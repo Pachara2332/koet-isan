@@ -1,0 +1,99 @@
+#app{position:relative;z-index:2;min-height:100vh;min-height:100dvh}
+
+.shell{
+  --gap:12px;
+  --bar-h:84px;
+  display:grid;
+  grid-template-columns:minmax(0,1fr);
+  grid-template-areas:
+    "head"
+    "cards"
+    "stats"
+    "trail";
+  gap:var(--gap);
+  width:100%;
+  max-width:640px;
+  margin:0 auto;
+  padding:0 12px calc(var(--bar-h) + 20px);
+}
+.slot-window{min-height:0}
+.slot-head{grid-area:head;min-width:0}
+.slot-stats{grid-area:stats;min-width:0}
+.slot-trail{grid-area:trail;min-width:0}
+.slot-cards{grid-area:cards;min-width:0;display:flex;flex-direction:column;gap:14px}
+.slot-actions{min-width:0}
+
+.shell .slot-window{height:220px;position:relative;margin:12px 0 16px}
+
+.slot-actions{
+  position:fixed;left:0;right:0;bottom:0;z-index:20;
+  display:flex;gap:10px;align-items:center;
+  padding:10px 12px calc(10px + env(safe-area-inset-bottom));
+  background:linear-gradient(rgba(255,252,246,0),var(--paper) 30%);
+}
+.slot-actions .btn-primary{flex:1 1 auto;min-width:0}
+
+.slot-stats.panel,.slot-trail.panel{padding:12px}
+.slot-stats .meters{--dial:54px}
+.slot-stats .money{margin-top:10px}
+.slot-stats .stats-who{display:none}
+.slot-trail .trail-extra{display:none}
+
+@media (min-width:1024px){
+  .shell{
+    --gap:18px;
+    max-width:none;
+    height:100vh;height:100dvh;
+    padding:18px;
+    grid-template-columns:minmax(240px,32%) minmax(0,1fr);
+    grid-template-rows:auto minmax(0,1fr) auto;
+    grid-template-areas:
+      "stats head"
+      "stats cards"
+      "trail actions";
+  }
+  .slot-cards{overflow-y:auto;overscroll-behavior:contain;padding:2px 6px 8px 2px;margin-right:-6px;scrollbar-width:thin}
+  .slot-actions{grid-area:actions;position:static;padding:0;background:none}
+  .slot-stats{min-height:0;max-height:100%;overflow-y:auto}
+  .slot-trail{align-self:stretch;max-height:24vh;overflow-y:auto}
+}
+
+@media (min-width:1440px){
+  .shell{
+    --gap:22px;
+    padding:22px;
+    grid-template-columns:minmax(300px,340px) minmax(0,1fr) minmax(290px,330px);
+    grid-template-rows:auto minmax(0,1fr) auto;
+    grid-template-areas:
+      "stats head    trail"
+      "stats cards   trail"
+      "stats actions trail";
+  }
+  .slot-head,.slot-cards,.slot-actions{width:100%;max-width:780px;justify-self:center}
+  .slot-stats{align-self:stretch;max-height:100%;overflow-y:auto}
+  .slot-stats .meters{grid-template-columns:repeat(2,minmax(0,1fr));gap:14px 8px;--dial:78px}
+  .slot-stats .dial span{font-size:24px}
+  .slot-stats .stats-who{display:block}
+  .slot-trail{align-self:stretch;max-height:none;overflow-y:auto;display:flex;flex-direction:column;gap:14px}
+  .slot-trail .trail-extra{display:block}
+  .slot-trail .strip{flex-direction:column;align-items:center;overflow-x:hidden;overflow-y:auto;max-height:46vh;padding:14px 6px;scroll-snap-type:y proximity}
+  .slot-trail .strip::before{left:6px;top:0;width:3px;height:var(--rope,100%);min-height:100%;min-width:0}
+  .slot-trail .cell{width:92px;height:26px;clip-path:polygon(0 0,84% 0,100% 50%,84% 100%,0 100%);flex-direction:row}
+  .slot-trail .cell b{top:0;bottom:0;right:auto;left:8px;display:flex;align-items:center}
+  .slot-trail .cell.now{width:132px;height:38px;animation:none}
+  .slot-trail .cell.now::after{left:auto;right:24px;top:50%;bottom:auto;margin:-7px 0 0}
+}
+
+.screen-placeholder{position:relative;z-index:2;min-height:100vh;display:grid;place-items:center;padding:24px 16px}
+.screen-placeholder .panel{width:min(100%,34rem)}
+@media (max-width:1023px){
+  .shell{grid-template-areas:"head" "stats" "cards" "trail"}
+  .slot-stats h3{margin:0 0 4px}
+  .shell .slot-window{height:190px;margin:6px 0 8px}
+  .slot-stats .stat-line{margin:4px 0 2px;min-height:0}
+  .slot-stats progress{margin:0 0 4px}
+  .slot-stats .money{margin:6px 0 0;padding:8px 12px}
+  .slot-actions{display:grid;grid-template-columns:auto minmax(0,1fr) minmax(0,1.1fr);gap:8px}
+  .slot-actions .btn{min-width:0;min-height:48px;padding:6px 10px;font-size:14px;line-height:1.25;white-space:normal}
+  .slot-actions .btn-primary{font-size:20px;white-space:nowrap}
+}

@@ -1,0 +1,232 @@
+@property --sky1{syntax:"<color>";inherits:true;initial-value:#6FA9D3}
+@property --sky2{syntax:"<color>";inherits:true;initial-value:#CFE0D6}
+@property --sky3{syntax:"<color>";inherits:true;initial-value:#F7CF7A}
+@property --sun{syntax:"<color>";inherits:true;initial-value:#FFF8E0}
+@property --glow{syntax:"<color>";inherits:true;initial-value:#FAC64E}
+@property --cloud{syntax:"<color>";inherits:true;initial-value:#FFF6E6}
+@property --cloud2{syntax:"<color>";inherits:true;initial-value:#F0CF9C}
+@property --hill1{syntax:"<color>";inherits:true;initial-value:#A9B2C4}
+@property --hill2{syntax:"<color>";inherits:true;initial-value:#8D9AA8}
+@property --hill3{syntax:"<color>";inherits:true;initial-value:#6E7F6B}
+@property --tree{syntax:"<color>";inherits:true;initial-value:#4E6B30}
+@property --tree2{syntax:"<color>";inherits:true;initial-value:#364C20}
+@property --palm{syntax:"<color>";inherits:true;initial-value:#354A24}
+@property --trunk{syntax:"<color>";inherits:true;initial-value:#4E3B28}
+@property --soil{syntax:"<color>";inherits:true;initial-value:#B88A4E}
+@property --soil2{syntax:"<color>";inherits:true;initial-value:#96703C}
+@property --bund{syntax:"<color>";inherits:true;initial-value:#8F8A44}
+@property --rice{syntax:"<color>";inherits:true;initial-value:#DDAA34}
+@property --rice2{syntax:"<color>";inherits:true;initial-value:#B9861F}
+@property --grain{syntax:"<color>";inherits:true;initial-value:#F2CF6A}
+@property --road{syntax:"<color>";inherits:true;initial-value:#CDAE78}
+@property --thatch{syntax:"<color>";inherits:true;initial-value:#C49A55}
+@property --river{syntax:"<color>";inherits:true;initial-value:#6E98B5}
+@property --river2{syntax:"<color>";inherits:true;initial-value:#A9C3CE}
+@property --haze{syntax:"<color>";inherits:true;initial-value:#F8DFA5}
+@property --tint{syntax:"<color>";inherits:true;initial-value:#F8DFA5}
+@property --asphalt{syntax:"<color>";inherits:true;initial-value:#8D8781}
+@property --ground{syntax:"<color>";inherits:true;initial-value:#E9CF96}
+@property --sun-y{syntax:"<number>";inherits:true;initial-value:-110}
+@property --sun-s{syntax:"<number>";inherits:true;initial-value:1}
+@property --sun-o{syntax:"<number>";inherits:true;initial-value:1}
+@property --storm{syntax:"<number>";inherits:true;initial-value:0}
+@property --cloud-o{syntax:"<number>";inherits:true;initial-value:.6}
+@property --wet{syntax:"<number>";inherits:true;initial-value:.1}
+@property --rice-h{syntax:"<number>";inherits:true;initial-value:1}
+@property --grain-o{syntax:"<number>";inherits:true;initial-value:1}
+@property --cracks{syntax:"<number>";inherits:true;initial-value:0}
+@property --kite{syntax:"<number>";inherits:true;initial-value:0}
+@property --egret{syntax:"<number>";inherits:true;initial-value:0}
+@property --sheaf{syntax:"<number>";inherits:true;initial-value:1}
+@property --lantern{syntax:"<number>";inherits:true;initial-value:1}
+@property --haze-o{syntax:"<number>";inherits:true;initial-value:.45}
+@property --mist{syntax:"<number>";inherits:true;initial-value:.5}
+@property --heat{syntax:"<number>";inherits:true;initial-value:0}
+@property --river-y{syntax:"<number>";inherits:true;initial-value:4}
+@property --sandbar{syntax:"<number>";inherits:true;initial-value:0}
+@property --birds{syntax:"<number>";inherits:true;initial-value:1}
+@property --wetroad{syntax:"<number>";inherits:true;initial-value:0}
+
+.ki-scene{
+  position:fixed;inset:0;z-index:0;
+  overflow:hidden;
+  pointer-events:none;
+  background:var(--paper);
+  contain:strict;
+  transition-property:--sky1,--sky2,--sky3,--sun,--glow,--cloud,--cloud2,--hill1,--hill2,--hill3,--tree,--tree2,--palm,--trunk,--soil,--soil2,--bund,--rice,--rice2,--grain,--road,--thatch,--river,--river2,--haze,--tint,--asphalt,--ground,--sun-y,--sun-s,--sun-o,--storm,--cloud-o,--wet,--rice-h,--grain-o,--cracks,--kite,--egret,--sheaf,--lantern,--haze-o,--mist,--heat,--river-y,--sandbar,--birds,--wetroad,opacity;
+  transition-duration:1.8s;
+  transition-timing-function:cubic-bezier(.45,.05,.35,1);
+}
+.ki-scene[data-season="0"]{
+  --sky1:#D7834F;--sky2:#EDAA70;--sky3:#F9DCAB;--sun:#FFF0C4;--glow:#F7A35A;--cloud:#F7D9B8;--cloud2:#E2A57A;
+  --hill1:#CC9A82;--hill2:#B4806A;--hill3:#93684F;--tree:#7D6C3D;--tree2:#584829;--palm:#4D4128;--trunk:#5E4832;
+  --soil:#D9AB78;--soil2:#A9754A;--bund:#C39260;--rice:#C9A469;--rice2:#A67E47;--grain:#C9A469;--road:#E4C595;--thatch:#D2AE73;
+  --river:#8FA49A;--river2:#C6C3A6;--haze:#F5C793;--tint:#F3B77D;--asphalt:#9B928A;--ground:#E6C397;
+  --sun-y:30;--sun-s:1.35;--sun-o:1;--storm:0;--cloud-o:.55;--wet:0;--rice-h:.2;--grain-o:0;--cracks:1;--kite:1;--egret:0;--sheaf:0;--lantern:0;
+  --haze-o:.7;--mist:0;--heat:1;--river-y:30;--sandbar:1;--birds:0;--wetroad:0;
+  --season:var(--dry);--season-ink:#fff;
+}
+.ki-scene[data-season="1"]{
+  --sky1:#55687B;--sky2:#8495A1;--sky3:#C4D0CC;--sun:#EEF2EE;--glow:#B9C6C6;--cloud:#AAB5BB;--cloud2:#65748A;
+  --hill1:#7C909A;--hill2:#5B7775;--hill3:#3C5E4D;--tree:#2E5E38;--tree2:#1C4126;--palm:#223E27;--trunk:#3F3428;
+  --soil:#6B5B45;--soil2:#544635;--bund:#5D8D3B;--rice:#6BB548;--rice2:#3F8C2B;--grain:#6BB548;--road:#8F775A;--thatch:#8C774E;
+  --river:#9A7F5B;--river2:#B39A73;--haze:#C6D2CF;--tint:#9EB0B8;--asphalt:#6A6C6E;--ground:#9DBB86;
+  --sun-y:-40;--sun-s:1;--sun-o:.16;--storm:1;--cloud-o:1;--wet:1;--rice-h:.58;--grain-o:0;--cracks:0;--kite:0;--egret:1;--sheaf:0;--lantern:0;
+  --haze-o:.4;--mist:.15;--heat:0;--river-y:-14;--sandbar:0;--birds:0;--wetroad:1;
+  --season:var(--rice);--season-ink:#fff;
+}
+.ki-scene[data-season="2"]{
+  --sky1:#6EA8D2;--sky2:#D3E2D4;--sky3:#F8CE79;--sun:#FFF8E0;--glow:#FAC64E;--cloud:#FFF7E8;--cloud2:#EFCD9B;
+  --hill1:#AAB3C5;--hill2:#8E9BAA;--hill3:#6D7E6A;--tree:#4F6C31;--tree2:#354B20;--palm:#354A24;--trunk:#4E3B28;
+  --soil:#B88A4E;--soil2:#94703D;--bund:#8F8B45;--rice:#DEAB35;--rice2:#B5841F;--grain:#F3D06B;--road:#D4B57F;--thatch:#C79D58;
+  --river:#6C97B4;--river2:#AAC4CF;--haze:#F8E0A8;--tint:#F6D58C;--asphalt:#8D8781;--ground:#EBD39A;
+  --sun-y:-110;--sun-s:1;--sun-o:1;--storm:0;--cloud-o:.65;--wet:.1;--rice-h:1;--grain-o:1;--cracks:0;--kite:0;--egret:0;--sheaf:1;--lantern:1;
+  --haze-o:.45;--mist:.55;--heat:0;--river-y:4;--sandbar:0;--birds:1;--wetroad:0;
+  --season:var(--gold);--season-ink:var(--ink);
+}
+.ki-scene[data-season="soft"]{
+  --sky1:#A8CAE2;--sky2:#EEE6D6;--sky3:#F8DCA4;--sun:#FFFBEC;--glow:#F9D98A;--cloud:#FFFAF0;--cloud2:#F1DDBA;
+  --hill1:#C4CAD6;--hill2:#AEB7C2;--hill3:#8E9C89;--tree:#6E8A52;--tree2:#536B3B;--palm:#4B5F38;--trunk:#5E4B37;
+  --soil:#CBA26B;--soil2:#AC8653;--bund:#A9A05E;--rice:#E5BF62;--rice2:#C49B3E;--grain:#F5DC90;--road:#E0C695;--thatch:#D3AE70;
+  --river:#8CB0C7;--river2:#C1D5DD;--haze:#FBEAC4;--tint:#F7E2B5;--asphalt:#A09A93;--ground:#F1E0B8;
+  --sun-y:-80;--sun-s:1.1;--sun-o:1;--storm:0;--cloud-o:.7;--wet:.06;--rice-h:.92;--grain-o:.9;--cracks:0;--kite:0;--egret:0;--sheaf:.7;--lantern:0;
+  --haze-o:.55;--mist:.7;--heat:0;--river-y:2;--sandbar:0;--birds:.7;--wetroad:0;
+  --season:var(--gold);--season-ink:var(--ink);
+}
+
+.scene-svg{position:absolute;left:0;top:0;width:100%;height:46vh;height:46svh;display:block}
+.scene-ground{
+  position:absolute;left:0;right:0;bottom:0;top:calc(46svh - 70px);
+  background:linear-gradient(rgba(0,0,0,0),var(--ground) 70px,color-mix(in srgb,var(--ground) 55%,var(--paper)) 40%,var(--paper) 85%);
+}
+.scene-particles{position:absolute;inset:0;width:100%;height:100%;display:block}
+.scene-mood{position:absolute;inset:0;opacity:0;transition:opacity 1.8s ease}
+.scene-mood-sad{background:#7E8796;mix-blend-mode:saturation}
+.scene-mood-sad2{background:linear-gradient(rgba(70,80,105,.28),rgba(70,80,105,.12));mix-blend-mode:multiply}
+.scene-mood-bright{background:radial-gradient(70% 60% at 72% 28%,rgba(255,196,96,.55),rgba(255,196,96,0) 70%);mix-blend-mode:soft-light}
+.ki-scene[data-mood="sad"] .scene-mood-sad{opacity:.6}
+.ki-scene[data-mood="sad"] .scene-mood-sad2{opacity:1}
+.ki-scene[data-mood="bright"] .scene-mood-bright{opacity:1}
+.scene-veil{position:absolute;inset:0;background:var(--paper);opacity:0}
+.ki-scene.fading .scene-veil{animation:ki-veil .3s ease}
+@keyframes ki-veil{0%{opacity:0}45%,55%{opacity:.85}100%{opacity:0}}
+
+@media (min-width:1024px){
+  .scene-svg{height:100%;left:-24vw;width:124vw}
+  .scene-ground{display:none}
+}
+@media (min-width:1440px){
+  .scene-svg{left:0;width:100%}
+}
+
+.ki-scene .pl{opacity:0;visibility:hidden;transition:opacity 1.2s ease,visibility 0s linear 1.2s}
+.ki-scene[data-place="rural"] .pl-rural,
+.ki-scene[data-place="town"] .pl-town,
+.ki-scene[data-place="mekong"] .pl-mekong,
+.ki-scene[data-place="bangkok"] .pl-bangkok,
+.ki-scene[data-place="abroad"] .pl-abroad,
+.ki-scene[data-place="school"] .pl-school,
+.ki-scene[data-place="factory"] .pl-factory,
+.ki-scene[data-place="market"] .pl-market,
+.ki-scene[data-place="temple"] .pl-temple,
+.ki-scene[data-place="desert"] .pl-desert,
+.ki-scene[data-place="asiacity"] .pl-asiacity,
+.ki-scene[data-place="nordic"] .pl-nordic,
+.ki-scene[data-place="prison"] .pl-prison,
+.ki-scene[data-place="garden"] .pl-garden{opacity:1;visibility:visible;transition:opacity 1.2s ease,visibility 0s}
+.ki-scene .hills{transition:opacity 1.2s ease}
+.ki-scene[data-place="bangkok"] .hills,
+.ki-scene[data-place="prison"] .hills{opacity:0}
+.ki-scene[data-place="mekong"] .hills .ridge-near{opacity:0}
+
+.era{display:none}
+.ki-scene.era-electricity .era-electricity,
+.ki-scene.era-tv .era-tv,
+.ki-scene.era-motorcycle .era-motorcycle,
+.ki-scene.era-mobile .era-mobile{display:inline}
+
+.sun{transform:translateY(calc(var(--sun-y) * 1px)) scale(var(--sun-s));transform-origin:1150px 400px;opacity:var(--sun-o)}
+.clouds{opacity:var(--cloud-o)}
+.storm{opacity:var(--storm)}
+.kite{opacity:var(--kite)}
+.egret{opacity:var(--egret)}
+.sheaf{opacity:var(--sheaf)}
+.lantern{opacity:var(--lantern)}
+.haze{opacity:var(--haze-o)}
+.mist{opacity:var(--mist)}
+.heat{opacity:var(--heat)}
+.cracks{opacity:var(--cracks)}
+.wet{opacity:var(--wet)}
+.grain{opacity:var(--grain-o)}
+.sandbar{opacity:var(--sandbar)}
+.birds{opacity:var(--birds)}
+.wetroad{opacity:calc(var(--wetroad) * .55)}
+.rice-row{transform:scaleY(var(--rice-h))}
+.river-edge{transform:translateY(calc(var(--river-y) * 1px))}
+.far-rice{opacity:calc(.25 + var(--rice-h) * .75)}
+
+.drift{animation:ki-drift var(--d,90s) ease-in-out infinite alternate}
+@keyframes ki-drift{from{transform:translateX(calc(var(--dx,60px) * -1))}to{transform:translateX(var(--dx,60px))}}
+.sway{animation:ki-palm 6s ease-in-out infinite alternate}
+@keyframes ki-palm{from{transform:rotate(-1.6deg)}to{transform:rotate(1.8deg)}}
+.wave{animation:ki-wave 4.2s ease-in-out infinite;transform-box:fill-box;transform-origin:50% 100%}
+@keyframes ki-wave{0%,100%{transform:skewX(-4deg)}50%{transform:skewX(5deg)}}
+.kite-fly{animation:ki-kite 5s ease-in-out infinite alternate}
+@keyframes ki-kite{0%{transform:rotate(-5deg) translate(0,0)}50%{transform:rotate(3deg) translate(8px,-10px)}100%{transform:rotate(6deg) translate(-6px,4px)}}
+.tail-swish{animation:ki-tail 3.4s ease-in-out infinite}
+@keyframes ki-tail{0%,100%{transform:rotate(-8deg)}50%{transform:rotate(14deg)}}
+.bolt{opacity:0;animation:ki-bolt 9s linear infinite}
+@keyframes ki-bolt{0%,61%{opacity:0}62%{opacity:1}63%{opacity:.2}64%{opacity:.95}66%,100%{opacity:0}}
+.flash{opacity:0;animation:ki-flash 9s linear infinite}
+@keyframes ki-flash{0%,61%{opacity:0}62%{opacity:.5}63%{opacity:.1}64%{opacity:.4}68%,100%{opacity:0}}
+.shimmer{animation:ki-shimmer 2.8s ease-in-out infinite alternate;transform-box:fill-box;transform-origin:50% 50%}
+@keyframes ki-shimmer{from{transform:translateX(-14px) scaleY(.6)}to{transform:translateX(14px) scaleY(1.5)}}
+.glint{animation:ki-glint 3s ease-in-out infinite}
+@keyframes ki-glint{0%,100%{opacity:.15}50%{opacity:.9}}
+.blink{animation:ki-blink 1.6s steps(1) infinite}
+@keyframes ki-blink{0%{opacity:1}50%{opacity:.15}}
+.boat-cross{animation:ki-cross 46s linear infinite}
+@keyframes ki-cross{from{transform:translateX(-260px)}to{transform:translateX(1900px)}}
+.train{animation:ki-train 16s linear infinite}
+@keyframes ki-train{0%{transform:translateX(-900px)}100%{transform:translateX(1900px)}}
+.flock{animation:ki-flock 38s linear infinite}
+@keyframes ki-flock{from{transform:translate(-200px,30px)}to{transform:translate(1900px,-60px)}}
+.flap{animation:ki-flap .9s ease-in-out infinite alternate;transform-box:fill-box;transform-origin:50% 50%}
+@keyframes ki-flap{from{transform:scaleY(1)}to{transform:scaleY(.4)}}
+.bob{animation:ki-bob 4s ease-in-out infinite alternate}
+@keyframes ki-bob{from{transform:translateY(-1.5px)}to{transform:translateY(1.5px)}}
+.lamp-glow{animation:ki-glint 2.4s ease-in-out infinite}
+
+.fx{opacity:0;visibility:hidden}
+.ki-scene[data-fx="flood"] .fx-flood,
+.ki-scene[data-fx="drought"] .fx-drought,
+.ki-scene[data-fx="rocket"] .fx-rocket,
+.ki-scene[data-fx="boats"] .fx-boats,
+.ki-scene[data-fx="boats"] .fx-dusk,
+.ki-scene[data-fx="fireworks"] .fx-dusk{visibility:visible;opacity:1}
+.ki-scene[data-fx="flood"] .fx-flood .flood-water{animation:ki-flood 4.2s cubic-bezier(.4,0,.3,1) both}
+@keyframes ki-flood{0%{transform:translateY(300px)}35%,72%{transform:translateY(0)}100%{transform:translateY(300px)}}
+.ki-scene[data-fx="drought"] .fx-drought{animation:ki-fade4 4.2s ease both}
+.ki-scene[data-fx="drought"] .sun{transition:none}
+.ki-scene[data-fx="drought"] .fx-drought .scorch{animation:ki-pulse 1.4s ease-in-out infinite alternate}
+@keyframes ki-pulse{from{opacity:.55}to{opacity:1}}
+@keyframes ki-fade4{0%{opacity:0}20%,75%{opacity:1}100%{opacity:0}}
+.ki-scene[data-fx="rocket"] .rocket{animation:ki-rocket 3.6s cubic-bezier(.5,0,.8,.6) .3s both}
+@keyframes ki-rocket{0%{transform:translate(0,0)}12%{transform:translate(0,-6px)}100%{transform:translate(260px,-1100px)}}
+.ki-scene[data-fx="rocket"] .rocket-trail{animation:ki-trail 3.6s cubic-bezier(.5,0,.8,.6) .3s both}
+@keyframes ki-trail{0%{stroke-dashoffset:1200;opacity:.9}80%{opacity:.75}100%{stroke-dashoffset:0;opacity:0}}
+.ki-scene[data-fx="rocket"] .fx-rocket{animation:ki-fade4 4.2s ease both}
+.ki-scene[data-fx="boats"] .fx-boats .boat-a{animation:ki-boat 4.2s linear both}
+.ki-scene[data-fx="boats"] .fx-boats .boat-b{animation:ki-boat 4.2s linear .2s both}
+@keyframes ki-boat{from{transform:translateX(-120px)}to{transform:translateX(220px)}}
+.ki-scene[data-fx="boats"] .fx-dusk,.ki-scene[data-fx="fireworks"] .fx-dusk{animation:ki-dusk 4.2s ease both}
+.ki-scene[data-fx="boats"] .fx-boats{animation:ki-fade4 4.2s ease both}
+@keyframes ki-dusk{0%{opacity:0}18%,78%{opacity:1}100%{opacity:0}}
+
+.ki-scene.paused *,.ki-scene.paused *::before{animation-play-state:paused!important}
+.ki-scene.still,.ki-scene.still *{animation:none!important}
+.ki-scene.still{transition-duration:0s}
+.ki-scene.still .scene-mood,.ki-scene.still .pl,.ki-scene.still .hills{transition-duration:0s}
+.ki-scene.still.fading .scene-veil{animation:ki-veil .3s ease!important}
+
+.ki-scene[data-place="asiacity"] .hills,.ki-scene[data-place="temple"] .hills .ridge-near{opacity:0}

@@ -1,0 +1,591 @@
+<!doctype html>
+<html lang="th">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>เกิดอีสาน</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Anuphan:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --kram:#1E3570;
+  --kram-deep:#13234D;
+  --kram-mid:#3D5A9E;
+  --kram-mist:#E3E9F5;
+  --kram-haze:#F0F3FA;
+  --paper:#FBFBF8;
+  --white:#FFFFFF;
+  --lac:#B4372A;
+  --lac-mist:#F8E7E3;
+  --ink:#1A2238;
+  --ink-soft:#4F5873;
+  --line:#D8DEEB;
+  --dry:#D9B25E;
+  --rain:#5E9A6A;
+  --harvest:#C6862A;
+  --r-lg:20px;
+  --r-md:14px;
+  --r-sm:10px;
+  --ikat:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='32' height='24' viewBox='0 0 32 24'%3E%3Cpath fill='%23FFFFFF' fill-opacity='.9' d='M14 2h4v3h3v3h3v3h3v2h-3v3h-3v3h-3v3h-4v-3h-3v-3H8v-3H5v-2h3V8h3V5h3z'/%3E%3Cpath fill='%231E3570' d='M15 8h2v2h2v4h-2v2h-2v-2h-2v-4h2z'/%3E%3Cpath fill='%23B4372A' d='M0 11h2v2H0zM30 11h2v2h-2z'/%3E%3C/svg%3E");
+  --zig:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='8' viewBox='0 0 16 8'%3E%3Cpath d='M0 6 4 2 8 6 12 2 16 6' fill='none' stroke='%231E3570' stroke-width='1.6'/%3E%3C/svg%3E");
+}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{
+  margin:0;
+  font-family:"Anuphan",system-ui,sans-serif;
+  color:var(--ink);
+  background-color:#E9EDF6;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='64' height='48' viewBox='0 0 64 48'%3E%3Cpath fill='%231E3570' fill-opacity='.06' d='M28 4h8v6h6v6h6v6h6v4h-6v6h-6v6h-6v6h-8v-6h-6v-6h-6v-6h-6v-4h6v-6h6v-6h6z'/%3E%3C/svg%3E");
+  line-height:1.6;
+  font-size:16px;
+}
+.phone{
+  max-width:480px;
+  min-height:100vh;
+  margin:0 auto;
+  background:var(--paper);
+  box-shadow:0 0 0 1px rgba(30,53,112,.08),0 30px 60px -30px rgba(19,35,77,.35);
+  overflow-x:hidden;
+}
+[hidden]{display:none!important}
+button,input,select{font:inherit;color:inherit}
+button{cursor:pointer}
+:focus-visible{outline:3px solid var(--lac);outline-offset:2px}
+.band{
+  height:24px;
+  background:var(--kram) var(--ikat) repeat-x center/32px 24px;
+}
+.zig{height:8px;background:var(--zig) repeat-x center/16px 8px;opacity:.5;margin:28px 0}
+
+.hero{
+  position:relative;
+  background:var(--kram);
+  color:var(--white);
+  padding:36px 20px 30px;
+  overflow:hidden;
+}
+.hero::after{
+  content:"";
+  position:absolute;inset:auto 0 0 0;height:24px;
+  background:var(--ikat) repeat-x center/32px 24px;
+  filter:blur(.4px);
+}
+.hero::before{
+  content:"";
+  position:absolute;right:-40px;top:-30px;width:200px;height:200px;
+  background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Cpath fill='none' stroke='%23FFFFFF' stroke-opacity='.14' stroke-width='5' d='M44 6h12v10h10v10h10v10h10v28H78v10H68v10H56v10H44V84H34V74H24V64H14V36h10V26h10V16h10z'/%3E%3Cpath fill='none' stroke='%23FFFFFF' stroke-opacity='.1' stroke-width='5' d='M46 30h8v8h8v24h-8v8h-8v-8h-8V38h8z'/%3E%3C/svg%3E") no-repeat center/contain;
+}
+.hero h1{
+  margin:0;
+  font-size:52px;
+  line-height:1.1;
+  font-weight:700;
+  letter-spacing:-.01em;
+  position:relative;
+}
+.hero p{
+  margin:10px 0 26px;
+  font-size:17px;
+  font-weight:300;
+  color:#D5DDF0;
+  position:relative;
+}
+.wrap{padding:22px 16px 32px}
+.preset{
+  display:grid;
+  grid-template-columns:44px 1fr;
+  gap:14px;
+  background:var(--white);
+  border:1px solid var(--line);
+  border-radius:var(--r-lg);
+  padding:16px;
+  margin-top:-34px;
+  position:relative;
+  box-shadow:0 12px 24px -16px rgba(19,35,77,.4);
+}
+.preset-mark{
+  width:44px;height:44px;border-radius:12px;
+  background:var(--lac-mist) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath fill='%23B4372A' d='M10 2h4v4h4v4h4v4h-4v4h-4v4h-4v-4H6v-4H2v-4h4V6h4z'/%3E%3Cpath fill='%23F8E7E3' d='M11 8h2v3h3v2h-3v3h-2v-3H8v-2h3z'/%3E%3C/svg%3E") no-repeat center/26px;
+}
+.preset p{margin:0 0 12px;font-size:15px;color:var(--ink-soft);overflow-wrap:anywhere}
+.preset strong{display:block;color:var(--ink);font-weight:600;font-size:16px}
+.preset .btn{grid-column:1/-1}
+
+.btn{
+  display:inline-flex;align-items:center;justify-content:center;
+  min-height:48px;padding:10px 20px;
+  border-radius:var(--r-md);
+  border:1.5px solid var(--kram);
+  background:var(--white);color:var(--kram);
+  font-weight:600;font-size:16px;
+  text-align:center;
+  transition:background .15s,transform .1s;
+}
+.btn:active{transform:scale(.98)}
+.btn:hover{background:var(--kram-haze)}
+.btn-primary{background:var(--kram);color:var(--white);border-color:var(--kram)}
+.btn-primary:hover{background:var(--kram-deep)}
+.btn-block{width:100%}
+.btn-born{
+  min-height:60px;font-size:22px;letter-spacing:.02em;
+  border-radius:18px;
+  position:relative;overflow:hidden;
+}
+.btn-born::after{
+  content:"";position:absolute;left:0;right:0;bottom:0;height:6px;
+  background:linear-gradient(90deg,var(--lac) 0 20%,transparent 20% 24%,var(--lac) 24% 44%,transparent 44% 48%,var(--lac) 48% 68%,transparent 68% 72%,var(--lac) 72% 100%);
+  filter:blur(.6px);
+}
+
+.field{margin:0 0 22px;border:0;padding:0;min-width:0}
+.field>.lbl,.field>legend{
+  display:block;font-weight:600;font-size:15px;color:var(--kram);margin-bottom:8px;padding:0;
+}
+.hint{font-weight:400;color:var(--ink-soft);font-size:14px;margin-left:6px}
+.input{
+  width:100%;min-height:48px;padding:10px 14px;
+  border:1.5px solid var(--line);border-radius:var(--r-md);
+  background:var(--white);font-size:16px;
+}
+.input:focus{border-color:var(--kram-mid)}
+select.input{
+  appearance:none;-webkit-appearance:none;
+  background:var(--white) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='10' viewBox='0 0 14 10'%3E%3Cpath d='M1 2l6 6 6-6' fill='none' stroke='%231E3570' stroke-width='2'/%3E%3C/svg%3E") no-repeat right 14px center;
+  padding-right:40px;
+}
+.seg{display:flex;flex-wrap:wrap;gap:8px}
+.seg label{flex:1 1 auto;position:relative;min-width:0}
+.seg input{position:absolute;opacity:0;inset:0;width:100%;height:100%;margin:0;cursor:pointer}
+.seg span{
+  display:flex;align-items:center;justify-content:center;
+  min-height:46px;padding:8px 14px;
+  border:1.5px solid var(--line);border-radius:999px;
+  background:var(--white);font-size:15px;text-align:center;
+}
+.seg input:checked+span{background:var(--kram);border-color:var(--kram);color:var(--white);font-weight:600}
+.seg input:focus-visible+span{outline:3px solid var(--lac);outline-offset:2px}
+.seg-stack label{flex:1 1 calc(50% - 8px)}
+
+.year-row{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+.year-row .input{flex:1 1 120px;font-size:20px;font-weight:600;color:var(--kram)}
+.chips{display:flex;gap:8px}
+.chip-btn{
+  min-height:44px;min-width:60px;padding:0 12px;
+  border:1.5px dashed var(--kram-mid);border-radius:var(--r-sm);
+  background:var(--kram-haze);color:var(--kram);font-weight:600;
+}
+.chip-btn:hover{background:var(--kram-mist)}
+
+.traits{
+  background:var(--white);border:1px solid var(--line);border-radius:var(--r-lg);
+  padding:18px 16px 16px;
+}
+.trait{margin-bottom:16px}
+.trait-ends{display:flex;justify-content:space-between;gap:12px;font-size:14px;color:var(--ink-soft)}
+.trait-ends span:last-child{text-align:right}
+input[type=range]{
+  -webkit-appearance:none;appearance:none;width:100%;height:44px;background:transparent;margin:0;
+}
+input[type=range]::-webkit-slider-runnable-track{
+  height:8px;border-radius:4px;
+  background:repeating-linear-gradient(90deg,var(--kram-mist) 0 10px,#CBD5EA 10px 12px);
+}
+input[type=range]::-moz-range-track{height:8px;border-radius:4px;background:var(--kram-mist)}
+input[type=range]::-webkit-slider-thumb{
+  -webkit-appearance:none;width:26px;height:26px;margin-top:-9px;
+  background:var(--kram);border:4px solid var(--white);
+  transform:rotate(45deg);border-radius:4px;
+  box-shadow:0 0 0 1.5px var(--kram);
+}
+input[type=range]::-moz-range-thumb{
+  width:20px;height:20px;background:var(--kram);border:4px solid var(--white);
+  transform:rotate(45deg);border-radius:4px;box-shadow:0 0 0 1.5px var(--kram);
+}
+input[type=range]:focus-visible{outline:3px solid var(--lac);outline-offset:0;border-radius:8px}
+
+.switch{
+  display:flex;align-items:center;justify-content:space-between;gap:16px;
+  min-height:56px;padding:8px 16px;
+  background:var(--kram-haze);border-radius:var(--r-md);cursor:pointer;
+  font-weight:500;
+}
+.switch input{position:absolute;opacity:0;width:1px;height:1px}
+.switch .track{
+  flex:none;width:52px;height:30px;border-radius:15px;background:#C3CBDD;position:relative;transition:background .15s;
+}
+.switch .track::after{
+  content:"";position:absolute;top:4px;left:4px;width:22px;height:22px;border-radius:50%;background:var(--white);transition:transform .15s;
+}
+.switch input:checked+.track{background:var(--kram)}
+.switch input:checked+.track::after{transform:translateX(22px)}
+.switch input:focus-visible+.track{outline:3px solid var(--lac);outline-offset:2px}
+
+.foot{
+  display:flex;justify-content:center;gap:4px;flex-wrap:wrap;margin-top:22px;
+}
+.link{
+  background:none;border:0;min-height:44px;padding:0 12px;
+  color:var(--kram-mid);font-weight:500;text-decoration:underline;text-underline-offset:4px;text-decoration-thickness:1px;
+}
+.foot .dot{align-self:center;color:var(--line)}
+
+.topbar{
+  background:var(--kram);color:var(--white);padding:10px 16px 18px;position:relative;
+}
+.topbar .back{color:#C9D3EC;padding:0;min-height:44px}
+.when{display:flex;flex-wrap:wrap;align-items:baseline;gap:4px 12px;margin-top:2px}
+.when .year{font-size:28px;font-weight:700;line-height:1.2}
+.when .ce{font-size:15px;color:#C9D3EC}
+.meta{display:flex;flex-wrap:wrap;gap:8px;margin-top:10px}
+.pill{
+  display:inline-flex;align-items:center;min-height:32px;padding:4px 12px;border-radius:999px;
+  background:rgba(255,255,255,.12);font-size:14px;
+}
+.pill-season{background:var(--harvest);color:var(--kram-deep);font-weight:600}
+.where{margin:14px 0 0;font-size:15px;color:var(--ink-soft);overflow-wrap:anywhere}
+
+.stats{
+  display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin-top:14px;
+}
+.stat{
+  background:var(--white);border:1px solid var(--line);border-radius:var(--r-md);
+  padding:10px 12px;min-width:0;
+}
+.stat-head{display:flex;justify-content:space-between;align-items:baseline;gap:6px;font-size:13px;color:var(--ink-soft)}
+.stat-head b{font-size:20px;color:var(--kram);font-weight:700}
+.bar{height:6px;border-radius:3px;background:var(--kram-mist);margin-top:6px;overflow:hidden}
+.bar i{display:block;height:100%;background:var(--kram)}
+.stat-money{grid-column:1/-1;display:flex;justify-content:space-between;align-items:center;background:var(--kram-haze);border-color:transparent}
+.stat-money b{font-size:22px;color:var(--kram);font-weight:700}
+.stat-money small{font-size:14px;font-weight:500}
+
+.cond{
+  display:inline-flex;align-items:center;gap:8px;margin-top:12px;
+  padding:6px 12px 6px 8px;border-radius:999px;
+  background:var(--lac-mist);color:var(--lac);font-size:14px;font-weight:600;
+}
+.cond::before{
+  content:"";width:14px;height:14px;background:var(--lac);
+  clip-path:polygon(50% 0,100% 50%,50% 100%,0 50%);
+}
+
+.strip{margin-top:20px}
+.strip-cells{display:flex;gap:3px;align-items:flex-end}
+.cell{flex:1 1 0;min-width:0;text-align:center;font-size:11px;color:var(--ink-soft)}
+.cell i{
+  display:block;height:28px;border-radius:5px;margin-bottom:4px;
+  background:linear-gradient(90deg,var(--dry) 0 26%,var(--rain) 40% 60%,var(--harvest) 74% 100%);
+}
+.cell.s i{height:28px}
+.cell.dry i{background:var(--dry)}
+.cell.rain i{background:var(--rain)}
+.cell.harvest i{background:var(--harvest)}
+.cell.now i{box-shadow:0 0 0 2px var(--paper),0 0 0 4px var(--lac);height:34px}
+.cell.now{color:var(--lac);font-weight:700}
+.age7{display:flex;gap:3px;flex:3 1 0;min-width:0;flex-direction:column}
+.age7 .trio{display:flex;gap:3px;align-items:flex-end}
+.age7 .trio .cell{flex:1}
+.legend{display:flex;flex-wrap:wrap;gap:4px 14px;margin-top:10px;font-size:13px;color:var(--ink-soft)}
+.legend span{display:inline-flex;align-items:center;gap:6px}
+.legend span::before{content:"";width:12px;height:12px;border-radius:3px;background:var(--c)}
+
+.card{
+  background:var(--white);border:1px solid var(--line);border-radius:var(--r-lg);
+  margin-top:18px;overflow:hidden;
+}
+.card-tag{
+  display:flex;align-items:center;justify-content:space-between;gap:10px;
+  padding:10px 16px;font-size:14px;font-weight:600;
+}
+.card-body{padding:2px 16px 16px}
+.card h2{margin:0 0 4px;font-size:19px;line-height:1.4;font-weight:700;color:var(--ink);overflow-wrap:anywhere}
+.card time{display:block;font-size:14px;color:var(--ink-soft);margin-bottom:8px}
+.card p{margin:0;font-size:16px}
+.world .card-tag{background:var(--kram-haze);color:var(--kram);border-bottom:1px solid var(--line)}
+.world .card-tag::after{
+  content:"";height:10px;flex:1;max-width:120px;
+  background:var(--zig) repeat-x center/16px 8px;opacity:.45;
+}
+.world .card-body{padding-top:14px}
+.world .link{padding:0;margin-top:6px;font-size:14px}
+.mine{border:0;background:var(--kram);color:var(--white)}
+.mine .card-tag{color:#F3C9A0}
+.mine .card-tag::before{content:"";width:28px;height:12px;background:var(--ikat) no-repeat center/28px 21px;order:2}
+.mine p{font-size:17px;line-height:1.7}
+
+.choices{display:flex;flex-direction:column;gap:10px;margin-top:16px}
+.choice{
+  text-align:left;min-height:56px;padding:12px 16px 12px 48px;
+  border:1.5px solid var(--line);border-radius:var(--r-md);background:var(--white);
+  position:relative;font-size:16px;line-height:1.5;
+}
+.choice::before{
+  content:"";position:absolute;left:18px;top:50%;width:14px;height:14px;margin-top:-7px;
+  border:2px solid var(--kram-mid);transform:rotate(45deg);border-radius:2px;
+}
+.choice:hover{border-color:var(--kram-mid);background:var(--kram-haze)}
+.choice[aria-pressed=true]{border-color:var(--kram);background:var(--kram-haze);font-weight:600}
+.choice[aria-pressed=true]::before{background:var(--kram);border-color:var(--kram)}
+.choices.done .choice[aria-pressed=false]{opacity:.55}
+
+.result{display:flex;flex-wrap:wrap;gap:8px;margin-top:16px}
+.rchip{
+  display:inline-flex;align-items:center;min-height:36px;padding:4px 14px;border-radius:999px;
+  font-size:15px;font-weight:600;
+  animation:pop .3s ease both;
+}
+.rchip:nth-child(2){animation-delay:.07s}
+.rchip:nth-child(3){animation-delay:.14s}
+.minus{background:var(--lac-mist);color:var(--lac)}
+.plus{background:#E2EFE4;color:#2F6B3C}
+.neutral{background:var(--kram-mist);color:var(--kram)}
+@keyframes pop{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+@media (prefers-reduced-motion:reduce){.rchip{animation:none}.btn,.switch .track,.switch .track::after{transition:none}}
+
+.actions{display:flex;flex-direction:column;gap:10px;margin-top:20px}
+.menu{display:flex;justify-content:center;gap:4px;margin-top:16px}
+
+@media (min-width:600px){
+  body{padding:24px 0}
+  .phone{min-height:calc(100vh - 48px);border-radius:28px}
+}
+</style>
+</head>
+<body>
+<div class="phone">
+
+<main id="screen-a">
+  <header class="hero">
+    <h1>เกิดอีสาน</h1>
+    <p>หนึ่งชีวิต ทีละฤดู บนแผ่นดินอีสาน</p>
+  </header>
+  <div class="wrap">
+    <section class="preset" aria-label="เส้นทางสำเร็จรูป">
+      <div class="preset-mark" aria-hidden="true"></div>
+      <p><strong>เส้นทางสำเร็จรูป: เด็กโพนสวรรค์</strong>เกิด พ.ศ. 2547 · นครพนม · ชนบท · ยากจน</p>
+      <button type="button" class="btn" id="use-preset">ใช้เส้นทางนี้</button>
+    </section>
+
+    <div class="zig" aria-hidden="true"></div>
+
+    <form id="birth-form" onsubmit="return false">
+      <div class="field">
+        <label class="lbl" for="name">ชื่อ</label>
+        <input class="input" id="name" type="text" autocomplete="off">
+      </div>
+
+      <fieldset class="field">
+        <legend>เพศ</legend>
+        <div class="seg">
+          <label><input type="radio" name="sex" value="m" checked><span>ชาย</span></label>
+          <label><input type="radio" name="sex" value="f"><span>หญิง</span></label>
+        </div>
+      </fieldset>
+
+      <div class="field">
+        <label class="lbl" for="year">ปีเกิด <span class="hint" id="ce">(ค.ศ. 1997)</span></label>
+        <div class="year-row">
+          <input class="input" id="year" type="number" inputmode="numeric" value="2540" min="2500" max="2560" aria-describedby="ce">
+          <div class="chips">
+            <button type="button" class="chip-btn" data-year="2513">2513</button>
+            <button type="button" class="chip-btn" data-year="2540">2540</button>
+            <button type="button" class="chip-btn" data-year="2547">2547</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="field">
+        <label class="lbl" for="prov">จังหวัดเกิด</label>
+        <select class="input" id="prov">
+          <option>สุ่ม</option><option>นครพนม</option><option>สกลนคร</option><option>มหาสารคาม</option><option>ขอนแก่น</option><option>อุดรธานี</option><option>อุบลราชธานี</option><option>นครราชสีมา</option><option>บุรีรัมย์</option><option>สุรินทร์</option><option>ศรีสะเกษ</option><option>ร้อยเอ็ด</option><option>กาฬสินธุ์</option><option>ชัยภูมิ</option><option>เลย</option><option>หนองคาย</option><option>ยโสธร</option><option>มุกดาหาร</option><option>หนองบัวลำภู</option><option>อำนาจเจริญ</option><option>บึงกาฬ</option>
+        </select>
+      </div>
+
+      <fieldset class="field">
+        <legend>ถิ่น</legend>
+        <div class="seg">
+          <label><input type="radio" name="area" value="rural" checked><span>ชนบท</span></label>
+          <label><input type="radio" name="area" value="town"><span>ในเมือง</span></label>
+        </div>
+      </fieldset>
+
+      <fieldset class="field">
+        <legend>ฐานะครอบครัว</legend>
+        <div class="seg seg-stack">
+          <label style="flex-basis:100%"><input type="radio" name="wealth" value="stat" checked><span>สุ่มตามสถิติจริง</span></label>
+          <label><input type="radio" name="wealth" value="poor"><span>ยากจน</span></label>
+          <label><input type="radio" name="wealth" value="mid"><span>พอมีพอกิน</span></label>
+          <label><input type="radio" name="wealth" value="rich"><span>มีฐานะ</span></label>
+        </div>
+      </fieldset>
+
+      <fieldset class="field">
+        <legend>นิสัย</legend>
+        <div class="traits">
+          <div class="trait">
+            <div class="trait-ends" aria-hidden="true"><span>ปล่อยวาง</span><span>ยึดติด</span></div>
+            <input type="range" min="0" max="100" value="50" aria-label="ปล่อยวาง ถึง ยึดติด">
+          </div>
+          <div class="trait">
+            <div class="trait-ends" aria-hidden="true"><span>ท้อง่าย</span><span>ใจสู้</span></div>
+            <input type="range" min="0" max="100" value="50" aria-label="ท้อง่าย ถึง ใจสู้">
+          </div>
+          <div class="trait">
+            <div class="trait-ends" aria-hidden="true"><span>เก็บตัว</span><span>ชอบเข้าสังคม</span></div>
+            <input type="range" min="0" max="100" value="50" aria-label="เก็บตัว ถึง ชอบเข้าสังคม">
+          </div>
+          <button type="button" class="btn btn-block" id="rand-traits">สุ่มนิสัย</button>
+        </div>
+      </fieldset>
+
+      <div class="field">
+        <label class="switch">
+          <span>ซ่อนเนื้อหาหนัก</span>
+          <input type="checkbox" role="switch">
+          <span class="track" aria-hidden="true"></span>
+        </label>
+      </div>
+
+      <button type="button" class="btn btn-primary btn-block btn-born" id="go-born">เกิด</button>
+    </form>
+
+    <nav class="foot">
+      <button type="button" class="link">บันทึกชาติก่อน</button>
+      <span class="dot" aria-hidden="true">·</span>
+      <button type="button" class="link">แหล่งข้อมูล</button>
+    </nav>
+  </div>
+  <div class="band" aria-hidden="true"></div>
+</main>
+
+<main id="screen-b" hidden>
+  <header class="topbar">
+    <button type="button" class="link back" id="go-back">กลับหน้าเริ่ม</button>
+    <div class="when">
+      <span class="year">พ.ศ. 2554</span>
+      <span class="ce">(ค.ศ. 2011)</span>
+    </div>
+    <div class="meta">
+      <span class="pill">อายุ 7 ปี</span>
+      <span class="pill pill-season">หน้าเกี่ยว (ต.ค.–ธ.ค.)</span>
+    </div>
+  </header>
+  <div class="band" aria-hidden="true"></div>
+
+  <div class="wrap">
+    <p class="where">อ.โพนสวรรค์ จ.นครพนม · นักเรียน ป.2 · อยู่กับยาย</p>
+
+    <section class="stats" aria-label="สถานะ">
+      <div class="stat"><div class="stat-head"><span>สุขภาพ</span><b>78</b></div><div class="bar"><i style="width:78%"></i></div></div>
+      <div class="stat"><div class="stat-head"><span>ความสุข</span><b id="v-happy">64</b></div><div class="bar"><i id="b-happy" style="width:64%"></i></div></div>
+      <div class="stat"><div class="stat-head"><span>ความรู้</span><b>31</b></div><div class="bar"><i style="width:31%"></i></div></div>
+      <div class="stat"><div class="stat-head"><span>ความสัมพันธ์</span><b>70</b></div><div class="bar"><i style="width:70%"></i></div></div>
+      <div class="stat stat-money"><span>เงินในบ้าน</span><b>3,200 <small>บาท</small></b></div>
+    </section>
+
+    <span class="cond">คิดถึงแม่ (อีก 2 ฤดู)</span>
+
+    <section class="strip" aria-label="เส้นชีวิต">
+      <div class="strip-cells">
+        <div class="cell"><i></i>0</div>
+        <div class="cell"><i></i>1</div>
+        <div class="cell"><i></i>2</div>
+        <div class="cell"><i></i>3</div>
+        <div class="cell"><i></i>4</div>
+        <div class="cell"><i></i>5</div>
+        <div class="cell"><i></i>6</div>
+        <div class="age7">
+          <div class="trio">
+            <div class="cell dry" title="หน้าแล้ง"><i></i></div>
+            <div class="cell rain" title="หน้านา"><i></i></div>
+            <div class="cell harvest now" title="หน้าเกี่ยว" aria-current="true"><i></i></div>
+          </div>
+          <div class="cell now" style="flex:none">7</div>
+        </div>
+      </div>
+      <div class="legend">
+        <span style="--c:var(--dry)">หน้าแล้ง</span>
+        <span style="--c:var(--rain)">หน้านา</span>
+        <span style="--c:var(--harvest)">หน้าเกี่ยว</span>
+      </div>
+    </section>
+
+    <article class="card world">
+      <div class="card-tag">เรื่องจริงปีนี้</div>
+      <div class="card-body">
+        <h2>เปิดสะพานมิตรภาพไทย–ลาว แห่งที่ 3 (นครพนม–คำม่วน)</h2>
+        <time datetime="2011-11-11">11 พฤศจิกายน 2554</time>
+        <p>สะพานข้ามแม่น้ำโขงแห่งใหม่เปิดใช้ คนนครพนมข้ามไปฝั่งลาวได้ง่ายขึ้น ตลาดริมโขงคึกคัก ครูพานักเรียนทั้งห้องไปยืนดูสะพานจากริมฝั่ง</p>
+        <button type="button" class="link">ที่มา</button>
+      </div>
+    </article>
+
+    <article class="card mine">
+      <div class="card-tag">เรื่องของเจ้า</div>
+      <div class="card-body">
+        <p>แม่โทรมาจากกรุงเทพฯ น้ำท่วมโรงงาน งานหยุดมาเดือนกว่าแล้ว แม่ว่าปีใหม่นี้อาจบ่มีเงินกลับบ้าน</p>
+      </div>
+    </article>
+
+    <div class="choices" id="choices">
+      <button type="button" class="choice" aria-pressed="false">บอกแม่ว่าบ่เป็นหยัง หนูอยู่กับยายได้</button>
+      <button type="button" class="choice" aria-pressed="false">ร้องไห้ ขอให้แม่กลับมา</button>
+      <button type="button" class="choice" aria-pressed="false">ถามแม่ว่าหนูไปอยู่กรุงเทพฯ นำได้บ่</button>
+    </div>
+
+    <div aria-live="polite">
+      <div class="result" id="result" hidden>
+        <span class="rchip minus">ความสุข −6</span>
+        <span class="rchip plus">ความสัมพันธ์ +3</span>
+        <span class="rchip neutral">คิดถึงแม่ +1 ฤดู</span>
+      </div>
+    </div>
+
+    <div class="actions">
+      <button type="button" class="btn btn-primary btn-block" id="next" hidden>ไปต่อ</button>
+      <button type="button" class="btn btn-block">ข้ามไปเรื่องสำคัญถัดไป</button>
+    </div>
+
+    <nav class="menu">
+      <button type="button" class="link">บันทึกชีวิต</button>
+      <span class="dot" aria-hidden="true">·</span>
+      <button type="button" class="link">แหล่งข้อมูล</button>
+    </nav>
+  </div>
+</main>
+
+</div>
+<script>
+const $ = s => document.querySelector(s);
+const year = $('#year');
+const setCE = () => { const v = parseInt(year.value, 10); $('#ce').textContent = '(ค.ศ. ' + (isNaN(v) ? '–' : v - 543) + ')'; };
+year.addEventListener('input', setCE);
+document.querySelectorAll('[data-year]').forEach(b => b.onclick = () => { year.value = b.dataset.year; setCE(); });
+$('#rand-traits').onclick = () => document.querySelectorAll('input[type=range]').forEach(r => r.value = Math.floor(Math.random() * 101));
+$('#use-preset').onclick = () => {
+  year.value = 2547; setCE();
+  $('#prov').value = 'นครพนม';
+  document.querySelector('[name=area][value=rural]').checked = true;
+  document.querySelector('[name=wealth][value=poor]').checked = true;
+};
+const show = id => {
+  $('#screen-a').hidden = id !== 'a';
+  $('#screen-b').hidden = id !== 'b';
+  window.scrollTo(0, 0);
+};
+$('#go-born').onclick = () => show('b');
+$('#go-back').onclick = () => show('a');
+const choices = document.querySelectorAll('.choice');
+choices.forEach(c => c.onclick = () => {
+  choices.forEach(o => o.setAttribute('aria-pressed', o === c));
+  $('#choices').classList.add('done');
+  $('#result').hidden = false;
+  $('#next').hidden = false;
+  $('#v-happy').textContent = 58;
+  $('#b-happy').style.width = '58%';
+});
+</script>
+</body>
+</html>

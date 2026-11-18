@@ -1,0 +1,671 @@
+<!doctype html>
+<html lang="th">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>เกิดอีสาน</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Mali:wght@500;600;700&family=Noto+Sans+Thai+Looped:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --paper:#F2E6C4;
+  --paper-2:#EAD9AC;
+  --rule:#B9C7D6;
+  --margin:#C5574A;
+  --ink:#24305E;
+  --ink-soft:#4A5378;
+  --text:#2A2620;
+  --muted:#6B5E45;
+  --straw:#C79A3B;
+  --paddy:#4F7A34;
+  --chili:#B0362A;
+  --mud:#8A5A2B;
+  --tape:rgba(214,196,140,.78);
+  --dry:#D9A441;
+  --wet:#5C8F4A;
+  --harvest:#B8792E;
+  --hand:"Mali",cursive;
+  --body:"Noto Sans Thai Looped","Sarabun",system-ui,sans-serif;
+  --pakhaoma:
+    repeating-linear-gradient(90deg,rgba(176,54,42,.85) 0 8px,transparent 8px 16px,rgba(36,48,94,.9) 16px 24px,transparent 24px 32px),
+    repeating-linear-gradient(0deg,rgba(176,54,42,.6) 0 8px,transparent 8px 16px,rgba(36,48,94,.75) 16px 24px,transparent 24px 32px),
+    #E8D7A8;
+}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{
+  margin:0;
+  font-family:var(--body);
+  font-size:16px;
+  line-height:1.7;
+  color:var(--text);
+  background-color:#A8875A;
+  background-image:
+    repeating-linear-gradient(90deg,rgba(255,240,200,.18) 0 3px,transparent 3px 9px),
+    repeating-linear-gradient(0deg,rgba(80,50,20,.16) 0 2px,transparent 2px 7px),
+    linear-gradient(180deg,#B39466,#9A7A4E);
+  min-height:100vh;
+  overflow-x:hidden;
+}
+button,input,select{font:inherit;color:inherit}
+.book{
+  max-width:480px;
+  margin:0 auto;
+  min-height:100vh;
+  position:relative;
+  background-color:var(--paper);
+  background-image:
+    linear-gradient(90deg,transparent 30px,var(--margin) 30px,var(--margin) 31px,transparent 31px),
+    repeating-linear-gradient(180deg,transparent 0 31px,var(--rule) 31px 32px),
+    radial-gradient(ellipse at 20% 10%,rgba(255,250,230,.7),transparent 60%),
+    radial-gradient(ellipse at 90% 80%,rgba(160,120,60,.14),transparent 55%);
+  box-shadow:0 0 0 1px rgba(90,60,20,.25),0 18px 40px rgba(50,30,10,.35);
+}
+@media (min-width:520px){
+  .book{margin:24px auto;min-height:calc(100vh - 48px);border-radius:4px 10px 10px 4px}
+}
+.binding{
+  height:18px;
+  background:var(--pakhaoma);
+  border-bottom:2px solid rgba(36,48,94,.35);
+}
+@media (min-width:520px){.binding{border-radius:4px 10px 0 0}}
+.page{padding:22px 18px 40px 44px}
+.screen[hidden]{display:none}
+h1,h2,h3{font-family:var(--hand);color:var(--ink);margin:0;font-weight:700;line-height:1.3}
+p{margin:0}
+.wrap{overflow-wrap:anywhere}
+
+.masthead{position:relative;padding:8px 0 18px}
+.title{
+  font-size:clamp(48px,15vw,64px);
+  letter-spacing:.5px;
+  transform:rotate(-2deg);
+  transform-origin:left;
+  display:inline-block;
+  position:relative;
+}
+.title::after{
+  content:"";
+  position:absolute;left:-4px;right:-10px;bottom:2px;height:12px;
+  background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 12' preserveAspectRatio='none'%3E%3Cpath d='M2 8 C40 2 70 11 110 6 S170 3 198 7' fill='none' stroke='%23C79A3B' stroke-width='4' stroke-linecap='round'/%3E%3C/svg%3E") no-repeat center/100% 100%;
+  z-index:-1;
+}
+.tagline{font-size:17px;color:var(--ink-soft);margin-top:10px;max-width:22em}
+.stamp{
+  position:absolute;right:0;top:4px;
+  width:74px;height:74px;border-radius:50%;
+  border:2.5px solid var(--chili);
+  color:var(--chili);
+  display:grid;place-items:center;text-align:center;
+  font-family:var(--hand);font-size:13px;line-height:1.15;font-weight:700;
+  transform:rotate(12deg);
+  opacity:.82;
+  box-shadow:inset 0 0 0 3px var(--paper),inset 0 0 0 4.5px var(--chili);
+}
+
+.note{
+  position:relative;
+  background:#FBF5E3;
+  border:1px solid rgba(120,90,40,.25);
+  border-radius:2px;
+  padding:18px 16px 16px;
+  margin:22px 0;
+  box-shadow:2px 3px 0 rgba(120,90,40,.12);
+}
+.note::before{
+  content:"";
+  position:absolute;top:-11px;left:50%;
+  width:92px;height:22px;margin-left:-46px;
+  background:var(--tape);
+  transform:rotate(-3deg);
+  box-shadow:0 1px 2px rgba(0,0,0,.08);
+}
+.note.tilt-r{transform:rotate(.6deg)}
+.note.tilt-l{transform:rotate(-.5deg)}
+.preset-head{font-family:var(--hand);font-size:15px;color:var(--chili);font-weight:600}
+.preset-name{font-family:var(--hand);font-size:24px;color:var(--ink);margin:2px 0 6px}
+.preset-meta{font-size:15px;color:var(--muted)}
+
+.field{margin:26px 0 0}
+.field>label,.legend{
+  display:block;
+  font-family:var(--hand);
+  font-size:20px;
+  font-weight:600;
+  color:var(--ink);
+  margin-bottom:6px;
+}
+fieldset{border:0;margin:26px 0 0;padding:0;min-width:0}
+legend{padding:0}
+.help{font-size:14px;color:var(--muted);font-weight:400;font-family:var(--body);margin-left:6px}
+
+.line-input{
+  width:100%;
+  min-height:48px;
+  border:0;
+  border-bottom:2px solid var(--ink);
+  background:transparent;
+  padding:6px 4px;
+  font-size:18px;
+  border-radius:0;
+}
+.line-input:focus{outline:none;border-bottom-color:var(--chili);background:rgba(255,250,235,.7)}
+select.line-input{appearance:none;-webkit-appearance:none;padding-right:34px;
+  background:transparent url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 10'%3E%3Cpath d='M2 2 L8 8 L14 2' fill='none' stroke='%2324305E' stroke-width='2.4' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") no-repeat right 8px center/16px 10px}
+.year-row{display:flex;align-items:flex-end;gap:12px;flex-wrap:wrap}
+.year-row .line-input{width:120px;font-family:var(--hand);font-size:24px;font-weight:600;color:var(--ink)}
+
+.picks{display:flex;flex-wrap:wrap;gap:8px}
+.pick{position:relative}
+.pick input{position:absolute;opacity:0;inset:0;margin:0;pointer-events:none}
+.pick span{
+  display:inline-flex;align-items:center;justify-content:center;
+  min-height:44px;padding:6px 16px;
+  border:1.5px solid var(--ink-soft);
+  border-radius:22px 18px 24px 16px;
+  background:#FBF5E3;
+  color:var(--ink);
+  cursor:pointer;
+  font-weight:500;
+  transition:background .15s,color .15s;
+}
+.pick input:checked+span{
+  background:var(--ink);color:#FFF8E6;border-color:var(--ink);
+}
+.pick input:focus-visible+span{outline:3px solid var(--straw);outline-offset:2px}
+
+.chip-btn{
+  min-height:44px;min-width:64px;
+  padding:4px 14px;
+  border:1.5px dashed var(--mud);
+  background:transparent;
+  border-radius:6px;
+  color:var(--mud);
+  font-family:var(--hand);font-size:18px;font-weight:600;
+  cursor:pointer;
+}
+.chip-btn:hover{background:rgba(199,154,59,.15)}
+
+.trait{margin-top:14px}
+.trait-ends{display:flex;justify-content:space-between;gap:10px;font-size:15px;color:var(--ink-soft);font-weight:500}
+input[type=range]{
+  -webkit-appearance:none;appearance:none;
+  width:100%;height:44px;background:transparent;margin:0;cursor:pointer;
+}
+input[type=range]::-webkit-slider-runnable-track{
+  height:6px;border-radius:3px;
+  background:repeating-linear-gradient(90deg,var(--straw) 0 6px,#E0C88E 6px 9px);
+}
+input[type=range]::-moz-range-track{
+  height:6px;border-radius:3px;
+  background:repeating-linear-gradient(90deg,var(--straw) 0 6px,#E0C88E 6px 9px);
+}
+input[type=range]::-webkit-slider-thumb{
+  -webkit-appearance:none;
+  width:26px;height:26px;margin-top:-10px;
+  border-radius:50%;
+  background:var(--paddy);
+  border:3px solid #FBF5E3;
+  box-shadow:0 0 0 1.5px var(--paddy);
+}
+input[type=range]::-moz-range-thumb{
+  width:22px;height:22px;border-radius:50%;
+  background:var(--paddy);border:3px solid #FBF5E3;box-shadow:0 0 0 1.5px var(--paddy);
+}
+input[type=range]:focus-visible{outline:3px solid var(--straw);outline-offset:2px;border-radius:6px}
+
+.toggle{
+  display:flex;align-items:center;justify-content:space-between;gap:14px;
+  min-height:52px;margin-top:28px;padding:6px 0;
+  border-top:1.5px dashed rgba(36,48,94,.35);
+  border-bottom:1.5px dashed rgba(36,48,94,.35);
+  cursor:pointer;
+  font-weight:500;color:var(--ink);font-size:17px;
+}
+.toggle input{position:absolute;opacity:0;width:1px;height:1px}
+.switch{
+  flex:none;width:54px;height:30px;border-radius:15px;
+  background:#D8C79C;border:1.5px solid var(--ink-soft);
+  position:relative;transition:background .2s;
+}
+.switch::after{
+  content:"";position:absolute;top:3px;left:3px;width:21px;height:21px;border-radius:50%;
+  background:#FBF5E3;border:1.5px solid var(--ink-soft);transition:transform .2s;
+}
+.toggle input:checked+.switch{background:var(--paddy)}
+.toggle input:checked+.switch::after{transform:translateX(24px)}
+.toggle input:focus-visible+.switch{outline:3px solid var(--straw);outline-offset:3px}
+
+.btn{
+  display:flex;align-items:center;justify-content:center;
+  min-height:48px;padding:8px 18px;
+  border-radius:4px;
+  cursor:pointer;
+  font-weight:600;
+  text-align:center;
+}
+.btn-primary{
+  width:100%;
+  border:0;
+  background:var(--ink);
+  color:#FFF8E6;
+  font-family:var(--hand);
+  font-size:24px;
+  box-shadow:0 4px 0 #141C3E;
+  position:relative;
+}
+.btn-primary:active{transform:translateY(3px);box-shadow:0 1px 0 #141C3E}
+.btn-primary.big{min-height:64px;font-size:32px;margin-top:30px;border-radius:6px 10px 6px 12px}
+.btn-primary.big::before{
+  content:"";position:absolute;left:0;right:0;top:0;height:8px;
+  background:var(--pakhaoma);border-radius:6px 10px 0 0;opacity:.9;
+}
+.btn-ghost{
+  border:1.5px solid var(--ink);
+  background:#FBF5E3;
+  color:var(--ink);
+}
+.btn-ghost:hover{background:#F3E7C2}
+.btn-small{min-height:44px;font-size:15px;padding:6px 14px}
+:focus-visible{outline:3px solid var(--straw);outline-offset:3px}
+.btn-primary:focus-visible{outline:3px solid var(--chili);outline-offset:3px}
+
+.links{display:flex;justify-content:center;flex-wrap:wrap;gap:4px 18px;margin-top:26px}
+.link{
+  display:inline-flex;align-items:center;min-height:44px;padding:0 4px;
+  background:none;border:0;cursor:pointer;
+  color:var(--ink);font-size:15px;font-weight:500;
+  text-decoration:underline;text-decoration-color:var(--straw);text-decoration-thickness:2px;text-underline-offset:5px;
+}
+.link-back{color:var(--muted);padding-left:0}
+
+.turn-top{display:flex;justify-content:space-between;align-items:center;gap:8px;margin-top:-6px}
+.date-head{margin-top:6px}
+.date-year{font-size:clamp(34px,10vw,42px);transform:rotate(-1.5deg);transform-origin:left;display:inline-block}
+.date-ce{font-family:var(--body);font-size:15px;color:var(--muted);font-weight:500;margin-left:6px}
+.date-line{display:flex;flex-wrap:wrap;gap:6px 10px;align-items:center;margin-top:6px}
+.age{
+  font-family:var(--hand);font-size:20px;font-weight:700;color:var(--chili);
+  border:2px solid var(--chili);border-radius:50% 46% 52% 44%;padding:0 12px;transform:rotate(-3deg);
+}
+.season{font-weight:600;color:var(--ink);font-size:16px}
+.season small{font-weight:400;color:var(--muted);font-size:14px}
+.where{font-size:15px;color:var(--ink-soft);margin-top:8px}
+.where span{white-space:nowrap}
+.where span+span::before{content:"/";margin:0 7px;color:var(--straw);font-weight:700}
+
+.stats{
+  display:grid;grid-template-columns:repeat(2,minmax(0,1fr));
+  gap:0;margin-top:16px;
+  border-top:1.5px solid var(--ink);
+}
+.stat{
+  display:flex;justify-content:space-between;align-items:baseline;gap:6px;
+  padding:6px 4px;border-bottom:1px dashed rgba(36,48,94,.4);min-width:0;
+}
+.stat:nth-child(odd){border-right:1px dashed rgba(36,48,94,.4);padding-right:10px}
+.stat:nth-child(even){padding-left:10px}
+.stat-label{font-size:15px;color:var(--muted)}
+.stat-val{font-family:var(--hand);font-size:22px;font-weight:700;color:var(--ink)}
+.stat.money{grid-column:1/-1;border-right:0;padding-right:4px}
+.stat.money .stat-val{color:var(--paddy)}
+.stat.money .stat-val small{font-family:var(--body);font-size:14px;color:var(--muted);font-weight:500;margin-left:4px}
+
+.condition{
+  display:inline-flex;align-items:center;gap:8px;flex-wrap:wrap;
+  margin-top:14px;padding:6px 12px 6px 10px;
+  background:#F7D9CF;
+  border-left:4px solid var(--chili);
+  color:#7A2219;font-weight:600;font-size:15px;
+  transform:rotate(-.6deg);
+}
+.condition small{font-weight:400;color:#8D4035}
+
+.strip-wrap{margin-top:22px}
+.strip-title{font-family:var(--hand);font-size:17px;font-weight:600;color:var(--ink);margin-bottom:6px}
+.strip{display:flex;gap:3px;align-items:stretch}
+.cell{
+  flex:1 1 0;min-width:0;
+  height:34px;
+  background:#E9DAB2;
+  border:1px solid rgba(120,90,40,.35);
+  position:relative;
+  display:flex;align-items:flex-start;justify-content:center;
+  font-size:12px;line-height:1;padding-top:5px;color:var(--muted);font-weight:600;
+}
+.cell::after{
+  content:"";position:absolute;left:0;right:0;bottom:0;height:7px;
+  background:linear-gradient(90deg,var(--dry) 0 33.3%,var(--wet) 33.3% 66.6%,var(--harvest) 66.6%);
+}
+.cell.s{flex:.62 1 0;padding-top:0}
+.cell.s::after{display:none}
+.cell.dry{background:var(--dry)}
+.cell.wet{background:var(--wet)}
+.cell.harvest{background:var(--harvest)}
+.cell.now{
+  outline:3px solid var(--ink);outline-offset:1px;z-index:1;
+}
+.cell.now::before{
+  content:"";position:absolute;top:-12px;left:50%;margin-left:-6px;
+  border:6px solid transparent;border-top-color:var(--chili);
+}
+.age7{flex:1.9 1 0;display:flex;gap:2px;min-width:0;position:relative}
+.age7-num{position:absolute;bottom:-20px;left:0;right:0;text-align:center;font-size:12px;color:var(--muted);font-weight:600}
+.legend-row{display:flex;flex-wrap:wrap;gap:4px 14px;margin-top:24px;font-size:13px;color:var(--muted)}
+.legend-row span{display:inline-flex;align-items:center;gap:6px}
+.legend-row i{width:12px;height:12px;display:inline-block;border:1px solid rgba(0,0,0,.2)}
+
+.card-label{
+  display:inline-block;
+  font-family:var(--hand);font-size:15px;font-weight:600;
+  padding:0 10px;margin-bottom:8px;
+}
+.world .card-label{background:var(--ink);color:#FFF8E6;transform:rotate(-2deg)}
+.world h3{font-size:21px;line-height:1.4}
+.world .date{font-size:14px;color:var(--chili);font-weight:600;margin:4px 0 8px}
+.world p.body{font-size:16px}
+.src-row{display:flex;justify-content:flex-end;margin-top:2px}
+.personal{
+  background:#FBF5E3;
+  border-left:0;
+}
+.personal .card-label{background:var(--paddy);color:#FFF8E6;transform:rotate(1.5deg)}
+.personal::before{left:auto;right:18px;margin-left:0;transform:rotate(4deg);width:70px}
+.personal p.body{font-size:17px;line-height:1.8}
+.pak-edge{position:absolute;left:0;top:0;bottom:0;width:7px;background:var(--pakhaoma)}
+
+.choices{display:grid;gap:10px;margin-top:6px}
+.choice{
+  display:flex;align-items:flex-start;gap:12px;
+  width:100%;min-height:52px;
+  padding:12px 14px;
+  text-align:left;
+  background:#FFFBEF;
+  border:1.5px solid var(--ink-soft);
+  border-radius:3px 8px 4px 10px;
+  color:var(--text);
+  font-size:16px;line-height:1.55;font-weight:500;
+  cursor:pointer;
+  transition:background .15s,border-color .15s;
+}
+.choice:hover{background:#F6ECCF}
+.choice .box{
+  flex:none;width:22px;height:22px;margin-top:2px;
+  border:2px solid var(--ink);border-radius:3px;
+  position:relative;background:#FFFBEF;
+}
+.choice[aria-pressed=true]{border-color:var(--ink);background:#F2E3B8}
+.choice[aria-pressed=true] .box::after{
+  content:"";position:absolute;left:4px;top:-6px;width:9px;height:18px;
+  border:solid var(--chili);border-width:0 4px 4px 0;transform:rotate(40deg);
+}
+.choices.done .choice[aria-pressed=false]{opacity:.55}
+
+.result{margin-top:16px}
+.result[hidden]{display:none}
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.chip{
+  display:inline-flex;align-items:center;gap:6px;
+  padding:4px 12px;
+  font-weight:600;font-size:15px;
+  border:2px solid currentColor;
+  border-radius:16px 12px 18px 10px;
+  background:#FFFBEF;
+}
+.chip b{font-family:var(--hand);font-size:18px}
+.chip.down{color:var(--chili)}
+.chip.up{color:var(--paddy)}
+.chip.mood{color:var(--mud)}
+.actions{display:grid;gap:10px;margin-top:16px}
+.result.show{animation:pop .35s ease-out}
+@keyframes pop{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+@media (prefers-reduced-motion:reduce){
+  .result.show{animation:none}
+  *{transition:none!important}
+}
+.menu{display:flex;justify-content:center;gap:4px 22px;flex-wrap:wrap;margin-top:22px;padding-top:6px;border-top:1.5px dashed rgba(36,48,94,.35)}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+</style>
+</head>
+<body>
+<main class="book">
+  <div class="binding" aria-hidden="true"></div>
+
+  <section class="screen page" id="screen-start" aria-labelledby="game-title">
+    <header class="masthead">
+      <h1 class="title" id="game-title">เกิดอีสาน</h1>
+      <p class="tagline">หนึ่งชีวิต ทีละฤดู บนแผ่นดินอีสาน</p>
+      <div class="stamp" aria-hidden="true">บ้านนา<br>อีสาน</div>
+    </header>
+
+    <div class="note tilt-r">
+      <p class="preset-head">เส้นทางสำเร็จรูป:</p>
+      <p class="preset-name">เด็กโพนสวรรค์</p>
+      <p class="preset-meta wrap">— เกิด พ.ศ. 2547 · นครพนม · ชนบท · ยากจน</p>
+      <button type="button" class="btn btn-ghost btn-small" id="use-preset" style="margin-top:12px">ใช้เส้นทางนี้</button>
+    </div>
+
+    <form id="birth-form" novalidate>
+      <div class="field">
+        <label for="name">ชื่อ</label>
+        <input class="line-input" id="name" name="name" type="text" autocomplete="off">
+      </div>
+
+      <fieldset>
+        <legend class="legend">เพศ</legend>
+        <div class="picks">
+          <label class="pick"><input type="radio" name="sex" value="m" checked><span>ชาย</span></label>
+          <label class="pick"><input type="radio" name="sex" value="f"><span>หญิง</span></label>
+        </div>
+      </fieldset>
+
+      <div class="field">
+        <label for="year">ปีเกิด <span class="help" id="year-ce">(ค.ศ. 1997)</span></label>
+        <div class="year-row">
+          <input class="line-input" id="year" name="year" type="number" inputmode="numeric" min="2480" max="2568" value="2540" aria-describedby="year-ce">
+          <div class="picks">
+            <button type="button" class="chip-btn" data-year="2513">2513</button>
+            <button type="button" class="chip-btn" data-year="2540">2540</button>
+            <button type="button" class="chip-btn" data-year="2547">2547</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="field">
+        <label for="province">จังหวัดเกิด</label>
+        <select class="line-input" id="province" name="province">
+          <option>สุ่ม</option>
+          <option>นครพนม</option>
+          <option>สกลนคร</option>
+          <option>มหาสารคาม</option>
+          <option>ขอนแก่น</option>
+          <option>อุดรธานี</option>
+          <option>อุบลราชธานี</option>
+          <option>นครราชสีมา</option>
+          <option>บุรีรัมย์</option>
+          <option>สุรินทร์</option>
+          <option>ศรีสะเกษ</option>
+          <option>ร้อยเอ็ด</option>
+          <option>กาฬสินธุ์</option>
+          <option>ชัยภูมิ</option>
+          <option>เลย</option>
+          <option>หนองคาย</option>
+          <option>ยโสธร</option>
+          <option>มุกดาหาร</option>
+          <option>หนองบัวลำภู</option>
+          <option>อำนาจเจริญ</option>
+          <option>บึงกาฬ</option>
+        </select>
+      </div>
+
+      <fieldset>
+        <legend class="legend">ถิ่น</legend>
+        <div class="picks">
+          <label class="pick"><input type="radio" name="area" value="rural" checked><span>ชนบท</span></label>
+          <label class="pick"><input type="radio" name="area" value="urban"><span>ในเมือง</span></label>
+        </div>
+      </fieldset>
+
+      <fieldset>
+        <legend class="legend">ฐานะครอบครัว</legend>
+        <div class="picks">
+          <label class="pick"><input type="radio" name="wealth" value="stat" checked><span>สุ่มตามสถิติจริง</span></label>
+          <label class="pick"><input type="radio" name="wealth" value="poor"><span>ยากจน</span></label>
+          <label class="pick"><input type="radio" name="wealth" value="mid"><span>พอมีพอกิน</span></label>
+          <label class="pick"><input type="radio" name="wealth" value="rich"><span>มีฐานะ</span></label>
+        </div>
+      </fieldset>
+
+      <fieldset>
+        <legend class="legend">นิสัย</legend>
+        <div class="trait">
+          <div class="trait-ends" aria-hidden="true"><span>ปล่อยวาง</span><span>ยึดติด</span></div>
+          <input type="range" class="trait-range" min="0" max="100" value="50" aria-label="ปล่อยวาง ถึง ยึดติด">
+        </div>
+        <div class="trait">
+          <div class="trait-ends" aria-hidden="true"><span>ท้อง่าย</span><span>ใจสู้</span></div>
+          <input type="range" class="trait-range" min="0" max="100" value="50" aria-label="ท้อง่าย ถึง ใจสู้">
+        </div>
+        <div class="trait">
+          <div class="trait-ends" aria-hidden="true"><span>เก็บตัว</span><span>ชอบเข้าสังคม</span></div>
+          <input type="range" class="trait-range" min="0" max="100" value="50" aria-label="เก็บตัว ถึง ชอบเข้าสังคม">
+        </div>
+        <button type="button" class="btn btn-ghost btn-small" id="rand-traits" style="margin-top:8px">สุ่มนิสัย</button>
+      </fieldset>
+
+      <label class="toggle">
+        <span>ซ่อนเนื้อหาหนัก</span>
+        <input type="checkbox" id="hide-heavy">
+        <span class="switch" aria-hidden="true"></span>
+      </label>
+
+      <button type="submit" class="btn btn-primary big">เกิด</button>
+    </form>
+
+    <nav class="links" aria-label="ลิงก์ท้ายหน้า">
+      <button type="button" class="link">บันทึกชาติก่อน</button>
+      <button type="button" class="link">แหล่งข้อมูล</button>
+    </nav>
+  </section>
+
+  <section class="screen page" id="screen-turn" aria-labelledby="turn-year" hidden>
+    <div class="turn-top">
+      <button type="button" class="link link-back" id="go-back">กลับหน้าเริ่ม</button>
+    </div>
+
+    <header class="date-head">
+      <h1 id="turn-year"><span class="date-year">พ.ศ. 2554</span><span class="date-ce">(ค.ศ. 2011)</span></h1>
+      <div class="date-line">
+        <span class="age">อายุ 7 ปี</span>
+        <span class="season">หน้าเกี่ยว <small>(ต.ค.–ธ.ค.)</small></span>
+      </div>
+      <p class="where"><span>อ.โพนสวรรค์ จ.นครพนม</span> <span>นักเรียน ป.2</span> <span>อยู่กับยาย</span></p>
+    </header>
+
+    <dl class="stats">
+      <div class="stat"><dt class="stat-label">สุขภาพ</dt><dd class="stat-val" style="margin:0">78</dd></div>
+      <div class="stat"><dt class="stat-label">ความสุข</dt><dd class="stat-val" style="margin:0">64</dd></div>
+      <div class="stat"><dt class="stat-label">ความรู้</dt><dd class="stat-val" style="margin:0">31</dd></div>
+      <div class="stat"><dt class="stat-label">ความสัมพันธ์</dt><dd class="stat-val" style="margin:0">70</dd></div>
+      <div class="stat money"><dt class="stat-label">เงินในบ้าน</dt><dd class="stat-val" style="margin:0">3,200<small>บาท</small></dd></div>
+    </dl>
+
+    <p class="condition">คิดถึงแม่ <small>(อีก 2 ฤดู)</small></p>
+
+    <div class="strip-wrap">
+      <div class="strip" role="img" aria-label="ชีวิตที่ผ่านมา อายุ 0 ถึง 6 ปี และอายุ 7 ปี หน้าแล้ง หน้านา ตอนนี้อยู่หน้าเกี่ยว">
+        <div class="cell">0</div>
+        <div class="cell">1</div>
+        <div class="cell">2</div>
+        <div class="cell">3</div>
+        <div class="cell">4</div>
+        <div class="cell">5</div>
+        <div class="cell">6</div>
+        <div class="age7">
+          <div class="cell s dry"></div>
+          <div class="cell s wet"></div>
+          <div class="cell s harvest now"></div>
+          <span class="age7-num">7</span>
+        </div>
+      </div>
+      <div class="legend-row">
+        <span><i style="background:var(--dry)"></i>หน้าแล้ง</span>
+        <span><i style="background:var(--wet)"></i>หน้านา</span>
+        <span><i style="background:var(--harvest)"></i>หน้าเกี่ยว</span>
+      </div>
+    </div>
+
+    <article class="note world tilt-l">
+      <span class="card-label">เรื่องจริงปีนี้</span>
+      <h3 class="wrap">เปิดสะพานมิตรภาพไทย–ลาว แห่งที่ 3 (นครพนม–คำม่วน)</h3>
+      <p class="date">11 พฤศจิกายน 2554</p>
+      <p class="body">สะพานข้ามแม่น้ำโขงแห่งใหม่เปิดใช้ คนนครพนมข้ามไปฝั่งลาวได้ง่ายขึ้น ตลาดริมโขงคึกคัก ครูพานักเรียนทั้งห้องไปยืนดูสะพานจากริมฝั่ง</p>
+      <div class="src-row"><button type="button" class="link">ที่มา</button></div>
+    </article>
+
+    <article class="note personal">
+      <span class="pak-edge" aria-hidden="true"></span>
+      <span class="card-label">เรื่องของเจ้า</span>
+      <p class="body">แม่โทรมาจากกรุงเทพฯ น้ำท่วมโรงงาน งานหยุดมาเดือนกว่าแล้ว แม่ว่าปีใหม่นี้อาจบ่มีเงินกลับบ้าน</p>
+    </article>
+
+    <div class="choices" id="choices">
+      <button type="button" class="choice" aria-pressed="false"><span class="box" aria-hidden="true"></span><span>บอกแม่ว่าบ่เป็นหยัง หนูอยู่กับยายได้</span></button>
+      <button type="button" class="choice" aria-pressed="false"><span class="box" aria-hidden="true"></span><span>ร้องไห้ ขอให้แม่กลับมา</span></button>
+      <button type="button" class="choice" aria-pressed="false"><span class="box" aria-hidden="true"></span><span>ถามแม่ว่าหนูไปอยู่กรุงเทพฯ นำได้บ่</span></button>
+    </div>
+
+    <div class="result" id="result" hidden aria-live="polite">
+      <div class="chips">
+        <span class="chip down">ความสุข <b>−6</b></span>
+        <span class="chip up">ความสัมพันธ์ <b>+3</b></span>
+        <span class="chip mood">คิดถึงแม่ <b>+1</b> ฤดู</span>
+      </div>
+      <div class="actions">
+        <button type="button" class="btn btn-primary">ไปต่อ</button>
+        <button type="button" class="btn btn-ghost">ข้ามไปเรื่องสำคัญถัดไป</button>
+      </div>
+    </div>
+
+    <nav class="menu" aria-label="เมนู">
+      <button type="button" class="link">บันทึกชีวิต</button>
+      <button type="button" class="link">แหล่งข้อมูล</button>
+    </nav>
+  </section>
+</main>
+
+<script>
+const $ = s => document.querySelector(s);
+const startS = $("#screen-start"), turnS = $("#screen-turn");
+function show(el){
+  startS.hidden = el !== startS;
+  turnS.hidden = el !== turnS;
+  window.scrollTo(0,0);
+  el.querySelector("h1").setAttribute("tabindex","-1");
+  el.querySelector("h1").focus({preventScroll:true});
+}
+const year = $("#year"), ce = $("#year-ce");
+function syncCE(){ const v = parseInt(year.value,10); ce.textContent = isNaN(v) ? "" : "(ค.ศ. " + (v - 543) + ")"; }
+year.addEventListener("input", syncCE);
+document.querySelectorAll("[data-year]").forEach(b => b.addEventListener("click", () => { year.value = b.dataset.year; syncCE(); }));
+$("#rand-traits").addEventListener("click", () => document.querySelectorAll(".trait-range").forEach(r => r.value = Math.floor(Math.random()*101)));
+$("#use-preset").addEventListener("click", () => {
+  year.value = 2547; syncCE();
+  $("#province").value = "นครพนม";
+  document.querySelector("input[name=area][value=rural]").checked = true;
+  document.querySelector("input[name=wealth][value=poor]").checked = true;
+});
+$("#birth-form").addEventListener("submit", e => { e.preventDefault(); show(turnS); });
+$("#go-back").addEventListener("click", () => show(startS));
+const choices = $("#choices"), result = $("#result");
+choices.addEventListener("click", e => {
+  const btn = e.target.closest(".choice"); if (!btn) return;
+  choices.querySelectorAll(".choice").forEach(c => c.setAttribute("aria-pressed", c === btn));
+  choices.classList.add("done");
+  result.hidden = false; result.classList.remove("show"); void result.offsetWidth; result.classList.add("show");
+});
+</script>
+</body>
+</html>

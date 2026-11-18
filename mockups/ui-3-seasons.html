@@ -1,0 +1,681 @@
+<!doctype html>
+<html lang="th">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>เกิดอีสาน</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Chonburi&family=Anuphan:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --dry:#C2521C;
+  --dry-deep:#8F3610;
+  --rice:#2E7D22;
+  --rice-soft:#7CC16A;
+  --gold:#E8A923;
+  --gold-soft:#F7D77F;
+  --ink:#24205C;
+  --ink-2:#4A4680;
+  --paper:#FFFCF6;
+  --line:#E4DCCB;
+  --sky:#EDEFFA;
+  --display:"Chonburi",serif;
+  --body:"Anuphan",system-ui,sans-serif;
+}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{
+  margin:0;
+  font-family:var(--body);
+  font-size:16px;
+  line-height:1.6;
+  color:var(--ink);
+  background-color:var(--sky);
+  background-image:
+    repeating-linear-gradient(135deg,rgba(194,82,28,.07) 0 22px,transparent 22px 44px,rgba(46,125,34,.07) 44px 66px,transparent 66px 88px,rgba(232,169,35,.1) 88px 110px,transparent 110px 132px);
+  min-height:100vh;
+}
+.app{
+  max-width:480px;
+  margin:0 auto;
+  min-height:100vh;
+  background:var(--paper);
+  box-shadow:0 0 0 1px rgba(36,32,92,.08),0 20px 60px rgba(36,32,92,.12);
+  overflow-x:hidden;
+}
+[hidden]{display:none!important}
+button,input,select{font:inherit;color:inherit}
+:focus-visible{outline:3px solid var(--ink);outline-offset:3px;border-radius:6px}
+.bunting{
+  position:relative;
+  display:flex;
+  gap:4px;
+  padding:10px 12px 0;
+  height:58px;
+}
+.bunting::before{
+  content:"";
+  position:absolute;
+  left:0;right:0;top:10px;
+  height:2px;
+  background:var(--ink);
+}
+.bunting span{
+  flex:1;
+  clip-path:polygon(0 0,100% 0,50% 100%);
+}
+.bunting span:nth-child(3n+1){background:var(--dry)}
+.bunting span:nth-child(3n+2){background:var(--rice)}
+.bunting span:nth-child(3n){background:var(--gold)}
+.hero-a{padding:18px 20px 8px;text-align:center}
+.title{
+  font-family:var(--display);
+  font-size:clamp(52px,16vw,72px);
+  line-height:1.15;
+  margin:0;
+  color:var(--dry);
+  text-shadow:4px 4px 0 var(--gold);
+  letter-spacing:.01em;
+}
+.tagline{margin:8px auto 0;font-size:17px;font-weight:600;color:var(--ink-2);max-width:22em}
+.wrap{padding:16px}
+.preset{
+  position:relative;
+  margin:12px 0 22px;
+  padding:18px 18px 18px 26px;
+  background:var(--ink);
+  color:#fff;
+  border-radius:4px 22px 4px 22px;
+  overflow:hidden;
+}
+.preset::before{
+  content:"";
+  position:absolute;
+  left:0;top:0;bottom:0;width:10px;
+  background:linear-gradient(var(--dry) 0 33.3%,var(--rice) 33.3% 66.6%,var(--gold) 66.6%);
+}
+.preset p{margin:0 0 14px;font-size:16px;line-height:1.65}
+.preset b{font-family:var(--display);font-weight:400;font-size:19px;color:var(--gold-soft);display:block;margin-bottom:4px}
+.btn{
+  display:inline-flex;align-items:center;justify-content:center;
+  min-height:48px;padding:10px 20px;
+  border:0;border-radius:999px;
+  font-weight:700;font-size:16px;
+  cursor:pointer;
+  text-align:center;
+}
+.btn-gold{background:var(--gold);color:var(--ink)}
+.btn-gold:hover{background:var(--gold-soft)}
+.preset .btn:focus-visible{outline-color:#fff}
+.field{margin:0 0 20px;border:0;padding:0;min-width:0}
+.field>legend,.field>label.lab,.lab{
+  display:block;
+  font-weight:700;
+  font-size:15px;
+  margin:0 0 8px;
+  padding:0;
+  color:var(--ink);
+}
+.lab small{font-weight:500;color:var(--ink-2);margin-left:6px}
+.text,.select,.num{
+  width:100%;
+  min-height:48px;
+  padding:10px 14px;
+  border:2px solid var(--ink);
+  border-radius:10px;
+  background:#fff;
+  font-size:17px;
+}
+.select{appearance:none;background-image:linear-gradient(45deg,transparent 50%,var(--ink) 50%),linear-gradient(135deg,var(--ink) 50%,transparent 50%);background-position:calc(100% - 22px) 52%,calc(100% - 16px) 52%;background-size:6px 6px;background-repeat:no-repeat;padding-right:40px}
+.seg{display:flex;flex-wrap:wrap;gap:8px}
+.seg label{position:relative;flex:1 1 auto}
+.seg input{position:absolute;opacity:0;inset:0;margin:0;cursor:pointer}
+.seg span{
+  display:flex;align-items:center;justify-content:center;
+  min-height:48px;padding:8px 14px;
+  border:2px solid var(--ink);
+  border-radius:10px;
+  font-weight:600;
+  background:#fff;
+  text-align:center;
+  line-height:1.3;
+}
+.seg input:checked+span{background:var(--ink);color:#fff}
+.seg input:focus-visible+span{outline:3px solid var(--dry);outline-offset:3px}
+.seg.wide label{flex:1 1 calc(50% - 4px)}
+.yearrow{display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+.yearrow .num{flex:1 1 140px;font-family:var(--display);font-size:22px;letter-spacing:.04em}
+.chips{display:flex;gap:8px;margin-top:10px;flex-wrap:wrap}
+.chip{
+  min-height:44px;min-width:72px;padding:6px 14px;
+  border:2px dashed var(--dry);
+  background:#fff;
+  color:var(--dry-deep);
+  border-radius:999px;
+  font-weight:700;
+  cursor:pointer;
+}
+.chip:hover{background:#FCE9DE}
+.traits{
+  background:#fff;
+  border:2px solid var(--ink);
+  border-radius:16px;
+  padding:14px 14px 6px;
+}
+.trait{margin-bottom:14px}
+.trait input[type=range]{width:100%;height:44px;margin:0;accent-color:var(--dry);cursor:pointer}
+.ends{display:flex;justify-content:space-between;gap:12px;font-size:14px;font-weight:600;color:var(--ink-2)}
+.ends span:last-child{text-align:right}
+.btn-line{background:#fff;border:2px solid var(--ink);color:var(--ink);width:100%;margin-bottom:8px}
+.btn-line:hover{background:var(--sky)}
+.toggle{
+  display:flex;align-items:center;justify-content:space-between;gap:16px;
+  min-height:56px;padding:8px 14px;
+  border-radius:12px;
+  background:var(--sky);
+  font-weight:700;
+  cursor:pointer;
+  margin-bottom:24px;
+}
+.toggle input{
+  appearance:none;
+  flex:none;
+  width:56px;height:32px;
+  border-radius:999px;
+  background:#B9B6D3;
+  position:relative;
+  cursor:pointer;
+  margin:0;
+  transition:background .2s;
+}
+.toggle input::after{
+  content:"";
+  position:absolute;top:4px;left:4px;
+  width:24px;height:24px;border-radius:50%;
+  background:#fff;
+  transition:transform .2s;
+}
+.toggle input:checked{background:var(--rice)}
+.toggle input:checked::after{transform:translateX(24px)}
+.btn-born{
+  width:100%;
+  min-height:68px;
+  font-family:var(--display);
+  font-weight:400;
+  font-size:30px;
+  background:var(--dry);
+  color:#fff;
+  border-radius:18px 18px 18px 18px;
+  box-shadow:0 6px 0 var(--dry-deep);
+}
+.btn-born:hover{background:#B04614}
+.btn-born:active{transform:translateY(4px);box-shadow:0 2px 0 var(--dry-deep)}
+.foot{display:flex;justify-content:center;gap:4px;flex-wrap:wrap;padding:20px 0 28px}
+.link{
+  background:none;border:0;cursor:pointer;
+  min-height:44px;padding:8px 12px;
+  color:var(--ink);
+  font-weight:600;
+  text-decoration:underline;
+  text-underline-offset:4px;
+  text-decoration-thickness:2px;
+  text-decoration-color:var(--gold);
+}
+.topnav{display:flex;justify-content:flex-start;padding:4px 8px 0}
+.topnav .link{font-size:14px}
+.hdr{
+  margin:0 12px;
+  padding:14px 16px 16px;
+  background:var(--ink);
+  color:#fff;
+  border-radius:20px 20px 0 0;
+}
+.hdr-year{display:flex;align-items:baseline;gap:10px;flex-wrap:wrap}
+.hdr-year strong{font-family:var(--display);font-weight:400;font-size:clamp(30px,9vw,40px);line-height:1.2;color:var(--gold-soft)}
+.hdr-year span{font-size:15px;color:#D6D4F0}
+.hdr-row{display:flex;flex-wrap:wrap;gap:8px;margin-top:8px;align-items:center}
+.pill{
+  display:inline-flex;align-items:center;
+  min-height:32px;padding:3px 12px;
+  border-radius:999px;
+  font-weight:700;font-size:15px;
+  line-height:1.35;
+}
+.pill-age{background:#fff;color:var(--ink)}
+.pill-season{background:var(--gold);color:var(--ink)}
+.where{margin:10px 0 0;font-size:15px;color:#E6E4F7;line-height:1.55}
+.strip-box{
+  margin:0 12px;
+  padding:14px 0 12px;
+  background:linear-gradient(#FFF1D6,#FFFCF6);
+  border:2px solid var(--ink);
+  border-top:0;
+  border-radius:0 0 20px 20px;
+}
+.strip{
+  position:relative;
+  display:flex;
+  align-items:flex-start;
+  gap:5px;
+  padding:6px 14px 4px;
+  overflow-x:auto;
+  scroll-snap-type:x proximity;
+  scrollbar-width:thin;
+}
+.strip::before{
+  content:"";
+  position:absolute;
+  left:0;top:6px;
+  height:3px;
+  width:var(--rope,100%);
+  background:var(--ink);
+  border-radius:2px;
+}
+.cell{
+  position:relative;
+  flex:none;
+  width:38px;
+  height:118px;
+  clip-path:polygon(0 0,100% 0,100% 84%,50% 100%,0 84%);
+  scroll-snap-align:center;
+  display:flex;
+  flex-direction:column;
+}
+.cell i{flex:1;display:block}
+.cell .d{background:var(--dry)}
+.cell .r{background:var(--rice)}
+.cell .h{background:var(--gold)}
+.cell b{
+  position:absolute;left:0;right:0;top:6px;
+  text-align:center;
+  font-family:var(--display);
+  font-weight:400;
+  font-size:15px;
+  color:#fff;
+  text-shadow:0 1px 0 rgba(0,0,0,.35);
+}
+.cell.season{width:50px;height:142px}
+.cell.season.d{background:var(--dry)}
+.cell.season.r{background:var(--rice)}
+.cell.season.h{background:var(--gold)}
+.cell.season.h b{color:var(--ink);text-shadow:none}
+.cell.now{
+  width:62px;height:168px;
+  animation:sway 2.6s ease-in-out infinite;
+  transform-origin:top center;
+}
+.cell.now::after{
+  content:"";
+  position:absolute;left:50%;bottom:30px;
+  width:16px;height:16px;margin-left:-8px;
+  border-radius:50%;
+  background:var(--ink);
+  box-shadow:0 0 0 5px #fff;
+}
+.cell.future{
+  background:repeating-linear-gradient(180deg,#EFE6D2 0 6px,#F8F2E4 6px 12px);
+  opacity:.75;
+}
+.cell.future:nth-last-child(-n+3){opacity:.4}
+.cell.future:last-child{opacity:.22}
+@keyframes sway{0%,100%{transform:rotate(-1.6deg)}50%{transform:rotate(1.6deg)}}
+@media (prefers-reduced-motion:reduce){.cell.now{animation:none}}
+.legend{display:flex;justify-content:center;flex-wrap:wrap;gap:6px 16px;margin:8px 12px 0;padding:0;list-style:none;font-size:14px;font-weight:600}
+.legend li{display:flex;align-items:center;gap:6px}
+.legend i{width:14px;height:14px;border-radius:3px;display:block}
+.panel{
+  margin:16px 12px 0;
+  padding:14px 12px 12px;
+  border-radius:16px;
+  background:#fff;
+  border:2px solid var(--line);
+}
+.gauges{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:6px;margin:0;padding:0;list-style:none}
+.gauge{text-align:center;min-width:0}
+.dial{
+  --c:var(--rice);
+  width:62px;height:62px;
+  margin:0 auto 4px;
+  border-radius:50%;
+  background:conic-gradient(from 225deg,var(--c) calc(var(--v)*.75%),#ECE7DA 0 75%,transparent 0);
+  display:grid;place-items:center;
+  position:relative;
+}
+.dial::before{
+  content:"";
+  position:absolute;inset:8px;
+  border-radius:50%;
+  background:#fff;
+}
+.dial span{position:relative;font-family:var(--display);font-size:19px;line-height:1}
+.gauge small{display:block;font-size:13px;font-weight:600;line-height:1.3;color:var(--ink-2);overflow-wrap:anywhere}
+.money{
+  display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap;
+  margin-top:12px;padding:10px 12px;
+  border-radius:10px;
+  background:var(--sky);
+}
+.money span{font-weight:700;font-size:15px}
+.money strong{font-family:var(--display);font-weight:400;font-size:22px;letter-spacing:.02em}
+.money strong small{font-family:var(--body);font-size:14px;font-weight:600;margin-left:4px}
+.cond{
+  display:inline-flex;align-items:center;gap:8px;
+  margin-top:10px;
+  min-height:36px;padding:4px 14px 4px 6px;
+  border-radius:999px;
+  background:#FCE9DE;
+  color:var(--dry-deep);
+  font-weight:700;font-size:15px;
+  line-height:1.35;
+}
+.cond::before{
+  content:"";
+  flex:none;
+  width:24px;height:24px;border-radius:50%;
+  background:conic-gradient(var(--dry) 0 66%,#F2C4AA 0);
+}
+.card{
+  position:relative;
+  margin:18px 12px 0;
+  padding:0 18px 18px;
+  border-radius:4px 28px 4px 4px;
+  overflow:hidden;
+}
+.card .tag{
+  display:inline-block;
+  margin:0 0 12px -18px;
+  padding:6px 18px 6px 18px;
+  font-family:var(--display);
+  font-size:16px;
+  line-height:1.4;
+  border-radius:0 0 18px 0;
+}
+.card h2{
+  font-family:var(--display);
+  font-weight:400;
+  font-size:clamp(21px,6vw,25px);
+  line-height:1.45;
+  margin:0 0 6px;
+}
+.card time{display:block;font-weight:700;font-size:15px;margin-bottom:8px}
+.card p{margin:0;font-size:16.5px;line-height:1.75}
+.world{background:var(--gold);color:var(--ink)}
+.world .tag{background:var(--ink);color:var(--gold-soft)}
+.world::after{
+  content:"";
+  position:absolute;right:-30px;top:-30px;
+  width:110px;height:110px;border-radius:50%;
+  border:16px solid rgba(255,255,255,.35);
+  pointer-events:none;
+}
+.world .src{margin:6px 0 -8px -12px;color:var(--ink);text-decoration-color:var(--ink)}
+.mine{background:var(--dry);color:#fff}
+.mine .tag{background:#fff;color:var(--dry-deep)}
+.mine p{font-size:18px;font-weight:500}
+.choices{display:flex;flex-direction:column;gap:10px;margin:14px 12px 0}
+.choice{
+  display:flex;align-items:center;gap:12px;
+  width:100%;
+  min-height:60px;
+  padding:12px 16px 12px 12px;
+  text-align:left;
+  background:#fff;
+  border:2px solid var(--ink);
+  border-radius:14px;
+  font-size:17px;font-weight:600;line-height:1.45;
+  cursor:pointer;
+  box-shadow:0 4px 0 var(--ink);
+  transition:transform .12s,box-shadow .12s,background .12s;
+}
+.choice::before{
+  content:"";
+  flex:none;
+  width:12px;align-self:stretch;
+  border-radius:6px;
+  background:linear-gradient(var(--dry),var(--gold));
+}
+.choice:hover{background:#FFF6E2}
+.choice:active{transform:translateY(3px);box-shadow:0 1px 0 var(--ink)}
+.choice[aria-pressed=true]{background:var(--ink);color:#fff;transform:translateY(3px);box-shadow:0 1px 0 var(--ink)}
+.choice[aria-pressed=true]::before{background:var(--gold)}
+.choices.done .choice[aria-pressed=false]{opacity:.45}
+.result{margin:16px 12px 0;display:flex;flex-wrap:wrap;gap:8px;list-style:none;padding:0}
+.result li{
+  min-height:38px;
+  display:inline-flex;align-items:center;
+  padding:5px 14px;
+  border-radius:8px;
+  font-weight:700;font-size:16px;
+  animation:pop .35s ease-out both;
+}
+.result li:nth-child(2){animation-delay:.08s}
+.result li:nth-child(3){animation-delay:.16s}
+.down{background:#FCE9DE;color:var(--dry-deep);border:2px solid var(--dry)}
+.up{background:#E3F2DD;color:#1F5A16;border:2px solid var(--rice)}
+.cnd{background:#FFF1CC;color:#6A4A00;border:2px solid var(--gold)}
+@keyframes pop{from{opacity:0;transform:scale(.8)}to{opacity:1;transform:none}}
+@media (prefers-reduced-motion:reduce){.result li{animation:none}}
+.actions{display:flex;flex-direction:column;gap:10px;margin:18px 12px 0}
+.btn-go{
+  min-height:58px;
+  font-family:var(--display);font-weight:400;font-size:24px;
+  background:var(--rice);color:#fff;
+  border-radius:16px;
+  box-shadow:0 5px 0 #1D5214;
+}
+.btn-go:hover{background:#266A1B}
+.btn-skip{background:#fff;border:2px solid var(--ink);color:var(--ink);border-radius:16px}
+.btn-skip:hover{background:var(--sky)}
+.menu{display:flex;justify-content:center;flex-wrap:wrap;gap:4px;padding:16px 0 28px}
+</style>
+</head>
+<body>
+<div class="app">
+
+<section id="screenA" aria-labelledby="gameTitle">
+  <div class="bunting" aria-hidden="true"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div>
+  <header class="hero-a">
+    <h1 class="title" id="gameTitle">เกิดอีสาน</h1>
+    <p class="tagline">หนึ่งชีวิต ทีละฤดู บนแผ่นดินอีสาน</p>
+  </header>
+
+  <div class="wrap">
+    <div class="preset">
+      <p><b>เส้นทางสำเร็จรูป: เด็กโพนสวรรค์</b>เกิด พ.ศ. 2547 · นครพนม · ชนบท · ยากจน</p>
+      <button type="button" class="btn btn-gold" id="usePreset">ใช้เส้นทางนี้</button>
+    </div>
+
+    <form id="birthForm" novalidate>
+      <div class="field">
+        <label class="lab" for="name">ชื่อ</label>
+        <input class="text" id="name" name="name" type="text" autocomplete="off">
+      </div>
+
+      <fieldset class="field">
+        <legend>เพศ</legend>
+        <div class="seg">
+          <label><input type="radio" name="sex" value="m" checked><span>ชาย</span></label>
+          <label><input type="radio" name="sex" value="f"><span>หญิง</span></label>
+        </div>
+      </fieldset>
+
+      <div class="field">
+        <label class="lab" for="year">ปีเกิด <small id="ce">(ค.ศ. 1997)</small></label>
+        <div class="yearrow">
+          <input class="num" id="year" name="year" type="number" inputmode="numeric" value="2540" aria-describedby="ce">
+        </div>
+        <div class="chips">
+          <button type="button" class="chip" data-year="2513">2513</button>
+          <button type="button" class="chip" data-year="2540">2540</button>
+          <button type="button" class="chip" data-year="2547">2547</button>
+        </div>
+      </div>
+
+      <div class="field">
+        <label class="lab" for="prov">จังหวัดเกิด</label>
+        <select class="select" id="prov" name="prov">
+          <option>สุ่ม</option><option>นครพนม</option><option>สกลนคร</option><option>มหาสารคาม</option><option>ขอนแก่น</option><option>อุดรธานี</option><option>อุบลราชธานี</option><option>นครราชสีมา</option><option>บุรีรัมย์</option><option>สุรินทร์</option><option>ศรีสะเกษ</option><option>ร้อยเอ็ด</option><option>กาฬสินธุ์</option><option>ชัยภูมิ</option><option>เลย</option><option>หนองคาย</option><option>ยโสธร</option><option>มุกดาหาร</option><option>หนองบัวลำภู</option><option>อำนาจเจริญ</option><option>บึงกาฬ</option>
+        </select>
+      </div>
+
+      <fieldset class="field">
+        <legend>ถิ่น</legend>
+        <div class="seg">
+          <label><input type="radio" name="area" value="rural" checked><span>ชนบท</span></label>
+          <label><input type="radio" name="area" value="city"><span>ในเมือง</span></label>
+        </div>
+      </fieldset>
+
+      <fieldset class="field">
+        <legend>ฐานะครอบครัว</legend>
+        <div class="seg wide">
+          <label><input type="radio" name="wealth" value="stat" checked><span>สุ่มตามสถิติจริง</span></label>
+          <label><input type="radio" name="wealth" value="poor"><span>ยากจน</span></label>
+          <label><input type="radio" name="wealth" value="mid"><span>พอมีพอกิน</span></label>
+          <label><input type="radio" name="wealth" value="rich"><span>มีฐานะ</span></label>
+        </div>
+      </fieldset>
+
+      <fieldset class="field">
+        <legend>นิสัย</legend>
+        <div class="traits">
+          <div class="trait">
+            <input type="range" min="0" max="100" value="50" aria-label="ปล่อยวาง ↔ ยึดติด" class="tr">
+            <div class="ends" aria-hidden="true"><span>ปล่อยวาง</span><span>ยึดติด</span></div>
+          </div>
+          <div class="trait">
+            <input type="range" min="0" max="100" value="50" aria-label="ท้อง่าย ↔ ใจสู้" class="tr">
+            <div class="ends" aria-hidden="true"><span>ท้อง่าย</span><span>ใจสู้</span></div>
+          </div>
+          <div class="trait">
+            <input type="range" min="0" max="100" value="50" aria-label="เก็บตัว ↔ ชอบเข้าสังคม" class="tr">
+            <div class="ends" aria-hidden="true"><span>เก็บตัว</span><span>ชอบเข้าสังคม</span></div>
+          </div>
+          <button type="button" class="btn btn-line" id="randTraits">สุ่มนิสัย</button>
+        </div>
+      </fieldset>
+
+      <label class="toggle">ซ่อนเนื้อหาหนัก<input type="checkbox" role="switch"></label>
+
+      <button type="submit" class="btn btn-born">เกิด</button>
+    </form>
+
+    <nav class="foot">
+      <button type="button" class="link">บันทึกชาติก่อน</button>
+      <button type="button" class="link">แหล่งข้อมูล</button>
+    </nav>
+  </div>
+</section>
+
+<section id="screenB" hidden aria-label="พ.ศ. 2554">
+  <div class="topnav"><button type="button" class="link" id="back">กลับหน้าเริ่ม</button></div>
+
+  <header class="hdr">
+    <div class="hdr-year"><strong>พ.ศ. 2554</strong><span>(ค.ศ. 2011)</span></div>
+    <div class="hdr-row">
+      <span class="pill pill-age">อายุ 7 ปี</span>
+      <span class="pill pill-season">หน้าเกี่ยว (ต.ค.–ธ.ค.)</span>
+    </div>
+    <p class="where">อ.โพนสวรรค์ จ.นครพนม · นักเรียน ป.2 · อยู่กับยาย</p>
+  </header>
+
+  <div class="strip-box">
+    <div class="strip" id="strip"></div>
+    <ul class="legend">
+      <li><i style="background:var(--dry)"></i>หน้าแล้ง</li>
+      <li><i style="background:var(--rice)"></i>หน้านา</li>
+      <li><i style="background:var(--gold)"></i>หน้าเกี่ยว</li>
+    </ul>
+  </div>
+
+  <div class="panel">
+    <ul class="gauges">
+      <li class="gauge"><div class="dial" style="--v:78"><span>78</span></div><small>สุขภาพ</small></li>
+      <li class="gauge"><div class="dial" style="--v:64;--c:var(--gold)"><span>64</span></div><small>ความสุข</small></li>
+      <li class="gauge"><div class="dial" style="--v:31;--c:var(--dry)"><span>31</span></div><small>ความรู้</small></li>
+      <li class="gauge"><div class="dial" style="--v:70;--c:var(--ink-2)"><span>70</span></div><small>ความสัมพันธ์</small></li>
+    </ul>
+    <div class="money"><span>เงินในบ้าน</span><strong>3,200<small>บาท</small></strong></div>
+    <span class="cond">คิดถึงแม่ (อีก 2 ฤดู)</span>
+  </div>
+
+  <article class="card world">
+    <span class="tag">เรื่องจริงปีนี้</span>
+    <h2>เปิดสะพานมิตรภาพไทย–ลาว แห่งที่ 3 (นครพนม–คำม่วน)</h2>
+    <time datetime="2011-11-11">11 พฤศจิกายน 2554</time>
+    <p>สะพานข้ามแม่น้ำโขงแห่งใหม่เปิดใช้ คนนครพนมข้ามไปฝั่งลาวได้ง่ายขึ้น ตลาดริมโขงคึกคัก ครูพานักเรียนทั้งห้องไปยืนดูสะพานจากริมฝั่ง</p>
+    <button type="button" class="link src">ที่มา</button>
+  </article>
+
+  <article class="card mine">
+    <span class="tag">เรื่องของเจ้า</span>
+    <p>แม่โทรมาจากกรุงเทพฯ น้ำท่วมโรงงาน งานหยุดมาเดือนกว่าแล้ว แม่ว่าปีใหม่นี้อาจบ่มีเงินกลับบ้าน</p>
+  </article>
+
+  <div class="choices" id="choices">
+    <button type="button" class="choice" aria-pressed="false">บอกแม่ว่าบ่เป็นหยัง หนูอยู่กับยายได้</button>
+    <button type="button" class="choice" aria-pressed="false">ร้องไห้ ขอให้แม่กลับมา</button>
+    <button type="button" class="choice" aria-pressed="false">ถามแม่ว่าหนูไปอยู่กรุงเทพฯ นำได้บ่</button>
+  </div>
+
+  <div id="after" hidden>
+    <ul class="result" aria-live="polite">
+      <li class="down">ความสุข −6</li>
+      <li class="up">ความสัมพันธ์ +3</li>
+      <li class="cnd">คิดถึงแม่ +1 ฤดู</li>
+    </ul>
+    <div class="actions">
+      <button type="button" class="btn btn-go">ไปต่อ</button>
+      <button type="button" class="btn btn-skip">ข้ามไปเรื่องสำคัญถัดไป</button>
+    </div>
+  </div>
+
+  <nav class="menu">
+    <button type="button" class="link">บันทึกชีวิต</button>
+    <button type="button" class="link">แหล่งข้อมูล</button>
+  </nav>
+</section>
+
+</div>
+<script>
+const $ = s => document.querySelector(s);
+const A = $('#screenA'), B = $('#screenB'), strip = $('#strip');
+const years = ['drh','rdh','hdr','drh','rhd','dhr','drh'];
+strip.innerHTML =
+  years.map((y, i) => `<div class="cell" aria-hidden="true">${[...y].map(c => `<i class="${c}"></i>`).join('')}<b>${i}</b></div>`).join('') +
+  [['d','หน้าแล้ง'],['r','หน้านา'],['h','หน้าเกี่ยว']].map(([c, t], i) => `<div class="cell season ${c}${i === 2 ? ' now' : ''}" role="img" aria-label="อายุ 7 ปี ${t}"><b>7</b></div>`).join('') +
+  '<div class="cell future" aria-hidden="true"></div>'.repeat(8);
+function show(el) {
+  A.hidden = el !== A; B.hidden = el !== B;
+  scrollTo(0, 0);
+  if (el === B) {
+    strip.style.setProperty('--rope', strip.scrollWidth + 'px');
+    $('.cell.now').scrollIntoView({inline: 'center', block: 'nearest'});
+  }
+}
+$('#birthForm').addEventListener('submit', e => { e.preventDefault(); show(B); });
+$('#back').addEventListener('click', () => show(A));
+const year = $('#year');
+const syncCE = () => { $('#ce').textContent = `(ค.ศ. ${(+year.value || 0) - 543})`; };
+year.addEventListener('input', syncCE);
+document.querySelectorAll('[data-year]').forEach(b => b.addEventListener('click', () => { year.value = b.dataset.year; syncCE(); }));
+$('#randTraits').addEventListener('click', () => document.querySelectorAll('.tr').forEach(r => r.value = Math.floor(Math.random() * 101)));
+$('#usePreset').addEventListener('click', () => {
+  year.value = 2547; syncCE();
+  $('#prov').value = 'นครพนม';
+  $('[name=area][value=rural]').checked = true;
+  $('[name=wealth][value=poor]').checked = true;
+  $('#name').focus();
+});
+$('#choices').addEventListener('click', e => {
+  const c = e.target.closest('.choice');
+  if (!c) return;
+  document.querySelectorAll('.choice').forEach(b => b.setAttribute('aria-pressed', b === c));
+  $('#choices').classList.add('done');
+  $('#after').hidden = false;
+  $('#after').scrollIntoView({behavior: 'smooth', block: 'nearest'});
+});
+</script>
+</body>
+</html>
