@@ -270,10 +270,12 @@ globalThis.KI = globalThis.KI || {};
     const avatar=element('div','character-avatar'); avatar.append(KI.avatar.create(state),element('span','character-name',state.name)); view.append(avatar);
     const kin=state.role==='prisoner'?[]:familyFigures();
     if(kin.length){const row=element('div','family-row');kin.forEach(person=>{const box=element('div','family-figure');box.append(KI.avatar.create(person),element('span','',person.label));row.append(box);});view.append(row);}
+    while(autoMode && (state.pendingSplits||[]).length){const sp=state.pendingSplits[0];const resolved=sp.assets && sp.assets.length?KI.finance.resolveSplit(state,data,sp.assets[0],'sell'):state;state=resolved!==state?resolved:{...state,pendingSplits:state.pendingSplits.slice(1)};}
+    const splitWaiting=(state.pendingSplits||[]).length>0;
     const pendingIndex=state.turn.cards.findIndex(card=>card.choices && card.picked===null);
     const h = state.turn.head;
     const playback=element('div','playback');
-    const waiting=pendingIndex>=0 && !autoMode;
+    const waiting=(pendingIndex>=0 && !autoMode) || splitWaiting;
     const status=element('p','clock-status');
     const showStatus=()=>{status.textContent=waiting?'เวลาหยุดรอคุณเลือก':clock.isPaused()?'เวลาหยุดอยู่':'เวลากำลังเดิน';};
     const pause=button(clock.isPaused()?'เล่นต่อ':'หยุดเวลา',()=>{if(clock.isPaused())clock.resume();else clock.pause();pause.textContent=clock.isPaused()?'เล่นต่อ':'หยุดเวลา';showStatus();drawProgress();},'btn');
@@ -425,6 +427,7 @@ globalThis.KI = globalThis.KI || {};
       });
       finance.append(grid);
     }
+    (state.exDebts||[]).filter(d=>d.amount>0).forEach(d=>finance.append(element('p','finance-line money-negative',`${d.name} ค้างคุณ ${d.amount.toLocaleString('th-TH')} บาท จากการแบ่ง${d.label} พ.ศ. ${d.year+543}`)));
     if(yearTotals.borrowed)finance.append(element('p','finance-line',`กู้เงินเข้ามา ${fmt(yearTotals.borrowed)} บาท`));
     if(yearTotals.loanPaid)finance.append(element('p','finance-line',`ผ่อนเงินกู้ ${fmt(yearTotals.loanPaid)} บาท`));
     if(age>=20 && state.role!=='prisoner') {
@@ -619,11 +622,41 @@ globalThis.KI = globalThis.KI || {};
         renderEvent({...card,body:card.body || source?.body || '',result:{text:card.resultText || '',deltas:card.deltas || []}},true);
       });
     });
-    const next=button('ไปต่อ',advance,'btn btn-primary'); next.disabled=!KI.game.canEnd(state)&&!autoMode;
-    const jump=button('ข้ามไปเรื่องสำคัญ',()=>{if(!KI.game.canEnd(state))return;state=KI.game.skip(state,data,settings);persist();play();},'btn'); jump.disabled=!KI.game.canEnd(state);
+    const next=button('ไปต่อ',advance,'btn btn-primary'); next.disabled=splitWaiting || (!KI.game.canEnd(state)&&!autoMode);
+    const jump=button('ข้ามไปเรื่องสำคัญ',()=>{if(splitWaiting || !KI.game.canEnd(state))return;state=KI.game.skip(state,data,settings);persist();play();},'btn'); jump.disabled=!KI.game.canEnd(state);
     actions.append(button('หน้าแรก',start,'btn'),jump,next);
     persist();
-    if(pendingIndex>=0 && !autoMode) {
+    if(splitWaiting) {
+      const split=state.pendingSplits[0], assetId=(split.assets||[])[0];
+      const dialog=element('dialog','situation-dialog split-dialog');dialog.setAttribute('aria-labelledby','split-title');
+      const title=element('h2','',`${split.married?'หย่า':'แยกทาง'}กับ ${split.partnerName} · แบ่งทรัพย์สินและหนี้`);title.id='split-title';
+      dialog.append(element('div','situation-kicker','ต้องตกลงก่อนเวลาเดินต่อ'),title);
+      const quotes=['sell','keep','give'].map(mode=>[mode,KI.finance.splitQuote(state,data,assetId,mode)]);
+      const first=quotes.find(([,q])=>q.ok);
+      if(!first){
+        dialog.append(element('p','situation-body','ไม่พบทรัพย์สินร่วมที่ต้องแบ่งแล้ว'),button('รับทราบ',()=>{state={...state,pendingSplits:state.pendingSplits.slice(1)};persist();play();},'btn btn-primary'));
+      } else {
+        const q0=first[1];
+        dialog.append(element('p','situation-body',`${q0.asset.label} ซื้อร่วมกันเมื่อ พ.ศ. ${q0.asset.year+543} · ราคาขายตอนนี้ ${q0.value.toLocaleString('th-TH')} บาท · หนี้ผ่อนค้าง ${q0.debt.toLocaleString('th-TH')} บาท · ${q0.equity>=0?'ส่วนที่เหลือหลังหักหนี้':'ขาดทุนเมื่อเทียบกับหนี้'} ${Math.abs(q0.equity).toLocaleString('th-TH')} บาท`));
+        if(split.assets.length>1)dialog.append(element('p','muted',`ยังมีทรัพย์สินร่วมอีก ${split.assets.length-1} รายการ จะแบ่งต่อทีละรายการ`));
+        const labels={sell:'ขายแล้วแบ่งกัน',keep:'คุณรับไว้เองพร้อมหนี้',give:'ให้อีกฝ่ายรับไปพร้อมหนี้'};
+        const choices=element('div','choices');
+        quotes.forEach(([mode,q],index)=>{
+          if(!q.ok)return;
+          const option=button('',()=>{state=KI.finance.resolveSplit(state,data,assetId,mode);persist();play();},'btn choice'+(q.borrow?' choice-borrow':''));
+          const detail=element('span','choice-text');
+          detail.append(element('span','choice-label',labels[mode]),...(q.borrow?[element('span','borrow-tag','ต้องกู้มาจ่าย')]:[]),element('span','choice-impact',`${q.note} · เงินของคุณ ${q.playerCash>=0?'+':''}${q.playerCash.toLocaleString('th-TH')} บาท`));
+          option.setAttribute('aria-label',labels[mode]+' · '+q.note);
+          option.append(element('span','choice-number',String(index+1).padStart(2,'0')),detail,element('span','choice-arrow','→'));
+          choices.append(option);
+        });
+        dialog.append(choices,element('p','muted finance-note','ตัวเลขเป็นการแบ่งแบบคนละครึ่งในเกม ไม่ใช่คำแนะนำทางกฎหมาย'));
+      }
+      root.append(dialog);
+      const pageY=window.scrollY, pageX=window.scrollX;
+      if(typeof dialog.showModal==='function')dialog.showModal();else {dialog.setAttribute('open','');dialog.setAttribute('aria-modal','true');}
+      window.scrollTo(pageX,pageY);
+    } else if(pendingIndex>=0 && !autoMode) {
       const dialog=element('dialog','situation-dialog');
       dialog.setAttribute('aria-labelledby','situation-title');
       dialog.addEventListener('cancel',event=>event.preventDefault());

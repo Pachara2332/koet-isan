@@ -48,7 +48,7 @@ KI.data.personalEvents.push(...[
     {"id":"hide","label":"หลบอยู่ในที่พักและหยุดงานชั่วคราว","text":"คุณลดความเสี่ยง แต่ขาดรายได้หลายวัน","effects":[{"money":-4,"unit":"wageDay"},{"stat":"happy","d":-3}]},
     {"id":"help","label":"ติดต่อองค์กรช่วยเหลือแรงงาน","text":"คุณขอคำปรึกษาเรื่องสิทธิและทางเลือกในการกลับบ้าน","effects":[{"stat":"happy","d":2},{"stat":"bond","d":1}]}
    ]},
-  {"id":"injury-moto-nohelmet","title":"ล้มรถ ศีรษะกระแทกพื้น","body":"ขี่มอเตอร์ไซค์ไม่ใส่หมวก รถเสียหลักตรงหลุมข้างทาง ศีรษะฟาดพื้นเต็มแรง","w":9,"cooldown":12,"heavy":true,"when":{"age":[13,80],"flag":{"noHelmet":true}},
+  {"id":"injury-moto-nohelmet","title":"ล้มรถ ศีรษะกระแทกพื้น","body":"ขี่มอเตอร์ไซค์ไม่ใส่หมวก รถเสียหลักตรงหลุมข้างทาง ศีรษะฟาดพื้นเต็มแรง","w":9,"cooldown":12,"heavy":true,"when":{"age":[16,80],"flag":{"noHelmet":true}},
    "choices":[
     {"id":"hospital","label":"ให้คนแถวนั้นพาส่งโรงพยาบาลทันที","text":"หมอเย็บแผลที่ศีรษะหลายเข็มและให้นอนดูอาการ","effects":[{"money":-6,"unit":"wageDay"},{"stat":"health","d":-10},{"pin":"บาดเจ็บที่ศีรษะจากอุบัติเหตุรถ"}],
      "roll":[{"p":0.05,"text":"สมองกระทบกระเทือนรุนแรง หมอช่วยไว้ไม่ได้","effects":[{"die":"road"}]}]},
@@ -56,7 +56,7 @@ KI.data.personalEvents.push(...[
      "roll":[{"p":0.12,"text":"เลือดออกในสมองโดยไม่รู้ตัว กว่าจะถึงโรงพยาบาลก็สายเกินไป","effects":[{"die":"road"}]}]},
     {"id":"learn","label":"ไปหาหมอ แล้วตั้งใจว่าจะใส่หมวกทุกครั้ง","text":"แผลหายแล้ว หมวกใบใหม่วางอยู่ข้างรถทุกวัน","effects":[{"money":-6,"unit":"wageDay"},{"stat":"health","d":-10},{"flag":"noHelmet","v":false}]}
    ]},
-  {"id":"injury-moto-helmet","title":"ล้มรถ แต่หมวกช่วยไว้","body":"ฝนตกถนนลื่น รถล้มไถลไปหลายเมตร หมวกกันน็อกแตกร้าวแต่ศีรษะไม่เป็นอะไร","w":3,"cooldown":18,"when":{"age":[15,75],"noFlag":["noHelmet"],"loc":"isan"},
+  {"id":"injury-moto-helmet","title":"ล้มรถ แต่หมวกช่วยไว้","body":"ฝนตกถนนลื่น รถล้มไถลไปหลายเมตร หมวกกันน็อกแตกร้าวแต่ศีรษะไม่เป็นอะไร","w":3,"cooldown":18,"when":{"age":[16,75],"noFlag":["noHelmet"],"loc":"isan"},
    "effects":[{"stat":"health","d":-4},{"money":-2,"unit":"wageDay"},{"stat":"happy","d":1}]},
   {"id":"injury-work","title":"บาดเจ็บจากการทำงาน","body":"ทำงานรีบจนพลาด มือถูกเครื่องจักรหนีบ ต้องหยุดงานหลายสัปดาห์","w":7,"cooldown":15,"when":{"age":[16,65],"role":["factory","construction","mechanic"]},
    "choices":[

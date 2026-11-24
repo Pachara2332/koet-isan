@@ -38,7 +38,7 @@ KI.data.personalEvents.push(...[
       {"p":0.4,"text":"เจ้าของร้านจับได้ โทรเรียกพ่อแม่มารับ ถูกตีและดุยกใหญ่","effects":[{"stat":"bond","d":-5},{"stat":"happy","d":-5},{"cond":"crime-guilt","turns":2}]}]},
     {"id":"no","label":"ปฏิเสธ แล้วเดินแยกออกมา","text":"เพื่อนหาว่าขี้ขลาด แต่ก็สบายใจกว่า","effects":[{"inc":"good"},{"stat":"bond","d":-1}]},
     {"id":"warn","label":"ห้ามเพื่อนไม่ให้ทำ","text":"เพื่อนบางคนฟัง บางคนไม่พอใจ","effects":[{"inc":"good"},{"trait":"social","d":1}]}]},
-  {"id":"crime-moto","title":"โอกาสขโมยรถ","body":"เห็นรถมอเตอร์ไซค์จอดเสียบกุญแจทิ้งไว้หน้าร้าน รุ่นพี่บอกว่ารู้แหล่งรับซื้อ","w":6,"when":{"age":[15,45],"year":[1985,9999],"any":[{"counter":{"crime":[1,99]}},{"counter":{"vice":[3,99]}}],"noFlag":["crime-inJail","crime-wanted"]},"cooldown":12,"heavy":true,"choices":[
+  {"id":"crime-moto","title":"โอกาสขโมยรถ","body":"เห็นรถมอเตอร์ไซค์จอดเสียบกุญแจทิ้งไว้หน้าร้าน รุ่นพี่บอกว่ารู้แหล่งรับซื้อ","w":6,"when":{"age":[16,45],"year":[1985,9999],"any":[{"counter":{"crime":[1,99]}},{"counter":{"vice":[3,99]}}],"noFlag":["crime-inJail","crime-wanted"]},"cooldown":12,"heavy":true,"choices":[
     {"id":"take","label":"ขี่ออกไปขาย","text":"ขี่รถออกไปอย่างรวดเร็ว","effects":[{"inc":"crime"},{"money":25,"unit":"wageDay"}],"roll":[
       {"p":0.55,"text":"ขายได้เงินก้อน ไม่มีใครตามมา","effects":[{"stat":"happy","d":2},{"cond":"crime-guilt","turns":2,"by":"attach"}]},
       {"p":0.45,"text":"กล้องวงจรปิดจับภาพไว้ได้ ตำรวจกำลังตามหา","effects":[{"flag":"crime-wanted","v":"minor"}]}]},

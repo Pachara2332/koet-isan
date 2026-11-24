@@ -15,7 +15,7 @@ KI.data.decisions.push(...[
     {"id":"study","label":"ตั้งใจเรียนให้พี่ภูมิใจ","text":"เอาสมุดพกผลการเรียนดีๆ มาให้พี่ดู","effects":[{"stat":"know","d":3},{"stat":"bond","d":3}]},
     {"id":"rebel","label":"ประชดชีวิต ไม่ฟังใคร","text":"หนีเรียนไปเล่นกับเพื่อน พี่ได้แต่ถอนใจ","effects":[{"inc":"naughty"},{"stat":"bond","d":-5},{"stat":"happy","d":1}]}]},
   {"id":"exp-orphan-quit","title":"ออกจากโรงเรียนช่วยพี่","body":"พี่ป่วยทำงานไม่ได้หลายเดือน เงินในบ้านใกล้หมด","when":{"age":[12,17],"flag":{"orphan":true},"edu":{"in":["school"]},"chance":0.4},"cooldown":"once","major":true,"heavy":true,"choices":[
-    {"id":"quit","label":"ออกจากโรงเรียนไปทำงาน","text":"รับจ้างทั่วไปในหมู่บ้าน ได้ค่าแรงรายวัน","effects":[{"edu":{"in":null,"grade":0}},{"role":"farmer"},{"money":8,"unit":"wageDay"},{"stat":"bond","d":6},{"stat":"happy","d":-4},{"pin":"ออกจากโรงเรียนมาช่วยพี่"}]},
+    {"id":"quit","label":"ออกจากโรงเรียนไปทำงาน","text":"รับจ้างทั่วไปในหมู่บ้าน ได้ค่าแรงรายวัน","when":{"age":[15,17]},"effects":[{"edu":{"in":null,"grade":0}},{"role":"farmer"},{"money":8,"unit":"wageDay"},{"stat":"bond","d":6},{"stat":"happy","d":-4},{"pin":"ออกจากโรงเรียนมาช่วยพี่"}]},
     {"id":"temple","label":"ไปขอความช่วยเหลือจากวัด","text":"หลวงพ่อให้กินข้าวที่วัด และฝากเรียนต่อ","effects":[{"stat":"bond","d":2},{"stat":"happy","d":1},{"inc":"good"}]},
     {"id":"school","label":"ขอทุนจากโรงเรียน","text":"ครูพาไปยื่นขอทุนเด็กกำพร้า","effects":[],"roll":[
       {"p":0.6,"text":"ได้ทุนรายปี เรียนต่อได้","effects":[{"stat":"happy","d":4},{"stat":"know","d":2}]},

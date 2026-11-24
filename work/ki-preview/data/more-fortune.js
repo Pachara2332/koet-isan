@@ -42,7 +42,7 @@ KI.data.personalEvents.push(...[
    ]},
   {"id":"fort-drought","title":"ปีแล้งหนัก","body":"ฝนทิ้งช่วงทั้งหน้านา ข้าวในนาพ่อแม่ยืนต้นตาย","w":12,"when":{"age":[6,45],"season":1,"flag":{"parentsAlive":true},"wealth":"mid","chance":0.15},"cooldown":24,
    "choices":[
-    {"id":"work","label":"ไปรับจ้างช่วยบ้าน","text":"ได้ค่าแรงมาช่วยซื้อข้าวกิน แต่เหนื่อยเกินวัย","effects":[{"money":5,"unit":"wageDay"},{"stat":"health","d":-3},{"stat":"bond","d":4}],
+    {"id":"work","label":"ไปรับจ้างช่วยบ้าน","text":"ได้ค่าแรงมาช่วยซื้อข้าวกิน แต่เหนื่อยเกินวัย","when":{"age":[15,45]},"effects":[{"money":5,"unit":"wageDay"},{"stat":"health","d":-3},{"stat":"bond","d":4}],
      "roll":[{"p":0.6,"text":"บ้านผ่านปีนี้ไปได้","effects":[]},{"p":0.4,"text":"หนี้ ธ.ก.ส. พอกขึ้นจนฐานะบ้านตก","effects":[{"wealth":"poor"},{"flag":"fort-bankrupt"}]}]},
     {"id":"wait","label":"รอปีหน้า","text":"กินข้าวเก่าในยุ้ง ภาวนาให้ฝนมา","effects":[{"stat":"happy","d":-3}],
      "roll":[{"p":0.5,"text":"ปีถัดมาฝนดี","effects":[{"stat":"happy","d":3}]},{"p":0.5,"text":"ต้องกู้มาซื้อพันธุ์ข้าว ฐานะบ้านตกลง","effects":[{"wealth":"poor"},{"flag":"fort-bankrupt"}]}]}
@@ -62,7 +62,7 @@ KI.data.personalEvents.push(...[
   {"id":"fort-old-illness","title":"พ่อป่วยเรื้อรัง","body":"พ่อต้องรักษาในเมืองนานหลายเดือน ก่อนมีบัตรทองค่ารักษาจ่ายเองทั้งหมด","w":10,"when":{"year":[1975,2001],"age":[8,40],"flag":{"fatherAlive":true},"wealth":["mid","rich"],"chance":0.15},"cooldown":"once",
    "choices":[
     {"id":"sell","label":"ขายวัวขายนารักษาพ่อ","text":"พ่ออาการดีขึ้น แต่บ้านไม่เหลืออะไรมาก","effects":[{"wealth":"poor"},{"flag":"fort-bankrupt"},{"stat":"bond","d":6}]},
-    {"id":"dropout","label":"ออกจากโรงเรียนไปทำงาน","text":"เลิกเรียนกลางคัน ไปเป็นลูกจ้างโรงงานส่งเงินค่ายา","when":{"age":[14,22],"edu":{"in":["school","voc","hvoc","uni"]}},"effects":[{"edu":{"in":null}},{"role":"factory"},{"stat":"bond","d":8},{"stat":"happy","d":-6},{"flag":"fort-dropout"},{"pin":"ออกจากโรงเรียนมาช่วยค่ารักษาพ่อ"}]},
+    {"id":"dropout","label":"ออกจากโรงเรียนไปทำงาน","text":"เลิกเรียนกลางคัน ไปเป็นลูกจ้างโรงงานส่งเงินค่ายา","when":{"age":[15,22],"edu":{"in":["school","voc","hvoc","uni"]}},"effects":[{"edu":{"in":null}},{"role":"factory"},{"stat":"bond","d":8},{"stat":"happy","d":-6},{"flag":"fort-dropout"},{"pin":"ออกจากโรงเรียนมาช่วยค่ารักษาพ่อ"}]},
     {"id":"herb","label":"รักษาแบบสมุนไพรประหยัดเงิน","text":"เงินยังอยู่ แต่อาการของพ่อไม่แน่นอน","effects":[{"stat":"happy","d":-3}],
      "roll":[{"p":0.5,"text":"พ่อค่อยๆ ดีขึ้นเอง","effects":[{"stat":"happy","d":3}]},{"p":0.5,"text":"อาการทรุดจนต้องเข้าโรงพยาบาลอยู่ดี ค่าใช้จ่ายสูงกว่าเดิม","effects":[{"wealth":"poor"},{"stat":"health","d":-2}]}]}
    ]},

@@ -26,7 +26,7 @@ globalThis.KI = globalThis.KI || {}; KI.data = KI.data || {};
     ],
     "fam-stop-kids": [{"id":"adopt-niece","label":"ช่วยเลี้ยงหลานญาติแทน","text":"คุณรับหลานญาติมาอยู่ด้วย บ้านคึกคักขึ้นโดยไม่ต้องมีลูกเพิ่ม","effects":[{"flag":"fam-stopKids"},{"stat":"bond","d":3},{"money":-10,"unit":"wageDay"}]}],
     "fam-sibling-quits-school": [
-      {"id":"both-work","label":"เรียนไปทำงานไปทั้งคู่","text":"คุณกับพี่น้องรับจ้างหลังเลิกเรียน เหนื่อยแต่ได้เรียนต่อทั้งสองคน","effects":[{"stat":"health","d":-3},{"stat":"know","d":1},{"stat":"bond","d":3},{"money":5,"unit":"wageDay"}]},
+      {"id":"both-work","label":"เรียนไปทำงานไปทั้งคู่","text":"คุณกับพี่น้องรับจ้างหลังเลิกเรียน เหนื่อยแต่ได้เรียนต่อทั้งสองคน","when":{"age":[15,16]},"effects":[{"stat":"health","d":-3},{"stat":"know","d":1},{"stat":"bond","d":3},{"money":5,"unit":"wageDay"}]},
       {"id":"temple-school","label":"ให้พี่น้องไปบวชเณรเรียนที่วัด","text":"วัดรับไปเรียนฟรี ครอบครัวเบาลง แต่พี่น้องต้องห่างบ้าน","when":{"year":[1960,2015]},"effects":[{"flag":"fam-siblingSacrificed"},{"stat":"bond","d":1}]}
     ],
     "fam-grand-morning": [{"id":"learn-cook","label":"ขอให้ยายสอนนึ่งข้าว","text":"ยายสอนวิธีแช่ข้าวและดูไฟ คุณทำได้แต่เช้าวันนั้นไปโรงเรียนสาย","effects":[{"stat":"bond","d":3},{"stat":"know","d":1},{"stat":"happy","d":-1}]}],
@@ -103,7 +103,7 @@ globalThis.KI = globalThis.KI || {}; KI.data = KI.data || {};
       {"id":"share","label":"ใช้เครื่องเดียวกันทั้งบ้าน","text":"ทุกคนผลัดกันใช้ ต้องแย่งกันบ้าง แต่ถูกกว่าซื้อหลายเครื่อง","effects":[{"flag":"tech-mobile"},{"money":-5,"unit":"wageDay"},{"stat":"bond","d":1}]},
       {"id":"business","label":"ซื้อเครื่องไว้รับสายลูกค้า","text":"รับงานได้มากขึ้นเพราะลูกค้าโทรหาได้ทันที","when":{"age":[18,60]},"effects":[{"flag":"tech-mobile"},{"money":-10,"unit":"wageDay"},{"money":12,"unit":"wageDay"}]}
     ],
-    "tech-netcafe": [{"id":"work","label":"ขอทำงานเฝ้าร้านเน็ต","text":"ได้ค่าขนมและเรียนรู้คอมพิวเตอร์ แต่กลับบ้านดึกจนยายบ่น","effects":[{"money":3,"unit":"wageDay"},{"stat":"know","d":2},{"stat":"health","d":-1}]}],
+    "tech-netcafe": [{"id":"work","label":"ขอทำงานเฝ้าร้านเน็ต","text":"ได้ค่าขนมและเรียนรู้คอมพิวเตอร์ แต่กลับบ้านดึกจนยายบ่น","when":{"age":[15,22]},"effects":[{"money":3,"unit":"wageDay"},{"stat":"know","d":2},{"stat":"health","d":-1}]}],
     "tech-gamer-grades": [
       {"id":"deal","label":"ตกลงกับพ่อแม่ เล่นได้เฉพาะวันหยุด","text":"เกรดค่อยๆ ขึ้น และยังได้เล่นกับเพื่อนวันเสาร์","effects":[{"stat":"know","d":2},{"stat":"bond","d":2}]},
       {"id":"pro","label":"ตั้งใจจะเป็นนักแข่งเกม","text":"คุณซ้อมหนักกว่าเดิม เกรดตกต่อ แต่ฝีมือดีขึ้นจริง","effects":[{"stat":"know","d":-3},{"stat":"happy","d":2},{"trait":"grit","d":1}]}

@@ -109,6 +109,61 @@ globalThis.KI = globalThis.KI || {};
     next.financeAt=state.t;
     return {ok:true,state:next,asset,quote};
   }
+  function exPartnerOf(state,split) {
+    return ((state.family && state.family.formerPartners)||[]).find(person=>person.name===split.partnerName && person.since===split.partnerSince)||null;
+  }
+  function splitQuote(state,data,assetId,mode) {
+    const split=(state.pendingSplits||[])[0];
+    const asset=split && (state.personalAssets||[]).find(a=>a.id===assetId && a.partnerName===split.partnerName && a.partnerSince===split.partnerSince);
+    if(!asset || !['sell','keep','give'].includes(mode))return {ok:false,reason:'ไม่พบทรัพย์สินร่วมที่ต้องแบ่ง'};
+    const ex=exPartnerOf(state,split), exCash=Math.max(0,(ex && ex.money)||0);
+    const value=personalSalePrice(state,data,asset), debt=(state.loans||[]).filter(l=>l.assetId===asset.id).reduce((n,l)=>n+l.balance,0), equity=value-debt;
+    const half=Math.floor(Math.abs(equity)/2), otherHalf=Math.abs(equity)-half;
+    let playerCash=0,exCashChange=0,exOwes=0,note='';
+    if(mode==='sell'){
+      if(equity>=0){playerCash=value-debt-half;exCashChange=half;note=`ขายได้ ${value.toLocaleString('th-TH')} บาท ปิดหนี้ ${debt.toLocaleString('th-TH')} บาท แล้วแบ่งเงินที่เหลือคนละครึ่ง`;}
+      else{const exPays=Math.min(exCash,half);exOwes=half-exPays;playerCash=-(otherHalf+exOwes);exCashChange=-exPays;note=`ขายได้ ${value.toLocaleString('th-TH')} บาท ไม่พอปิดหนี้ ${debt.toLocaleString('th-TH')} บาท ขาดอยู่ ${(-equity).toLocaleString('th-TH')} บาท ต้องช่วยกันจ่ายคนละครึ่ง`+(exOwes?` อีกฝ่ายจ่ายได้ ${exPays.toLocaleString('th-TH')} บาท คุณต้องสำรองจ่ายแทนก่อน ${exOwes.toLocaleString('th-TH')} บาท และบันทึกว่าเขาค้างคุณไว้`:'');}
+    }else if(mode==='keep'){
+      if(equity>=0){playerCash=-half;exCashChange=half;note=`คุณรับ${asset.label}และหนี้ที่เหลือ ${debt.toLocaleString('th-TH')} บาทไว้คนเดียว และจ่ายชดเชยส่วนของอีกฝ่าย ${half.toLocaleString('th-TH')} บาท`;}
+      else{const exPays=Math.min(exCash,half);exOwes=half-exPays;playerCash=exPays;exCashChange=-exPays;note=`คุณรับ${asset.label}และหนี้ ${debt.toLocaleString('th-TH')} บาท ซึ่งมากกว่าราคาขาย ${(-equity).toLocaleString('th-TH')} บาท อีกฝ่ายควรช่วยรับส่วนขาดครึ่งหนึ่ง จ่ายได้ ${exPays.toLocaleString('th-TH')} บาท`+(exOwes?` ค้างคุณไว้ ${exOwes.toLocaleString('th-TH')} บาท`:'');}
+    }else{
+      if(equity>=0){const exPays=Math.min(exCash,half);exOwes=half-exPays;playerCash=exPays;exCashChange=-exPays;note=`อีกฝ่ายรับ${asset.label}และหนี้ ${debt.toLocaleString('th-TH')} บาทไปผ่อนต่อ ชดเชยส่วนของคุณ ${half.toLocaleString('th-TH')} บาท จ่ายได้ทันที ${exPays.toLocaleString('th-TH')} บาท`+(exOwes?` ค้างไว้ ${exOwes.toLocaleString('th-TH')} บาท`:'');}
+      else{playerCash=-otherHalf;exCashChange=otherHalf;note=`อีกฝ่ายรับ${asset.label}และหนี้ ${debt.toLocaleString('th-TH')} บาทไป ซึ่งมากกว่าราคาขาย ${(-equity).toLocaleString('th-TH')} บาท คุณจ่ายส่วนขาดครึ่งหนึ่งให้เขา ${otherHalf.toLocaleString('th-TH')} บาท`;}
+    }
+    return {ok:true,split,asset,ex,value,debt,equity,playerCash,exCashChange,exOwes,note,borrow:playerCash<0 && state.money+playerCash<0};
+  }
+  function resolveSplit(state,data,assetId,mode) {
+    const q=splitQuote(state,data,assetId,mode);
+    if(!q.ok)return state;
+    const next=JSON.parse(JSON.stringify(state)), age=state.year-state.birthYear, who=q.split.partnerName;
+    const ex=exPartnerOf(next,q.split);
+    next.money+=q.playerCash;
+    if(ex)ex.money=Math.max(0,(ex.money||0)+q.exCashChange);
+    next.financeLog=[...(next.financeLog||[])];
+    const log=(label,delta)=>next.financeLog.push({year:state.year,age,label,delta,familyExpense:0,category:'split'});
+    if(mode==='sell'){
+      next.personalAssets=next.personalAssets.filter(a=>a.id!==assetId);
+      next.loans=(next.loans||[]).filter(l=>l.assetId!==assetId);
+      log('ขาย'+q.asset.label+'หลังแยกทางกับ '+who,q.value);
+      if(q.debt)log('ปิดเงินผ่อน'+q.asset.label,-q.debt);
+      if(q.playerCash-(q.value-q.debt))log(q.equity>=0?'แบ่งเงินขายให้ '+who:'รับเงินช่วยส่วนขาดจาก '+who,q.playerCash-(q.value-q.debt));
+    }else if(mode==='keep'){
+      next.personalAssets=next.personalAssets.map(a=>{if(a.id!==assetId)return a;const own={...a};delete own.partnerName;delete own.partnerSince;own.splitFrom=who;return own;});
+      log((q.playerCash<0?'จ่ายชดเชยให้ ':'รับเงินช่วยส่วนขาดจาก ')+who+' · รับ'+q.asset.label+'ไว้คนเดียว',q.playerCash);
+    }else{
+      next.personalAssets=next.personalAssets.filter(a=>a.id!==assetId);
+      next.loans=(next.loans||[]).filter(l=>l.assetId!==assetId);
+      if(q.debt)log('โอนหนี้'+q.asset.label+' '+q.debt.toLocaleString('th-TH')+' บาทให้ '+who+' รับผิดชอบต่อ',0);
+      log((q.playerCash>=0?'รับเงินชดเชยจาก ':'จ่ายส่วนขาดให้ ')+who+' · ยก'+q.asset.label+'ให้',q.playerCash);
+    }
+    if(q.exOwes)next.exDebts=[...(next.exDebts||[]),{name:who,since:q.split.partnerSince,amount:q.exOwes,year:state.year,label:q.asset.label}];
+    const left=next.personalAssets.filter(a=>a.partnerName===q.split.partnerName && a.partnerSince===q.split.partnerSince);
+    const split={...q.split,assets:left.map(a=>a.id),done:[...(q.split.done||[]),{assetId,mode,label:q.asset.label}]};
+    next.pendingSplits=left.length?[split,...(next.pendingSplits||[]).slice(1)]:(next.pendingSplits||[]).slice(1);
+    if(!left.length && next.turn)next.turn.pin=next.turn.pin||(q.split.married?'หย่าและแบ่งทรัพย์สินกับ ':'แยกทางและแบ่งทรัพย์สินกับ ')+who;
+    next.financeAt=state.t;
+    return next;
+  }
   const PARENT_HOME={poor:150,mid:1200,rich:6000};
   const STATUS=[['poor',400],['mid',4000],['rich',20000],['wealthy',Infinity]];
   const STATUS_LABEL={poor:'ยากจน',mid:'พอมีพอกิน',rich:'มีฐานะ',wealthy:'ร่ำรวย'};
@@ -320,5 +375,5 @@ globalThis.KI = globalThis.KI || {};
     next.financeLog=[...(state.financeLog||[]),{year:state.year,age:state.year-state.birthYear,label:'ปิด'+loan.label,delta:-loan.balance,familyExpense:0,category:'loan'}];
     return next;
   }
-  KI.finance={householdWorth,loanBalance,legacyDebt,payLegacyDebt,partnerTransfer,needsFamilyHelp,familyHelpOptions,askFamilyHelp,personalInventory,personalValue,personalSalePrice,personalQuote,buyPersonal,runway,LENDERS,loanLimit,loanReview,borrow,payOff,maxUnits,status,STATUS_LABEL,actions,price,saleValue,cost,annual,history,canAct,setHobby,act,assets,held,portfolioValue,canTrade,trade,priceAt};
+  KI.finance={householdWorth,splitQuote,resolveSplit,loanBalance,legacyDebt,payLegacyDebt,partnerTransfer,needsFamilyHelp,familyHelpOptions,askFamilyHelp,personalInventory,personalValue,personalSalePrice,personalQuote,buyPersonal,runway,LENDERS,loanLimit,loanReview,borrow,payOff,maxUnits,status,STATUS_LABEL,actions,price,saleValue,cost,annual,history,canAct,setHobby,act,assets,held,portfolioValue,canTrade,trade,priceAt};
 })();

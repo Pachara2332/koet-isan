@@ -30,7 +30,7 @@ KI.data.decisions.push(...[
      "roll":[{"p":0.4,"text":"หลักฐานชัดเกินไป อีกฝ่ายเก็บของกลับบ้านพ่อแม่","effects":[{"flag":"partner","v":false},{"flag":"married","v":false},{"cond":"heartbroken","turns":4,"by":"attach"}]}]},
     {"id":"leave","label":"เลือกไปอยู่กับคนใหม่","text":"เริ่มต้นใหม่ แต่ญาติทั้งสองฝ่ายมองด้วยสายตาไม่ดี","effects":[{"flag":"tmp-exposed"},{"flag":"married","v":false},{"stat":"bond","d":-10},{"stat":"happy","d":2},{"money":-15,"unit":"wageDay"},{"pin":"ทิ้งคนเก่าไปอยู่กับคนใหม่"}]}
    ]},
-  {"id":"tmp-outside-child","title":"ข่าวจากคนเก่า","body":"คนที่เคยค้างคืนด้วยกันส่งข่าวมาว่าตั้งครรภ์ และยืนยันว่าเป็นลูกของคุณ","when":{"age":[18,55],"flag":{"tmp-cheated":true},"noFlag":["tmp-outchild"],"chance":0.12},"cooldown":"once","major":true,"heavy":true,
+  {"id":"tmp-outside-child","title":"ข่าวจากคนเก่า","body":"คนที่เคยค้างคืนด้วยกันส่งข่าวมาว่าตั้งครรภ์ และยืนยันว่าเป็นลูกของคุณ","when":{"age":[18,55],"sex":"m","flag":{"tmp-cheated":true},"noFlag":["tmp-outchild"],"chance":0.12},"cooldown":"once","major":true,"heavy":true,
    "choices":[
     {"id":"accept","label":"รับเป็นพ่อ/แม่ ส่งเสียตามหน้าที่","text":"ต้องแบ่งเงินทุกเดือน และต้องเล่าความจริงให้ที่บ้านฟัง","effects":[{"flag":"tmp-outchild"},{"flag":"newChild"},{"money":-30,"unit":"wageDay"},{"stat":"bond","d":-6},{"stat":"happy","d":-3},{"pin":"มีลูกนอกสมรส"}]},
     {"id":"money","label":"ส่งเงินให้ แต่ไม่ยอมรับเปิดเผย","text":"ความลับยังอยู่ แต่ต้องโกหกต่อไปเรื่อยๆ","effects":[{"flag":"tmp-outchild"},{"money":-20,"unit":"wageDay"},{"stat":"happy","d":-5},{"flag":"tmp-affair"}]},
@@ -92,7 +92,7 @@ KI.data.personalEvents.push(...[
     {"id":"watch","label":"นั่งดูอย่างเดียว","text":"ไม่เสียเงิน แต่ก็ไม่ได้อะไรกลับมา","effects":[{"stat":"happy","d":1}]},
     {"id":"no","label":"ไม่ไป นอนเอาแรงพรุ่งนี้","text":"เพื่อนว่าเชย แต่เงินยังอยู่","effects":[{"stat":"health","d":1},{"inc":"good"}]}
    ]},
-  {"id":"tmp-race","title":"แข่งรถกลางคืน","body":"วัยรุ่นในอำเภอนัดแข่งมอเตอร์ไซค์บนถนนเส้นใหม่ตอนเที่ยงคืน มีเดิมพันกันด้วย","w":7,"when":{"age":[15,25],"year":[2000,2026],"loc":"isan","any":[{"counter":{"naughty":[2,99]}},{"counter":{"vice":[1,99]}},{"flag":{"tmp-drifter":true}}],"chance":0.3},"cooldown":6,"heavy":true,
+  {"id":"tmp-race","title":"แข่งรถกลางคืน","body":"วัยรุ่นในอำเภอนัดแข่งมอเตอร์ไซค์บนถนนเส้นใหม่ตอนเที่ยงคืน มีเดิมพันกันด้วย","w":7,"when":{"age":[16,25],"sex":"m","year":[2000,2026],"loc":"isan","any":[{"counter":{"naughty":[2,99]}},{"counter":{"vice":[1,99]}},{"flag":{"tmp-drifter":true}}],"chance":0.3},"cooldown":6,"heavy":true,
    "choices":[
     {"id":"race","label":"ลงแข่ง","text":"ลมตีหน้า เสียงเชียร์ดังลั่น","effects":[{"inc":"vice"},{"inc":"naughty"},{"stat":"happy","d":4},{"die":"road","p":0.02}],
      "roll":[{"p":0.3,"text":"ชนะเดิมพัน ได้ชื่อเสียงในกลุ่ม","effects":[{"money":5,"unit":"wageDay"}]},{"p":0.2,"text":"ล้มไถลไปกับถนน แผลถลอกเต็มตัว","effects":[{"stat":"health","d":-10},{"money":-8,"unit":"wageDay"}]},{"p":0.15,"text":"ตำรวจตั้งด่านจับ ต้องให้พ่อแม่มารับที่โรงพัก","effects":[{"stat":"bond","d":-6},{"flag":"tmp-police"}]}]},

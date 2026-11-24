@@ -110,6 +110,16 @@ globalThis.KI = globalThis.KI || {};
       const base = 'd' in e ? e.d : 1;
       const gift = e.inc.startsWith('skill-') && base > 0 && s.talents && s.talents.gifts ? s.talents.gifts[e.inc.slice(6)] || 0 : 0;
       s.counters[e.inc] = Math.max(0, (s.counters[e.inc] || 0) + (gift ? Math.round(base * (1 + gift * 0.5)) : base));
+    } else if ('loan' in e) {
+      const l = e.loan, amount = Math.round(l.amountDays * KI.tables.wageDay(data, s.year));
+      const old = (s.loans || []).find((x) => x.kind === l.kind);
+      const balance = amount + (old ? old.balance : 0);
+      const payment = Math.ceil(balance * (l.rate / (1 - Math.pow(1 + l.rate, -l.seasons))));
+      const loan = { ...(old || {}), kind: l.kind, label: l.label, principal: amount + (old ? old.principal : 0), balance, rate: l.rate, payment, left: l.seasons, since: old ? old.since : s.year, ...('grace' in l ? { grace: l.grace } : {}) };
+      s.loans = [...(s.loans || []).filter((x) => x !== old), loan];
+      s.money += amount;
+      s.financeLog = [...(s.financeLog || []), { year: s.year, age: s.year - s.birthYear, label: 'กู้' + l.label, delta: amount, familyExpense: 0, category: 'loan' }];
+      addDelta(deltas, 'money', amount);
     } else if ('inherit' in e) {
       const d = Math.round((s.flags.estate || 0) * e.inherit);
       s.money += d;

@@ -224,7 +224,7 @@ KI.data.personalEvents.push(...[
   {"id":"real-summer-novice","title":"บวชเณรภาคฤดูร้อน","body":"ปิดเทอมใหญ่ วัดในหมู่บ้านรับเด็กบวชเณรช่วงสั้นๆ แม่อยากให้ไป","when":{"year":[1980,2026],"age":[9,15],"sex":"m","season":0,"loc":"isan"},"w":10,"cooldown":"once","choices":[
     {"id":"ordain","label":"บวชตามที่แม่ขอ","text":"ตื่นตีสี่ บิณฑบาต ท่องบทสวด กลับมาใจเย็นขึ้น","effects":[{"stat":"bond","d":4},{"stat":"know","d":2},{"stat":"happy","d":-1},{"inc":"good"}]},
     {"id":"no","label":"ขอเล่นกับเพื่อนช่วงปิดเทอม","text":"สนุกเต็มที่ แต่แม่ผิดหวังเล็กน้อย","effects":[{"stat":"happy","d":3},{"stat":"bond","d":-2}]},
-    {"id":"work","label":"ไปรับจ้างเก็บเงินช่วยบ้าน","text":"ได้เงินค่าเทอม แต่ปิดเทอมนี้เหนื่อย","effects":[{"money":2,"unit":"wageDay"},{"stat":"health","d":-1}]}]},
+    {"id":"work","label":"ไปรับจ้างเก็บเงินช่วยบ้าน","text":"ได้เงินค่าเทอม แต่ปิดเทอมนี้เหนื่อย","when":{"age":[15,15]},"effects":[{"money":2,"unit":"wageDay"},{"stat":"health","d":-1}]}]},
   {"id":"real-letter-bkk","title":"จดหมายถึงคนที่กรุงเทพฯ","body":"ไม่ได้ข่าวญาติที่ไปทำงานกรุงเทพฯ มาหลายเดือน ที่บ้านอยากเขียนจดหมายไปถาม","when":{"year":[1975,1997],"age":[9,45],"loc":"isan"},"w":6,"cooldown":12,"choices":[
     {"id":"write","label":"รับเป็นคนเขียนให้ทั้งบ้าน","text":"เขียนเล่าทุกเรื่องในหมู่บ้าน อีกเดือนจดหมายตอบก็มาถึง","effects":[{"stat":"know","d":2},{"stat":"bond","d":3}]},
     {"id":"news","label":"ฝากข่าวกับคนที่จะขึ้นไปกรุงเทพฯ","text":"เร็วกว่าไปรษณีย์ แต่ข่าวเพี้ยนไประหว่างทาง","effects":[{"stat":"bond","d":1},{"stat":"happy","d":-1}]},
@@ -260,7 +260,7 @@ KI.data.personalEvents.push(...[
     {"id":"visit","label":"ไปเดินดูตั้งแต่วันแรก","text":"ตื่นตากับของแปลกตา ได้ขนมกลับมาหนึ่งถุง","effects":[{"stat":"happy","d":3},{"money":-1,"unit":"wageDay"}]},
     {"id":"local","label":"ซื้อของร้านป้าข้างบ้านเหมือนเดิม","text":"ป้ายิ้มดีใจ ได้ของแถมเป็นประจำ","effects":[{"stat":"bond","d":2}]},
     {"id":"job","label":"ไปสมัครเป็นพนักงาน","text":"ได้เงินพิเศษ แต่ต้องเข้ากะดึก","when":{"age":[16,40]},"effects":[{"money":3,"unit":"wageDay"},{"stat":"health","d":-1}]}]},
-  {"id":"real-motorbike-school","title":"ขี่มอเตอร์ไซค์ไปโรงเรียน","body":"เพื่อนหลายคนขี่มอเตอร์ไซค์ไปโรงเรียนมัธยม พ่อแม่ถามว่าอยากขี่เองไหม","when":{"year":[2000,2026],"age":[13,17],"loc":"isan","edu":{"in":["school"]}},"w":7,"cooldown":"once","choices":[
+  {"id":"real-motorbike-school","title":"ขี่มอเตอร์ไซค์ไปโรงเรียน","body":"เพื่อนหลายคนขี่มอเตอร์ไซค์ไปโรงเรียนมัธยม พ่อแม่ถามว่าอยากขี่เองไหม","when":{"year":[2000,2026],"age":[16,17],"loc":"isan","edu":{"in":["school"]}},"w":7,"cooldown":"once","choices":[
     {"id":"helmet","label":"ขี่เองแต่ใส่หมวกทุกวัน","text":"สะดวกขึ้น ผมยุ่งทุกเช้าแต่ปลอดภัยกว่า","effects":[{"stat":"happy","d":2},{"flag":"noHelmet","v":false}]},
     {"id":"nohelmet","label":"ขี่ไปแบบเพื่อน ไม่ใส่หมวก","text":"ดูเท่ในกลุ่มเพื่อน แต่ไม่มีอะไรป้องกันศีรษะ","effects":[{"stat":"happy","d":3},{"flag":"noHelmet","v":true},{"inc":"naughty"}]},
     {"id":"bus","label":"นั่งรถรับส่งนักเรียน","text":"ตื่นเช้ากว่าเดิม แต่บ้านไม่ต้องกังวล","effects":[{"money":-1,"unit":"wageDay"},{"stat":"bond","d":1}]}]},

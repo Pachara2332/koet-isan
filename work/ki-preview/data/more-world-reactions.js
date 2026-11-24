@@ -91,7 +91,7 @@ KI.data.decisions.unshift(...[
  "choices":[
   {"id":"save","label":"ขนข้าวของขึ้นที่สูง ช่วยเพื่อนบ้าน","text":"เหนื่อยแทบขาดใจ แต่ของสำคัญรอด","effects":[{"stat":"health","d":-3},{"stat":"bond","d":4},{"money":-5,"unit":"wageDay"}]},
   {"id":"replant","label":"รีบปลูกข้าวใหม่หลังน้ำลด","text":"ลงทุนซ้ำ หวังเก็บเกี่ยวทันปลายปี","when":{"role":"farmer"},"effects":[{"money":-12,"unit":"wageDay"}],"roll":[{"p":0.5,"text":"ข้าวรุ่นใหม่ให้ผลพอใช้","effects":[{"money":15,"unit":"wageDay"}]},{"p":0.5,"text":"น้ำมาอีกรอบ เสียทุนซ้ำ","effects":[{"stat":"happy","d":-6}]}]},
-  {"id":"leave","label":"เข้าเมืองหางานรอน้ำลด","text":"ทิ้งนาไว้ ไปรับจ้างชั่วคราว","effects":[{"money":8,"unit":"wageDay"},{"stat":"bond","d":-2},{"move":{"kind":"bangkok"}},{"role":"construction"}]}]},
+  {"id":"leave","label":"เข้าเมืองหางานรอน้ำลด","text":"ทิ้งนาไว้ ไปรับจ้างชั่วคราว","when":{"age":[18,70]},"effects":[{"money":8,"unit":"wageDay"},{"stat":"bond","d":-2},{"move":{"kind":"bangkok"}},{"role":"construction"}]}]},
 {"id":"wr-rice-pledge-2014","title":"เงินจำนำข้าวไม่มา","body":"เอาข้าวไปจำนำไว้หลายเดือนแล้ว แต่ยังไม่ได้เงิน ทั้งที่ค่าปุ๋ยค่าเช่านาถึงกำหนดจ่าย","when":{"year":[2014,2014],"season":0,"loc":"isan","role":"farmer","age":[20,70]},"cooldown":"once",
  "choices":[
   {"id":"loan","label":"กู้นอกระบบมาจ่ายก่อน","text":"ดอกโหด แต่ไม่เสียหน้าเจ้าของนา","effects":[{"cond":"indebted","turns":6},{"stat":"happy","d":-3}]},

@@ -9,7 +9,7 @@ KI.data.decisions.push(...[
     {"id":"replant","label":"รอน้ำลดแล้วหว่านใหม่","text":"ลงทุนซื้อเมล็ดพันธุ์อีกรอบ หวังว่าจะทันฤดู","effects":[{"money":-8,"unit":"wageDay"},{"stat":"health","d":-2}],"roll":[
       {"p":0.55,"text":"ข้าวรอบใหม่ขึ้นทัน ได้ผลผลิตครึ่งหนึ่ง","effects":[{"money":8,"unit":"wageDay"}]},
       {"p":0.45,"text":"หมดฤดูก่อน ข้าวรอบใหม่ไม่ทันเกี่ยว","effects":[{"money":-10,"unit":"wageDay"},{"stat":"happy","d":-4}]}]},
-    {"id":"bkk","label":"ไปรับจ้างในเมืองชดเชยรายได้","text":"ฝากนาไว้กับญาติ ขึ้นรถไปทำงานก่อสร้าง","effects":[{"move":{"kind":"bangkok"}},{"role":"construction"},{"money":-15,"unit":"wageDay"},{"cond":"homesick","turns":2,"by":"attach"}]},
+    {"id":"bkk","label":"ไปรับจ้างในเมืองชดเชยรายได้","text":"ฝากนาไว้กับญาติ ขึ้นรถไปทำงานก่อสร้าง","when":{"age":[18,70]},"effects":[{"move":{"kind":"bangkok"}},{"role":"construction"},{"money":-15,"unit":"wageDay"},{"cond":"homesick","turns":2,"by":"attach"}]},
     {"id":"loss","label":"ยอมรับความเสียหาย","text":"ปีนี้ไม่มีข้าวขาย ต้องซื้อข้าวกินเป็นครั้งแรก","effects":[{"money":-25,"unit":"wageDay"},{"stat":"happy","d":-6}]}]},
   {"id":"dis-drought-rice","title":"ฝนทิ้งช่วง ข้าวยืนต้นตาย","body":"ฝนไม่ตกมาเกือบเดือน ดินในนาแตกระแหง กล้าข้าวที่เพิ่งปักดำเริ่มเหลืองแห้ง","when":{"loc":"isan","season":1,"any":[{"role":"farmer"},{"setting":"rural","flag":{"parentsAlive":true}}],"chance":0.07},"cooldown":12,"major":true,"choices":[
     {"id":"pump","label":"เช่าเครื่องสูบน้ำจากหนองมาใส่นา","text":"ค่าน้ำมันแพง แต่อาจรักษาข้าวไว้ได้","when":{"year":[1985,9999]},"effects":[{"money":-10,"unit":"wageDay"}],"roll":[

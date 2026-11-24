@@ -127,7 +127,7 @@ KI.data.decisions.push(...[
     {"id":"stay","label":"เป็นลูกจ้างต่อ","text":"ไม่ต้องเสี่ยง","effects":[{"stat":"happy","d":-1}]}
   ]},
   {"id":"job2-artist","title":"เวทีชีวิต","body":"วงหมอลำรับนักร้องหางเครื่อง รายการประกวดร้องเพลงก็เปิดรับสมัคร","when":{"age":[15,35],"role":["jobless","farmer","factory","trader","student","construction","office"],"any":[{"counter":{"skill-music":[5,99]}},{"talent":{"music":[2,3]}},{"flag":{"tal-music-province":true}}],"chance":0.3},"major":true,"cooldown":"once","choices":[
-    {"id":"molam","label":"เข้าวงหมอลำ","text":"ตระเวนเล่นตามงานบุญทั้งภาค นอนบนรถ","effects":[{"role":"artist"},{"inc":"skill-music"},{"stat":"health","d":-2},{"stat":"happy","d":5},{"pin":"เป็นนักร้องหมอลำ"}]},
+    {"id":"molam","label":"เข้าวงหมอลำ","text":"ตระเวนเล่นตามงานบุญทั้งภาค นอนบนรถ","when":{"age":[18,35]},"effects":[{"role":"artist"},{"inc":"skill-music"},{"stat":"health","d":-2},{"stat":"happy","d":5},{"pin":"เป็นนักร้องหมอลำ"}]},
     {"id":"contest","label":"ประกวดรายการโทรทัศน์","text":"เดินทางไปกรุงเทพฯ ยืนรอคิวออดิชันทั้งวัน","effects":[{"money":-4,"unit":"wageDay"}],"roll":[{"p":0.3,"text":"คุณเข้ารอบลึก มีค่ายเซ็นสัญญา","effects":[{"role":"artist"},{"move":{"kind":"bangkok"}},{"stat":"happy","d":10},{"pin":"ได้เป็นศิลปิน"}]},{"p":0.7,"text":"ตกรอบแรก","effects":[{"stat":"happy","d":-4,"by":"attach"}]}]},
     {"id":"no","label":"ร้องเพลงเป็นงานอดิเรก","text":"งานประจำมั่นคงกว่า","effects":[{"stat":"happy","d":-1}]}
   ]},

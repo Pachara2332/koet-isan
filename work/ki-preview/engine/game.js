@@ -409,7 +409,9 @@ globalThis.KI = globalThis.KI || {};
     const loans=(s.loans || []).filter((l)=>l.balance>0);
     if (!loans.length) return 0;
     let paid=0;
+    const studying=Boolean(s.edu && s.edu.in) || s.role==='student';
     s.loans=loans.map((l)=>{
+      if (typeof l.grace==='number' && (studying || l.grace>0)) return studying ? l : { ...l, grace: l.grace-1 };
       const interest=Math.round(l.balance*l.rate);
       const pay=Math.min(l.balance+interest,l.payment);
       const asset=(s.personalAssets||[]).find(item=>item.id===l.assetId), partner=s.family && s.family.partner;
@@ -423,7 +425,7 @@ globalThis.KI = globalThis.KI || {};
       return { ...l, balance: Math.max(0, l.balance+interest-pay), left: Math.max(0, l.left-1) };
     }).filter((l)=>l.balance>0);
     if (!s.loans.some((l)=>l.kind==='shark')) s.flags.sharkLate=false;
-    s.financeLog=[...(s.financeLog || []),{year:s.year,age:ageOf(s),label:'ผ่อนเงินกู้',delta:-paid,familyExpense:0,category:'loan'}];
+    if (paid) s.financeLog=[...(s.financeLog || []),{year:s.year,age:ageOf(s),label:'ผ่อนเงินกู้',delta:-paid,familyExpense:0,category:'loan'}];
     return paid;
   }
 
@@ -461,7 +463,7 @@ globalThis.KI = globalThis.KI || {};
     if (e.grade >= LEVELS[e.in]) {
       e.in = null;
       e.grade = 0;
-      if (s.role === 'student') s.role = s.loc.kind === 'isan' && s.loc.setting === 'rural' ? 'farmer' : 'jobless';
+      if (s.role === 'student') s.role = ageOf(s) < INCOME_AGE ? 'child' : 'jobless';
     } else {
       e.grade += 1;
     }
@@ -555,6 +557,7 @@ globalThis.KI = globalThis.KI || {};
       s = KI.effects.tick(s, data, rng).state;
       if(s.money!==moneyBefore)entry.cashFlow.push({label:'ค่าใช้จ่ายจากสถานะ: '+conditionNames.join(', '),delta:s.money-moneyBefore});
       if (s.season === 0) autoPin = promote(s);
+      if (s.role === 'child' && !s.edu.in && ageOf(s) >= INCOME_AGE) s.role = 'jobless';
       if (s.season === 1 && ageOf(s) >= 60 && (s.role === 'civil' || (s.role === 'teacher' && s.flags.governmentTeacher))) {
         s.flags.retiredFrom = s.role;
         s.role = 'retired';

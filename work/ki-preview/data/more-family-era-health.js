@@ -40,7 +40,7 @@ KI.data.decisions.push(...[
   {"id":"fam-sibling-quits-school","title":"พี่น้องคนหนึ่งต้องออกจากโรงเรียน","body":"เงินในบ้านพอส่งเรียนต่อได้แค่คนเดียว พ่อแม่ให้พี่น้องคุยกันเอง","when":{"age":[14,16],"flag":{"hasSiblings":true},"wealth":"poor","noFlag":["fam-siblingSacrificed","fam-iSacrificed"],"season":0,"chance":0.35},"major":true,
    "choices":[
     {"id":"me-study","label":"เราเรียนต่อ","text":"พี่น้องไปทำงานโรงงานส่งเงินให้เรา เราติดหนี้บุญคุณก้อนใหญ่","effects":[{"flag":"fam-siblingSacrificed"},{"stat":"know","d":3},{"stat":"happy","d":-3,"by":"attach"}]},
-    {"id":"sib-study","label":"ให้พี่น้องเรียนต่อ","text":"เราออกมาช่วยทำงานหาเงิน พี่น้องสัญญาว่าจะไม่ลืม","effects":[{"flag":"fam-iSacrificed"},{"role":"farmer"},{"money":10,"unit":"wageDay"},{"stat":"bond","d":6},{"pin":"ออกจากโรงเรียนให้พี่น้องได้เรียน"}]}
+    {"id":"sib-study","label":"ให้พี่น้องเรียนต่อ","text":"เราออกมาช่วยพ่อแม่ทำนาหาเงิน พี่น้องสัญญาว่าจะไม่ลืม","effects":[{"flag":"fam-iSacrificed"},{"role":"farmer"},{"money":10,"unit":"wageDay"},{"stat":"bond","d":6},{"pin":"ออกจากโรงเรียนให้พี่น้องได้เรียน"}]}
    ]}
 ]);
 KI.data.personalEvents.push(...[
@@ -225,7 +225,7 @@ KI.data.personalEvents.push(...[
    ]},
   {"id":"tech-online-class","w":12,"cooldown":"once","title":"เรียนออนไลน์ช่วงโควิด","body":"โรงเรียนปิด ต้องเรียนผ่านโทรศัพท์ สัญญาณที่บ้านขาดๆ หายๆ","when":{"year":[2020,2021],"edu":{"in":["school","voc","hvoc","uni"]}},
    "choices":[
-    {"id":"hill","label":"ขี่รถไปนั่งเรียนที่มีสัญญาณ","text":"เรียนทัน แต่เหนื่อยและเปลืองค่าเน็ต","effects":[{"stat":"know","d":2},{"money":-3,"unit":"wageDay"},{"stat":"health","d":-1}]},
+    {"id":"hill","label":"ปั่นจักรยานไปนั่งเรียนที่มีสัญญาณ","text":"เรียนทัน แต่เหนื่อยและเปลืองค่าเน็ต","effects":[{"stat":"know","d":2},{"money":-3,"unit":"wageDay"},{"stat":"health","d":-1}]},
     {"id":"work","label":"ช่วยงานบ้านไปด้วย ดูคลิปย้อนหลัง","text":"ได้ช่วยครอบครัว แต่ตามบทเรียนไม่ทัน","effects":[{"stat":"bond","d":3},{"stat":"know","d":-3}]}
    ]},
 
