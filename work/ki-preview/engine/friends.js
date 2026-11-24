@@ -15,8 +15,11 @@ globalThis.KI = globalThis.KI || {};
   function sync(state) {
     const age=state.year-state.birthYear,seed=Array.from(state.name||'').reduce((n,c)=>n+c.codePointAt(0),state.birthYear);
     const friends=Array.isArray(state.friends)?state.friends.slice():[];
-    if(age>=7 && (age<20 || (state.role==='student' && age<30)) && !friends.some(f=>f.id==='school'))friends.push({id:'school',name:names[seed%names.length],metYear:state.year,origin:'เพื่อนวัยเรียน',closeness:55,conflict:false,owed:0,history:[]});
-    if(age>=20 && jobs.includes(state.role) && !friends.some(f=>f.id==='work'))friends.push({id:'work',name:names[(seed+5)%names.length],metYear:state.year,origin:'เพื่อนจากการทำงาน',closeness:45,conflict:false,owed:0,history:[]});
+    const taken=new Set([state.name,...(KI.family?KI.family.namesOf(state.family):[]),...friends.map(f=>f.name)]);
+    const pool=(KI.family && KI.family.NICKNAMES) || names;
+    const nameAt=(offset)=>{const open=pool.filter(n=>!taken.has(n));const list=open.length?open:pool;const name=list[(seed+offset)%list.length];taken.add(name);return name;};
+    if(age>=7 && (age<20 || (state.role==='student' && age<30)) && !friends.some(f=>f.id==='school'))friends.push({id:'school',name:nameAt(0),metYear:state.year,origin:'เพื่อนวัยเรียน',closeness:55,conflict:false,owed:0,history:[]});
+    if(age>=20 && jobs.includes(state.role) && !friends.some(f=>f.id==='work'))friends.push({id:'work',name:nameAt(5),metYear:state.year,origin:'เพื่อนจากการทำงาน',closeness:45,conflict:false,owed:0,history:[]});
     return {...state,friends};
   }
   function react(state,eventId) {

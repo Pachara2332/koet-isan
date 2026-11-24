@@ -27,7 +27,7 @@ globalThis.KI = globalThis.KI || {}; KI.data = KI.data || {};
       c("abroad", "เอาเงินชดเชยไปทำงานต่างประเทศ", "ใช้เงินก้อนเป็นค่าหัว เดิมพันว่ารายได้จะคุ้ม", [{"role": "abroad"}, {"flag": "career-abroad"}, {"move": {"kind": "abroad", "country": "ไต้หวัน"}}, m(-10), {"cond": "homesick", "turns": 4}], {"year": [1997, 2021]})
     ],
     "career-uniform": [
-      c("volunteer", "เป็นอาสาสมัครทหารพราน", "รับสมัครง่ายกว่า เงินพอใช้ แต่ต้องไปประจำพื้นที่ไกล", [{"role": "soldier"}, {"flag": "career-uniform"}, s("health", -3), {"cond": "homesick", "turns": 4}, {"die": "work", "p": 0.01}])
+      c("volunteer", "เป็นอาสาสมัครทหารพราน", "รับสมัครง่ายกว่า เงินพอใช้ แต่ต้องไปประจำพื้นที่ไกล", [{"role": "soldier"}, {"flag": "career-uniform"}, {"edu": {"in": null, "grade": 0}}, s("health", -3), {"cond": "homesick", "turns": 4}, {"die": "work", "p": 0.01}])
     ],
     "career-saudi": [
       c("agent", "หาเอเจนซีที่มีใบอนุญาต", "ค่าหัวแพงกว่าแต่มีสัญญาชัด ต้องกู้ญาติเพิ่ม", [{"role": "abroad"}, {"flag": "career-abroad"}, {"move": {"kind": "abroad", "country": "ซาอุดีอาระเบีย"}}, m(-25), {"cond": "homesick", "turns": 5}]),
@@ -345,7 +345,7 @@ globalThis.KI = globalThis.KI || {}; KI.data = KI.data || {};
       c("country", "ไปประเทศใหม่", "ใช้ประสบการณ์ไปทำงานประเทศที่ค่าแรงสูงกว่า", [{"move": {"kind": "abroad", "country": "เกาหลีใต้"}}, m(-10), {"cond": "homesick", "turns": 3}])
     ],
     "career-phinoi-risk": [
-      c("lawyer", "ขอนายจ้างช่วยทำเอกสาร", "ถ้าได้ จะทำงานต่อแบบถูกกฎหมาย ถ้าไม่ได้ เสียเงินเปล่า", [m(-5)], undefined, [{"p": 0.4, "text": "ได้วีซ่าทำงานถูกต้อง", "effects": [{"flag": "career-phinoi", "v": false}, s("happy", 5)]}, {"p": 0.6, "text": "เอกสารไม่ผ่าน เงินหายไปเปล่าๆ", "effects": [s("happy", -4)]}]),
+      c("lawyer", "ขอนายจ้างช่วยทำเอกสาร", "ถ้าได้ จะทำงานต่อแบบถูกกฎหมาย ถ้าไม่ได้ เสียเงินเปล่า", [m(-5)], undefined, [{"p": 0.4, "text": "ได้วีซ่าทำงานถูกต้อง", "effects": [{"flag": "career-phinoi", "v": false}, {"flag": "wr-illegalKorea", "v": false}, s("happy", 5)]}, {"p": 0.6, "text": "เอกสารไม่ผ่าน เงินหายไปเปล่าๆ", "effects": [s("happy", -4)]}]),
       c("move", "ย้ายไปเมืองอื่น", "หนีการตรวจชั่วคราว แต่ต้องหางานใหม่", [m(-3), s("happy", -2)])
     ],
     "career-returnee-next": [

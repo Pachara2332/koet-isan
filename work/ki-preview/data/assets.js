@@ -1,6 +1,8 @@
 globalThis.KI = globalThis.KI || {}; KI.data = KI.data || {};
 KI.data.assets = {
   "note": "ราคาหุ้นและอสังหาฯ เป็นราคาจำลองของเกม ไม่ใช่ราคาจริง ทิศทางปีวิกฤตอิงเหตุการณ์จริงโดยประมาณ (ต้มยำกุ้ง 2540, วิกฤตการเงินโลก 2551, โควิด 2563) ชื่อย่อหุ้นเป็นชื่อที่ใช้ในปัจจุบัน บางบริษัทเคยใช้ชื่ออื่นในอดีต ปีที่เปิดให้ซื้อในเกมอิงปีเข้าตลาดหลักทรัพย์โดยประมาณ",
+  "foreignNote": "หุ้นต่างประเทศเปิดให้ซื้อในเกมตั้งแต่ พ.ศ. 2565 ปีที่ตลาดหลักทรัพย์ฯ เริ่มมีตราสารแสดงสิทธิ (DR) ของหุ้นต่างประเทศรายตัวให้คนไทยซื้อเป็นเงินบาท ก่อนหน้านั้นคนทั่วไปซื้อหุ้นนอกได้ยาก ปีเข้าตลาดจริงของแต่ละบริษัทอยู่ในช่อง listed",
+  "foreignSource": "https://www.bangkokpost.com/business/2258927/krungthai-ready-to-offer-alibaba-dr-investing-in-global-tech-company-on-14-17-feb",
   "stockUnit": 100,
   "stocks": [
     { "id": "SCC", "name": "ปูนซิเมนต์ไทย", "sector": "วัสดุก่อสร้าง", "from": 1975, "base": 40, "drift": 0.09, "vol": 0.22 },
@@ -11,7 +13,22 @@ KI.data.assets = {
     { "id": "BDMS", "name": "กรุงเทพดุสิตเวชการ", "sector": "โรงพยาบาล", "from": 1991, "base": 20, "drift": 0.11, "vol": 0.25 },
     { "id": "PTT", "name": "ปตท.", "sector": "พลังงาน", "from": 2001, "base": 50, "drift": 0.08, "vol": 0.25 },
     { "id": "CPALL", "name": "ซีพี ออลล์", "sector": "ค้าปลีก", "from": 2003, "base": 20, "drift": 0.12, "vol": 0.24 },
-    { "id": "AOT", "name": "ท่าอากาศยานไทย", "sector": "ขนส่ง", "from": 2004, "base": 30, "drift": 0.11, "vol": 0.24 }
+    { "id": "AOT", "name": "ท่าอากาศยานไทย", "sector": "ขนส่ง", "from": 2004, "base": 30, "drift": 0.11, "vol": 0.24 },
+    { "id": "AAPL", "name": "Apple (หุ้นสหรัฐฯ)", "sector": "เทคโนโลยี", "from": 2022, "listed": 1980, "foreign": true, "base": 40, "drift": 0.12, "vol": 0.25 },
+    { "id": "MSFT", "name": "Microsoft (หุ้นสหรัฐฯ)", "sector": "เทคโนโลยี", "from": 2022, "listed": 1986, "foreign": true, "base": 50, "drift": 0.12, "vol": 0.22 },
+    { "id": "AMZN", "name": "Amazon (หุ้นสหรัฐฯ)", "sector": "ค้าปลีกออนไลน์", "from": 2022, "listed": 1997, "foreign": true, "base": 30, "drift": 0.12, "vol": 0.3 },
+    { "id": "GOOGL", "name": "Alphabet (Google) (หุ้นสหรัฐฯ)", "sector": "เทคโนโลยี", "from": 2022, "listed": 2004, "foreign": true, "base": 30, "drift": 0.11, "vol": 0.27 },
+    { "id": "META", "name": "Meta (Facebook) (หุ้นสหรัฐฯ)", "sector": "โซเชียลมีเดีย", "from": 2022, "listed": 2012, "foreign": true, "base": 25, "drift": 0.12, "vol": 0.4 },
+    { "id": "NVDA", "name": "Nvidia (หุ้นสหรัฐฯ)", "sector": "ชิปคอมพิวเตอร์", "from": 2022, "listed": 1999, "foreign": true, "base": 15, "drift": 0.2, "vol": 0.45 },
+    { "id": "TSLA", "name": "Tesla (หุ้นสหรัฐฯ)", "sector": "รถยนต์ไฟฟ้า", "from": 2022, "listed": 2010, "foreign": true, "base": 40, "drift": 0.1, "vol": 0.55 },
+    { "id": "KO", "name": "Coca-Cola (หุ้นสหรัฐฯ)", "sector": "เครื่องดื่ม", "from": 2022, "listed": 1919, "foreign": true, "base": 20, "drift": 0.05, "vol": 0.14 },
+    { "id": "7203", "name": "Toyota (หุ้นญี่ปุ่น)", "sector": "รถยนต์", "from": 2022, "listed": 1949, "foreign": true, "base": 20, "drift": 0.07, "vol": 0.22 },
+    { "id": "6758", "name": "Sony (หุ้นญี่ปุ่น)", "sector": "อิเล็กทรอนิกส์และบันเทิง", "from": 2022, "listed": 1958, "foreign": true, "base": 30, "drift": 0.08, "vol": 0.25 },
+    { "id": "005930", "name": "Samsung Electronics (หุ้นเกาหลีใต้)", "sector": "อิเล็กทรอนิกส์", "from": 2022, "listed": 1975, "foreign": true, "base": 20, "drift": 0.08, "vol": 0.28 },
+    { "id": "2330", "name": "TSMC (หุ้นไต้หวัน)", "sector": "ชิปคอมพิวเตอร์", "from": 2022, "listed": 1994, "foreign": true, "base": 25, "drift": 0.14, "vol": 0.32 },
+    { "id": "BABA", "name": "Alibaba (หุ้นจีน จดทะเบียนในสหรัฐฯ)", "sector": "ค้าปลีกออนไลน์", "from": 2022, "listed": 2014, "foreign": true, "base": 30, "drift": 0.04, "vol": 0.45 },
+    { "id": "0700", "name": "Tencent (หุ้นฮ่องกง)", "sector": "เกมและโซเชียลมีเดีย", "from": 2022, "listed": 2004, "foreign": true, "base": 30, "drift": 0.07, "vol": 0.35 },
+    { "id": "NESN", "name": "Nestlé (หุ้นสวิตเซอร์แลนด์)", "sector": "อาหารและเครื่องดื่ม", "from": 2022, "listed": 1905, "foreign": true, "base": 25, "drift": 0.04, "vol": 0.14 }
   ],
   "stockShocks": { "1997": -0.5, "1998": -0.15, "1999": 0.3, "2008": -0.45, "2009": 0.5, "2020": -0.12 },
   "property": [
@@ -24,6 +41,15 @@ KI.data.assets = {
     { "id": "condo-bkk", "name": "คอนโดใกล้รถไฟฟ้าในกรุงเทพฯ", "grade": "ทำเลทอง", "where": "bangkok", "from": 1999, "base": 2600, "growth": 0.05, "vol": 0.08, "info": "อยู่เองหรือปล่อยเช่าคนทำงาน ใกล้แหล่งงานในเมืองใหญ่" }
   ],
   "propertyShocks": { "1997": -0.25, "1998": -0.12, "2020": -0.05 },
+  "personal": [
+    {"id":"home-small","kind":"home","label":"ทาวน์เฮาส์หลังเล็ก","days":3000},
+    {"id":"home-medium","kind":"home","label":"บ้านเดี่ยวสำหรับครอบครัว","days":6000},
+    {"id":"home-large","kind":"home","label":"บ้านเดี่ยวหลังใหญ่","days":12000},
+    {"id":"car-small","kind":"car","label":"รถยนต์ขนาดเล็ก","days":1800},
+    {"id":"car-pickup","kind":"car","label":"รถกระบะ","days":2600},
+    {"id":"car-luxury","kind":"car","label":"รถยนต์ระดับหรู","days":6500},
+    {"id":"car-electric","kind":"car","label":"รถยนต์ไฟฟ้า","days":4000,"from":2022}
+  ],
   "borderProvinces": ["nong-khai", "bueng-kan", "nakhon-phanom", "mukdahan", "loei", "ubon-ratchathani"]
 };
 KI.data.hobbies = [

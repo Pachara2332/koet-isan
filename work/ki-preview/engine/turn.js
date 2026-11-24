@@ -4,8 +4,8 @@ globalThis.KI = globalThis.KI || {};
   const MAX_WORLD = 2;
   const PERSONAL_CHANCE = 0.8;
   const PRESET_TAG = 'ทางของต้นเรื่อง';
-  const FOCUS_TITLE = 'ปีนี้เอาจังได๋';
-  const FOCUS_BODY = 'เลือกสิ่งที่จะทุ่มเทให้มากที่สุดตลอดปีนี้ ผลจะค่อยๆ สะสมไปทุกฤดู';
+  const FOCUS_TITLE = 'ช่วงนี้เอาจังได๋';
+  const FOCUS_BODY = 'เลือกสิ่งที่จะทุ่มเทในช่วงชีวิตนี้ ผลจะค่อยๆ สะสมไปทุกฤดู และเปลี่ยนเองได้ตลอด';
 
   const ROLE_LABELS = {
     child: 'เด็ก', student: 'นักเรียน', farmer: 'ชาวนา', factory: 'คนงานโรงงาน', construction: 'คนงานก่อสร้าง',
@@ -87,7 +87,7 @@ globalThis.KI = globalThis.KI || {};
 
   function placeLabel(data, loc, year, withSetting) {
     if (loc.kind === 'bangkok') return 'กรุงเทพฯ';
-    if (loc.kind === 'abroad') return loc.country ? 'ต่างประเทศ (' + loc.country + ')' : 'ต่างประเทศ';
+    if (loc.kind === 'abroad') return loc.country || 'ต่างประเทศ (ไม่ระบุประเทศ)';
     const name = KI.tables.provinceName(data, loc.province, year);
     return withSetting ? name + ' (' + (loc.setting === 'urban' ? 'ในเมือง' : 'ชนบท') + ')' : name;
   }
@@ -98,13 +98,29 @@ globalThis.KI = globalThis.KI || {};
     return s.t - s.seen[id] >= cooldown;
   }
 
-  function choicesOf(src, s, rng) {
+  function choicesOf(src, s, rng, data) {
     if (!src.choices || !src.choices.length) return null;
     const out = [];
     for (const c of src.choices) {
       if (!KI.cond.test(c.when, s, rng)) continue;
+      const directCost = data && KI.game ? KI.game.moneyCost(c.effects, s, data) : 0;
+      if (c.requiresFunds && s.money < directCost || c.requiresShortfall && s.money >= directCost) continue;
       const p = c.preset && s.preset && c.preset[s.preset];
-      out.push({ id: c.id, label: (p && p.label) || c.label, tag: p && p.tag ? PRESET_TAG : null });
+      let label = (p && p.label) || c.label;
+      const moves = [...(c.effects || []), ...(c.roll || []).flatMap((r) => r.effects || [])].filter((e) => e.move && e.move.kind === 'abroad').map((e) => e.move);
+      const countries = [...new Set(moves.map((m) => m.country).filter(Boolean))];
+      if (countries.length && !countries.every((country) => label.includes(country))) label += ' · ปลายทาง ' + countries.join(' / ');
+      const description = [label, c.text || '', src.body || ''].join(' ');
+      const method = moves.length && (moves[0].method || (/ผีน้อย|ไม่มีใบอนุญาต|นักท่องเที่ยวแล้วอยู่/.test(description) ? 'เข้าแบบนักท่องเที่ยวแล้วอยู่ทำงาน' : /EPS|ระบบรัฐ|โครงการส่งแรงงาน/.test(description) ? 'สมัครผ่านโครงการของรัฐ' : /นายหน้า|บริษัทจัดหางาน|เอเจนซี/.test(description) ? 'ผ่านบริษัทจัดหางานหรือนายหน้า' : /สอบ|คัดเลือก|สมัคร/.test(description) ? 'สมัครและผ่านการคัดเลือก' : 'ไม่ได้ระบุวิธีเดินทาง'));
+      if (method && !label.includes(method)) label += ' · ' + method;
+      const kidCost = data && KI.game && s.year - s.birthYear >= 6 && s.year - s.birthYear < 15 ? KI.game.moneyCost(c.effects, s, data) : 0;
+      if (kidCost > 0) {
+        out.push({ id: c.id + '@parents', label: label + ' · ขอเงินพ่อแม่', tag: null, cost: kidCost, kid: 'parents' });
+        out.push({ id: c.id + '@earn', label: label + ' · ช่วยงานรับจ้างเก็บเงินเอง', tag: null, cost: kidCost, kid: 'earn' });
+        continue;
+      }
+      const cost = data && KI.game && s.year - s.birthYear >= 15 ? KI.game.moneyCost(c.effects, s, data) : 0;
+      out.push({ id: c.id, label, tag: p && p.tag ? PRESET_TAG : null, cost, borrow: cost > 0 && cost > Math.max(0, s.money), travelMethod: method || null });
     }
     return out.length ? out : null;
   }
@@ -147,18 +163,24 @@ globalThis.KI = globalThis.KI || {};
     return Array.isArray(when.any) && when.any.some((w) => forRole(w, r));
   }
 
-  function storyCard(s, data, settings, rng) {
+  const REPEAT_CHANCE = 0.35;
+
+  function storyCard(s, data, settings, rng, excluded) {
     const hidden = (x) => (settings.hideHeavy && x.heavy) || ((s.role === 'monk' || s.role === 'prisoner') && !forRole(x.when, s.role));
-    for (const d of data.decisions || []) {
-      if (hidden(d) || !cooled(s, d.id, d.cooldown)) continue;
-      if (!KI.cond.test(d.when, s, rng)) continue;
-      return card('decision', d, { major: d.major !== false, choices: choicesOf(d, s, rng) });
-    }
-    if (!rng.chance(PERSONAL_CHANCE)) return null;
-    const pool = (data.personalEvents || []).filter((p) => !hidden(p) && cooled(s, p.id, p.cooldown) && KI.cond.test(p.when, s, rng));
-    const p = rng.weighted(pool, (x) => (typeof x.w === 'number' ? x.w : 10));
-    if (!p) return null;
-    return card('personal', p, { major: false, choices: choicesOf(p, s, rng) });
+    const eligible = (x) => x.id !== excluded && x.id !== 'have-child' && !x.reflectionOnly && !hidden(x) && cooled(s, x.id, x.cooldown) && KI.cond.test(x.when, s, rng);
+    const decisions = (data.decisions || []).filter(eligible);
+    const choose = (pool) => rng.weighted(pool, (x) => typeof x.w === 'number' ? x.w : 10);
+    let selected = choose(decisions.filter((x) => x.urgent));
+    if (selected) return card('decision', selected, { major: selected.major !== false, choices: choicesOf(selected, s, rng, data) });
+    selected = choose(decisions.filter((x) => !(x.id in s.seen)));
+    if (selected) return card('decision', selected, { major: selected.major !== false, choices: choicesOf(selected, s, rng, data) });
+    const personal = rng.chance(PERSONAL_CHANCE) ? (data.personalEvents || []).filter(eligible) : [];
+    selected = choose(personal.filter((x) => !(x.id in s.seen)));
+    if (selected) return card('personal', selected, { major: false, choices: choicesOf(selected, s, rng, data) });
+    selected = rng.chance(REPEAT_CHANCE) ? choose(decisions) : null;
+    if (selected) return card('decision', selected, { major: selected.major !== false, choices: choicesOf(selected, s, rng, data) });
+    selected = choose(personal);
+    return selected ? card('personal', selected, { major: false, choices: choicesOf(selected, s, rng, data) }) : null;
   }
 
   function quietCard(s, rng) {
@@ -173,23 +195,33 @@ globalThis.KI = globalThis.KI || {};
     const age = state.year - state.birthYear;
     const head = {
       yearBE: state.year + 543, yearCE: state.year, age, season: state.season,
-      place: placeLabel(data, state.loc, state.year, true), roleLabel: roleLabel(state),
+      place: placeLabel(data, state.loc, state.year, true) + (state.loc.kind === 'abroad' ? ' (กลับไทยที่ ' + KI.tables.provinceName(data, state.home.province, state.year) + ')' : ''), roleLabel: roleLabel(state),
       future: state.year > LAST_REAL_YEAR
     };
     const cards = worldCards(state, data, settings);
-    if (state.season === 0 && age >= 6) {
+    let nextReflectionYear = null, reflectionId = null;
+    if (state.season === 0 && age >= 6 && (!Number.isFinite(state.nextReflectionYear) || state.year >= state.nextReflectionYear)) {
+      const candidates = ['have-child','reflect-parenthood','reflect-retirement','child-with-grandparents','career-abroad-return','career-returnee-next','career-burnout','after-p6','after-m3'];
+      const entries = [...(data.decisions || []).map((item) => ({item,kind:'decision'})),...(data.personalEvents || []).map((item) => ({item,kind:'personal'}))];
+      const available = entries.filter(({item}) => candidates.includes(item.id) && !(settings.hideHeavy && item.heavy) && cooled(state,item.id,item.cooldown) && KI.cond.test(item.when,state,rng));
+      const priorities = available.filter(({item}) => item.id === 'have-child' || item.id === 'reflect-parenthood' || item.id === 'reflect-retirement');
+      const reflection = rng.weighted(priorities.length ? priorities : available, ({item}) => typeof item.w === 'number' ? item.w : 10);
       const opts = (data.focus || []).filter((f) => KI.cond.test(f.when, state, rng) && (state.role !== 'monk' || ['merit', 'study', 'health'].includes(f.id)) && (state.role !== 'prisoner' || ['study', 'health', 'merit'].includes(f.id)));
-      if (opts.length) {
+      if (reflection) {
+        reflectionId = reflection.item.id;
+        cards.push(card(reflection.kind, reflection.item, {title:FOCUS_TITLE+' · '+reflection.item.title,major:true,reflection:true,choices:choicesOf(reflection.item,state,rng,data)}));
+      } else if (opts.length) {
         cards.push(card('focus', { id: 'focus', title: FOCUS_TITLE, body: FOCUS_BODY }, {
-          choices: opts.map((f) => ({ id: f.id, label: f.label, tag: null }))
+          reflection:true,choices: opts.map((f) => ({ id: f.id, label: f.label, tag: null }))
         }));
       }
+      if (reflection || opts.length) nextReflectionYear = state.year + 5 + rng.int(6);
     }
-    const story = storyCard(state, data, settings, rng);
+    const story = storyCard(state, data, settings, rng, reflectionId);
     if (story) cards.push(story);
     if (!cards.length) cards.push(quietCard(state, rng));
-    return { head, cards };
+    return { head, cards, nextReflectionYear };
   }
 
-  KI.turn = { build, roleLabel, placeLabel, ROLE_LABELS };
+  KI.turn = { build, choicesOf, roleLabel, placeLabel, ROLE_LABELS };
 })();

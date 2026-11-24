@@ -120,6 +120,8 @@
 }
 
 .ki-scene .pl{opacity:0;visibility:hidden;transition:opacity 1.2s ease,visibility 0s linear 1.2s}
+.ki-scene .landmark{display:none}
+.ki-scene[data-country="taiwan"] .landmark-taiwan,.ki-scene[data-country="japan"] .landmark-japan,.ki-scene[data-country="korea"] .landmark-korea,.ki-scene[data-country="singapore"] .landmark-singapore,.ki-scene[data-country="saudi"] .landmark-saudi,.ki-scene[data-country="israel"] .landmark-israel,.ki-scene[data-country="qatar"] .landmark-qatar,.ki-scene[data-country="australia"] .landmark-australia{display:inline}
 .ki-scene[data-place="rural"] .pl-rural,
 .ki-scene[data-place="town"] .pl-town,
 .ki-scene[data-place="mekong"] .pl-mekong,

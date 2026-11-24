@@ -4,15 +4,47 @@ globalThis.KI = globalThis.KI || {};
     'maha-sarakham', 'mukdahan', 'yasothon', 'roi-et', 'loei', 'sisaket', 'sakon-nakhon', 'surin', 'nong-khai',
     'nong-bua-lamphu', 'udon-thani', 'ubon-ratchathani', 'amnat-charoen'];
   const NAMES = {
-    m: ['สมศักดิ์', 'ประเสริฐ', 'อนุชา', 'ธนากร', 'วีระพงษ์', 'กิตติพงษ์', 'บุญมี', 'วิชัย', 'สุรชัย', 'สมชาย', 'อำนาจ', 'ไพศาล', 'วสันต์', 'ชัยวัฒน์', 'นพดล', 'ศุภชัย', 'ธวัชชัย', 'ภูวดล', 'พงศกร', 'ณัฐวุฒิ', 'ภาคิน', 'ก้องภพ', 'ชาญชัย', 'สิทธิชัย'],
-    f: ['สุภาพร', 'วันเพ็ญ', 'กาญจนา', 'อรอุมา', 'จันทร์เพ็ญ', 'พรทิพย์', 'สมพร', 'บุญเรือน', 'อำพร', 'สายใจ', 'วาสนา', 'รัตนา', 'ดวงใจ', 'มาลี', 'สุชาดา', 'พิมพ์ใจ', 'นภา', 'ศิริพร', 'อรทัย', 'ชลธิชา', 'ธัญญา', 'นิตยา', 'กมลชนก', 'ปาริชาติ']
+    old: {
+      m: ['สมศักดิ์', 'ประเสริฐ', 'บุญมี', 'วิชัย', 'สุรชัย', 'สมชาย', 'อำนาจ', 'ไพศาล', 'วสันต์', 'ชัยวัฒน์', 'สมพงษ์', 'ประยูร', 'บุญเลิศ', 'ชาตรี', 'สุวิทย์', 'ทองหล่อ', 'วีระ', 'เสถียร', 'อุดม', 'สำราญ', 'ณรงค์', 'ไพโรจน์', 'สมบัติ', 'บุญช่วย', 'คำพอง', 'ทองใบ', 'บุญส่ง', 'สมหมาย', 'สมบูรณ์', 'ประสิทธิ์', 'สุพจน์', 'บุญธรรม', 'ชูชาติ', 'สุรศักดิ์', 'เกรียงไกร', 'พิชัย', 'มานพ', 'สมเกียรติ', 'ธีระ', 'วิเชียร', 'ประจักษ์', 'บรรจง', 'ศักดิ์ชัย', 'สุนทร', 'อนันต์', 'ไพบูลย์', 'ชาญ', 'สายัณห์', 'บุญยืน', 'คำแสน', 'ทองสุข', 'สมยศ', 'ประสาน', 'วิโรจน์', 'สุเมธ', 'เฉลิม', 'สงวน', 'จำลอง', 'ปัญญา', 'เสน่ห์', 'พยุง', 'สนิท', 'ประเทือง', 'ยุทธนา', 'สมนึก', 'ทวี', 'กิตติ', 'บุญชู', 'สุชาติ', 'วรวุฒิ', 'ประพันธ์', 'อดุลย์', 'ชัยยา', 'สมัย', 'คำมี', 'สุขสันต์', 'อุทัย', 'ธนู', 'ไชยา', 'บัวลอง', 'ทองดี'],
+      f: ['สุภาพร', 'วันเพ็ญ', 'กาญจนา', 'อรอุมา', 'จันทร์เพ็ญ', 'พรทิพย์', 'สมพร', 'บุญเรือน', 'อำพร', 'สายใจ', 'วาสนา', 'รัตนา', 'ดวงใจ', 'มาลี', 'สุชาดา', 'พิมพ์ใจ', 'นภา', 'ศิริพร', 'อรทัย', 'นิตยา', 'ประนอม', 'สุนันทา', 'บุษบา', 'ลำดวน', 'จำปา', 'พิมพา', 'อรุณี', 'ทองเหรียญ', 'ละเอียด', 'บัวผัน', 'คำแพง', 'บุญมา', 'สุดารัตน์', 'ยุพิน', 'วิไล', 'เพ็ญศรี', 'ศรีสุดา', 'สุพัตรา', 'บังอร', 'จันทร์ทิพย์', 'สมใจ', 'ประภา', 'อัมพร', 'มยุรี', 'ราตรี', 'สุนีย์', 'บุญหลาย', 'สร้อยทอง', 'เยาวลักษณ์', 'วิภา', 'กัลยา', 'สมปอง', 'ดารุณี', 'ปราณี', 'สุมาลี', 'รำไพ', 'พัชรี', 'สุกัญญา', 'อุไร', 'จินตนา', 'นงลักษณ์', 'แสงเดือน', 'บัวเรียน', 'คำปุน', 'ทองม้วน', 'สมศรี', 'ชนิดา', 'ลัดดา', 'อุบล', 'วนิดา', 'สมคิด', 'อนงค์', 'บุญยัง', 'มณี', 'หนูเวียง', 'ทองพูน']
+    },
+    new: {
+      m: ['อนุชา', 'ธนากร', 'วีระพงษ์', 'กิตติพงษ์', 'นพดล', 'ศุภชัย', 'ธวัชชัย', 'ภูวดล', 'พงศกร', 'ณัฐวุฒิ', 'ภาคิน', 'ก้องภพ', 'ชาญชัย', 'สิทธิชัย', 'ธนกร', 'ณัฐพล', 'ปิยะพงษ์', 'จิรายุ', 'ธีรภัทร', 'ศุภกร', 'ภานุวัฒน์', 'อภิสิทธิ์', 'ชยพล', 'กฤษดา', 'ณัฐพงศ์', 'วรากร', 'พีรพัฒน์', 'ธนวัฒน์', 'ปฏิภาณ', 'ศักดิ์สิทธิ์', 'เอกชัย', 'สุทธิพงษ์', 'อนุวัฒน์', 'ภัทรพล', 'ธีรวัฒน์', 'จักรพันธ์', 'ณัฐดนัย', 'กฤษณะ', 'ปัณณวัฒน์', 'วุฒิชัย', 'อิทธิพล', 'ธนพล', 'รัฐพล', 'ชนาธิป', 'วชิรวิทย์', 'พงษ์พันธ์', 'ภูริ', 'ปกรณ์', 'ศิวกร', 'กิตติศักดิ์', 'สหรัฐ', 'ธนดล', 'อัครพล', 'ทินกร', 'ณภัทร', 'ปริญญา', 'กิตติภูมิ', 'ณัฐกิตติ์', 'พชร', 'นันทวัฒน์', 'ภูมิพัฒน์', 'ธีรเดช', 'วรวิทย์', 'อดิศักดิ์', 'สุรเชษฐ์', 'พิทักษ์', 'ศรัณย์', 'ธันวา', 'ปวริศ', 'กันตพงศ์', 'ณัฐวัฒน์', 'จิรพัฒน์', 'ตะวัน', 'ภาณุพงศ์', 'อนันตชัย', 'วัชรพล', 'ทศพล', 'เจษฎา', 'พีรวิชญ์'],
+      f: ['ชลธิชา', 'ธัญญา', 'กมลชนก', 'ปาริชาติ', 'พิมพ์ชนก', 'ณัฐธิดา', 'สุธิดา', 'ศศิธร', 'อรอนงค์', 'จิราพร', 'ปิยะนุช', 'กนกวรรณ', 'ณัฐริกา', 'พัชราภรณ์', 'วรรณิศา', 'ธนพร', 'ศิรินทร์', 'อภิญญา', 'ณัฐณิชา', 'เบญจมาศ', 'ชนัญชิดา', 'ปวีณา', 'สุนิสา', 'กัญญารัตน์', 'พรรณนิภา', 'ธิดารัตน์', 'จุฑามาศ', 'วิลาวัณย์', 'อรวรรณ', 'กาญจนาภา', 'มัลลิกา', 'ทิพวรรณ', 'นันทิดา', 'ปภาวดี', 'ภัทรา', 'ณิชา', 'พิชญา', 'ชุติมา', 'สิริกร', 'อัญชลี', 'รุ่งนภา', 'ขวัญใจ', 'ณัฐกานต์', 'ปณิตา', 'ภัทราภรณ์', 'ศุภาวรรณ', 'ธมลวรรณ', 'ปิยธิดา', 'กชกร', 'ญาณิศา', 'พิชชาพร', 'ชญานิศ', 'สุพิชชา', 'วรัญญา', 'อารีรัตน์', 'เกศินี', 'ณัฐนันท์', 'ภาวินี', 'ธนัชพร', 'ลลิตา', 'มนัสนันท์', 'นภัสสร', 'ปุณยวีร์', 'กุลธิดา', 'ธนาภรณ์', 'สุจิตรา', 'เพ็ญพิชชา', 'อริสา', 'ศิริลักษณ์', 'จารุวรรณ', 'กัลยรัตน์', 'ธัญชนก', 'พรนภา', 'รัชนีกร', 'วรรณวิสา', 'อมรรัตน์', 'สุพรรษา', 'จันทร์จิรา']
+    }
   };
+  const NAME_ERA = 1990;
   const START_HEALTH = { poor: 65, mid: 70, rich: 75 };
   const RURAL_CHANCE = 0.75;
   const DEFAULT_POVERTY = 40;
   const RICH_SHARE = 0.2;
   const PADDY_TONS = 2;
-  const SICK_MORTALITY = 1.5;
+  const PADDY_TONS_MODERN = 3;
+  const PADDY_MODERN_YEAR = 2000;
+  const SICK_MORTALITY = 1.25;
+  const CHILD_MORTALITY = 0.1;
+  const ADULT_AGE = 18;
+  const HEALTH_RISK = [0.6, 1.4];
+  const ELDER_AGE = 60;
+  const ALLOWANCE_START = 2009;
+  const ALLOWANCE_FLAT = 500;
+  const ALLOWANCE_TIERS = [[90, 1000], [80, 800], [70, 700], [60, 600]];
+  const REMIT_DAYS = 5;
+  const PENSION_DAYS = 40;
+  const REMIT_AGE = 22;
+  const MONTHS = [4, 5, 3];
+  const INCOME_SCALE = 0.4;
+  const COST_BASE = 30;
+  const SALARY_ROLES = ['civil', 'teacher'];
+  const DEBT_TIERS = [
+    { level: 'crushing', below: -300, rate: 0.05, happy: -3, health: -1, bond: -1, label: 'หนี้ล้นตัว' },
+    { level: 'heavy', below: -100, rate: 0.05, happy: -3, health: -1, bond: -1, label: 'หนี้หนัก' },
+    { level: 'small', below: 0, rate: 0.03, happy: -2, health: 0, bond: 0, label: 'หนี้เล็ก' }
+  ];
+  const INTEREST_CAP = 2;
+  const PARENT_YES = { poor: 0.5, mid: 0.8, rich: 0.95 };
+  const PRIME_AGE_MORTALITY = 0.35;
+  const OLDER_MORTALITY = 0.85;
   const MAX_AGE = 100;
   const SKIP_LIMIT = 400;
   const SCHOOL_AGE = 6;
@@ -37,7 +69,28 @@ globalThis.KI = globalThis.KI || {};
     heart: 'โรคหัวใจ', kidney: 'ไตวาย', diabetes: 'เบาหวานและโรคแทรกซ้อน', dengue: 'ไข้เลือดออก', snake: 'งูกัด',
     lightning: 'ฟ้าผ่า', electric: 'ไฟฟ้าดูด', fight: 'ถูกทำร้ายจากการทะเลาะวิวาท', alcohol: 'พิษสุราเรื้อรัง',
     hiv: 'โรคเอดส์', abroad: 'เสียชีวิตขณะทำงานต่างประเทศ', fire: 'ไฟไหม้', fall: 'พลัดตกจากที่สูง',
-    'prison-fight': 'ถูกทำร้ายในเรือนจำ', 'prison-illness': 'ป่วยหนักระหว่างต้องโทษในเรือนจำ', 'debt-fight': 'ถูกลูกหนี้ทำร้ายขณะทวงหนี้'
+    'prison-fight': 'ถูกทำร้ายในเรือนจำ', 'prison-illness': 'ป่วยหนักระหว่างต้องโทษในเรือนจำ', 'debt-fight': 'ถูกลูกหนี้ทำร้ายขณะทวงหนี้', 'debt-collector': 'ถูกเจ้าหนี้นอกระบบทำร้าย'
+  };
+  const CAUSE_DETAIL = {
+    'old-age': ['หลับไปอย่างสงบที่บ้าน ท่ามกลางลูกหลาน', 'ร่างกายอ่อนแรงลงตามวัย และจากไปอย่างสงบในคืนหนึ่ง', 'ล้มป่วยเล็กน้อยตามวัย แล้วจากไปอย่างสงบในโรงพยาบาลอำเภอ'],
+    illness: ['ปอดติดเชื้อรุนแรง รักษาไม่ทัน', 'ติดเชื้อในกระแสเลือด', 'ไข้สูงหลายวัน กว่าจะถึงโรงพยาบาลก็สายไป'],
+    cancer: ['มะเร็งปอดระยะที่ 4 ตรวจพบเมื่อลุกลามแล้ว', 'มะเร็งตับระยะลุกลาม', 'มะเร็งลำไส้ใหญ่ระยะที่ 4', 'มะเร็งเต้านมระยะลุกลาม', 'มะเร็งปากมดลูกระยะที่ 4'],
+    liver: ['มะเร็งท่อน้ำดีระยะที่ 4 จากพยาธิใบไม้ตับที่สะสมมานาน', 'ตับแข็งระยะสุดท้ายจากพยาธิใบไม้ตับ'],
+    stroke: ['เส้นเลือดในสมองแตก หมดสติกะทันหัน', 'เส้นเลือดในสมองตีบ ล้มลงในห้องน้ำ', 'เส้นเลือดในสมองแตกจากความดันสูงที่ไม่ได้รักษา'],
+    heart: ['หัวใจวายเฉียบพลันขณะนอนหลับ', 'กล้ามเนื้อหัวใจขาดเลือด เจ็บหน้าอกแล้วไปโรงพยาบาลไม่ทัน'],
+    kidney: ['ไตวายเรื้อรังระยะสุดท้าย หลังฟอกไตมาหลายปี', 'ไตวายระยะสุดท้าย ไม่มีทุนฟอกไตต่อเนื่อง'],
+    diabetes: ['แผลเบาหวานที่เท้าติดเชื้อลุกลาม', 'เบาหวานแทรกซ้อนจนไตวาย'],
+    alcohol: ['ตับแข็งระยะสุดท้ายจากการดื่มสุราเรื้อรัง', 'เลือดออกในกระเพาะจากพิษสุราเรื้อรัง'],
+    road: ['มอเตอร์ไซค์ชนกับรถกระบะ ไม่ได้สวมหมวกกันน็อก', 'รถตู้โดยสารเสียหลักตกข้างทางช่วงเทศกาล', 'ขี่มอเตอร์ไซค์กลับจากวงเหล้าแล้วชนท้ายรถบรรทุก'],
+    fight: ['ถูกยิงเสียชีวิตหลังมีปากเสียงกับคนเมาในงานบุญ', 'ถูกแทงหลังทะเลาะวิวาทในวงเหล้า', 'ถูกยิงหลังกวนประสาทคู่อริในงานวัด'],
+    drown: ['จมน้ำขณะหาปลาในหนองน้ำ', 'จมน้ำในแม่น้ำช่วงน้ำหลาก'],
+    dengue: ['ไข้เลือดออกระยะช็อก'],
+    snake: ['ถูกงูเห่ากัดกลางทุ่งนา ไปโรงพยาบาลไม่ทัน'],
+    lightning: ['ถูกฟ้าผ่ากลางทุ่งนาช่วงฝนตก'],
+    electric: ['ไฟฟ้าดูดขณะซ่อมสายไฟในบ้าน'],
+    work: ['พลัดตกจากนั่งร้านในไซต์ก่อสร้าง', 'เครื่องจักรในโรงงานหนีบ'],
+    hiv: ['ภาวะแทรกซ้อนจากโรคเอดส์ ในยุคที่ยาต้านไวรัสยังเข้าไม่ถึง'],
+    'debt-collector': ['ถูกคนของเจ้าหนี้นอกระบบทำร้ายจนเสียชีวิต']
   };
   const ILLNESS = [['cancer', 3], ['stroke', 3], ['heart', 3], ['kidney', 1], ['illness', 2]];
   const OTHER_CAUSE = 'เหตุไม่คาดฝัน';
@@ -89,15 +142,21 @@ globalThis.KI = globalThis.KI || {};
     const given = cfg.traits || {};
     const traits = {};
     for (const k of ['attach', 'grit', 'social']) traits[k] = typeof given[k] === 'number' ? given[k] : rng.int(101);
-    const name = cfg.name || rng.pick(NAMES[sex] || NAMES.m);
+    const namePool = NAMES[birthYear < NAME_ERA ? 'old' : 'new'][sex] || NAMES.new.m;
+    const avoid = new Set(cfg.avoidNames || []);
+    const fresh = namePool.filter((n) => !avoid.has(n));
+    const name = cfg.name || rng.pick(fresh.length ? fresh : namePool);
     const learn = Math.round((0.55 + (rng.next() + rng.next() + rng.next()) / 3 * 0.9) * 100) / 100;
     const gifts = {};
     const giftCount = rng.weighted([[0, 25], [1, 50], [2, 20], [3, 5]], (x) => x[1])[0];
     const pool = TALENTS.slice();
     for (let i = 0; i < giftCount; i++) gifts[pool.splice(rng.int(pool.length), 1)[0]] = rng.weighted([[1, 55], [2, 33], [3, 12]], (x) => x[1])[0];
+    const disabilityRoll=rng.int(300);
+    const disability=disabilityRoll===0?'birth':null;
+    const disabilityAccidentAge=disabilityRoll===1?8+rng.int(68):null;
     return {
       v: 1, rng: rng.state(), t: 0,
-      name, sex, birthYear, year: birthYear, season: null,
+      name, sex, birthYear, year: birthYear, season: null, disability, disabilityAccidentAge,
       home: { province, setting },
       loc: { kind: 'isan', province, setting, country: null },
       wealth,
@@ -141,10 +200,26 @@ globalThis.KI = globalThis.KI || {};
     let s = state;
     const rng = KI.rng.make(state.rng);
     let changed = false;
+    if (s.turn) {
+      const index = s.turn.cards.findIndex((c) => c.id === 'biz-grow-3' && c.picked === null);
+      const src = index >= 0 && (data.decisions || []).find((d) => d.id === 'biz-grow-3');
+      if (src) {
+        const choices = KI.turn.choicesOf(src, s, rng, data);
+        if (JSON.stringify(choices) !== JSON.stringify(s.turn.cards[index].choices)) {
+          s = clone(s);
+          s.turn.cards[index].choices = choices;
+          changed = true;
+        }
+      }
+    }
     if (!s.turn) {
       s = clone(s);
+      if(!s.disability && Number.isFinite(s.disabilityAccidentAge) && s.year-s.birthYear>=s.disabilityAccidentAge) {
+        s.disability='accident';s.flags.disabilityAccidentPending=true;s.disabilityAccidentAge=null;
+      }
       const built = KI.turn.build(s, data, settings || {}, rng);
       s.turn = { head: built.head, cards: built.cards, pin: null };
+      if (built.nextReflectionYear !== null) s.nextReflectionYear = built.nextReflectionYear;
       for (const c of built.cards) if (c.kind === 'personal' || c.kind === 'decision') s.seen[c.id] = s.t;
       changed = true;
     }
@@ -168,7 +243,9 @@ globalThis.KI = globalThis.KI || {};
     if (state.death || !card || !card.choices || card.picked !== null) return state;
     const shown = card.choices.find((c) => c.id === choiceId);
     const src = sourceOf(data, card);
-    const choice = src && (src.choices || []).find((c) => c.id === choiceId);
+    const baseId = String(choiceId).split('@')[0];
+    const kidMode = String(choiceId).split('@')[1] || null;
+    const choice = src && (src.choices || []).find((c) => c.id === baseId);
     if (!shown || !choice) return state;
     const rng = KI.rng.make(state.rng);
     let s = state;
@@ -179,17 +256,22 @@ globalThis.KI = globalThis.KI || {};
       s.focus = choiceId;
       text = 'ปีนี้ตั้งใจทุ่มเทให้: ' + shown.label;
     } else {
-      const r = KI.effects.apply(s, choice.effects || [], data, rng);
+      const noMoney = (list) => kidMode ? (list || []).filter((e) => typeof e.money !== 'number') : (list || []);
+      const cost = kidMode ? moneyCost(choice.effects, s, data) : 0;
+      const refused = kidMode === 'parents' && !rng.chance(PARENT_YES[s.wealth] || 0.75);
+      const extra = kidMode === 'earn' ? [{ stat: 'health', d: -2 }, { stat: 'happy', d: -1 }, { trait: 'grit', d: 2 }] : kidMode === 'parents' && !refused ? [{ stat: 'bond', d: 1 }] : [];
+      const r = KI.effects.apply(s, refused ? [{ stat: 'happy', d: -3 }] : [...noMoney(choice.effects), ...extra], data, rng);
       s = r.state;
       deltas = r.deltas;
-      text = choice.text || '';
-      if (choice.roll && !s.death) {
+      text = refused ? 'พ่อแม่บอกว่าช่วงนี้เงินไม่พอ เรื่องนี้ต้องรอไปก่อน' : (kidMode === 'earn' ? 'ช่วยงานรับจ้างและเก็บเงินอยู่หลายสัปดาห์จนพอ ' : kidMode === 'parents' ? 'พ่อแม่ควักเงินให้ ' : '') + (choice.text || '');
+      if (kidMode === 'parents' && !refused && cost) s.financeLog = [...(s.financeLog || []), { year: s.year, age: ageOf(s), label: 'พ่อแม่จ่ายให้ · ' + (src.title || ''), delta: 0, familyExpense: cost, category: 'family' }];
+      if (choice.roll && !s.death && !refused) {
         const x = rng.next();
         let acc = 0;
         for (const o of choice.roll) {
           acc += o.p;
           if (x < acc) {
-            const rr = KI.effects.apply(s, o.effects || [], data, rng);
+            const rr = KI.effects.apply(s, noMoney(o.effects), data, rng);
             s = rr.state;
             deltas = mergeDeltas(deltas, rr.deltas);
             text = text ? text + ' ' + (o.text || '') : o.text || '';
@@ -197,6 +279,7 @@ globalThis.KI = globalThis.KI || {};
           }
         }
       }
+      if (shown.travelMethod && s.loc.kind === 'abroad' && (state.loc.kind !== 'abroad' || state.loc.country !== s.loc.country)) s.loc.method = shown.travelMethod;
     }
     s.turn.cards[cardIndex].picked = choiceId;
     s.turn.cards[cardIndex].result = { text, deltas };
@@ -215,27 +298,114 @@ globalThis.KI = globalThis.KI || {};
     const age=ageOf(s), months=s.season===null?0:[4,5,3][s.season];
     const hours=s.hobbies && [4,16,40,80].includes(s.hobbies.gameCafeHours)?s.hobbies.gameCafeHours:4;
     const gaming=s.hobbies && s.hobbies.gameCafe && age>=7 && s.year>=2000 ? KI.tables.gameCafePrice(s)*hours*months : 0;
+    const living=livingMonthly(s,data);
     if (age < INCOME_AGE) {
-      const wage=KI.tables.wageDay(data,s.year);
       const factor={poor:0.75,mid:1,rich:1.5}[s.wealth] || 1;
-      return {income:0,expense:0,familyExpense:Math.round(wage*(s.season===null?30:10)*factor)+gaming,familySupport:0,hobbyExpense:0,familyHobbyExpense:gaming};
+      return {income:0,expense:0,familyExpense:Math.round(living*KI.tables.childWeight(data,age)*(s.season===null?12:months)*factor)+gaming,familySupport:0,hobbyExpense:0,familyHobbyExpense:gaming};
     }
     if (!r || s.season === null) return {income:0,expense:0,familyExpense:0,familySupport:0,hobbyExpense:0,familyHobbyExpense:0};
     const wage=KI.tables.wageDay(data,s.year);
-    let income=r.incomeDays[s.season]*wage;
+    let income=SALARY_ROLES.includes(s.role) ? KI.tables.salary(data,s.year)*months : r.incomeDays[s.season]*wage*months*INCOME_SCALE;
     const biz=Math.min(BIZ_INCOME.length-1,(s.counters && s.counters.biz) || 0);
     if(biz && s.role!=='monk')income+=BIZ_INCOME[biz]*wage;
-    let expense=r.costDays[s.season]*wage;
-    if (!['student','monk','prisoner'].includes(s.role)) {
-      const kids=((s.family && s.family.children) || []).filter((c)=>s.year-c.birthYear>=0 && s.year-c.birthYear<22).length;
-      expense=expense*({frugal:0.85,comfort:1.3}[s.flags.spendLevel] || 1)+kids*8*wage;
-    }
-    if (s.role === 'farmer' && s.season === 2 && data.stats.paddy && data.stats.paddy.length) income+=KI.tables.paddyPrice(data,s.year)*PADDY_TONS;
-    const supportRate={poor:0.25,mid:0.75,rich:1}[s.wealth] || 0;
-    const familySupport=s.role==='student' && age<=22 ? Math.round(expense*supportRate) : 0;
+    let expense=monthlyCost(s,data)*months;
+    if (s.role === 'farmer' && s.season === 2 && data.stats.paddy && data.stats.paddy.length) income+=KI.tables.paddyPrice(data,s.year)*(s.year>=PADDY_MODERN_YEAR?PADDY_TONS_MODERN:PADDY_TONS);
+    const allowance=elderAllowance(s);
+    const remit=childRemittance(s,wage);
+    const pension=s.role==='retired' && s.flags.retiredFrom ? PENSION_DAYS*wage : 0;
+    income+=allowance+remit+pension;
+    const supportRate={poor:0.6,mid:0.85,rich:1}[s.wealth] || 0;
+    const familySupport=(s.role==='student' && age<=22) || (s.role==='jobless' && age<ADULT_AGE) ? Math.round(expense*supportRate) : 0;
     const hobbyExpense=gaming && s.money+income+familySupport-expense>=gaming?gaming:0;
     expense+=hobbyExpense;
-    return {income:Math.round(income),expense:Math.round(expense),familyExpense:0,familySupport,hobbyExpense,familyHobbyExpense:0};
+    return {income:Math.round(income),expense:Math.round(expense),familyExpense:0,familySupport,hobbyExpense,familyHobbyExpense:0,allowance,remit,pension:Math.round(pension)};
+  }
+
+  function livingMonthly(s, data) {
+    return KI.tables.livingCost(data,s.year,KI.tables.livingPlace(s.loc));
+  }
+
+  function monthlyCost(s, data) {
+    const r=data.stats.roles[s.role], living=livingMonthly(s,data);
+    const cost=living*r.costDays[s.season===null?0:s.season]/COST_BASE;
+    if (['student','monk','prisoner'].includes(s.role)) return cost;
+    const kids=((s.family && s.family.children) || []).reduce((sum,c)=>sum+KI.tables.childWeight(data,s.year-c.birthYear),0);
+    return cost*({frugal:0.85,comfort:1.3}[s.flags.spendLevel] || 1)+kids*living;
+  }
+
+  function elderAllowance(s) {
+    const age=ageOf(s);
+    if (age < ELDER_AGE || s.year < ALLOWANCE_START || s.season === null || s.flags.retiredFrom) return 0;
+    const months=s.year===ALLOWANCE_START && s.season===0 ? 1 : MONTHS[s.season];
+    const tiered=s.year>2011 || (s.year===2011 && s.season===2);
+    const monthly=tiered ? ALLOWANCE_TIERS.find(([from])=>age>=from)[1] : ALLOWANCE_FLAT;
+    return monthly*months;
+  }
+
+  function childRemittance(s, wage) {
+    const grown=((s.family && s.family.children) || []).filter((c)=>s.year-c.birthYear>=REMIT_AGE).length;
+    if (!grown || ['monk','prisoner'].includes(s.role)) return 0;
+    return Math.round(grown*REMIT_DAYS*wage*clamp(s.stats.bond/60,0.3,1.5));
+  }
+
+  function debtTier(s, data) {
+    if (ageOf(s) < INCOME_AGE || s.money >= 0 || s.role === 'student') return null;
+    const days=s.money/KI.tables.wageDay(data,s.year);
+    return DEBT_TIERS.find((t)=>days<t.below) || null;
+  }
+
+  function applyDebt(s, data) {
+    const tier=debtTier(s,data);
+    s.flags.debtLevel=tier ? tier.level : null;
+    s.flags.debtHeavy=!!tier && tier.level!=='small';
+    s.flags.debtCrushing=!!tier && tier.level==='crushing';
+    if (!tier) {
+      s.debtInterest=0;
+      s.debtPrincipal=0;
+      return 0;
+    }
+    const owed=-s.money, paid=s.debtInterest || 0;
+    s.debtPrincipal=Math.max(s.debtPrincipal || 0,owed-paid);
+    const interest=Math.max(0,Math.min(Math.round(owed*tier.rate),Math.round(s.debtPrincipal*INTEREST_CAP-paid)));
+    s.money-=interest;
+    s.debtInterest=paid+interest;
+    s.stats.happy=clamp(s.stats.happy+tier.happy,0,100);
+    s.stats.health=clamp(s.stats.health+tier.health,0,100);
+    s.stats.bond=clamp(s.stats.bond+tier.bond,0,100);
+    if (interest) s.financeLog=[...(s.financeLog || []),{year:s.year,age:ageOf(s),label:'ดอกเบี้ย'+tier.label,delta:-interest,familyExpense:0,category:'interest'}];
+    return interest;
+  }
+
+  function serviceLoans(s) {
+    const loans=(s.loans || []).filter((l)=>l.balance>0);
+    if (!loans.length) return 0;
+    let paid=0;
+    s.loans=loans.map((l)=>{
+      const interest=Math.round(l.balance*l.rate);
+      const pay=Math.min(l.balance+interest,l.payment);
+      const short=s.money<pay && l.kind==='shark';
+      s.money-=pay;
+      paid+=pay;
+      if (short) s.flags.sharkLate=true;
+      if (s.money<0 && l.kind!=='shark') s.flags.loanDefault=true;
+      return { ...l, balance: Math.max(0, l.balance+interest-pay), left: Math.max(0, l.left-1) };
+    }).filter((l)=>l.balance>0);
+    if (!s.loans.some((l)=>l.kind==='shark')) s.flags.sharkLate=false;
+    s.financeLog=[...(s.financeLog || []),{year:s.year,age:ageOf(s),label:'ผ่อนเงินกู้',delta:-paid,familyExpense:0,category:'loan'}];
+    return paid;
+  }
+
+  function debtInfo(state, data) {
+    const tier=debtTier(state,data);
+    if (!tier) return null;
+    const owed=-state.money, paid=state.debtInterest || 0, principal=Math.max(state.debtPrincipal || 0,owed-paid);
+    return { level: tier.level, label: tier.label, rate: tier.rate, interest: Math.max(0,Math.min(Math.round(owed*tier.rate),Math.round(principal*INTEREST_CAP-paid))) };
+  }
+
+  function moneyCost(effects, s, data) {
+    let cost=0;
+    for (const e of effects || []) if (typeof e.money === 'number' && e.money < 0) cost+=-(e.unit==='wageDay' ? e.money*KI.tables.wageDay(data,s.year) : e.money);
+    return Math.round(cost);
   }
 
   function promote(s) {
@@ -273,13 +443,15 @@ globalThis.KI = globalThis.KI || {};
       return;
     }
     const sick = s.conds.some((c) => c.id === 'sick') ? SICK_MORTALITY : 1;
-    const p = KI.tables.mortality(data, age, s.year, s.sex) * clamp(1 + (70 - s.stats.health) / 100, 0.7, 1.7) * sick;
+    const ageFactor = age < ADULT_AGE ? CHILD_MORTALITY : age < 50 ? PRIME_AGE_MORTALITY : OLDER_MORTALITY;
+    const p = KI.tables.mortality(data, age, s.year, s.sex) * clamp(1 + (70 - s.stats.health) / 100, HEALTH_RISK[0], HEALTH_RISK[1]) * sick * ageFactor;
     if (!rng.chance(p)) return;
     let cause = 'illness';
     if (age >= 80 && rng.chance(0.5)) cause = 'old-age';
     else if (age >= 35) cause = rng.weighted(ILLNESS, (x) => x[1])[0];
     if (cause !== 'old-age' && s.flags.drinker && rng.chance(0.3)) cause = 'alcohol';
     if (cause !== 'old-age' && s.flags['hl-diabetes'] && rng.chance(0.4)) cause = 'diabetes';
+    if (cause !== 'old-age' && age >= 40 && s.flags.rawFish && rng.chance(0.35)) cause = 'liver';
     s.death = { year: s.year, age, cause };
   }
 
@@ -306,7 +478,8 @@ globalThis.KI = globalThis.KI || {};
     if (!s.death) {
       const f = s.focus && s.season !== null && (data.focus || []).find((x) => x.id === s.focus);
       const knowBeforeFocus = s.stats.know;
-      if (f) s = KI.effects.apply(s, f.perSeason || [], data, rng).state;
+      if (f && KI.cond.test(f.when,s,rng) && (s.role !== 'monk' || ['merit','study','health'].includes(f.id)) && (s.role !== 'prisoner' || ['study','health','merit'].includes(f.id))) s = KI.effects.apply(s, f.perSeason || [], data, rng).state;
+      else if (f) s.focus = null;
       const hobby = s.hobby && s.season !== null && s.role !== 'monk' && s.role !== 'prisoner' && (data.hobbies || []).find((x) => x.id === s.hobby);
       if (hobby) {
         const cost = ageOf(s) >= INCOME_AGE ? Math.round(hobby.costDays * KI.tables.wageDay(data, s.year)) : 0;
@@ -314,6 +487,9 @@ globalThis.KI = globalThis.KI || {};
       }
       entry.economy = seasonMoney(s, data);
       s.money += entry.economy.income + entry.economy.familySupport - entry.economy.expense;
+      if (ageOf(s) < INCOME_AGE && s.money < 0) s.money = 0;
+      if (s.season !== null) entry.economy.loanPaid = serviceLoans(s);
+      if (s.season !== null) entry.economy.interest = applyDebt(s, data);
       if (entry.economy.hobbyExpense || entry.economy.familyHobbyExpense) {
         s.stats.happy = Math.min(100, s.stats.happy + 1);
         if (s.hobbies && s.hobbies.gameCafeHours >= 40) {
@@ -328,6 +504,9 @@ globalThis.KI = globalThis.KI || {};
         s.role = 'retired';
         retirementPin = 'เกษียณจากราชการ';
       }
+      if (s.season !== null && s.stats.happy > 70) s.stats.happy -= 1;
+      if (s.season === 2 && s.stats.bond > 75) s.stats.bond -= 1;
+      if (s.season === 2 && ageOf(s) >= 75 && s.stats.know > 50) s.stats.know -= 1;
       if (s.season === 2 && ageOf(s) >= 45) s.stats.health = Math.max(0, s.stats.health - (ageOf(s) >= 70 ? 2 : 1));
       if (!s.death && (s.season === null || s.season === 2)) deathCheck(s, data, rng);
     }
@@ -363,7 +542,8 @@ globalThis.KI = globalThis.KI || {};
       const c = s.turn.cards[i];
       if (s.death || !c.choices || c.picked !== null) continue;
       const rng = KI.rng.make(s.rng);
-      const pick = rng.pick(c.choices);
+      let pick = rng.pick(c.choices);
+      if (c.id === 'reflect-retirement' && s.money < monthlyCost(s, data) * 24 && !c.choices.some((choice) => choice.id === 'retire-civil' || choice.id === 'retire-teacher')) pick = c.choices.find((choice) => choice.id === 'continue') || pick;
       s = choose({ ...s, rng: rng.state() }, data, i, pick.id);
     }
     return end(s, data);
@@ -380,6 +560,14 @@ globalThis.KI = globalThis.KI || {};
 
   function dedupe(list) {
     return list.filter((x, i) => x !== list[i - 1]);
+  }
+
+  function causeText(state) {
+    const base = CAUSES[state.death.cause] || OTHER_CAUSE;
+    const list = (CAUSE_DETAIL[state.death.cause] || []).filter((x) => state.sex !== 'm' || !/เต้านม|ปากมดลูก/.test(x));
+    if (!list.length) return base;
+    const seed = Array.from(state.name + state.death.year).reduce((h, c) => (Math.imul(h, 31) + c.codePointAt(0)) >>> 0, 7);
+    return base + ' · ' + list[seed % list.length];
   }
 
   function summary(state, data) {
@@ -399,9 +587,11 @@ globalThis.KI = globalThis.KI || {};
     }
     return {
       name: state.name,
+      sex: state.sex,
+      disability: state.disability || null,
       years: [state.birthYear, state.death ? state.death.year : state.year],
       age,
-      cause: state.death ? CAUSES[state.death.cause] || OTHER_CAUSE : null,
+      cause: state.death ? causeText(state) : null,
       places,
       edu: TOP_LABELS[state.edu.top] || TOP_LABELS.none,
       jobs,
@@ -411,5 +601,5 @@ globalThis.KI = globalThis.KI || {};
     };
   }
 
-  KI.game = { newGame, begin, choose, canEnd, end, skip, auto, summary };
+  KI.game = { newGame, begin, choose, canEnd, end, skip, auto, summary, debtInfo, moneyCost, elderAllowance, livingMonthly, monthlyCost };
 })();

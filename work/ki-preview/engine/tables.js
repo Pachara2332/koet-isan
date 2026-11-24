@@ -14,11 +14,42 @@ globalThis.KI = globalThis.KI || {};
     return at(data.stats.wageDay, year);
   }
 
-  function paddyPrice(data, year) {
-    const rows = data.stats.paddy;
+  function wageScaled(data, rows, year) {
     const first = rows.reduce((a, b) => a.year < b.year ? a : b);
     if (year < first.year) return Math.round(first.value * wageDay(data, year) / wageDay(data, first.year));
     return at(rows, year);
+  }
+
+  function paddyPrice(data, year) {
+    return wageScaled(data, data.stats.paddy, year);
+  }
+
+  function salary(data, year) {
+    const rows = data.stats.salary.filter((r) => r.year <= year);
+    if (!rows.length) return wageScaled(data, data.stats.salary, year);
+    return rows.reduce((a, b) => a.year > b.year ? a : b).value;
+  }
+
+  function livingPlace(loc) {
+    if (loc.kind === 'bangkok' || loc.kind === 'abroad') return loc.kind;
+    return loc.setting === 'rural' ? 'rural' : 'town';
+  }
+
+  function livingCost(data, year, place) {
+    const l = data.stats.living, cpi = (y) => at(data.stats.cpi, y);
+    const rows = [...l.perCapita].sort((a, b) => a.year - b.year).map((r) => ({ year: r.year, real: r.value / cpi(r.year) }));
+    const after = rows.findIndex((r) => r.year >= year);
+    let real = after < 0 ? rows[rows.length - 1].real : rows[after].real;
+    if (after > 0) {
+      const a = rows[after - 1], b = rows[after];
+      real = a.real + (b.real - a.real) * (year - a.year) / (b.year - a.year);
+    }
+    return Math.round(real * cpi(year) * l.places[place].value * l.share.value);
+  }
+
+  function childWeight(data, age) {
+    const band = data.stats.living.child.find((c) => age >= c.from && age <= c.to);
+    return band ? band.value : 0;
   }
 
   function gameCafePrice(state) {
@@ -50,5 +81,5 @@ globalThis.KI = globalThis.KI || {};
     return p.th;
   }
 
-  KI.tables = { at, wageDay, paddyPrice, gameCafePrice, annualize, mortality, provinceName };
+  KI.tables = { at, wageDay, paddyPrice, salary, livingPlace, livingCost, childWeight, gameCafePrice, annualize, mortality, provinceName };
 })();

@@ -31,17 +31,24 @@ globalThis.KI = globalThis.KI || {};
 
   function move(s, m) {
     if (m === 'home') {
+      if (s.role === 'abroad') s.role = 'jobless';
+      s.flags['career-phinoi'] = false;
+      s.flags['wr-illegalKorea'] = false;
       s.loc = { kind: 'isan', province: s.home.province, setting: s.home.setting, country: null };
       return;
     }
     if (!m || !LOCS.includes(m.kind)) throw new Error('effects: bad move');
+    if (m.kind !== 'abroad' && s.role === 'abroad') s.role = 'jobless';
+    if (m.kind !== 'abroad') { s.flags['career-phinoi'] = false; s.flags['wr-illegalKorea'] = false; }
     if (m.kind === 'isan') {
       const province = m.province || (s.loc.kind === 'isan' ? s.loc.province : s.home.province);
       s.loc = { kind: 'isan', province, setting: m.setting || s.loc.setting || s.home.setting, country: null };
     } else {
-      s.loc = { kind: m.kind, province: null, setting: 'urban', country: m.kind === 'abroad' ? (m.country || null) : null };
+      s.loc = { kind: m.kind, province: null, setting: 'urban', country: m.kind === 'abroad' ? (m.country || null) : null, ...(m.kind === 'abroad' && m.method ? { method: m.method } : {}) };
     }
   }
+
+  const SOFT_CAP = 60;
 
   function one(s, e, data, rng, deltas) {
     const m = mult(s, e.by);
@@ -49,7 +56,8 @@ globalThis.KI = globalThis.KI || {};
       if (!STATS.includes(e.stat)) throw new Error('effects: unknown stat "' + e.stat + '"');
       const old = s.stats[e.stat];
       const learn = e.stat === 'know' && e.d > 0 && s.talents ? s.talents.learn || 1 : 1;
-      s.stats[e.stat] = clamp(old + Math.round(e.d * m * learn), 0, 100);
+      const ease = e.d > 0 && old > SOFT_CAP ? clamp((100 - old) / (100 - SOFT_CAP), 0.1, 1) : 1;
+      s.stats[e.stat] = clamp(old + Math.round(e.d * m * learn * ease), 0, 100);
       addDelta(deltas, e.stat, s.stats[e.stat] - old);
     } else if ('trait' in e) {
       if (!TRAITS.includes(e.trait)) throw new Error('effects: unknown trait "' + e.trait + '"');
@@ -83,6 +91,7 @@ globalThis.KI = globalThis.KI || {};
         if (!value) delete s.flags[since];
       }
       s.flags[e.flag] = value;
+      if (e.flag === 'life2-ownHouse' && value) s.legacyHomeDisposed = false;
     } else if ('role' in e) {
       if (!ROLES.includes(e.role)) throw new Error('effects: unknown role "' + e.role + '"');
       s.role = e.role;

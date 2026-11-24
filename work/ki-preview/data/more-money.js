@@ -111,7 +111,7 @@ KI.data.personalEvents.push(...[
    ]},
   {"id":"money-bike-stolen","title":"รถหาย","body":"จอดรถไว้หน้างานวัด กลับมาอีกทีไม่เห็นรถแล้ว","w":3,"when":{"flag":{"money-bike":true}},"cooldown":"once",
    "effects":[{"flag":"money-bike","v":false},{"stat":"happy","d":-6},{"money":-5,"unit":"wageDay"}]},
-  {"id":"money-phone","title":"ซื้อมือถือ","body":"คนในหมู่บ้านเริ่มมีมือถือกัน โทรหาลูกหลานที่กรุงเทพฯ ได้ทุกเมื่อ","w":6,"when":{"year":[2000,2011],"age":[15,60],"noFlag":["money-phone"]},"cooldown":9,
+  {"id":"money-phone","title":"ซื้อมือถือ","body":"คนในหมู่บ้านเริ่มมีมือถือกัน โทรหาคนที่อยู่ไกลได้ทุกเมื่อ","w":6,"when":{"year":[2000,2011],"age":[15,60],"noFlag":["money-phone"]},"cooldown":9,
    "choices":[
     {"id":"buy","label":"ซื้อเครื่องใหม่","text":"ติดต่อคนไกลได้ง่ายขึ้น แต่มีค่าโทรทุกเดือน","effects":[{"money":-50,"unit":"wageDay"},{"flag":"money-phone"},{"stat":"bond","d":3}]},
     {"id":"used","label":"ซื้อเครื่องมือสอง","text":"ประหยัดกว่า แบตหมดไวไปหน่อย","effects":[{"money":-20,"unit":"wageDay"},{"flag":"money-phone"},{"stat":"bond","d":2}]},

@@ -21,10 +21,10 @@ KI.data.decisions.push(...[
     {"id":"go-home","label":"กลับไปอยู่บ้าน","text":"รายได้ลดลงมาก แต่ได้อยู่ใกล้พ่อแม่ในวันที่เหลือ","effects":[{"flag":"fam-caredDecided"},{"flag":"fam-caredHome"},{"move":"home"},{"role":"farmer"},{"stat":"bond","d":10},{"stat":"happy","d":3},{"pin":"กลับบ้านมาดูแลพ่อแม่"}]},
     {"id":"send-money","label":"อยู่ต่อ ส่งเงินกลับ","text":"ส่งเงินทุกเดือนและโทรหาบ่อยขึ้น พี่น้องรับภาระหน้างานแทน","effects":[{"flag":"fam-caredDecided"},{"money":-30,"unit":"wageDay"},{"stat":"bond","d":-3},{"cond":"homesick","turns":4}]}
    ]},
-  {"id":"fam-become-grandparent-carer","title":"ลูกฝากหลานไว้ให้เลี้ยง","body":"ลูกจะไปทำงานกรุงเทพฯ ขอฝากหลานตัวเล็กไว้ที่บ้าน","when":{"age":[45,65],"loc":"isan","noFlag":["fam-raisingGrand"],"any":[{"flag":{"child":true}},{"flag":{"grandchild":true}}],"chance":0.15},"major":true,
+  {"id":"fam-become-grandparent-carer","title":"ลูกฝากหลานไว้ให้เลี้ยง","body":"ลูกจะไปทำงานกรุงเทพฯ ขอฝากหลานตัวเล็กไว้ที่บ้าน","when":{"age":[45,65],"loc":"isan","noFlag":["fam-raisingGrand"],"flag":{"grandchild":true},"chance":0.15},"major":true,
    "choices":[
     {"id":"take","label":"รับเลี้ยงหลาน","text":"บ้านกลับมามีเสียงเด็กอีกครั้ง เหนื่อยขึ้นแต่ไม่เหงา","effects":[{"flag":"fam-raisingGrand"},{"flag":"grandchild"},{"stat":"happy","d":5},{"stat":"health","d":-3},{"money":-10,"unit":"wageDay"},{"pin":"เลี้ยงหลานแทนลูก"}]},
-    {"id":"refuse","label":"บอกว่าเลี้ยงไม่ไหว","text":"ลูกพาหลานไปฝากเนอสเซอรี่ในเมือง ความสัมพันธ์ตึงไปพักหนึ่ง","effects":[{"flag":"fam-raisingGrand","v":false},{"stat":"bond","d":-5},{"stat":"health","d":2}]}
+    {"id":"refuse","label":"บอกว่าเลี้ยงไม่ไหว","text":"ลูกพาหลานไปฝากเนอสเซอรี่ในเมือง ความสัมพันธ์ตึงไปพักหนึ่ง","effects":[{"flag":"grandchild"},{"flag":"fam-raisingGrand","v":false},{"stat":"bond","d":-5},{"stat":"health","d":2}]}
    ]},
   {"id":"fam-land-dispute","title":"แบ่งที่นาไม่ลงตัว","body":"หลังงานศพ พี่น้องนั่งคุยเรื่องโฉนดที่นา ทุกคนมีเหตุผลของตัวเอง","when":{"age":[35,60],"flag":{"hasSiblings":true},"noFlag":["fam-landSettled"],"chance":0.06},"major":true,
    "choices":[
@@ -186,7 +186,7 @@ KI.data.personalEvents.push(...[
     {"id":"join","label":"สมัครเลย","text":"เจอเพื่อนเก่าที่หายไปหลายปี แต่ก็ไถหน้าฟีดจนดึก","effects":[{"flag":"tech-social"},{"stat":"bond","d":3},{"stat":"happy","d":2},{"stat":"health","d":-1}]},
     {"id":"no","label":"ไม่เอาดีกว่า","text":"ชีวิตเงียบสงบ แต่บางทีไม่รู้ข่าวเพื่อนเลย","effects":[{"trait":"social","d":-1}]}
    ]},
-  {"id":"tech-line-family","w":10,"cooldown":"once","title":"กลุ่ม LINE ครอบครัว","body":"ลูกหลานตั้งกลุ่ม LINE ครอบครัว ส่งสติกเกอร์สวัสดีทุกเช้า","when":{"year":[2012,2026],"age":[15,80]},
+  {"id":"tech-line-family","w":10,"cooldown":"once","title":"กลุ่ม LINE ครอบครัว","body":"ญาติๆ ตั้งกลุ่ม LINE ครอบครัว ส่งสติกเกอร์สวัสดีทุกเช้า","when":{"year":[2012,2026],"age":[15,80]},
    "choices":[
     {"id":"active","label":"ทักทายทุกวัน","text":"รู้สึกใกล้กันแม้อยู่คนละจังหวัด","effects":[{"stat":"bond","d":4}]},
     {"id":"mute","label":"ปิดแจ้งเตือน","text":"โทรศัพท์เงียบขึ้น แต่พลาดข่าวงานบุญไปครั้งหนึ่ง","effects":[{"stat":"happy","d":1},{"stat":"bond","d":-1}]}
@@ -198,7 +198,7 @@ KI.data.personalEvents.push(...[
    ]},
   {"id":"tech-scam-sms","w":8,"cooldown":12,"title":"ข้อความแปลก","body":"มีข้อความบอกว่าบัญชีมีปัญหา ให้กดลิงก์เพื่อยืนยันตัวตน","when":{"year":[2015,2026],"age":[20,80],"flag":{"tech-smartphone":true}},
    "choices":[
-    {"id":"ignore","label":"ลบทิ้ง แล้วถามลูกหลาน","text":"ลูกหลานบอกว่าเป็นมิจฉาชีพ โชคดีที่ไม่กด","effects":[{"stat":"know","d":2}]},
+    {"id":"ignore","label":"ลบทิ้ง แล้วถามคนรู้จัก","text":"คนรู้จักบอกว่าเป็นมิจฉาชีพ โชคดีที่ไม่กด","effects":[{"stat":"know","d":2}]},
     {"id":"click","label":"กดลิงก์ตามที่บอก","text":"กดไปแล้วใจไม่ดี","effects":[],"roll":[{"p":0.5,"text":"เงินในบัญชีหายไปก้อนหนึ่ง","effects":[{"money":-20,"unit":"wageDay"},{"stat":"happy","d":-6}]},{"p":0.5,"text":"ธนาคารโทรมาเตือนทัน อายัดบัญชีไว้ได้","effects":[{"stat":"happy","d":-2}]}]}
    ]},
   {"id":"tech-promptpay","w":8,"cooldown":"once","title":"รับเงินผ่านพร้อมเพย์","body":"ลูกค้าในตลาดถามว่าสแกนจ่ายได้ไหม หลายร้านติดป้าย QR กันแล้ว","when":{"year":[2017,2026],"age":[18,75]},
@@ -208,7 +208,7 @@ KI.data.personalEvents.push(...[
    ]},
   {"id":"tech-paotang","w":8,"cooldown":"once","title":"แอปเป๋าตัง","body":"มีโครงการคนละครึ่ง ต้องลงแอปเป๋าตังถึงจะใช้สิทธิ์ได้","when":{"year":[2020,2022],"age":[18,80]},
    "choices":[
-    {"id":"learn","label":"ให้ลูกหลานช่วยสอน","text":"ใช้เป็นแล้ว ซื้อของถูกลงหลายเดือน","effects":[{"money":5,"unit":"wageDay"},{"stat":"bond","d":2}]},
+    {"id":"learn","label":"ให้คนรู้จักช่วยสอน","text":"ใช้เป็นแล้ว ซื้อของถูกลงหลายเดือน","effects":[{"money":5,"unit":"wageDay"},{"stat":"bond","d":2}]},
     {"id":"skip","label":"ไม่ลง ยุ่งยาก","text":"ไม่ต้องปวดหัวกับแอป แต่พลาดสิทธิ์ไป","effects":[{"stat":"happy","d":-1}]}
    ]},
   {"id":"tech-live-sell","w":8,"cooldown":"once","title":"ไลฟ์ขายของ","body":"เพื่อนบ้านไลฟ์ขายปลาร้ากับผ้าไหมผ่านโทรศัพท์ ขายได้ทั่วประเทศ","when":{"year":[2018,2026],"age":[18,60],"flag":{"tech-smartphone":true}},
@@ -260,7 +260,7 @@ KI.data.personalEvents.push(...[
     {"id":"smoke","label":"สูบตามเพื่อน","text":"เข้ากลุ่มได้ง่าย แต่เริ่มติด","effects":[{"flag":"hl-smoker"},{"trait":"social","d":1},{"stat":"health","d":-2}]},
     {"id":"no","label":"ปฏิเสธ","text":"เพื่อนแซวนิดหน่อย แล้วก็ลืมไป","effects":[{"stat":"health","d":1}]}
    ]},
-  {"id":"hl-quit-smoke","w":10,"cooldown":12,"title":"ไอไม่หยุด","body":"ไอเรื้อรังมาหลายเดือน หลานบอกว่าไม่ชอบกลิ่นบุหรี่","when":{"age":[30,80],"flag":{"hl-smoker":true}},
+  {"id":"hl-quit-smoke","w":10,"cooldown":12,"title":"ไอไม่หยุด","body":"ไอเรื้อรังมาหลายเดือน คนใกล้ตัวบอกว่าไม่ชอบกลิ่นบุหรี่","when":{"age":[30,80],"flag":{"hl-smoker":true}},
    "choices":[
     {"id":"quit","label":"ตั้งใจเลิก","text":"หงุดหงิดหลายอาทิตย์ แต่หายใจโล่งขึ้น","effects":[{"flag":"hl-smoker","v":false},{"stat":"happy","d":-3},{"stat":"health","d":5},{"money":3,"unit":"wageDay"}]},
     {"id":"keep","label":"สูบต่อ","text":"ยังช่วยคลายเครียด แต่ปอดแย่ลง","effects":[{"stat":"health","d":-5},{"die":"illness","p":0.02}]}
@@ -296,14 +296,17 @@ KI.data.personalEvents.push(...[
     {"id":"clinic","label":"ไปคุยกับหมอที่ รพ.สต.","text":"หมอฟังอย่างตั้งใจ แนะนำวิธีนอนและที่ปรึกษาเรื่องหนี้","effects":[{"stat":"health","d":2},{"stat":"happy","d":2},{"money":-1,"unit":"wageDay"}]},
     {"id":"hold","label":"เก็บไว้คนเดียว","text":"ทำงานหนักขึ้นเพื่อจ่ายหนี้ ร่างกายเริ่มประท้วง","effects":[{"stat":"health","d":-3},{"stat":"happy","d":-3}]}
    ]},
-  {"id":"hl-elder-lonely","w":10,"cooldown":12,"title":"วันยาวๆ ของคนแก่","body":"ลูกหลานไปทำงานไกล วันหนึ่งพูดกับคนแทบนับคำได้","when":{"age":[62,90]},
+  {"id":"hl-elder-lonely","w":10,"cooldown":12,"title":"วันยาวๆ ของคนแก่","body":"คนใกล้ตัวต่างมีภาระ วันหนึ่งพูดกับคนแทบนับคำได้","when":{"age":[62,90]},
    "choices":[
     {"id":"club","label":"ไปชมรมผู้สูงอายุ","text":"ได้รำวง ได้คุย ได้หัวเราะกับคนรุ่นเดียวกัน","effects":[{"stat":"happy","d":4},{"uncond":"lonely"}]},
-    {"id":"call","label":"โทรหาลูกหลาน","text":"ลูกหลานดีใจที่ได้ยินเสียง สัญญาว่าจะกลับมาเยี่ยม","effects":[{"stat":"bond","d":3},{"stat":"happy","d":2}]},
+    {"id":"call","label":"โทรหาคนรู้จัก","text":"คนรู้จักดีใจที่ได้ยินเสียง และชวนคุยกันนานขึ้น","effects":[{"stat":"bond","d":3},{"stat":"happy","d":2}]},
     {"id":"alone","label":"อยู่เงียบๆ คนเดียว","text":"สงบดี แต่บางวันก็เหงาจับใจ","effects":[{"cond":"lonely","turns":3}]}
    ]}
 ]);
 KI.data.decisions.unshift(...[
-  {"id":"fam-father-passed","title":"พ่อจากไป","body":"พ่อจากไปอย่างสงบ ญาติพี่น้องมารวมกันที่บ้าน จัดงานศพตามประเพณี","when":{"flag":{"parentPassed":"พ่อ"}},"major":true,"choices":[{"id":"near","label":"อยู่ใกล้ครอบครัว ช่วยงานศพจนเสร็จ","text":"ได้ร่วมส่งพ่อเป็นครั้งสุดท้าย และได้อยู่กับคนในบ้าน","effects":[{"flag":"parentPassed","v":false},{"stat":"happy","d":-15,"by":"attach"},{"cond":"grieving","turns":3,"by":"attach"},{"stat":"bond","d":5},{"pin":"พ่อจากไป"}]},{"id":"pay","label":"ออกค่างานศพให้เต็มที่","text":"งานศพสมเกียรติ แต่เงินเก็บหายไปมาก","when":{"age":[20,100]},"effects":[{"flag":"parentPassed","v":false},{"money":-40,"unit":"wageDay"},{"stat":"happy","d":-12,"by":"attach"},{"cond":"grieving","turns":3,"by":"attach"},{"stat":"bond","d":6},{"pin":"พ่อจากไป"}]},{"id":"work","label":"กลับไปทำงานเร็ว เก็บความเศร้าไว้ข้างใน","text":"งานไม่สะดุด แต่ความเศร้ายังค้างอยู่นาน","when":{"age":[18,100]},"effects":[{"flag":"parentPassed","v":false},{"stat":"happy","d":-10,"by":"attach"},{"cond":"grieving","turns":5,"by":"attach"},{"stat":"bond","d":-3},{"pin":"พ่อจากไป"}]}]},
-  {"id":"fam-mother-passed","title":"แม่จากไป","body":"แม่จากไปอย่างสงบ ญาติพี่น้องมารวมกันที่บ้าน จัดงานศพตามประเพณี","when":{"flag":{"parentPassed":"แม่"}},"major":true,"choices":[{"id":"near","label":"อยู่ใกล้ครอบครัว ช่วยงานศพจนเสร็จ","text":"ได้ร่วมส่งแม่เป็นครั้งสุดท้าย และได้อยู่กับคนในบ้าน","effects":[{"flag":"parentPassed","v":false},{"stat":"happy","d":-15,"by":"attach"},{"cond":"grieving","turns":3,"by":"attach"},{"stat":"bond","d":5},{"pin":"แม่จากไป"}]},{"id":"pay","label":"ออกค่างานศพให้เต็มที่","text":"งานศพสมเกียรติ แต่เงินเก็บหายไปมาก","when":{"age":[20,100]},"effects":[{"flag":"parentPassed","v":false},{"money":-40,"unit":"wageDay"},{"stat":"happy","d":-12,"by":"attach"},{"cond":"grieving","turns":3,"by":"attach"},{"stat":"bond","d":6},{"pin":"แม่จากไป"}]},{"id":"work","label":"กลับไปทำงานเร็ว เก็บความเศร้าไว้ข้างใน","text":"งานไม่สะดุด แต่ความเศร้ายังค้างอยู่นาน","when":{"age":[18,100]},"effects":[{"flag":"parentPassed","v":false},{"stat":"happy","d":-10,"by":"attach"},{"cond":"grieving","turns":5,"by":"attach"},{"stat":"bond","d":-3},{"pin":"แม่จากไป"}]}]}
+  {"id":"family-ask-father","urgent":true,"title":"ทำไมเราไม่มีพ่ออยู่ด้วย","body":"เมื่อเห็นเพื่อนอยู่กับพ่อ คุณนึกสงสัยเรื่องพ่อที่ไม่ได้อยู่ด้วยตั้งแต่ยังเล็ก","when":{"age":[8,18],"flag":{"missingFatherEarly":true}},"cooldown":"once","choices":[{"id":"ask","label":"ถามคนที่เลี้ยงดูเรา","text":"คนที่ดูแลเล่าเรื่องพ่อเท่าที่รู้ และรับฟังความรู้สึกของคุณ","effects":[{"stat":"bond","d":3},{"pin":"ถามเรื่องพ่อกับคนที่ดูแล"}]},{"id":"remember","label":"ขอดูรูปหรือฟังเรื่องของพ่อ","text":"คุณได้เก็บความทรงจำจากเรื่องเล่าของคนในบ้าน","effects":[{"stat":"happy","d":2}]},{"id":"later","label":"ยังไม่พร้อมถาม","text":"คุณเก็บคำถามไว้ก่อน และรู้ว่ากลับมาคุยเมื่อพร้อมได้","effects":[]}]},
+  {"id":"family-ask-mother","urgent":true,"title":"ทำไมเราไม่มีแม่อยู่ด้วย","body":"เมื่อเห็นเพื่อนอยู่กับแม่ คุณนึกสงสัยเรื่องแม่ที่ไม่ได้อยู่ด้วยตั้งแต่ยังเล็ก","when":{"age":[8,18],"flag":{"missingMotherEarly":true}},"cooldown":"once","choices":[{"id":"ask","label":"ถามคนที่เลี้ยงดูเรา","text":"คนที่ดูแลเล่าเรื่องแม่เท่าที่รู้ และรับฟังความรู้สึกของคุณ","effects":[{"stat":"bond","d":3},{"pin":"ถามเรื่องแม่กับคนที่ดูแล"}]},{"id":"remember","label":"ขอดูรูปหรือฟังเรื่องของแม่","text":"คุณได้เก็บความทรงจำจากเรื่องเล่าของคนในบ้าน","effects":[{"stat":"happy","d":2}]},{"id":"later","label":"ยังไม่พร้อมถาม","text":"คุณเก็บคำถามไว้ก่อน และรู้ว่ากลับมาคุยเมื่อพร้อมได้","effects":[]}]},
+  {"id":"physical-disability-accident","urgent":true,"title":"ชีวิตหลังอุบัติเหตุ","body":"อุบัติเหตุทำให้การเคลื่อนไหวเปลี่ยนไป คุณต้องปรับตัวและวางแผนการใช้ชีวิตต่อ","when":{"flag":{"disabilityAccidentPending":true}},"cooldown":"once","choices":[{"id":"rehab","label":"ขอคำปรึกษาและฝึกฟื้นฟู","text":"คุณเริ่มหาวิธีใช้ชีวิตที่เหมาะกับร่างกายและความต้องการของตัวเอง","effects":[{"flag":"disabilityAccidentPending","v":false},{"stat":"health","d":-3},{"pin":"ปรับตัวหลังอุบัติเหตุ"}]},{"id":"family","label":"ขอให้คนใกล้ตัวช่วยวางแผน","text":"คุณกับคนใกล้ตัวช่วยกันหาทางปรับชีวิตประจำวัน","effects":[{"flag":"disabilityAccidentPending","v":false},{"stat":"bond","d":3},{"pin":"ปรับตัวหลังอุบัติเหตุ"}]}]},
+  {"id":"fam-father-passed","urgent":true,"title":"พ่อจากไป","body":"พ่อจากไปอย่างสงบ ญาติพี่น้องมารวมกันที่บ้าน จัดงานศพตามประเพณี","when":{"flag":{"parentPassed":"พ่อ"}},"major":true,"choices":[{"id":"near","label":"อยู่ใกล้ครอบครัว ช่วยงานศพจนเสร็จ","text":"ได้ร่วมส่งพ่อเป็นครั้งสุดท้าย และได้อยู่กับคนในบ้าน","effects":[{"flag":"parentPassed","v":false},{"stat":"happy","d":-15,"by":"attach"},{"cond":"grieving","turns":3,"by":"attach"},{"stat":"bond","d":5},{"pin":"พ่อจากไป"}]},{"id":"pay","label":"ออกค่างานศพให้เต็มที่","text":"งานศพสมเกียรติ แต่เงินเก็บหายไปมาก","when":{"age":[20,100]},"effects":[{"flag":"parentPassed","v":false},{"money":-40,"unit":"wageDay"},{"stat":"happy","d":-12,"by":"attach"},{"cond":"grieving","turns":3,"by":"attach"},{"stat":"bond","d":6},{"pin":"พ่อจากไป"}]},{"id":"work","label":"กลับไปทำงานเร็ว เก็บความเศร้าไว้ข้างใน","text":"งานไม่สะดุด แต่ความเศร้ายังค้างอยู่นาน","when":{"age":[18,100]},"effects":[{"flag":"parentPassed","v":false},{"stat":"happy","d":-10,"by":"attach"},{"cond":"grieving","turns":5,"by":"attach"},{"stat":"bond","d":-3},{"pin":"พ่อจากไป"}]}]},
+  {"id":"fam-mother-passed","urgent":true,"title":"แม่จากไป","body":"แม่จากไปอย่างสงบ ญาติพี่น้องมารวมกันที่บ้าน จัดงานศพตามประเพณี","when":{"flag":{"parentPassed":"แม่"}},"major":true,"choices":[{"id":"near","label":"อยู่ใกล้ครอบครัว ช่วยงานศพจนเสร็จ","text":"ได้ร่วมส่งแม่เป็นครั้งสุดท้าย และได้อยู่กับคนในบ้าน","effects":[{"flag":"parentPassed","v":false},{"stat":"happy","d":-15,"by":"attach"},{"cond":"grieving","turns":3,"by":"attach"},{"stat":"bond","d":5},{"pin":"แม่จากไป"}]},{"id":"pay","label":"ออกค่างานศพให้เต็มที่","text":"งานศพสมเกียรติ แต่เงินเก็บหายไปมาก","when":{"age":[20,100]},"effects":[{"flag":"parentPassed","v":false},{"money":-40,"unit":"wageDay"},{"stat":"happy","d":-12,"by":"attach"},{"cond":"grieving","turns":3,"by":"attach"},{"stat":"bond","d":6},{"pin":"แม่จากไป"}]},{"id":"work","label":"กลับไปทำงานเร็ว เก็บความเศร้าไว้ข้างใน","text":"งานไม่สะดุด แต่ความเศร้ายังค้างอยู่นาน","when":{"age":[18,100]},"effects":[{"flag":"parentPassed","v":false},{"stat":"happy","d":-10,"by":"attach"},{"cond":"grieving","turns":5,"by":"attach"},{"stat":"bond","d":-3},{"pin":"แม่จากไป"}]}]}
 ]);

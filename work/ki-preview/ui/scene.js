@@ -768,6 +768,25 @@ globalThis.KI = globalThis.KI || {};
     return g('<rect x="-200" y="600" width="2000" height="330" fill="#b6ca8e"/><path d="M-200 740 Q800 670 1800 740 V930 H-200 Z" fill="#d0b98c"/>'+stiltHouse(800,580,.7,'var(--thatch)')+tree(220,650,1.2,'var(--tree)','var(--tree2)')+tree(1380,650,1.1,'var(--tree)','var(--tree2)')+plants, 'class="pl pl-garden"');
   }
 
+  function countryFor(state) {
+    if (state.loc.kind !== 'abroad') return '';
+    return ({'ไต้หวัน':'taiwan','ญี่ปุ่น':'japan','เกาหลีใต้':'korea','สิงคโปร์':'singapore','ซาอุดีอาระเบีย':'saudi','อิสราเอล':'israel','กาตาร์':'qatar','ออสเตรเลีย':'australia'})[state.loc.country] || '';
+  }
+
+  function landmarks() {
+    const shapes = {
+      taiwan: '<path d="M740 680 V470 H725 L750 430 H745 L770 390 H765 L790 350 H785 L800 310 L815 350 H810 L835 390 H830 L855 430 H850 L875 470 H860 V680 Z" fill="#729392" stroke="#587978" stroke-width="8"/><path d="M800 310 V275 M750 470 H850 M745 510 H855 M740 550 H860 M740 590 H860" fill="none" stroke="#c7d9c9" stroke-width="7"/>',
+      japan: '<path d="M560 625 L720 400 L800 290 L880 400 L1040 625 Z" fill="#9caeb5"/><path d="M720 400 L800 290 L880 400 L850 390 L830 405 L800 385 L775 405 L750 390 Z" fill="#fff9ed"/><path d="M630 650 V475 H970 V650 M600 475 H1000 M650 545 H950" fill="none" stroke="#b64c36" stroke-width="18"/>',
+      korea: '<path d="M785 620 L793 390 H807 L815 620 Z M790 390 L800 270 L810 390 Z" fill="#d8dad2"/><rect x="760" y="350" width="80" height="35" rx="8" fill="#748b91"/><path d="M610 625 L800 570 L990 625 Z" fill="#6c8972"/>',
+      singapore: '<path d="M600 640 L625 470 H690 L700 640 M735 640 L745 470 H805 L815 640 M850 640 L860 470 H925 L950 640" fill="#b9cbd0" stroke="#6e9095" stroke-width="8"/><path d="M590 465 Q770 405 965 465 Q950 485 610 485 Z" fill="#d5d9ce"/>',
+      saudi: '<path d="M720 650 L735 375 Q800 320 865 375 L880 650 Z" fill="#cfbfaa"/><path d="M760 395 Q800 440 840 395 L830 470 H770 Z" fill="#7e9aa4"/><path d="M800 350 V280" stroke="#9a8c7d" stroke-width="8"/>',
+      israel: '<rect x="660" y="520" width="280" height="130" fill="#d4bc94"/><path d="M690 520 Q800 340 910 520 Z" fill="#d5ab53"/><path d="M800 388 V350" stroke="#b79146" stroke-width="8"/>',
+      qatar: '<path d="M715 650 Q700 430 800 320 Q900 430 885 650 Z" fill="#c8d0c7" stroke="#91a5a1" stroke-width="8"/><path d="M735 600 L865 410 M725 550 L850 375 M760 650 L880 475 M720 450 L870 620 M740 390 L875 550 M780 350 L880 485" fill="none" stroke="#9eaea9" stroke-width="7"/>',
+      australia: '<path d="M610 640 Q610 450 735 500 Q750 390 800 370 Q850 390 865 500 Q990 450 990 640 Z" fill="#f1e8d5" stroke="#a9b6b0" stroke-width="8"/><path d="M620 640 H980" stroke="#8da8aa" stroke-width="20"/>'
+    };
+    return Object.entries(shapes).map(([key,shape])=>g(shape,'class="landmark landmark-'+key+'"')).join('');
+  }
+
   function placeFor(state, data) {
     if(state.role==='prisoner')return 'prison';
     if(state.role==='monk' || (state.edu && state.edu.in==='novice'))return 'temple';
@@ -826,7 +845,7 @@ globalThis.KI = globalThis.KI || {};
     root.setAttribute('aria-hidden', 'true');
     seed = 7;
     const markup = '<svg class="scene-svg" xmlns="' + NS + '" viewBox="0 0 ' + W + ' ' + H + '" preserveAspectRatio="xMidYMax slice" focusable="false">' +
-      defs() + sky() + hills() + rural() + town() + mekong() + bangkok() + abroad() + school() + factory() + market() + garden() + temple() + prison() + desert() + asiacity() + nordic() + fx() + '</svg>' +
+      defs() + sky() + hills() + rural() + town() + mekong() + bangkok() + abroad() + school() + factory() + market() + garden() + temple() + prison() + desert() + asiacity() + nordic() + landmarks() + fx() + '</svg>' +
       '<div class="scene-ground"></div><canvas class="scene-particles"></canvas>' +
       '<div class="scene-mood scene-mood-sad"></div><div class="scene-mood scene-mood-sad2"></div><div class="scene-mood scene-mood-bright"></div><div class="scene-veil"></div>';
     root.innerHTML = markup;
@@ -867,6 +886,7 @@ globalThis.KI = globalThis.KI || {};
     const seasonAttr = s.season === null || s.season === undefined ? 'soft' : String(s.season);
     root.setAttribute('data-season', seasonAttr);
     root.setAttribute('data-place', s.place);
+    root.setAttribute('data-country', s.country);
     root.setAttribute('data-mood', s.mood);
     applyEra(s.year);
     if (KI.particles && KI.particles.set) KI.particles.set(defaultParticles(s));
@@ -878,6 +898,7 @@ globalThis.KI = globalThis.KI || {};
     const next = {
       season: o.season === null || o.season === 0 || o.season === 1 || o.season === 2 ? o.season : (o.season === undefined ? current.season : 2),
       place: PLACES.indexOf(o.place) >= 0 ? o.place : (o.place === undefined ? current.place : 'rural'),
+      country: typeof o.country === 'string' ? o.country : '',
       year: typeof o.year === 'number' ? o.year : (o.year === undefined ? current.year : null),
       mood: MOODS.indexOf(o.mood) >= 0 ? o.mood : (o.mood === undefined ? current.mood : 'normal'),
       fx: FX.indexOf(o.fx) >= 0 ? o.fx : null
@@ -909,5 +930,5 @@ globalThis.KI = globalThis.KI || {};
     return motionOn;
   }
 
-  KI.scene = { mount, set, motion, placeFor, get: () => Object.assign({}, current), eraYear };
+  KI.scene = { mount, set, motion, placeFor, countryFor, get: () => Object.assign({}, current), eraYear };
 })();

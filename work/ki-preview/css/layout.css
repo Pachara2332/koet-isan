@@ -14,7 +14,7 @@
   width:100%;
   max-width:640px;
   margin:0 auto;
-  padding:0 12px calc(var(--bar-h) + 20px);
+  padding:0 12px calc(var(--bar-h) + 20px + env(safe-area-inset-bottom, 0px));
 }
 .slot-window{min-height:0}
 .slot-head{grid-area:head;min-width:0}
@@ -55,7 +55,7 @@
   .slot-cards{overflow-y:auto;overscroll-behavior:contain;padding:2px 6px 8px 2px;margin-right:-6px;scrollbar-width:thin}
   .slot-actions{grid-area:actions;position:static;padding:0;background:none}
   .slot-stats{min-height:0;max-height:100%;overflow-y:auto}
-  .slot-trail{align-self:stretch;max-height:24vh;overflow-y:auto}
+  .slot-trail{align-self:stretch;max-height:32vh;overflow-y:auto}
 }
 
 @media (min-width:1440px){
@@ -99,6 +99,10 @@
 }
 @media (min-width:700px) and (max-width:1023px){
   .shell{max-width:none;padding:16px 16px calc(var(--bar-h) + 20px);grid-template-columns:minmax(260px,42%) minmax(0,1fr);grid-template-rows:auto 1fr auto;grid-template-areas:"stats head" "stats cards" "trail trail";align-items:start}
-  .slot-stats{position:sticky;top:16px}
+  .slot-stats{position:sticky;top:16px;max-height:calc(100vh - var(--bar-h) - 32px);max-height:calc(100dvh - var(--bar-h) - 32px - env(safe-area-inset-bottom, 0px));overflow-y:auto;overscroll-behavior:contain;-webkit-overflow-scrolling:touch}
   .slot-actions{padding-left:16px;padding-right:16px}
+}
+@media (min-width:1024px) and (max-height:700px){
+  .shell{height:auto;min-height:100vh;min-height:100dvh}
+  .slot-stats,.slot-trail,.slot-cards{max-height:none;overflow:visible}
 }

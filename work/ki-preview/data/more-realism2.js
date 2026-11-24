@@ -221,7 +221,7 @@ KI.data.personalEvents.push(...[
     {"id":"ride","label":"ปั่นไปกลับทุกวัน","text":"ขาแข็งแรง แต่เหนื่อยจนหลับในห้องบางคาบ","effects":[{"stat":"health","d":2},{"stat":"know","d":1}]},
     {"id":"group","label":"รอเพื่อนไปเป็นกลุ่ม","text":"คุยกันตลอดทาง สนิทกันมากขึ้น","effects":[{"stat":"happy","d":2},{"trait":"social","d":1}]},
     {"id":"songthaew","label":"ขอเงินแม่ขึ้นรถสองแถว","text":"ไม่เหนื่อย แต่บ้านเสียเงินเพิ่มทุกเดือน","effects":[{"money":-1,"unit":"wageDay"},{"stat":"happy","d":1}]}]},
-  {"id":"real-summer-novice","title":"บวชเณรภาคฤดูร้อน","body":"ปิดเทอมใหญ่ วัดในหมู่บ้านรับเด็กบวชเณรช่วงสั้นๆ แม่อยากให้ไป","when":{"year":[1980,2026],"age":[9,15],"sex":"m","season":0,"loc":"isan"},"w":6,"cooldown":"once","choices":[
+  {"id":"real-summer-novice","title":"บวชเณรภาคฤดูร้อน","body":"ปิดเทอมใหญ่ วัดในหมู่บ้านรับเด็กบวชเณรช่วงสั้นๆ แม่อยากให้ไป","when":{"year":[1980,2026],"age":[9,15],"sex":"m","season":0,"loc":"isan"},"w":10,"cooldown":"once","choices":[
     {"id":"ordain","label":"บวชตามที่แม่ขอ","text":"ตื่นตีสี่ บิณฑบาต ท่องบทสวด กลับมาใจเย็นขึ้น","effects":[{"stat":"bond","d":4},{"stat":"know","d":2},{"stat":"happy","d":-1},{"inc":"good"}]},
     {"id":"no","label":"ขอเล่นกับเพื่อนช่วงปิดเทอม","text":"สนุกเต็มที่ แต่แม่ผิดหวังเล็กน้อย","effects":[{"stat":"happy","d":3},{"stat":"bond","d":-2}]},
     {"id":"work","label":"ไปรับจ้างเก็บเงินช่วยบ้าน","text":"ได้เงินค่าเทอม แต่ปิดเทอมนี้เหนื่อย","effects":[{"money":2,"unit":"wageDay"},{"stat":"health","d":-1}]}]},
@@ -268,16 +268,16 @@ KI.data.personalEvents.push(...[
     {"id":"join","label":"เข้ากลุ่ม ลงหุ้นซื้อด้าย","text":"มีรายได้เสริมหลังฤดูนา ได้เพื่อนใหม่","effects":[{"money":-2,"unit":"wageDay"},{"inc":"skill-craft"},{"trait":"social","d":2}],"roll":[{"p":0.5,"text":"ผ้าลายใหม่ขายหมดในงาน ทุกคนได้ปันผล","effects":[{"money":5,"unit":"wageDay"},{"stat":"happy","d":3}]}]},
     {"id":"help","label":"ช่วยงานกลุ่มบ้างตอนว่าง","text":"ไม่ได้ลงทุน แต่ได้ค่าแรงเล็กน้อย","effects":[{"money":1,"unit":"wageDay"},{"stat":"bond","d":1}]},
     {"id":"no","label":"ไม่เข้า งานบ้านก็หนักแล้ว","text":"เวลาพักยังเหลือ","effects":[{"stat":"health","d":1}]}]},
-  {"id":"real-elder-allowance","title":"เบี้ยยังชีพผู้สูงอายุ","body":"ต้นเดือนผู้สูงอายุในหมู่บ้านไปรับเบี้ยยังชีพที่ศาลากลางบ้าน","when":{"year":[2009,2026],"age":[60,100],"loc":"isan"},"w":5,"cooldown":12,"choices":[
+  {"id":"real-elder-allowance","title":"เบี้ยยังชีพผู้สูงอายุ","body":"ต้นเดือนผู้สูงอายุในหมู่บ้านไปรับเบี้ยยังชีพที่ศาลากลางบ้าน","when":{"year":[2009,2100],"age":[60,100],"loc":"isan"},"w":5,"cooldown":12,"choices":[
     {"id":"save","label":"เก็บไว้เป็นค่ายา","text":"มีเงินติดตัวยามเจ็บป่วย","effects":[{"money":2,"unit":"wageDay"},{"stat":"health","d":1}]},
-    {"id":"grandkids","label":"ให้หลานเป็นค่าขนม","text":"หลานกอดแน่น วิ่งไปบอกเพื่อน","effects":[{"stat":"bond","d":3},{"stat":"happy","d":2}]},
+    {"id":"grandkids","label":"ให้หลานเป็นค่าขนม","text":"หลานกอดแน่น วิ่งไปบอกเพื่อน","when":{"flag":{"grandchild":true}},"effects":[{"stat":"bond","d":3},{"stat":"happy","d":2}]},
     {"id":"merit","label":"เอาไปทำบุญที่วัด","text":"ใจสงบ ได้พบเพื่อนวัยเดียวกัน","effects":[{"stat":"happy","d":3},{"trait":"social","d":1}]}]},
-  {"id":"real-line-family","title":"กลุ่มไลน์ครอบครัว","body":"หลานตั้งกลุ่มไลน์ครอบครัว รูปสวัสดีวันจันทร์กับข่าวจากทุกคนเด้งทั้งวัน","when":{"year":[2013,2026],"age":[15,90]},"w":6,"cooldown":15,"choices":[
+  {"id":"real-line-family","title":"กลุ่มไลน์ครอบครัว","body":"ญาติตั้งกลุ่มไลน์ครอบครัว รูปสวัสดีวันจันทร์กับข่าวจากทุกคนเด้งทั้งวัน","when":{"year":[2013,2026],"age":[15,90]},"w":6,"cooldown":15,"choices":[
     {"id":"active","label":"ส่งรูปทักทายทุกเช้า","text":"ญาติที่อยู่ไกลรู้สึกใกล้ขึ้น","effects":[{"stat":"bond","d":3},{"stat":"happy","d":1}]},
     {"id":"mute","label":"ปิดเสียงกลุ่ม อ่านเป็นบางครั้ง","text":"สมาธิกลับมา แต่พลาดข่าวสำคัญไปเรื่องหนึ่ง","effects":[{"stat":"happy","d":1},{"stat":"bond","d":-1}]},
     {"id":"check","label":"ช่วยเช็คข่าวปลอมที่ญาติแชร์","text":"บางคนขอบคุณ บางคนน้อยใจ","effects":[{"stat":"know","d":2},{"stat":"bond","d":-1}]}]},
   {"id":"real-video-call","title":"วิดีโอคอลหาลูกหลาน","body":"ลูกหลานที่ทำงานไกลโทรวิดีโอกลับมา อยากเห็นหน้าทุกคนในบ้าน","when":{"year":[2014,2026],"age":[40,90],"flag":{"child":true}},"w":6,"cooldown":12,"choices":[
-    {"id":"talk","label":"คุยนานจนแบตหมด","text":"เห็นหน้าหลานโตขึ้นทุกครั้ง","effects":[{"stat":"bond","d":3},{"stat":"happy","d":3,"by":"attach"}]},
+    {"id":"talk","label":"คุยนานจนแบตหมด","text":"ได้เห็นหน้าคนที่รักและพูดคุยกัน","effects":[{"stat":"bond","d":3},{"stat":"happy","d":3,"by":"attach"}]},
     {"id":"show","label":"พาเดินดูนาดูบ้านผ่านกล้อง","text":"ลูกหัวเราะว่าบ้านเปลี่ยนไปเยอะ","effects":[{"stat":"bond","d":2},{"stat":"happy","d":2}]},
     {"id":"short","label":"คุยสั้นๆ ไม่อยากให้เปลืองเน็ต","text":"ได้ยินเสียงก็พอใจ แต่ยังคิดถึง","effects":[{"stat":"happy","d":1},{"cond":"lonely","turns":1}]}]},
   {"id":"real-fluke-check","title":"ตรวจพยาธิใบไม้ตับ","body":"โรงพยาบาลส่งเสริมสุขภาพตำบลชวนตรวจอุจจาระและอัลตราซาวด์ตับฟรี","when":{"year":[2015,2026],"age":[30,80],"loc":"isan"},"w":5,"cooldown":"once","choices":[

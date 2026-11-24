@@ -111,19 +111,19 @@ globalThis.KI = globalThis.KI || {}; KI.data = KI.data || {};
     "tech-hi5": [{"id":"sell","label":"รับแต่งหน้าให้เพื่อน","text":"เพื่อนจ้างคนละไม่กี่บาท คุณเก่งโค้ดหน้าเว็บขึ้นมาก","effects":[{"money":1,"unit":"wageDay"},{"stat":"know","d":2}]}],
     "tech-facebook": [
       {"id":"sell","label":"สมัครเพื่อเปิดเพจขายของ","text":"มีลูกค้าจากอำเภออื่นทักมา ยอดขายเพิ่มแต่ต้องตอบแชตทั้งคืน","when":{"age":[18,60]},"effects":[{"flag":"tech-social"},{"money":8,"unit":"wageDay"},{"stat":"health","d":-1}]},
-      {"id":"family","label":"สมัครไว้ดูรูปลูกหลานอย่างเดียว","text":"ได้เห็นลูกหลานที่อยู่ไกลทุกวันโดยไม่ต้องโพสต์อะไร","effects":[{"flag":"tech-social"},{"stat":"bond","d":2}]}
+      {"id":"family","label":"สมัครไว้ดูรูปคนรู้จัก","text":"ได้เห็นรูปคนรู้จักที่อยู่ไกลโดยไม่ต้องโพสต์อะไร","effects":[{"flag":"tech-social"},{"stat":"bond","d":2}]}
     ],
     "tech-line-family": [
-      {"id":"forward","label":"แชร์ข่าวสุขภาพทุกเช้า","text":"บางข่าวเป็นข่าวปลอม ลูกหลานแอบขำแต่ก็รู้ว่าคุณห่วง","effects":[{"stat":"bond","d":1},{"stat":"know","d":-1}]},
+      {"id":"forward","label":"แชร์ข่าวสุขภาพทุกเช้า","text":"บางข่าวเป็นข่าวปลอม คนในกลุ่มแอบขำแต่ก็รู้ว่าคุณห่วง","effects":[{"stat":"bond","d":1},{"stat":"know","d":-1}]},
       {"id":"leave","label":"ออกจากกลุ่มไปเลย","text":"สงบขึ้น แต่พลาดข่าวงานบุญของญาติ","effects":[{"stat":"bond","d":-3},{"stat":"happy","d":1}]}
     ],
     "tech-smartphone": [
-      {"id":"wait","label":"ยังใช้เครื่องปุ่มกดต่อ","text":"แบตอยู่ได้เป็นอาทิตย์ แต่ลูกหลานส่งรูปมาให้ไม่ได้","effects":[{"stat":"bond","d":-1},{"money":2,"unit":"wageDay"}]},
-      {"id":"hand-me","label":"ขอเครื่องเก่าจากลูกหลาน","text":"ได้เครื่องฟรี ลูกหลานลงแอปให้เสร็จ","effects":[{"flag":"tech-smartphone"},{"stat":"bond","d":2}]}
+      {"id":"wait","label":"ยังใช้เครื่องปุ่มกดต่อ","text":"แบตอยู่ได้เป็นอาทิตย์ แต่รับรูปจากคนรู้จักไม่ได้","effects":[{"stat":"bond","d":-1},{"money":2,"unit":"wageDay"}]},
+      {"id":"hand-me","label":"ขอเครื่องเก่าจากคนรู้จัก","text":"ได้เครื่องฟรี คนรู้จักช่วยลงแอปให้","effects":[{"flag":"tech-smartphone"},{"stat":"bond","d":2}]}
     ],
     "tech-scam-sms": [
       {"id":"call-bank","label":"โทรเช็กกับธนาคารเอง","text":"ธนาคารยืนยันว่าเป็นข้อความหลอก คุณช่วยเตือนคนในหมู่บ้านต่อ","effects":[{"stat":"know","d":2},{"trait":"social","d":1}]},
-      {"id":"reply","label":"โทรกลับเบอร์ที่ให้มา","text":"ปลายสายพูดเก่งจนคุณเกือบโอนเงิน ได้สติตอนลูกโทรมาพอดี","effects":[{"money":-3,"unit":"wageDay"},{"stat":"happy","d":-3}]}
+      {"id":"reply","label":"โทรกลับเบอร์ที่ให้มา","text":"ปลายสายพูดเก่งจนคุณเกือบโอนเงิน ได้สติตอนคนรู้จักโทรมาพอดี","effects":[{"money":-3,"unit":"wageDay"},{"stat":"happy","d":-3}]}
     ],
     "tech-promptpay": [
       {"id":"both","label":"รับทั้งสองแบบ","text":"ลูกค้าสะดวก แต่ต้องคอยเช็กยอดในแอปบ่อยๆ ว่าเงินเข้าจริง","effects":[{"money":3,"unit":"wageDay"},{"stat":"know","d":1}]},
@@ -134,7 +134,7 @@ globalThis.KI = globalThis.KI || {}; KI.data = KI.data || {};
       {"id":"neighbor","label":"ฝากเพื่อนบ้านลงทะเบียนให้","text":"ได้สิทธิ์เหมือนกัน แต่ต้องบอกข้อมูลส่วนตัวให้คนอื่นรู้","effects":[{"money":3,"unit":"wageDay"},{"stat":"know","d":-1}]}
     ],
     "tech-live-sell": [
-      {"id":"team","label":"ให้ลูกหลานไลฟ์ เราแพ็กของ","text":"ขายได้มากกว่าทำคนเดียว และได้ใช้เวลาด้วยกัน","effects":[{"money":6,"unit":"wageDay"},{"stat":"bond","d":2}]},
+      {"id":"team","label":"ชวนคนรู้จักมาไลฟ์ เราแพ็กของ","text":"ขายได้มากกว่าทำคนเดียว และได้ใช้เวลาด้วยกัน","effects":[{"money":6,"unit":"wageDay"},{"stat":"bond","d":2}]},
       {"id":"buy","label":"ไม่ขาย แต่ดูไลฟ์ซื้อของ","text":"ของถูกหลายชิ้น แต่บางชิ้นไม่จำเป็นเลย","effects":[{"money":-5,"unit":"wageDay"},{"stat":"happy","d":2}]}
     ],
     "tech-tiktok": [
@@ -187,7 +187,7 @@ globalThis.KI = globalThis.KI || {}; KI.data = KI.data || {};
       {"id":"osm","label":"ถาม อสม. ก่อนว่าควรไปไหน","text":"อสม. ดูอาการแล้วส่งไป รพ.สต. ไม่ต้องเดินทางไกล","effects":[{"stat":"health","d":2},{"stat":"know","d":1}]}
     ],
     "hl-osm": [
-      {"id":"later","label":"ขอรอให้ลูกโตก่อน","text":"ผู้ใหญ่บ้านเข้าใจ แต่ตำแหน่งตกไปเป็นของคนอื่น","effects":[{"stat":"happy","d":1}]},
+      {"id":"later","label":"ขอรอให้พร้อมกว่านี้","text":"ผู้ใหญ่บ้านเข้าใจ แต่ตำแหน่งตกไปเป็นของคนอื่น","effects":[{"stat":"happy","d":1}]},
       {"id":"support","label":"ไม่รับ แต่ช่วยงาน อสม. เป็นครั้งคราว","text":"ได้ช่วยเพื่อนบ้านโดยไม่ต้องรับภาระทุกเดือน","effects":[{"trait":"social","d":1},{"stat":"know","d":1}]}
     ],
     "hl-debt-stress": [

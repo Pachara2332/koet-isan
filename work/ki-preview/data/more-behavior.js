@@ -164,7 +164,7 @@ KI.data.personalEvents.push(...[
   {"id":"bhv-spouse-angry","title":"คู่ชีวิตโกรธ","body":"กลับบ้านดึกกลิ่นเหล้าคลุ้งหรือเงินหายไปกับหวยอีกครั้ง คู่ชีวิตนั่งรอพร้อมคำถาม","when":{"age":[20,70],"flag":{"partner":true},"counter":{"vice":[2,99]}},"w":14,"cooldown":9,
    "choices":[
     {"id":"sorry","label":"ขอโทษและสัญญาจะลด","text":"คู่ชีวิตบอกว่าจะรอดูการกระทำ","effects":[{"inc":"vice","d":-1},{"stat":"bond","d":2},{"stat":"happy","d":-2}]},
-    {"id":"argue","label":"เถียงว่าเงินตัวเองหามา","text":"ทะเลาะกันจนลูกหลานได้ยินทั้งบ้าน","effects":[{"inc":"vice"},{"stat":"bond","d":-6},{"stat":"happy","d":-3}]},
+    {"id":"argue","label":"เถียงว่าเงินตัวเองหามา","text":"ทะเลาะกันจนคนในบ้านได้ยิน","effects":[{"inc":"vice"},{"stat":"bond","d":-6},{"stat":"happy","d":-3}]},
     {"id":"out","label":"ออกไปนอนบ้านเพื่อน","text":"เรื่องยังค้าง และยาวขึ้นทุกครั้ง","effects":[{"stat":"bond","d":-4},{"cond":"lonely","turns":2}]}]},
   {"id":"bhv-gossip","title":"เสียงซุบซิบในหมู่บ้าน","body":"ร้านค้าหน้าหมู่บ้านเริ่มพูดกันว่าเห็นนั่งวงเหล้าทุกวันหรือติดหนี้หวยหลายเจ้า","when":{"age":[20,70],"counter":{"vice":[2,99]}},"w":14,"cooldown":12,
    "choices":[
@@ -197,7 +197,7 @@ KI.data.personalEvents.push(...[
     {"id":"follow","label":"ทำตามหมอ เลิกดื่ม","text":"สามเดือนแรกยากที่สุด แต่ผลตรวจรอบหน้าดีขึ้น","effects":[{"inc":"vice","d":-3},{"stat":"health","d":6},{"stat":"happy","d":-2}]},
     {"id":"less","label":"ลดลงบ้าง","text":"ดีกว่าเดิมนิดหนึ่ง","effects":[{"inc":"vice","d":-1},{"stat":"health","d":2}]},
     {"id":"ignore","label":"ไม่เชื่อ ใช้ชีวิตเหมือนเดิม","text":"เหนื่อยง่ายขึ้นเรื่อยๆ","effects":[{"inc":"vice"},{"stat":"health","d":-6},{"die":"liver","p":0.02}]}]},
-  {"id":"bhv-family-meeting","title":"ครอบครัวนั่งล้อมวง","body":"พี่น้องและลูกหลานนัดกันมาพร้อมหน้า ขอให้เลือกระหว่างครอบครัวกับวงเหล้าวงพนัน","when":{"age":[25,70],"counter":{"vice":[4,99]}},"w":14,"heavy":true,
+  {"id":"bhv-family-meeting","title":"ครอบครัวนั่งล้อมวง","body":"คนในครอบครัวนัดกันมาคุย ขอให้เลือกระหว่างครอบครัวกับวงเหล้าวงพนัน","when":{"age":[25,70],"counter":{"vice":[4,99]}},"w":14,"heavy":true,
    "choices":[
     {"id":"family","label":"เลือกครอบครัว ไปบวชหรือบำบัด","text":"น้ำตาทั้งวง แต่เป็นจุดเริ่มต้นใหม่","effects":[{"inc":"vice","d":-4},{"inc":"responsible","d":2},{"stat":"bond","d":6},{"pin":"ตัดสินใจเลิกเหล้าเลิกพนันเพื่อครอบครัว"}]},
     {"id":"walk","label":"ลุกหนีออกจากวง","text":"บ้านแตกเป็นสองฝั่ง ไม่มีใครโทรหาอีกนาน","effects":[{"stat":"bond","d":-10},{"cond":"lonely","turns":4},{"stat":"happy","d":-5}]},

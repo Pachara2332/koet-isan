@@ -273,7 +273,89 @@ KI.data.stats = {
       "source": "https://mahasarakham.gdcatalog.go.th/dataset/02f4ec71-94b0-4399-8280-a336d3f6a74f"
     }
   ],
-  "cpi": [],
+  "cpi": [
+    {"year":1970,"value":12.78,"level":"ดัชนีราคาผู้บริโภคทั้งประเทศ ปี 2553 = 100","source":"https://api.worldbank.org/v2/country/THA/indicator/FP.CPI.TOTL?format=json"},
+    {"year":1971,"value":12.84,"level":"ดัชนีราคาผู้บริโภคทั้งประเทศ ปี 2553 = 100","source":"https://api.worldbank.org/v2/country/THA/indicator/FP.CPI.TOTL?format=json"},
+    {"year":1972,"value":13.46,"level":"ดัชนีราคาผู้บริโภคทั้งประเทศ ปี 2553 = 100","source":"https://api.worldbank.org/v2/country/THA/indicator/FP.CPI.TOTL?format=json"},
+    {"year":1973,"value":15.55,"level":"ดัชนีราคาผู้บริโภคทั้งประเทศ ปี 2553 = 100","source":"https://api.worldbank.org/v2/country/THA/indicator/FP.CPI.TOTL?format=json"},
+    {"year":1974,"value":19.33,"level":"ดัชนีราคาผู้บริโภคทั้งประเทศ ปี 2553 = 100","source":"https://api.worldbank.org/v2/country/THA/indicator/FP.CPI.TOTL?format=json"},
+    {"year":1975,"value":20.36,"level":"ดัชนีราคาผู้บริโภคทั้งประเทศ ปี 2553 = 100","source":"https://api.worldbank.org/v2/country/THA/indicator/FP.CPI.TOTL?format=json"},
+    {"year":1976,"value":21.2,"level":"ดัชนีราคาผู้บริโภคทั้งประเทศ ปี 2553 = 100","source":"https://api.worldbank.org/v2/country/THA/indicator/FP.CPI.TOTL?format=json"},
+    {"year":1977,"value":22.81,"level":"ดัชนีราคาผู้บริโภคทั้งประเทศ ปี 2553 = 100","source":"https://api.worldbank.org/v2/country/THA/indicator/FP.CPI.TOTL?format=json"},
+    {"year":1978,"value":24.62,"level":"ดัชนีราคาผู้บริโภคทั้งประเทศ ปี 2553 = 100","source":"https://api.worldbank.org/v2/country/THA/indicator/FP.CPI.TOTL?format=json"},
+    {"year":1979,"value":27.06,"level":"ดัชนีราคาผู้บริโภคทั้งประเทศ ปี 2553 = 100","source":"https://api.worldbank.org/v2/country/THA/indicator/FP.CPI.TOTL?format=json"},
+    {"year":1980,"value":32.39,"level":"ดัชนีราคาผู้บริโภคทั้งประเทศ ปี 2553 = 100","source":"https://api.worldbank.org/v2/country/THA/indicator/FP.CPI.TOTL?format=json"},
+    {"year":1981,"value":36.49,"level":"ดัชนีราคาผู้บริโภคทั้งประเทศ ปี 2553 = 100","source":"https://api.worldbank.org/v2/country/THA/indicator/FP.CPI.TOTL?format=json"},
+    {"year":1982,"value":38.41,"level":"ดัชนีราคาผู้บริโภคทั้งประเทศ ปี 2553 = 100","source":"https://api.worldbank.org/v2/country/THA/indicator/FP.CPI.TOTL?format=json"},
+    {"year":1983,"value":39.84,"level":"ดัชนีราคาผู้บริโภคทั้งประเทศ ปี 2553 = 100","source":"https://api.worldbank.org/v2/country/THA/indicator/FP.CPI.TOTL?format=json"},
+    {"year":1984,"value":40.19,"level":"ดัชนีราคาผู้บริโภคทั้งประเทศ ปี 2553 = 100","source":"https://api.worldbank.org/v2/country/THA/indicator/FP.CPI.TOTL?format=json"},
+    {"year":1985,"value":41.16,"level":"ดัชนีราคาผู้บริโภคทั้งประเทศ ปี 2553 = 100","source":"https://api.worldbank.org/v2/country/THA/indicator/FP.CPI.TOTL?format=json"},
+    {"year":1986,"value":41.92,"level":"ดัชนีราคาผู้บริโภคทั้งประเทศ ปี 2553 = 100","source":"https://api.worldbank.org/v2/country/THA/indicator/FP.CPI.TOTL?format=json"},
+    {"year":1987,"value":42.95,"level":"ดัชนีราคาผู้บริโภคทั้งประเทศ ปี 2553 = 100","source":"https://api.worldbank.org/v2/country/THA/indicator/FP.CPI.TOTL?format=json"},
+    {"year":1988,"value":44.61,"level":"ดัชนีราคาผู้บริโภคทั้งประเทศ ปี 2553 = 100","source":"https://api.worldbank.org/v2/country/THA/indicator/FP.CPI.TOTL?format=json"},
+    {"year":1989,"value":47,"level":"ดัชนีราคาผู้บริโภคทั้งประเทศ ปี 2553 = 100","source":"https://api.worldbank.org/v2/country/THA/indicator/FP.CPI.TOTL?format=json"},
+    {"year":1990,"value":49.76,"level":"ดัชนีราคาผู้บริโภคทั้งประเทศ ปี 2553 = 100","source":"https://api.worldbank.org/v2/country/THA/indicator/FP.CPI.TOTL?format=json"},
+    {"year":1991,"value":52.6,"level":"ดัชนีราคาผู้บริโภคทั้งประเทศ ปี 2553 = 100","source":"https://api.worldbank.org/v2/country/THA/indicator/FP.CPI.TOTL?format=json"},
+    {"year":1992,"value":54.78,"level":"ดัชนีราคาผู้บริโภคทั้งประเทศ ปี 2553 = 100","source":"https://api.worldbank.org/v2/country/THA/indicator/FP.CPI.TOTL?format=json"},
+    {"year":1993,"value":56.59,"level":"ดัชนีราคาผู้บริโภคทั้งประเทศ ปี 2553 = 100","source":"https://api.worldbank.org/v2/country/THA/indicator/FP.CPI.TOTL?format=json"},
+    {"year":1994,"value":59.45,"level":"ดัชนีราคาผู้บริโภคทั้งประเทศ ปี 2553 = 100","source":"https://api.worldbank.org/v2/country/THA/indicator/FP.CPI.TOTL?format=json"},
+    {"year":1995,"value":62.91,"level":"ดัชนีราคาผู้บริโภคทั้งประเทศ ปี 2553 = 100","source":"https://api.worldbank.org/v2/country/THA/indicator/FP.CPI.TOTL?format=json"},
+    {"year":1996,"value":66.56,"level":"ดัชนีราคาผู้บริโภคทั้งประเทศ ปี 2553 = 100","source":"https://api.worldbank.org/v2/country/THA/indicator/FP.CPI.TOTL?format=json"},
+    {"year":1997,"value":70.3,"level":"ดัชนีราคาผู้บริโภคทั้งประเทศ ปี 2553 = 100","source":"https://api.worldbank.org/v2/country/THA/indicator/FP.CPI.TOTL?format=json"},
+    {"year":1998,"value":75.92,"level":"ดัชนีราคาผู้บริโภคทั้งประเทศ ปี 2553 = 100","source":"https://api.worldbank.org/v2/country/THA/indicator/FP.CPI.TOTL?format=json"},
+    {"year":1999,"value":76.14,"level":"ดัชนีราคาผู้บริโภคทั้งประเทศ ปี 2553 = 100","source":"https://api.worldbank.org/v2/country/THA/indicator/FP.CPI.TOTL?format=json"},
+    {"year":2000,"value":77.35,"level":"ดัชนีราคาผู้บริโภคทั้งประเทศ ปี 2553 = 100","source":"https://api.worldbank.org/v2/country/THA/indicator/FP.CPI.TOTL?format=json"},
+    {"year":2001,"value":78.61,"level":"ดัชนีราคาผู้บริโภคทั้งประเทศ ปี 2553 = 100","source":"https://api.worldbank.org/v2/country/THA/indicator/FP.CPI.TOTL?format=json"},
+    {"year":2002,"value":79.16,"level":"ดัชนีราคาผู้บริโภคทั้งประเทศ ปี 2553 = 100","source":"https://api.worldbank.org/v2/country/THA/indicator/FP.CPI.TOTL?format=json"},
+    {"year":2003,"value":80.59,"level":"ดัชนีราคาผู้บริโภคทั้งประเทศ ปี 2553 = 100","source":"https://api.worldbank.org/v2/country/THA/indicator/FP.CPI.TOTL?format=json"},
+    {"year":2004,"value":82.81,"level":"ดัชนีราคาผู้บริโภคทั้งประเทศ ปี 2553 = 100","source":"https://api.worldbank.org/v2/country/THA/indicator/FP.CPI.TOTL?format=json"},
+    {"year":2005,"value":86.57,"level":"ดัชนีราคาผู้บริโภคทั้งประเทศ ปี 2553 = 100","source":"https://api.worldbank.org/v2/country/THA/indicator/FP.CPI.TOTL?format=json"},
+    {"year":2006,"value":90.59,"level":"ดัชนีราคาผู้บริโภคทั้งประเทศ ปี 2553 = 100","source":"https://api.worldbank.org/v2/country/THA/indicator/FP.CPI.TOTL?format=json"},
+    {"year":2007,"value":92.62,"level":"ดัชนีราคาผู้บริโภคทั้งประเทศ ปี 2553 = 100","source":"https://api.worldbank.org/v2/country/THA/indicator/FP.CPI.TOTL?format=json"},
+    {"year":2008,"value":97.68,"level":"ดัชนีราคาผู้บริโภคทั้งประเทศ ปี 2553 = 100","source":"https://api.worldbank.org/v2/country/THA/indicator/FP.CPI.TOTL?format=json"},
+    {"year":2009,"value":96.85,"level":"ดัชนีราคาผู้บริโภคทั้งประเทศ ปี 2553 = 100","source":"https://api.worldbank.org/v2/country/THA/indicator/FP.CPI.TOTL?format=json"},
+    {"year":2010,"value":100,"level":"ดัชนีราคาผู้บริโภคทั้งประเทศ ปี 2553 = 100","source":"https://api.worldbank.org/v2/country/THA/indicator/FP.CPI.TOTL?format=json"},
+    {"year":2011,"value":103.81,"level":"ดัชนีราคาผู้บริโภคทั้งประเทศ ปี 2553 = 100","source":"https://api.worldbank.org/v2/country/THA/indicator/FP.CPI.TOTL?format=json"},
+    {"year":2012,"value":106.94,"level":"ดัชนีราคาผู้บริโภคทั้งประเทศ ปี 2553 = 100","source":"https://api.worldbank.org/v2/country/THA/indicator/FP.CPI.TOTL?format=json"},
+    {"year":2013,"value":109.27,"level":"ดัชนีราคาผู้บริโภคทั้งประเทศ ปี 2553 = 100","source":"https://api.worldbank.org/v2/country/THA/indicator/FP.CPI.TOTL?format=json"},
+    {"year":2014,"value":111.34,"level":"ดัชนีราคาผู้บริโภคทั้งประเทศ ปี 2553 = 100","source":"https://api.worldbank.org/v2/country/THA/indicator/FP.CPI.TOTL?format=json"},
+    {"year":2015,"value":110.34,"level":"ดัชนีราคาผู้บริโภคทั้งประเทศ ปี 2553 = 100","source":"https://api.worldbank.org/v2/country/THA/indicator/FP.CPI.TOTL?format=json"},
+    {"year":2016,"value":110.55,"level":"ดัชนีราคาผู้บริโภคทั้งประเทศ ปี 2553 = 100","source":"https://api.worldbank.org/v2/country/THA/indicator/FP.CPI.TOTL?format=json"},
+    {"year":2017,"value":111.28,"level":"ดัชนีราคาผู้บริโภคทั้งประเทศ ปี 2553 = 100","source":"https://api.worldbank.org/v2/country/THA/indicator/FP.CPI.TOTL?format=json"},
+    {"year":2018,"value":112.47,"level":"ดัชนีราคาผู้บริโภคทั้งประเทศ ปี 2553 = 100","source":"https://api.worldbank.org/v2/country/THA/indicator/FP.CPI.TOTL?format=json"},
+    {"year":2019,"value":113.26,"level":"ดัชนีราคาผู้บริโภคทั้งประเทศ ปี 2553 = 100","source":"https://api.worldbank.org/v2/country/THA/indicator/FP.CPI.TOTL?format=json"},
+    {"year":2020,"value":112.31,"level":"ดัชนีราคาผู้บริโภคทั้งประเทศ ปี 2553 = 100","source":"https://api.worldbank.org/v2/country/THA/indicator/FP.CPI.TOTL?format=json"},
+    {"year":2021,"value":113.69,"level":"ดัชนีราคาผู้บริโภคทั้งประเทศ ปี 2553 = 100","source":"https://api.worldbank.org/v2/country/THA/indicator/FP.CPI.TOTL?format=json"},
+    {"year":2022,"value":120.6,"level":"ดัชนีราคาผู้บริโภคทั้งประเทศ ปี 2553 = 100","source":"https://api.worldbank.org/v2/country/THA/indicator/FP.CPI.TOTL?format=json"},
+    {"year":2023,"value":122.08,"level":"ดัชนีราคาผู้บริโภคทั้งประเทศ ปี 2553 = 100","source":"https://api.worldbank.org/v2/country/THA/indicator/FP.CPI.TOTL?format=json"},
+    {"year":2024,"value":122.57,"level":"ดัชนีราคาผู้บริโภคทั้งประเทศ ปี 2553 = 100","source":"https://api.worldbank.org/v2/country/THA/indicator/FP.CPI.TOTL?format=json"},
+    {"year":2025,"value":122.4,"level":"ดัชนีราคาผู้บริโภคทั้งประเทศ ปี 2553 = 100","source":"https://api.worldbank.org/v2/country/THA/indicator/FP.CPI.TOTL?format=json"}
+  ],
+  "living": {
+    "perCapita": [
+      {"year":2004,"value":2295,"level":"ค่าใช้จ่ายต่อคนต่อเดือน ภาคตะวันออกเฉียงเหนือ","source":"https://www.nso.go.th/public/e-book/Statistical-Yearbook/SYB-2547/files/assets/basic-html/page180.html"},
+      {"year":2011,"value":4199,"level":"ค่าใช้จ่ายต่อครัวเรือน 14,277 บาท หารขนาดครัวเรือน 3.4 คน ภาคตะวันออกเฉียงเหนือ","source":"https://www.nso.go.th/public/e-book/Statistical-Yearbook/SYB-2013/360-361/","sizeSource":"https://catalogapi.nso.go.th/api/index?table=SES_0705_08_0049_01&format=csv"},
+      {"year":2019,"value":5708,"level":"ค่าใช้จ่ายต่อครัวเรือน 16,553 บาท หารขนาดครัวเรือน 2.9 คน ภาคตะวันออกเฉียงเหนือ","source":"https://www.nso.go.th/public/e-book/Statistical-Yearbook/SYB-2020/299/","sizeSource":"https://catalogapi.nso.go.th/api/index?table=SES_0705_08_0049_01&format=csv"}
+    ],
+    "places": {
+      "rural": {"value":0.931,"level":"ค่าใช้จ่ายครัวเรือนนอกเขตเทศบาล 15,413 บาท เทียบค่าเฉลี่ยภาค 16,553 บาท ปี 2562","source":"https://nso.go.th/nsoweb/download/eyJwYXRoIjoic3RvcmFnZVwvc3VydmV5X2RldGFpbFwvMjAyM1wvMjAyMzA1MDMxOTMyMjFfOTY1OTIucGRmIiwiZmlsZW5hbWUiOiJmdWxscmVwb3J0X25lXzYzLnBkZiJ9"},
+      "town": {"value":1.154,"level":"ค่าใช้จ่ายครัวเรือนในเขตเทศบาล 19,098 บาท เทียบค่าเฉลี่ยภาค 16,553 บาท ปี 2562","source":"https://nso.go.th/nsoweb/download/eyJwYXRoIjoic3RvcmFnZVwvc3VydmV5X2RldGFpbFwvMjAyM1wvMjAyMzA1MDMxOTMyMjFfOTY1OTIucGRmIiwiZmlsZW5hbWUiOiJmdWxscmVwb3J0X25lXzYzLnBkZiJ9"},
+      "bangkok": {"value":1.32,"level":"เส้นความยากจนกรุงเทพฯ 3,276 บาท เทียบภาคตะวันออกเฉียงเหนือ 2,478 บาทต่อคนต่อเดือน ปี 2562","source":"https://www.nso.go.th/public/e-book/Statistical-Yearbook/SYB-2025/307/"},
+      "abroad": {"value":1,"level":"แรงงานไทยในต่างประเทศ ส่วนใหญ่นายจ้างจัดที่พัก","estimate":true}
+    },
+    "share": {"value":0.55,"level":"ผู้ใหญ่ที่ใช้จ่ายระดับปกติ ใช้ราวร้อยละ 55 ของค่าใช้จ่ายเฉลี่ยต่อคน ในชนบทอีสานราว 1.2 เท่าของเส้นความยากจนภาคตะวันออกเฉียงเหนือ 2,478 บาท ปี 2562","source":"https://www.nso.go.th/public/e-book/Statistical-Yearbook/SYB-2025/307/","estimate":true},
+    "child": [
+      {"from":0,"to":13,"value":0.3,"level":"น้ำหนักเด็กอายุต่ำกว่า 14 ปี ตามมาตราส่วน OECD ปรับปรุง","source":"https://ec.europa.eu/eurostat/statistics-explained/index.php?title=Glossary:Equivalised_disposable_income"},
+      {"from":14,"to":21,"value":0.5,"level":"น้ำหนักสมาชิกอายุ 14 ปีขึ้นไป ตามมาตราส่วน OECD ปรับปรุง","source":"https://ec.europa.eu/eurostat/statistics-explained/index.php?title=Glossary:Equivalised_disposable_income"}
+    ]
+  },
+  "salary": [
+    {"year":2009,"value":7940,"level":"เงินเดือนแรกบรรจุข้าราชการวุฒิปริญญาตรี ก่อน 1 ต.ค. 2553","source":"https://alro.go.th/uploads/org/central_admin/download/article/article_20160528150930.pdf"},
+    {"year":2011,"value":8700,"level":"เงินเดือนแรกบรรจุข้าราชการวุฒิปริญญาตรี ตั้งแต่ 1 ต.ค. 2553","source":"https://alro.go.th/uploads/org/central_admin/download/article/article_20160528150930.pdf"},
+    {"year":2012,"value":11680,"level":"เงินเดือนแรกบรรจุข้าราชการวุฒิปริญญาตรี ปีที่ 1 ของการปรับโครงสร้าง ย้อนหลังถึง 1 ม.ค. 2555","source":"https://www.thaipbs.or.th/news/content/62951"},
+    {"year":2013,"value":15000,"level":"เงินเดือนแรกบรรจุข้าราชการวุฒิปริญญาตรี ปีที่ 2 ของการปรับโครงสร้าง","source":"https://www.thaipbs.or.th/news/content/62951"},
+    {"year":2024,"value":16500,"level":"เงินเดือนแรกบรรจุข้าราชการวุฒิปริญญาตรี ตั้งแต่ 1 พ.ค. 2567","source":"https://www.thansettakij.com/business/economy/594714"}
+  ],
   "mortality": [
     {
       "year": 2000,
@@ -2467,15 +2549,15 @@ KI.data.stats = {
         0
       ],
       "costDays": [
-        30,
-        30,
-        30
+        15,
+        15,
+        15
       ],
       "estimate": true
     },
     "farmer": {
       "incomeDays": [
-        10,
+        30,
         10,
         10
       ],
@@ -2592,14 +2674,14 @@ KI.data.stats = {
     },
     "monk": {
       "incomeDays": [
-        0,
-        0,
-        0
+        6,
+        6,
+        6
       ],
       "costDays": [
-        30,
-        30,
-        30
+        5,
+        5,
+        5
       ],
       "estimate": true
     },
