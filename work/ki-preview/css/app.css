@@ -97,6 +97,9 @@ select{-webkit-appearance:none;appearance:none;font:inherit;font-size:15px;color
 .cash-card{margin-top:10px;padding:10px 14px;border:1px solid var(--line);border-radius:14px;background:#fff}
 .slot-stats .cash-card .money{margin:0;padding:0;font-size:1.15rem}
 .cash-meta{margin-top:4px;font-size:13px;line-height:1.45;color:var(--ink-2);overflow-wrap:anywhere}
+.cash-ledger{margin-top:10px}.cash-ledger summary{min-height:44px;display:flex;align-items:center;cursor:pointer;font-weight:700}.cash-ledger .cash-meta{padding:3px 0;border-bottom:1px solid var(--line)}
+.partner-finance{margin:10px 0;padding:10px;border-radius:10px;background:#f2f5e8;overflow-wrap:anywhere}.partner-split{display:flex;align-items:flex-start;gap:8px;margin-top:8px;font-size:13px;line-height:1.5}.partner-split input{flex:none;margin-top:4px}.partner-finance .finance-action{margin-top:6px}
+.year-events-heading{margin:0;font-size:1rem;color:var(--ink-2)}
 .slot-stats .condition{margin:8px 0 0;padding:6px 12px;border-radius:10px;background:var(--dry-soft);color:var(--dry-deep);font-size:.9rem}
 .slot-stats>.form-field{margin-top:10px}
 .share-box{display:grid;gap:10px;padding:14px;border:1px solid var(--line-2);border-radius:14px;background:var(--paper-2)}

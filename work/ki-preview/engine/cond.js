@@ -1,7 +1,7 @@
 globalThis.KI = globalThis.KI || {};
 (function () {
   const KEYS = ['age', 'year', 'season', 'sex', 'role', 'wealth', 'loc', 'setting', 'province', 'homeProvince',
-    'edu', 'flag', 'noFlag', 'trait', 'stat', 'money', 'cond', 'noCond', 'preset', 'chance', 'any', 'partnerYears', 'marriedYears', 'childAge', 'counter', 'talent', 'learn'];
+    'edu', 'flag', 'noFlag', 'trait', 'stat', 'money', 'cond', 'noCond', 'preset', 'chance', 'any', 'partnerYears', 'marriedYears', 'childAge', 'counter', 'talent', 'learn', 'personality'];
   const EDU_KEYS = ['in', 'grade', 'top'];
 
   function check(cond, rng) {
@@ -44,6 +44,7 @@ globalThis.KI = globalThis.KI || {};
     if ('year' in c && !num(s.year, c.year)) return false;
     if ('season' in c && s.season !== null && !num(s.season, c.season)) return false;
     if ('sex' in c && !one(s.sex, c.sex)) return false;
+    if ('personality' in c && !one(KI.game.personality(s).id, c.personality)) return false;
     if ('role' in c && !one(s.role, c.role)) return false;
     if ('wealth' in c && !one(s.wealth, c.wealth)) return false;
     if ('loc' in c && !one(s.loc.kind, c.loc)) return false;

@@ -156,7 +156,7 @@ globalThis.KI = globalThis.KI || {};
     const disabilityAccidentAge=disabilityRoll===1?8+rng.int(68):null;
     return {
       v: 1, rng: rng.state(), t: 0,
-      name, sex, birthYear, year: birthYear, season: null, disability, disabilityAccidentAge,
+      name, sex, birthYear, year: birthYear, season: null, disability, disabilityAccidentAge, personalityHistory:[],
       home: { province, setting },
       loc: { kind: 'isan', province, setting, country: null },
       wealth,
@@ -180,6 +180,31 @@ globalThis.KI = globalThis.KI || {};
     if (card.kind === 'personal') return (data.personalEvents || []).find((p) => p.id === card.id);
     if (card.kind === 'focus') return { choices: data.focus || [] };
     return null;
+  }
+
+  function personality(state) {
+    const history=Array.isArray(state.personalityHistory)?state.personalityHistory:[];
+    const kind=history.filter(item=>item.kind==='kind').length, harmful=history.filter(item=>item.kind==='harmful').length;
+    if(history.length<2)return {id:'forming',label:'กำลังก่อตัวจากการเลือก',kind,harmful};
+    if(kind-harmful>=2)return {id:'kind',label:'มักเห็นใจและช่วยเหลือผู้อื่น',kind,harmful};
+    if(harmful-kind>=2)return {id:'harmful',label:'มักเลือกเอาเปรียบหรือทำร้ายผู้อื่น',kind,harmful};
+    return {id:'mixed',label:'มีทั้งการช่วยเหลือและการเอาเปรียบ',kind,harmful};
+  }
+  function characterChoice(choice) {
+    const effects=choice.effects||[];
+    return choice.character || (effects.some(effect=>effect.inc==='crime' && (effect.d===undefined || effect.d>0))?'harmful':null);
+  }
+  function restorePersonality(state,data) {
+    if(Array.isArray(state.personalityHistory))return state;
+    const history=[];
+    for(const entry of state.log||[])for(const card of entry.cards||[]) {
+      if(!card.picked || String(card.picked).endsWith('@parents'))continue;
+      const src=sourceOf(data,card), id=String(card.picked).split('@')[0];
+      const choice=src && (src.choices||[]).find(item=>item.id===id);
+      const kind=choice && characterChoice(choice);
+      if(kind==='kind' || kind==='harmful')history.push({kind,year:entry.year,title:card.title,choice:choice.label});
+    }
+    return {...state,personalityHistory:history.slice(-8)};
   }
 
   function autoEffects(data, card, s, rng) {
@@ -280,6 +305,10 @@ globalThis.KI = globalThis.KI || {};
         }
       }
       if (shown.travelMethod && s.loc.kind === 'abroad' && (state.loc.kind !== 'abroad' || state.loc.country !== s.loc.country)) s.loc.method = shown.travelMethod;
+      if(!refused) {
+        const kind=characterChoice(choice);
+        if(kind==='kind' || kind==='harmful')s.personalityHistory=[...(s.personalityHistory||[]),{kind,year:s.year,title:card.title,choice:choice.label}].slice(-8);
+      }
     }
     s.turn.cards[cardIndex].picked = choiceId;
     s.turn.cards[cardIndex].result = { text, deltas };
@@ -383,9 +412,12 @@ globalThis.KI = globalThis.KI || {};
     s.loans=loans.map((l)=>{
       const interest=Math.round(l.balance*l.rate);
       const pay=Math.min(l.balance+interest,l.payment);
-      const short=s.money<pay && l.kind==='shark';
-      s.money-=pay;
-      paid+=pay;
+      const asset=(s.personalAssets||[]).find(item=>item.id===l.assetId), partner=s.family && s.family.partner;
+      const contribution=asset && asset.partnerName && partner && partner.name===asset.partnerName && partner.since===asset.partnerSince?Math.min(partner.money,Math.floor(pay/2)):0;
+      if(contribution)partner.money-=contribution;
+      const ownPay=pay-contribution,short=s.money<ownPay && l.kind==='shark';
+      s.money-=ownPay;
+      paid+=ownPay;
       if (short) s.flags.sharkLate=true;
       if (s.money<0 && l.kind!=='shark') s.flags.loanDefault=true;
       return { ...l, balance: Math.max(0, l.balance+interest-pay), left: Math.max(0, l.left-1) };
@@ -472,22 +504,43 @@ globalThis.KI = globalThis.KI || {};
     const entry = {
       t: s.t, year: s.year, season: s.season, age: ageOf(s), province: s.loc.province, kind: s.loc.kind, role: s.role,
       pin: null, stats: null, money: 0, economy: {income:0,expense:0,familyExpense:0,familySupport:0},
-      cards: s.turn.cards.map((c) => ({ kind: c.kind, id: c.id, title: c.title, picked: c.picked, deltas: c.result ? c.result.deltas : [] }))
+      cashFlow:[],
+      cards: s.turn.cards.map((c) => ({ kind: c.kind, id: c.id, title: c.title, body:c.body, picked: c.picked, choice:(c.choices||[]).find(choice=>choice.id===c.picked)?.label || '', resultText:c.result?.text || '', deltas: c.result ? c.result.deltas : [] }))
     };
     let autoPin = null, retirementPin = null;
     if (!s.death) {
       const f = s.focus && s.season !== null && (data.focus || []).find((x) => x.id === s.focus);
       const knowBeforeFocus = s.stats.know;
+      let moneyBefore=s.money;
       if (f && KI.cond.test(f.when,s,rng) && (s.role !== 'monk' || ['merit','study','health'].includes(f.id)) && (s.role !== 'prisoner' || ['study','health','merit'].includes(f.id))) s = KI.effects.apply(s, f.perSeason || [], data, rng).state;
       else if (f) s.focus = null;
+      if(s.money!==moneyBefore)entry.cashFlow.push({label:'สิ่งที่เน้น: '+f.label,delta:s.money-moneyBefore});
       const hobby = s.hobby && s.season !== null && s.role !== 'monk' && s.role !== 'prisoner' && (data.hobbies || []).find((x) => x.id === s.hobby);
+      moneyBefore=s.money;
       if (hobby) {
         const cost = ageOf(s) >= INCOME_AGE ? Math.round(hobby.costDays * KI.tables.wageDay(data, s.year)) : 0;
         if (s.money >= cost) s = KI.effects.apply(s, [...hobby.effects, ...(cost ? [{ money: -cost }] : [])], data, rng).state;
       }
+      if(s.money!==moneyBefore)entry.cashFlow.push({label:'งานอดิเรก: '+hobby.label,delta:s.money-moneyBefore});
       entry.economy = seasonMoney(s, data);
+      const partner=s.family && s.family.partner;
+      if(partner && s.season!==null && s.flags.partner){
+        const months=[4,5,3][s.season], age=s.year-partner.birthYear, wage=KI.tables.wageDay(data,s.year);
+        if(age>=65)partner.job='เกษียณ';
+        else if(age>=18 && partner.job==='ยังไม่ทำงาน')partner.job=partner.location.kind==='abroad'?'แรงงานต่างประเทศ':'รับจ้างทั่วไป';
+        const income=age>=18 && age<65?Math.round(wage*(partner.location.kind==='abroad'?55:20)*months):0;
+        const cost=Math.round(KI.tables.livingCost(data,s.year,KI.tables.livingPlace(partner.location))*months);
+        partner.money+=income;
+        const paid=Math.min(partner.money,cost);partner.money-=paid;partner.lastIncome=income;partner.lastExpense=paid;
+        if(partner.splitExpenses && KI.family.together(s,partner)){
+          const share=Math.min(partner.money,Math.round(entry.economy.expense/2));partner.money-=share;entry.economy.familySupport+=share;partner.lastContribution=share;
+        }else partner.lastContribution=0;
+      }
       s.money += entry.economy.income + entry.economy.familySupport - entry.economy.expense;
-      if (ageOf(s) < INCOME_AGE && s.money < 0) s.money = 0;
+      if(entry.economy.income)entry.cashFlow.push({label:'รายรับ',delta:entry.economy.income});
+      if(entry.economy.familySupport)entry.cashFlow.push({label:'ครอบครัวช่วยค่าใช้จ่าย',delta:entry.economy.familySupport});
+      if(entry.economy.expense)entry.cashFlow.push({label:'ค่าครองชีพและค่าใช้จ่ายประจำ',delta:-entry.economy.expense});
+      if (ageOf(s) < INCOME_AGE && s.money < 0) {entry.cashFlow.push({label:'ครอบครัวช่วยค่าใช้จ่ายเด็ก',delta:-s.money});s.money = 0;}
       if (s.season !== null) entry.economy.loanPaid = serviceLoans(s);
       if (s.season !== null) entry.economy.interest = applyDebt(s, data);
       if (entry.economy.hobbyExpense || entry.economy.familyHobbyExpense) {
@@ -497,7 +550,10 @@ globalThis.KI = globalThis.KI || {};
           if (s.role === 'student' && s.focus === 'study' && s.stats.know > knowBeforeFocus) s.stats.know -= 1;
         }
       }
+      moneyBefore=s.money;
+      const conditionNames=s.conds.filter(cond=>(data.conditions[cond.id]?.perTurn||[]).some(effect=>typeof effect.money==='number')).map(cond=>data.conditions[cond.id]?.name || cond.id);
       s = KI.effects.tick(s, data, rng).state;
+      if(s.money!==moneyBefore)entry.cashFlow.push({label:'ค่าใช้จ่ายจากสถานะ: '+conditionNames.join(', '),delta:s.money-moneyBefore});
       if (s.season === 0) autoPin = promote(s);
       if (s.season === 1 && ageOf(s) >= 60 && (s.role === 'civil' || (s.role === 'teacher' && s.flags.governmentTeacher))) {
         s.flags.retiredFrom = s.role;
@@ -601,5 +657,5 @@ globalThis.KI = globalThis.KI || {};
     };
   }
 
-  KI.game = { newGame, begin, choose, canEnd, end, skip, auto, summary, debtInfo, moneyCost, elderAllowance, livingMonthly, monthlyCost };
+  KI.game = { newGame, begin, choose, canEnd, end, skip, auto, summary, personality, restorePersonality, debtInfo, moneyCost, elderAllowance, livingMonthly, monthlyCost };
 })();

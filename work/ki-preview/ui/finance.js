@@ -56,7 +56,7 @@ globalThis.KI = globalThis.KI || {};
   }
   function personalValue(state,data) {
     const totals={homes:0,cars:0};
-    for(const asset of personalInventory(state,data))totals[asset.kind==='home'?'homes':'cars']+=personalSalePrice(state,data,asset);
+    for(const asset of personalInventory(state,data))totals[asset.kind==='home'?'homes':'cars']+=Math.round(personalSalePrice(state,data,asset)*(asset.partnerName?0.5:1));
     return totals;
   }
   function personalSalePrice(state,data,asset) {
@@ -65,35 +65,46 @@ globalThis.KI = globalThis.KI || {};
     if(asset.kind==='car')return Math.round(asset.price*Math.max(0.3,Math.pow(0.9,years)));
     return Math.round(asset.price*0.95*KI.tables.wageDay(data,state.year)/KI.tables.wageDay(data,asset.year));
   }
-  function personalQuote(state,data,id,method,sellId) {
+  function personalQuote(state,data,id,method,sellId,shared) {
     const item=((data.assets||{}).personal||[]).find(x=>x.id===id),old=sellId && personalInventory(state,data).find(x=>x.id===sellId);
     if(!item || state.death || state.role==='prisoner' || state.year-state.birthYear<18 || item.from && state.year<item.from || !['cash','finance'].includes(method))return {ok:false,reason:'ยังซื้อรายการนี้ไม่ได้'};
     if(sellId && (!old || old.kind!==item.kind))return {ok:false,reason:'ไม่พบทรัพย์สินที่ต้องการขาย'};
+    const partner=state.family && state.family.partner;
+    if(shared && (!partner || state.year-partner.birthYear<18 || state.stats.bond<35))return {ok:false,reason:'ซื้อร่วมกันได้เมื่อคู่รักบรรลุนิติภาวะและความสัมพันธ์ตั้งแต่ 35/100'};
     const price=Math.round(item.days*KI.tables.wageDay(data,state.year)), sale=old?personalSalePrice(state,data,old):0;
     const oldBalance=old?(state.loans||[]).filter(l=>l.assetId===old.id).reduce((n,l)=>n+l.balance,0)+(old.legacy?legacyDebt(state,data).filter(l=>l.id==='life2-mortgage').reduce((n,l)=>n+l.balance,0):0):0;
+    const oldOwner=old && old.partnerName?(partner && partner.name===old.partnerName && partner.since===old.partnerSince?partner:(state.family?.formerPartners||[]).find(person=>person.name===old.partnerName && person.since===old.partnerSince)):null;
+    if(old && old.partnerName && !oldOwner)return {ok:false,reason:'ไม่พบเจ้าของร่วมสำหรับแบ่งเงินขาย'};
+    if(old && old.partnerName && sale<oldBalance)return {ok:false,reason:'ราคาขายไม่พอปิดหนี้ทรัพย์สินร่วม'};
+    const partnerPayout=oldOwner?Math.floor((sale-oldBalance)/2):0;
     const down=method==='cash'?price:Math.ceil(price*0.2), principal=price-down;
     const rate=0.02,seasons=item.kind==='home'?45:15;
     const payment=principal?Math.ceil(principal*rate/(1-Math.pow(1+rate,-seasons))):0;
-    const required=down+oldBalance-sale;
-    if(state.money<required)return {ok:false,reason:'เงินสดไม่พอจ่ายหลังหักราคาขายและหนี้เดิม',price,sale,oldBalance,down,payment};
-    return {ok:true,item,price,sale,oldBalance,down,principal,rate,seasons,payment};
+    const partnerDown=shared?Math.floor(down/2):0,required=down+oldBalance-sale-partnerDown+partnerPayout;
+    if(shared && partner.money+(oldOwner===partner?partnerPayout:0)<partnerDown)return {ok:false,reason:'เงินสดของคู่รักไม่พอจ่ายส่วนของตน',price,sale,oldBalance,down,payment,partnerDown,partnerPayout};
+    if(state.money<required)return {ok:false,reason:'เงินสดไม่พอจ่ายหลังหักราคาขายและหนี้เดิม',price,sale,oldBalance,down,payment,partnerDown,partnerPayout};
+    return {ok:true,item,price,sale,oldBalance,down,principal,rate,seasons,payment,partnerDown,partnerPayout};
   }
-  function buyPersonal(state,data,id,method,sellId) {
-    const quote=personalQuote(state,data,id,method,sellId);
+  function buyPersonal(state,data,id,method,sellId,shared) {
+    const quote=personalQuote(state,data,id,method,sellId,shared);
     if(!quote.ok)return {ok:false,state,reason:quote.reason};
     const next=JSON.parse(JSON.stringify(state)),previous=sellId && personalInventory(state,data).find(a=>a.id===sellId);
     next.personalAssets=(next.personalAssets||[]).filter(a=>a.id!==sellId);
     next.loans=sellId?(next.loans||[]).filter(l=>l.assetId!==sellId):(next.loans||[]);
     if(previous && previous.legacy){next.legacyHomeDisposed=true;next.conds=(next.conds||[]).filter(c=>c.id!=='life2-mortgage');next.flags['life2-ownHouse']=false;}
-    next.money+=quote.sale-quote.oldBalance-quote.down;
+    next.money+=quote.sale-quote.oldBalance-quote.down+quote.partnerDown-quote.partnerPayout;
+    if(quote.partnerPayout){const current=next.family.partner, owner=current && current.name===previous.partnerName && current.since===previous.partnerSince?current:(next.family.formerPartners||[]).find(person=>person.name===previous.partnerName && person.since===previous.partnerSince);owner.money=(owner.money||0)+quote.partnerPayout;}
+    if(quote.partnerDown)next.family.partner.money-=quote.partnerDown;
     let serial=(state.personalAssetSerial||0)+1;
     while(next.personalAssets.some(a=>a.id==='asset-'+serial))serial++;
-    const asset={id:'asset-'+serial,key:id,kind:quote.item.kind,label:quote.item.label,year:state.year,price:quote.price};
+    const asset={id:'asset-'+serial,key:id,kind:quote.item.kind,label:quote.item.label,year:state.year,price:quote.price,...(shared?{partnerName:next.family.partner.name,partnerSince:next.family.partner.since}: {})};
     next.personalAssetSerial=serial;next.personalAssets.push(asset);
     next.financeLog=[...(state.financeLog||[])];
     if(previous)next.financeLog.push({year:state.year,age:state.year-state.birthYear,label:'ขาย'+previous.label,delta:quote.sale,familyExpense:0,category:'personal'});
     if(quote.oldBalance)next.financeLog.push({year:state.year,age:state.year-state.birthYear,label:'ปิดเงินผ่อน'+previous.label,delta:-quote.oldBalance,familyExpense:0,category:'loan'});
+    if(quote.partnerPayout)next.financeLog.push({year:state.year,age:state.year-state.birthYear,label:'แบ่งเงินขายให้ '+previous.partnerName,delta:-quote.partnerPayout,familyExpense:0,category:'personal'});
     if(quote.principal){next.loans.push({kind:'asset-'+asset.id,assetId:asset.id,label:'ผ่อน'+asset.label,principal:quote.principal,balance:quote.principal,rate:quote.rate,payment:quote.payment,left:quote.seasons,since:state.year});next.financeLog.push({year:state.year,age:state.year-state.birthYear,label:'กู้ซื้อ'+asset.label,delta:quote.principal,familyExpense:0,category:'loan'});}
+    if(quote.partnerDown)next.financeLog.push({year:state.year,age:state.year-state.birthYear,label:'คู่รักช่วยซื้อ'+asset.label,delta:quote.partnerDown,familyExpense:0,category:'personal'});
     next.financeLog.push({year:state.year,age:state.year-state.birthYear,label:'ซื้อ'+asset.label,delta:-quote.price,familyExpense:0,category:'personal'});
     next.financeAt=state.t;
     return {ok:true,state:next,asset,quote};
@@ -113,7 +124,22 @@ globalThis.KI = globalThis.KI || {};
     next.financeLog=[...(state.financeLog||[]),{year:state.year,age:state.year-state.birthYear,label:'ปิด'+debt.label,delta:-debt.balance,familyExpense:0,category:'loan'}];
     return next;
   }
-  function loanBalance(state,data) { return (state.loans||[]).reduce((sum,loan)=>sum+(loan.balance||0),0)+(data?legacyDebt(state,data).reduce((sum,debt)=>sum+debt.balance,0):0); }
+  function loanBalance(state,data) { return (state.loans||[]).reduce((sum,loan)=>sum+(loan.balance||0),0)+(state.partnerLoan?.amount||0)+(data?legacyDebt(state,data).reduce((sum,debt)=>sum+debt.balance,0):0); }
+  function partnerTransfer(state,kind,amount) {
+    const partner=state.family?.partner, loan=state.partnerLoan, n=Math.floor(amount);
+    if(state.death || !Number.isSafeInteger(n) || n<=0)return {ok:false,state,reason:'กรุณาระบุจำนวนเงินให้ถูกต้อง'};
+    if(kind==='borrow' && (!partner || state.stats.bond<35 || partner.money<n || loan && loan.amount>0 && loan.name!==partner.name))return {ok:false,state,reason:'ยังยืมจำนวนนี้ไม่ได้ ตรวจความสัมพันธ์ เงินของคู่รัก และหนี้เดิม'};
+    if(kind==='give' && (!partner || state.money<n))return {ok:false,state,reason:'เงินสดไม่พอให้คู่รัก'};
+    if(kind==='repay' && (!loan || n>loan.amount || state.money<n))return {ok:false,state,reason:'เงินสดไม่พอหรือจำนวนเกินยอดหนี้'};
+    if(!['borrow','give','repay'].includes(kind))return {ok:false,state,reason:'ไม่พบรายการ'};
+    const next=JSON.parse(JSON.stringify(state)), other=next.family.partner;
+    let label;
+    if(kind==='borrow'){other.money-=n;next.money+=n;next.partnerLoan={name:other.name,amount:(loan?.amount||0)+n};label='ยืมเงินจาก '+other.name;}
+    else if(kind==='give'){other.money+=n;next.money-=n;label='ให้เงิน '+other.name;}
+    else {next.money-=n;next.partnerLoan.amount-=n;const recipient=other && other.name===loan.name?other:(next.family.formerPartners||[]).find(p=>p.name===loan.name);if(recipient)recipient.money=(recipient.money||0)+n;label='คืนเงิน '+loan.name;if(!next.partnerLoan.amount)next.partnerLoan=null;}
+    next.financeAt=state.t;next.financeLog=[...(state.financeLog||[]),{year:state.year,age:state.year-state.birthYear,label,delta:kind==='borrow'?n:-n,familyExpense:0,category:kind==='give'?'partner':'loan'}];
+    return {ok:true,state:next};
+  }
   function needsFamilyHelp(state,data) {
     const months=runway(state,data), debt=loanBalance(state,data);
     return !state.death && state.year-state.birthYear>=15 && (state.money<0 || debt>state.money || months!==null && months<=1);
@@ -125,7 +151,6 @@ globalThis.KI = globalThis.KI || {};
       if(name && person && (!Number.isFinite(person.deathYear) || state.year<person.deathYear))options.push({id:key,label:label+' · '+name});
     }
     const add=(person,id,label)=>{if(person && person.name && Number.isFinite(person.birthYear) && state.year-person.birthYear>=20 && (!Number.isFinite(person.deathYear) || state.year<person.deathYear))options.push({id,label:label+' · '+person.name});};
-    add(family.partner,'partner','คู่ชีวิต');
     (family.siblings||[]).forEach((person,i)=>add(person,'sibling:'+i,'พี่น้อง'));
     (family.children||[]).forEach((person,i)=>add(person,'child:'+i,'ลูก'));
     return options;
@@ -295,5 +320,5 @@ globalThis.KI = globalThis.KI || {};
     next.financeLog=[...(state.financeLog||[]),{year:state.year,age:state.year-state.birthYear,label:'ปิด'+loan.label,delta:-loan.balance,familyExpense:0,category:'loan'}];
     return next;
   }
-  KI.finance={householdWorth,loanBalance,legacyDebt,payLegacyDebt,needsFamilyHelp,familyHelpOptions,askFamilyHelp,personalInventory,personalValue,personalSalePrice,personalQuote,buyPersonal,runway,LENDERS,loanLimit,loanReview,borrow,payOff,maxUnits,status,STATUS_LABEL,actions,price,saleValue,cost,annual,history,canAct,setHobby,act,assets,held,portfolioValue,canTrade,trade,priceAt};
+  KI.finance={householdWorth,loanBalance,legacyDebt,payLegacyDebt,partnerTransfer,needsFamilyHelp,familyHelpOptions,askFamilyHelp,personalInventory,personalValue,personalSalePrice,personalQuote,buyPersonal,runway,LENDERS,loanLimit,loanReview,borrow,payOff,maxUnits,status,STATUS_LABEL,actions,price,saleValue,cost,annual,history,canAct,setHobby,act,assets,held,portfolioValue,canTrade,trade,priceAt};
 })();
