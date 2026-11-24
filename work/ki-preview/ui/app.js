@@ -44,14 +44,20 @@ globalThis.KI = globalThis.KI || {};
   }
   function notice(message) {gameDialog({title:'แจ้งให้ทราบ',message});}
   function supportBox() {
-    const box=element('details','support-box');
-    box.append(element('summary','','เป็นกำลังใจให้ผู้สร้าง'));
-    box.append(element('p','support-copy','ถ้าเรื่องราวนี้ทำให้คุณยิ้มหรือนึกถึงบ้าน สามารถสนับสนุนการพัฒนาเกมได้ตามกำลัง ขอบคุณจากใจครับ'));
-    const qr=document.createElement('img');qr.src='assets/support-qr.jpg';qr.alt='คิวอาร์พร้อมเพย์สำหรับสนับสนุนผู้สร้างเกิดอีสาน';qr.className='support-qr';qr.loading='lazy';
-    const save=element('a','btn support-save','บันทึกภาพคิวอาร์');save.href=qr.src;save.download='koet-isan-support.jpg';
-    const actions=element('div','support-actions');actions.append(save,button('โอนแล้ว',()=>notice('ขอบคุณมากครับ กำลังใจของคุณช่วยให้เกิดอีสานได้เดินทางต่อ'),'btn support-thanks'));
-    box.append(qr,element('p','support-hint','สแกนด้วยแอปธนาคาร หรือบันทึกภาพแล้วเปิดจากแอปธนาคารบนเครื่องนี้'),actions);
-    return box;
+    return button('♥  เป็นกำลังใจให้ผู้สร้าง',()=>{
+      const previous=document.activeElement, dialog=element('dialog','game-dialog support-dialog');
+      dialog.setAttribute('aria-labelledby','support-dialog-title');
+      const content=element('div','game-dialog-content'),title=element('h2','','เป็นกำลังใจให้ผู้สร้าง');title.id='support-dialog-title';
+      const qr=document.createElement('img');qr.src='assets/support-qr.jpg';qr.alt='คิวอาร์พร้อมเพย์สำหรับสนับสนุนผู้สร้างเกิดอีสาน';qr.className='support-qr';
+      const save=element('a','btn support-save','บันทึกภาพคิวอาร์');save.href=qr.src;save.download='koet-isan-support.jpg';
+      function dismiss(){if(typeof dialog.close==='function')dialog.close();dialog.remove();if(previous && previous.isConnected)previous.focus();}
+      dialog.addEventListener('cancel',event=>{event.preventDefault();dismiss();});
+      dialog.addEventListener('click',event=>{if(event.target===dialog)dismiss();});
+      const actions=element('div','support-actions');actions.append(save,button('โอนแล้ว',()=>{dismiss();notice('ขอบคุณมากครับ กำลังใจของคุณช่วยให้เกิดอีสานได้เดินทางต่อ');},'btn btn-primary support-thanks'),button('ปิด',dismiss,'btn'));
+      content.append(title,element('p','support-copy','ถ้าเรื่องราวนี้ทำให้คุณยิ้มหรือนึกถึงบ้าน สามารถสนับสนุนการพัฒนาเกมได้ตามกำลัง ขอบคุณจากใจครับ'),qr,element('p','support-hint','สแกนด้วยแอปธนาคาร หรือบันทึกภาพแล้วเปิดจากแอปธนาคารบนเครื่องนี้'),actions);
+      dialog.append(content);(document.body || root).append(dialog);
+      if(typeof dialog.showModal==='function')dialog.showModal();else {dialog.setAttribute('open','');dialog.setAttribute('aria-modal','true');}
+    },'btn support-box');
   }
   function musicButton() {
     const control=button(KI.music.playing()?'ปิดเสียงเพลง':'เปิดเสียงเพลง',async()=>{
