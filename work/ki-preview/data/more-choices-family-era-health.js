@@ -4,8 +4,8 @@ globalThis.KI = globalThis.KI || {}; KI.data = KI.data || {};
     "fam-father-passed": [{"id":"ordain-fire","label":"บวชหน้าไฟให้พ่อ","text":"คุณโกนหัวห่มผ้าเหลืองหน้าเมรุ ญาติพี่น้องบอกว่าพ่อคงได้บุญ","when":{"sex":"m","age":[15,100]},"effects":[{"flag":"parentPassed","v":false},{"cond":"grieving","turns":2,"by":"attach"},{"stat":"bond","d":5},{"stat":"happy","d":2}]}],
     "fam-mother-passed": [{"id":"ordain-fire","label":"บวชหน้าไฟให้แม่","text":"คุณบวชหน้าไฟส่งแม่ ญาติๆ ยกมือไหว้ด้วยน้ำตา","when":{"sex":"m","age":[15,100]},"effects":[{"flag":"parentPassed","v":false},{"cond":"grieving","turns":2,"by":"attach"},{"stat":"bond","d":5},{"stat":"happy","d":2}]}],
     "fam-parents-to-bangkok": [
-      {"id":"go-along","label":"ขอตามไปกรุงเทพฯ ด้วย","text":"คุณได้อยู่กับพ่อแม่ในห้องเช่าแคบๆ แต่ต้องย้ายโรงเรียนและคิดถึงเพื่อนที่บ้าน","effects":[{"flag":"fam-parentsStayed"},{"stat":"bond","d":4},{"stat":"happy","d":-2},{"cond":"homesick","turns":3}]},
-      {"id":"aunt","label":"ไปอยู่กับน้าในตัวอำเภอ","text":"น้ารับไปอยู่ใกล้โรงเรียนดีๆ แต่บ้านน้าก็ไม่ใช่บ้านตัวเอง","effects":[{"flag":"fam-raisedByGrand"},{"stat":"know","d":3},{"stat":"bond","d":-3,"by":"attach"}]}
+      {"id":"go-along","label":"ขอตามไปหาพ่อแม่ทุกปิดเทอม","text":"เปิดเทอมอยู่กับตายาย ปิดเทอมนั่งรถไปอยู่ห้องเช่าแคบๆ กับพ่อแม่ ได้เจอกันบ่อยขึ้นแต่ใจหายทุกครั้งที่ต้องแยก","effects":[{"flag":"fam-raisedByGrand"},{"stat":"bond","d":4},{"stat":"happy","d":-2},{"cond":"homesick","turns":3}]},
+      {"id":"aunt","label":"ไปอยู่กับน้าในตัวอำเภอ","text":"น้ารับไปอยู่ใกล้โรงเรียนดีๆ ช่วงเปิดเทอม ปิดเทอมกลับไปอยู่กับตายาย แต่บ้านน้าก็ไม่ใช่บ้านตัวเอง","effects":[{"flag":"fam-raisedByGrand"},{"stat":"know","d":3},{"stat":"bond","d":-3,"by":"attach"}]}
     ],
     "fam-parent-returns": [
       {"id":"test","label":"ทำตัวดื้อใส่ดูว่าจะอยู่จริงไหม","text":"บ้านตึงเครียดอยู่หลายเดือน กว่าทุกคนจะยอมรับกันได้","effects":[{"stat":"bond","d":-3},{"stat":"happy","d":-2},{"trait":"grit","d":1}]},
@@ -27,7 +27,7 @@ globalThis.KI = globalThis.KI || {}; KI.data = KI.data || {};
     "fam-stop-kids": [{"id":"adopt-niece","label":"ช่วยเลี้ยงหลานญาติแทน","text":"คุณรับหลานญาติมาอยู่ด้วย บ้านคึกคักขึ้นโดยไม่ต้องมีลูกเพิ่ม","effects":[{"flag":"fam-stopKids"},{"stat":"bond","d":3},{"money":-10,"unit":"wageDay"}]}],
     "fam-sibling-quits-school": [
       {"id":"both-work","label":"เรียนไปทำงานไปทั้งคู่","text":"คุณกับพี่น้องรับจ้างหลังเลิกเรียน เหนื่อยแต่ได้เรียนต่อทั้งสองคน","when":{"age":[15,16]},"effects":[{"stat":"health","d":-3},{"stat":"know","d":1},{"stat":"bond","d":3},{"money":5,"unit":"wageDay"}]},
-      {"id":"temple-school","label":"ให้พี่น้องไปบวชเณรเรียนที่วัด","text":"วัดรับไปเรียนฟรี ครอบครัวเบาลง แต่พี่น้องต้องห่างบ้าน","when":{"year":[1960,2015]},"effects":[{"flag":"fam-siblingSacrificed"},{"stat":"bond","d":1}]}
+      {"id":"temple-school","label":"ขอให้วัดช่วยส่งพี่น้องเรียนฟรี","text":"หลวงพ่อฝากพี่น้องเข้าเรียนฟรีในโรงเรียนของวัด ครอบครัวเบาลงแต่พี่น้องต้องไปอยู่ไกลบ้าน","when":{"year":[1960,2015]},"effects":[{"flag":"fam-siblingSacrificed"},{"stat":"bond","d":1}]}
     ],
     "fam-grand-morning": [{"id":"learn-cook","label":"ขอให้ยายสอนนึ่งข้าว","text":"ยายสอนวิธีแช่ข้าวและดูไฟ คุณทำได้แต่เช้าวันนั้นไปโรงเรียนสาย","effects":[{"stat":"bond","d":3},{"stat":"know","d":1},{"stat":"happy","d":-1}]}],
     "fam-call-from-mom": [{"id":"ask-home","label":"ถามว่าเมื่อไหร่จะกลับ","text":"แม่เงียบไปนาน แล้วบอกว่าสงกรานต์ เสียงแม่สั่นนิดๆ","effects":[{"stat":"bond","d":2},{"stat":"happy","d":-2,"by":"attach"}]}],
@@ -51,11 +51,11 @@ globalThis.KI = globalThis.KI || {}; KI.data = KI.data || {};
     "fam-sibling-repays": [{"id":"job","label":"ฝากงานให้พี่น้องแทนเงิน","text":"พี่น้องได้งานที่มั่นคงกว่าเดิม ภูมิใจที่ได้ยืนด้วยตัวเอง","effects":[{"stat":"bond","d":3},{"trait":"social","d":1}]}],
     "fam-grand-frail": [
       {"id":"hospital","label":"พายายไปหาหมอที่โรงพยาบาลจังหวัด","text":"หมอให้ยาชะลออาการ ค่ารถค่ายาไม่น้อย แต่ยายจำชื่อคุณได้นานขึ้น","effects":[{"flag":"fam-caredGrand"},{"money":-10,"unit":"wageDay"},{"stat":"bond","d":3}]},
-      {"id":"osm","label":"ฝาก อสม. แวะดูยายทุกอาทิตย์","text":"อสม. ช่วยเช็กยาและความดัน คุณยังทำงานต่อได้แต่ใจยังห่วง","effects":[{"stat":"bond","d":1},{"cond":"homesick","turns":2}]}
+      {"id":"osm","label":"ฝาก อสม. แวะดูยายทุกอาทิตย์","text":"อสม. ช่วยเช็กยาและความดัน คุณยังเรียนหรือทำงานต่อได้แต่ใจยังห่วง","effects":[{"stat":"bond","d":1},{"cond":"homesick","turns":2}]}
     ],
     "fam-grand-dies": [
       {"id":"ordain","label":"บวชหน้าไฟให้ยาย","text":"คุณบวชส่งยายตามที่ยายเคยพูดไว้ ใจสงบลงบ้าง","when":{"sex":"m","age":[15,100]},"effects":[{"cond":"grieving","turns":2,"by":"attach"},{"stat":"bond","d":3}]},
-      {"id":"merit","label":"ทำบุญร้อยวันให้ยายทุกปี","text":"คุณกลับบ้านทุกปีเพื่อทำบุญให้ยาย ค่าเดินทางหมดไปไม่น้อยแต่ไม่เสียดาย","effects":[{"cond":"grieving","turns":3,"by":"attach"},{"money":-5,"unit":"wageDay"},{"stat":"bond","d":2}]}
+      {"id":"merit","label":"กลับบ้านทำบุญให้ยายทุกปี","text":"คุณกลับบ้านทุกปีเพื่อทำบุญให้ยาย ค่าเดินทางหมดไปไม่น้อยแต่ไม่เสียดาย","effects":[{"cond":"grieving","turns":3,"by":"attach"},{"money":-5,"unit":"wageDay"},{"stat":"bond","d":2}]}
     ],
     "fam-teen-phone": [
       {"id":"take","label":"ยึดโทรศัพท์ไปเลย","text":"ลูกไม่พูดด้วยเป็นอาทิตย์ แต่การบ้านเสร็จทันเวลา","effects":[{"stat":"bond","d":-4},{"stat":"happy","d":-1}]},
@@ -71,7 +71,7 @@ globalThis.KI = globalThis.KI || {}; KI.data = KI.data || {};
     ],
     "fam-empty-nest": [
       {"id":"garden","label":"ปลูกผักขายที่ตลาดเช้า","text":"มีเงินเข้าทีละนิด และมีคนให้คุยด้วยทุกเช้า","effects":[{"money":3,"unit":"wageDay"},{"stat":"happy","d":3},{"stat":"health","d":1}]},
-      {"id":"video","label":"หัดวิดีโอคอลหาลูก","text":"ภาพกระตุกบ้างแต่ได้เห็นหน้าหลานทุกคืน","when":{"year":[2014,2026]},"effects":[{"stat":"bond","d":3},{"stat":"happy","d":2}]}
+      {"id":"video","label":"หัดวิดีโอคอลหาลูก","text":"ภาพกระตุกบ้างแต่ได้เห็นหน้าลูกบ่อยขึ้น","when":{"year":[2014,2026]},"effects":[{"stat":"bond","d":3},{"stat":"happy","d":2}]}
     ],
     "fam-grandkid-school": [
       {"id":"walk","label":"ให้หลานเดินไปกับเด็กข้างบ้าน","text":"ประหยัดเงินและหลานโตขึ้น แต่คุณยืนรอหน้าบ้านทุกเย็น","effects":[{"stat":"happy","d":-1},{"trait":"grit","d":1}]},
@@ -82,7 +82,7 @@ globalThis.KI = globalThis.KI || {}; KI.data = KI.data || {};
       {"id":"monk","label":"พาลูกไปคุยกับหลวงพ่อที่วัด","text":"หลวงพ่อเล่าเรื่องการพลัดพรากให้ลูกฟังแบบง่ายๆ ลูกดูสงบลง","effects":[{"stat":"bond","d":2},{"stat":"happy","d":1}]}
     ],
     "fam-parent-pension": [
-      {"id":"buy-meds","label":"กลับไปพาไปหาหมอเอง","text":"คุณลางานกลับบ้าน ได้รู้ว่ายาที่พ่อแม่กินอยู่ไม่ตรงกับโรค","effects":[{"money":-8,"unit":"wageDay"},{"stat":"bond","d":4}]},
+      {"id":"buy-meds","label":"พาพ่อแม่ไปหาหมอเอง","text":"คุณพาพ่อแม่ไปหาหมอ ได้รู้ว่ายาที่กินอยู่ไม่ตรงกับโรค เสียค่ารถค่ายาแต่สบายใจ","effects":[{"money":-8,"unit":"wageDay"},{"stat":"bond","d":4}]},
       {"id":"refuse","label":"บอกว่าตอนนี้ไม่มีให้จริงๆ","text":"พ่อแม่เข้าใจแต่เสียงเงียบไป คุณนอนไม่หลับคืนนั้น","effects":[{"stat":"bond","d":-3},{"stat":"happy","d":-2,"by":"attach"}]}
     ],
     "fam-rift-heal": [
@@ -96,7 +96,7 @@ globalThis.KI = globalThis.KI || {}; KI.data = KI.data || {};
     ],
     "tech-cassette": [{"id":"sell","label":"อัดเทปขายในตลาดนัด","text":"ขายดีอยู่พักหนึ่ง จนมีคนเตือนว่าเป็นของละเมิดลิขสิทธิ์","when":{"age":[15,45]},"effects":[{"money":4,"unit":"wageDay"},{"trait":"grit","d":-1}]}],
     "tech-payphone": [
-      {"id":"village-phone","label":"ฝากผู้ใหญ่บ้านประกาศเสียงตามสาย","text":"ญาติโทรกลับมาที่บ้านผู้ใหญ่ ทั้งหมู่บ้านรู้เรื่องของคุณไปด้วย","effects":[{"stat":"bond","d":2},{"stat":"happy","d":-1}]},
+      {"id":"village-phone","label":"ให้ญาติโทรกลับมาที่บ้านผู้ใหญ่บ้าน","text":"ญาติโทรมาที่บ้านผู้ใหญ่ ผู้ใหญ่ประกาศเสียงตามสายเรียกคุณ ทั้งหมู่บ้านเลยรู้เรื่องไปด้วย","effects":[{"stat":"bond","d":2},{"stat":"happy","d":-1}]},
       {"id":"skip","label":"ไม่ติดต่อ รอญาติกลับมาเอง","text":"ประหยัดเงิน แต่ข่าวจากเมืองมาถึงช้าไปหลายเดือน","effects":[{"stat":"bond","d":-2}]}
     ],
     "tech-first-mobile": [

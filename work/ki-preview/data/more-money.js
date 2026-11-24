@@ -18,7 +18,7 @@ KI.data.decisions.push(...[
     {"id":"full","label":"จัดเต็มตามที่ผู้ใหญ่ขอ","text":"งานใหญ่ หน้าตาดีทั้งสองฝ่าย แต่เงินเก็บหายไปเกือบหมด","when":{"sex":"m"},"effects":[{"money":-250,"unit":"wageDay"},{"stat":"bond","d":5},{"stat":"happy","d":3},{"flag":"money-dowryDone"}]},
     {"id":"borrow","label":"กู้ญาติมาจัดงานให้สมเกียรติ","text":"งานผ่านไปด้วยดี แต่มีหนี้ญาติติดตัวไปอีกนาน","when":{"sex":"m"},"effects":[{"money":-50,"unit":"wageDay"},{"cond":"money-loanCoop","turns":9},{"stat":"bond","d":4},{"flag":"money-dowryDone"}]},
     {"id":"talk","label":"ต่อรองให้พอดีกับฐานะ","text":"ตกลงกันได้ แต่มีคนในหมู่บ้านพูดลับหลังอยู่พักหนึ่ง","effects":[{"money":-80,"unit":"wageDay"},{"stat":"happy","d":-2},{"flag":"money-dowryDone"}]},
-    {"id":"give","label":"ให้สินสอดกลับไปตั้งตัวคู่ใหม่","text":"พ่อแม่ฝ่ายหญิงคืนเงินให้ลูกสองคนไว้ตั้งตัว","when":{"sex":"f"},"effects":[{"money":60,"unit":"wageDay"},{"stat":"bond","d":3},{"flag":"money-dowryDone"}]}
+    {"id":"give","label":"ขอพ่อแม่คืนสินสอดไว้ตั้งตัว","text":"พ่อแม่ฝ่ายหญิงคืนเงินให้ลูกสองคนไว้ตั้งตัว","when":{"sex":"f"},"effects":[{"money":60,"unit":"wageDay"},{"stat":"bond","d":3},{"flag":"money-dowryDone"}]}
    ]},
   {"id":"money-shark-pressure","title":"คนทวงหนี้มาที่บ้าน","body":"คนของเจ้าหนี้นอกระบบมายืนรอหน้าบ้าน พูดเสียงดังให้เพื่อนบ้านได้ยิน","when":{"flag":{"money-loanShark":true},"money":[-999999999,3000],"chance":0.5},"cooldown":6,"major":true,
    "choices":[
@@ -26,7 +26,7 @@ KI.data.decisions.push(...[
     {"id":"police","label":"ไปแจ้งตำรวจและขอไกล่เกลี่ยหนี้","text":"มีบันทึกไว้ เจ้าหนี้ยอมคุยเรื่องดอกเบี้ย แต่ต้องเดินเรื่องหลายรอบ","effects":[{"uncond":"money-loanShark"},{"flag":"money-loanShark","v":false},{"stat":"happy","d":-2},{"cond":"indebted","turns":6}]},
     {"id":"flee","label":"หนีไปทำงานกรุงเทพฯ","text":"ไปตั้งหลักไกลบ้าน แต่ครอบครัวยังต้องรับหน้าแทน","effects":[{"move":{"kind":"bangkok"}},{"role":"construction"},{"stat":"bond","d":-6},{"cond":"homesick","turns":4}]}
    ]},
-  {"id":"money-abroad-debt","title":"ไปเมืองนอกใช้หนี้","body":"หนี้พอกจนรายได้ในบ้านไม่พอจ่าย นายหน้าบอกว่าไปทำงานต่างประเทศสองปีก็ปลดหนี้ได้","when":{"money":[-999999999,-1],"age":[22,45],"loc":"isan","year":[1985,2026],"chance":0.3},"cooldown":"once","major":true,
+  {"id":"money-abroad-debt","title":"ไปเมืองนอกใช้หนี้","body":"หนี้พอกจนรายได้ในบ้านไม่พอจ่าย นายหน้าบอกว่าไปทำงานต่างประเทศสองปีก็ปลดหนี้ได้","when":{"money":[-999999999,-1],"age":[22,45],"loc":"isan","year":[1990,2026],"chance":0.3},"cooldown":"once","major":true,
    "choices":[
     {"id":"go","label":"กู้ค่านายหน้าแล้วไป","text":"จากบ้านไปไกล ค่าแรงสูงกว่า แต่ต้องเริ่มจากหนี้ค่านายหน้าก่อน","effects":[{"money":-60,"unit":"wageDay"},{"move":{"kind":"abroad","country":"ไต้หวัน"}},{"role":"abroad"},{"cond":"homesick","turns":6},{"pin":"ไปทำงานต่างประเทศเพื่อใช้หนี้"}],
      "roll":[{"p":0.75,"text":"นายจ้างดี ส่งเงินกลับบ้านได้ทุกเดือน","effects":[{"stat":"happy","d":2}]},{"p":0.25,"text":"งานไม่ตรงที่ตกลงไว้ ต้องอดทนทำต่อ","effects":[{"stat":"happy","d":-6},{"stat":"health","d":-3}]}]},
@@ -37,17 +37,17 @@ KI.data.decisions.push(...[
     {"id":"buy","label":"ซื้อเก็บไว้","text":"มีที่นาเพิ่ม ความรู้สึกมั่นคงขึ้น แต่เงินเก็บหมดไปกับดิน","effects":[{"money":-400,"unit":"wageDay"},{"flag":"money-land"},{"stat":"happy","d":5},{"pin":"ซื้อที่นาของตัวเอง"}]},
     {"id":"no","label":"เก็บเงินสดไว้","text":"มีเงินไว้ใช้ยามจำเป็น แต่นาแปลงนั้นตกเป็นของคนอื่น","effects":[{"stat":"happy","d":-2}]}
    ]},
-  {"id":"money-house-build","title":"สร้างบ้านที่หมู่บ้าน","body":"เงินที่ส่งกลับมาสะสมจนพอจะรื้อบ้านไม้หลังเก่า ปลูกบ้านปูนให้พ่อแม่","when":{"age":[25,55],"money":[60000,999999999],"noFlag":["money-house"],"chance":0.3},"cooldown":"once","major":true,
+  {"id":"money-house-build","title":"สร้างบ้านที่หมู่บ้าน","body":"เงินเก็บสะสมจนพอจะรื้อบ้านไม้หลังเก่าของพ่อแม่ ปลูกเป็นบ้านปูน","when":{"age":[25,55],"flag":{"parentsAlive":true},"money":[60000,999999999],"noFlag":["money-house"],"chance":0.3},"cooldown":"once","major":true,
    "choices":[
     {"id":"big","label":"สร้างบ้านปูนสองชั้น","text":"บ้านใหญ่โตเป็นหน้าเป็นตา พ่อแม่ภูมิใจ เงินเก็บแทบไม่เหลือ","effects":[{"money":-1200,"unit":"wageDay"},{"flag":"money-house"},{"stat":"bond","d":8},{"cond":"proud","turns":4},{"pin":"สร้างบ้านหลังใหม่ให้พ่อแม่"}]},
     {"id":"fix","label":"ซ่อมต่อเติมบ้านเดิม","text":"บ้านน่าอยู่ขึ้น ยังมีเงินเหลือไว้ใช้","effects":[{"money":-300,"unit":"wageDay"},{"flag":"money-house"},{"stat":"bond","d":3}]},
     {"id":"wait","label":"เก็บเงินต่อไปก่อน","text":"พ่อแม่บอกว่าไม่เป็นไร แต่หลังคายังรั่วเหมือนเดิม","effects":[{"stat":"bond","d":-2}]}
    ]},
-  {"id":"money-ordination-cost","title":"งานบวชน้องชาย","body":"น้องชายจะบวชทดแทนคุณพ่อแม่ ญาติถามว่าจะจัดงานแบบไหน","when":{"flag":{"hasSiblings":true},"age":[20,40],"noFlag":["money-ordainPaid"],"chance":0.15},"cooldown":"once","major":true,
+  {"id":"money-ordination-cost","title":"งานบวชในบ้าน","body":"ญาติผู้ชายในบ้านจะบวชทดแทนคุณพ่อแม่ ญาติผู้ใหญ่ถามว่าจะช่วยจัดงานแบบไหน","when":{"flag":{"hasSiblings":true},"age":[20,40],"noFlag":["money-ordainPaid"],"chance":0.15},"cooldown":"once","major":true,
    "choices":[
     {"id":"big","label":"ช่วยจัดงานใหญ่ มีหมอลำ","text":"คนทั้งหมู่บ้านมาร่วม บุญใหญ่ แต่ค่าใช้จ่ายก้อนโต","effects":[{"money":-120,"unit":"wageDay"},{"stat":"bond","d":6},{"stat":"happy","d":4},{"flag":"money-ordainPaid"}]},
     {"id":"simple","label":"ช่วยงานเรียบง่าย","text":"ได้บุญเท่ากัน มีญาติบางคนบ่นว่าเงียบไปหน่อย","effects":[{"money":-30,"unit":"wageDay"},{"stat":"bond","d":2},{"flag":"money-ordainPaid"}]},
-    {"id":"none","label":"บอกว่าช่วงนี้ไม่มีเงิน","text":"ไม่เสียเงิน แต่พ่อแม่ดูผิดหวัง","effects":[{"stat":"bond","d":-5},{"flag":"money-ordainPaid"}]}
+    {"id":"none","label":"บอกว่าช่วงนี้ไม่มีเงิน","text":"ไม่เสียเงิน แต่ญาติผู้ใหญ่ดูผิดหวัง","effects":[{"stat":"bond","d":-5},{"flag":"money-ordainPaid"}]}
    ]}
 ]);
 KI.data.personalEvents.push(...[
@@ -59,15 +59,15 @@ KI.data.personalEvents.push(...[
   {"id":"money-loan-shark","title":"เงินด่วนนอกระบบ","body":"ใบปลิวเงินด่วนติดเสาไฟ โทรไปได้เงินวันนี้ ไม่ต้องมีคนค้ำ","w":6,"when":{"age":[18,60],"money":[-999999999,3000],"noFlag":["money-loanShark"]},"cooldown":12,
    "choices":[
     {"id":"take","label":"โทรไปกู้","text":"ได้เงินทันที แต่ดอกเบี้ยรายวันกินรายได้ไปเรื่อยๆ","effects":[{"money":40,"unit":"wageDay"},{"cond":"money-loanShark","turns":9},{"flag":"money-loanShark"}]},
-    {"id":"no","label":"ไม่เอา ไปยืมพ่อแม่แทน","text":"ได้เงินก้อนเล็ก แต่ต้องฟังพ่อแม่บ่นยาว","when":{"age":[18,40]},"effects":[{"money":15,"unit":"wageDay"},{"stat":"bond","d":-2},{"flag":"money-owesParents"}]},
+    {"id":"no","label":"ไม่เอา ไปยืมพ่อแม่แทน","text":"ได้เงินก้อนเล็ก แต่ต้องฟังพ่อแม่บ่นยาว","when":{"age":[18,40],"flag":{"parentsAlive":true}},"effects":[{"money":15,"unit":"wageDay"},{"stat":"bond","d":-2},{"flag":"money-owesParents"}]},
     {"id":"tough","label":"อดทนไปก่อน","text":"ลำบากหน่อยแต่ไม่มีหนี้เพิ่ม","effects":[{"stat":"happy","d":-3},{"stat":"health","d":-1}]}
    ]},
-  {"id":"money-parents-loan","title":"ยืมเงินพ่อแม่","body":"พ่อแม่รู้ว่าช่วงนี้ขัดสน แม่แอบยื่นเงินที่เก็บไว้จากขายข้าวให้","w":14,"when":{"age":[18,40],"money":[-999999999,0],"noFlag":["money-owesParents"]},"cooldown":12,
+  {"id":"money-parents-loan","title":"ยืมเงินพ่อแม่","body":"พ่อแม่รู้ว่าช่วงนี้ขัดสน จึงแอบยื่นเงินเก็บของตัวเองให้","w":14,"when":{"age":[18,40],"flag":{"parentsAlive":true},"money":[-999999999,0],"noFlag":["money-owesParents"]},"cooldown":12,
    "choices":[
     {"id":"take","label":"รับไว้ก่อน","text":"ผ่านช่วงนี้ไปได้ แต่รู้ว่าเงินนั้นคือเงินเก็บของพ่อแม่","effects":[{"money":25,"unit":"wageDay"},{"flag":"money-owesParents"},{"stat":"happy","d":-1}]},
     {"id":"refuse","label":"ปฏิเสธ บอกว่าจัดการเองได้","text":"แม่ไม่สบายใจ แต่ก็ภูมิใจที่ลูกพยายาม","effects":[{"stat":"bond","d":2},{"stat":"happy","d":-2}]}
    ]},
-  {"id":"money-repay-parents","title":"คืนเงินพ่อแม่","body":"ช่วงนี้พอมีเงิน นึกถึงเงินที่เคยยืมพ่อแม่มา","w":14,"when":{"flag":{"money-owesParents":true},"money":[5000,999999999]},"cooldown":6,
+  {"id":"money-repay-parents","title":"คืนเงินพ่อแม่","body":"ช่วงนี้พอมีเงิน นึกถึงเงินที่เคยยืมพ่อแม่มา","w":14,"when":{"flag":{"money-owesParents":true,"parentsAlive":true},"money":[5000,999999999]},"cooldown":6,
    "choices":[
     {"id":"repay","label":"เอาไปคืนพร้อมของฝาก","text":"พ่อแม่ยิ้ม ไม่ได้ทวงแต่ก็ดีใจ","effects":[{"money":-30,"unit":"wageDay"},{"flag":"money-owesParents","v":false},{"stat":"bond","d":5}]},
     {"id":"later","label":"ไว้ก่อน พ่อแม่ไม่ได้ทวง","text":"เงินอยู่ในมือต่อ แต่ค้างใจอยู่ลึกๆ","effects":[{"stat":"happy","d":-1}]}
@@ -120,7 +120,7 @@ KI.data.personalEvents.push(...[
   {"id":"money-smartphone","title":"สมาร์ตโฟนเครื่องแรก","body":"ใครๆ ก็ใช้จอสัมผัส ดูคลิป โอนเงิน คุยวิดีโอคอลได้","w":6,"when":{"year":[2012,2026],"age":[13,65],"noFlag":["money-smartphone"]},"cooldown":9,
    "choices":[
     {"id":"cash","label":"ซื้อเงินสด","text":"ได้เครื่องดี เงินเก็บลดไปพอสมควร","effects":[{"money":-40,"unit":"wageDay"},{"flag":"money-smartphone"},{"stat":"happy","d":3},{"stat":"know","d":2}]},
-    {"id":"install","label":"ผ่อนรุ่นท็อป","text":"ได้เครื่องที่อยากได้ แต่ผ่อนนานกว่าที่คิด","effects":[{"money":-5,"unit":"wageDay"},{"cond":"money-installment","turns":6},{"flag":"money-smartphone"},{"stat":"happy","d":4}]},
+    {"id":"install","label":"ผ่อนรุ่นท็อป","text":"ได้เครื่องที่อยากได้ แต่ผ่อนนานกว่าที่คิด","when":{"age":[18,65]},"effects":[{"money":-5,"unit":"wageDay"},{"cond":"money-installment","turns":6},{"flag":"money-smartphone"},{"stat":"happy","d":4}]},
     {"id":"no","label":"ใช้เครื่องเดิม","text":"ประหยัด แต่ตามข่าวในกลุ่มไม่ทัน","effects":[{"stat":"happy","d":-1}]}
    ]},
   {"id":"money-buy-gold","title":"ซื้อทองเก็บ","body":"ราคาทองวันนี้ลงนิดหน่อย แม่บอกว่าทองเป็นเงินเก็บที่ไม่หายไปไหน","w":5,"when":{"age":[20,65],"money":[15000,999999999],"noFlag":["money-gold"]},"cooldown":12,
@@ -128,7 +128,7 @@ KI.data.personalEvents.push(...[
     {"id":"buy","label":"ซื้อสร้อยสองสลึง","text":"มีของมีค่าเก็บไว้ ยามลำบากขายได้","effects":[{"money":-80,"unit":"wageDay"},{"flag":"money-gold"},{"stat":"happy","d":2}]},
     {"id":"no","label":"เก็บเงินสดดีกว่า","text":"เงินอยู่ในมือ ใช้ได้ทันทีเมื่อจำเป็น","effects":[]}
    ]},
-  {"id":"money-send-home","title":"ส่งเงินให้พ่อแม่","body":"สิ้นเดือนนี้ได้เงินมา แม่โทรมาบอกว่าหลังคารั่วอีกแล้ว","w":8,"when":{"age":[18,50],"loc":["bangkok","abroad"]},"cooldown":6,
+  {"id":"money-send-home","title":"ส่งเงินให้พ่อแม่","body":"สิ้นเดือนนี้ได้เงินมา ทางบ้านโทรมาบอกว่าหลังคารั่วอีกแล้ว","w":8,"when":{"age":[18,50],"flag":{"parentsAlive":true},"loc":["bangkok","abroad"]},"cooldown":6,
    "choices":[
     {"id":"lot","label":"ส่งเกือบหมด","text":"ทางบ้านสบายขึ้น ตัวเองกินมาม่าไปจนสิ้นเดือน","effects":[{"money":-40,"unit":"wageDay"},{"stat":"bond","d":5},{"stat":"health","d":-1}]},
     {"id":"some","label":"ส่งพอประมาณ","text":"ช่วยทางบ้านได้บ้าง ยังเหลือไว้ใช้เอง","effects":[{"money":-15,"unit":"wageDay"},{"stat":"bond","d":2}]},
@@ -138,7 +138,7 @@ KI.data.personalEvents.push(...[
    "choices":[
     {"id":"pay","label":"จ่ายให้เต็มที่ เรียนที่ดีๆ","text":"เด็กได้เรียนที่ดี เงินเก็บลดลงมาก","effects":[{"money":-60,"unit":"wageDay"},{"stat":"bond","d":4},{"stat":"happy","d":2}]},
     {"id":"loan","label":"ให้กู้ กยศ.","text":"ภาระในบ้านเบาลง แต่เด็กจะมีหนี้ติดตัวตอนเรียนจบ","when":{"year":[1996,2026]},"effects":[{"money":-10,"unit":"wageDay"},{"stat":"bond","d":1}]},
-    {"id":"near","label":"เรียนใกล้บ้านประหยัดก่อน","text":"ใช้เงินไม่มาก เด็กดูผิดหวังนิดหน่อย","effects":[{"money":-15,"unit":"wageDay"},{"stat":"bond","d":-1}]}
+    {"id":"near","label":"ให้เรียนใกล้บ้าน ประหยัดไว้ก่อน","text":"ใช้เงินไม่มาก เด็กดูผิดหวังนิดหน่อย","effects":[{"money":-15,"unit":"wageDay"},{"stat":"bond","d":-1}]}
    ]},
   {"id":"money-funeral","title":"งานศพญาติ","body":"ญาติผู้ใหญ่เสีย งานจัดหลายคืน มีค่าโลง ค่าอาหาร ค่าหมอลำ","w":4,"heavy":true,"when":{"age":[18,70]},"cooldown":15,
    "choices":[
@@ -178,7 +178,7 @@ KI.data.personalEvents.push(...[
     {"id":"hold","label":"เก็บใส่ยุ้งรอราคา","text":"เสี่ยงกว่า ต้องหาเงินอื่นใช้ไปก่อน","effects":[{"money":-5,"unit":"wageDay"}],
      "roll":[{"p":0.5,"text":"ราคาขึ้น ขายได้กำไร","effects":[{"money":40,"unit":"wageDay"},{"stat":"happy","d":4}]},{"p":0.5,"text":"ราคาลง ข้าวบางส่วนมอดกิน","effects":[{"money":-10,"unit":"wageDay"},{"stat":"happy","d":-4}]}]}
    ]},
-  {"id":"money-medical-old","title":"ค่ารักษาพยาบาล","body":"คนในบ้านป่วยหนักต้องนอนโรงพยาบาลจังหวัด ยังไม่มีบัตรอะไรช่วยจ่าย","w":7,"when":{"year":[1975,2001],"age":[15,70]},"cooldown":15,
+  {"id":"money-medical-old","title":"ค่ารักษาพยาบาล","body":"คนในบ้านป่วยหนักต้องนอนโรงพยาบาลจังหวัด ไม่มีสิทธิ์อะไรช่วยจ่าย","w":7,"when":{"year":[1975,2001],"age":[15,70]},"cooldown":15,
    "choices":[
     {"id":"hospital","label":"รักษาเต็มที่","text":"คนป่วยหายดี แต่ค่าโรงพยาบาลเป็นก้อนโต","effects":[{"money":-100,"unit":"wageDay"},{"stat":"bond","d":4}]},
     {"id":"herb","label":"กลับมารักษาที่บ้านด้วยยาสมุนไพร","text":"ประหยัด แต่หายช้าและทุกคนกังวล","effects":[{"money":-10,"unit":"wageDay"},{"stat":"happy","d":-5},{"stat":"health","d":-2}]}
@@ -195,10 +195,10 @@ KI.data.personalEvents.push(...[
     {"id":"small","label":"ช่วยเท่าที่ไหว ไม่หวังคืน","text":"เสียไม่มาก ญาติเข้าใจ","effects":[{"money":-15,"unit":"wageDay"},{"stat":"bond","d":2}]},
     {"id":"no","label":"บอกว่าไม่มี","text":"เงินอยู่ครบ แต่งานบุญครั้งหน้าคงเจอหน้ากันยาก","effects":[{"stat":"bond","d":-4}]}
    ]},
-  {"id":"money-installment-late","title":"ผ่อนไม่ทัน","body":"ไฟแนนซ์โทรมาเตือนว่าค้างค่างวดสองเดือนแล้ว จะมายึดรถ","w":14,"when":{"cond":["money-installment"],"money":[-999999999,2000]},"cooldown":6,
+  {"id":"money-installment-late","title":"ผ่อนไม่ทัน","body":"ไฟแนนซ์โทรมาเตือนว่าค้างค่างวดสองเดือนแล้ว ถ้าไม่จ่ายจะมายึดของคืน","w":14,"when":{"cond":["money-installment"],"money":[-999999999,2000]},"cooldown":6,
    "choices":[
-    {"id":"borrow","label":"ยืมเพื่อนมาจ่ายงวด","text":"รักษารถไว้ได้ แต่ย้ายหนี้ไปอยู่กับเพื่อน","effects":[{"money":20,"unit":"wageDay"},{"stat":"happy","d":-2}]},
-    {"id":"seize","label":"ปล่อยให้ยึด","text":"ไม่ต้องผ่อนต่อ แต่เงินดาวน์กับงวดที่จ่ายไปหายหมด","effects":[{"uncond":"money-installment"},{"flag":"money-bike","v":false},{"stat":"happy","d":-5}]}
+    {"id":"borrow","label":"ยืมเพื่อนมาจ่ายงวด","text":"รักษาของไว้ได้ แต่ย้ายหนี้ไปอยู่กับเพื่อน","effects":[{"money":20,"unit":"wageDay"},{"stat":"happy","d":-2}]},
+    {"id":"seize","label":"ปล่อยให้ยึดของคืน","text":"ไม่ต้องผ่อนต่อ แต่เงินดาวน์กับงวดที่จ่ายไปหายหมด","effects":[{"uncond":"money-installment"},{"flag":"money-bike","v":false},{"stat":"happy","d":-5}]}
    ]}
 ]);
 Object.assign(KI.data.conditions, {

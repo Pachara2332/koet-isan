@@ -14,16 +14,16 @@ KI.data.decisions.push(...[
     {"id":"help","label":"ช่วยงานบ้านและหารายได้เล็กๆ น้อยๆ","text":"เก็บผักไปขายตลาดเช้าก่อนไปโรงเรียน","effects":[{"money":2,"unit":"wageDay"},{"stat":"bond","d":4},{"stat":"know","d":-1},{"trait":"grit","d":2}]},
     {"id":"study","label":"ตั้งใจเรียนให้พี่ภูมิใจ","text":"เอาสมุดพกผลการเรียนดีๆ มาให้พี่ดู","effects":[{"stat":"know","d":3},{"stat":"bond","d":3}]},
     {"id":"rebel","label":"ประชดชีวิต ไม่ฟังใคร","text":"หนีเรียนไปเล่นกับเพื่อน พี่ได้แต่ถอนใจ","effects":[{"inc":"naughty"},{"stat":"bond","d":-5},{"stat":"happy","d":1}]}]},
-  {"id":"exp-orphan-quit","title":"ออกจากโรงเรียนช่วยพี่","body":"พี่ป่วยทำงานไม่ได้หลายเดือน เงินในบ้านใกล้หมด","when":{"age":[12,17],"flag":{"orphan":true},"edu":{"in":["school"]},"chance":0.4},"cooldown":"once","major":true,"heavy":true,"choices":[
+  {"id":"exp-orphan-quit","title":"ออกจากโรงเรียนช่วยพี่","body":"พี่ป่วยทำงานไม่ได้หลายเดือน เงินในบ้านใกล้หมด","when":{"age":[12,17],"flag":{"orphan":true,"elderSibling":true},"edu":{"in":["school"]},"chance":0.4},"cooldown":"once","major":true,"heavy":true,"choices":[
     {"id":"quit","label":"ออกจากโรงเรียนไปทำงาน","text":"รับจ้างทั่วไปในหมู่บ้าน ได้ค่าแรงรายวัน","when":{"age":[15,17]},"effects":[{"edu":{"in":null,"grade":0}},{"role":"farmer"},{"money":8,"unit":"wageDay"},{"stat":"bond","d":6},{"stat":"happy","d":-4},{"pin":"ออกจากโรงเรียนมาช่วยพี่"}]},
     {"id":"temple","label":"ไปขอความช่วยเหลือจากวัด","text":"หลวงพ่อให้กินข้าวที่วัด และฝากเรียนต่อ","effects":[{"stat":"bond","d":2},{"stat":"happy","d":1},{"inc":"good"}]},
     {"id":"school","label":"ขอทุนจากโรงเรียน","text":"ครูพาไปยื่นขอทุนเด็กกำพร้า","effects":[],"roll":[
       {"p":0.6,"text":"ได้ทุนรายปี เรียนต่อได้","effects":[{"stat":"happy","d":4},{"stat":"know","d":2}]},
       {"p":0.4,"text":"ทุนเต็มแล้ว ต้องหาทางอื่น","effects":[{"stat":"happy","d":-3}]}]}]},
-  {"id":"exp-repay-elder","title":"ตอบแทนพี่","body":"พี่ที่เลี้ยงดูมาตั้งแต่เด็กอายุมากขึ้นแล้ว ตัวเองทำงานมีรายได้ ถึงเวลาตอบแทนบ้าง","when":{"age":[22,60],"flag":{"elderSibling":true},"chance":0.3},"cooldown":15,"choices":[
+  {"id":"exp-repay-elder","title":"ตอบแทนพี่","body":"พี่คนโตที่ช่วยดูแลมาตั้งแต่เด็กอายุมากขึ้นแล้ว ตัวเองทำงานมีรายได้ ถึงเวลาตอบแทนบ้าง","when":{"age":[22,60],"flag":{"elderSibling":true},"chance":0.3},"cooldown":15,"choices":[
     {"id":"money","label":"ส่งเงินให้พี่ทุกเดือน","text":"พี่บอกว่าไม่ต้อง แต่ก็ยิ้มทั้งน้ำตา","effects":[{"money":-20,"unit":"wageDay"},{"stat":"bond","d":6},{"stat":"happy","d":3}]},
     {"id":"house","label":"ซ่อมบ้านให้พี่","text":"เปลี่ยนหลังคาที่รั่วมาหลายปี","effects":[{"money":-35,"unit":"wageDay"},{"stat":"bond","d":8}]},
-    {"id":"visit","label":"กลับไปเยี่ยมบ่อยขึ้น","text":"ขับรถกลับบ้านทุกเทศกาล","effects":[{"money":-5,"unit":"wageDay"},{"stat":"bond","d":3}]}]},
+    {"id":"visit","label":"กลับไปเยี่ยมบ่อยขึ้น","text":"เดินทางกลับไปหาพี่ทุกเทศกาล","effects":[{"money":-5,"unit":"wageDay"},{"stat":"bond","d":3}]}]},
   {"id":"exp-send-home","title":"ส่งเงินกลับบ้าน","body":"ที่บ้านโทรมาบอกว่าปีนี้ข้าวไม่ค่อยดี พ่อแม่อายุมากแล้ว","when":{"age":[20,60],"loc":["bangkok","abroad"],"flag":{"parentsAlive":true},"chance":0.4},"cooldown":6,"major":true,"choices":[
     {"id":"lot","label":"ส่งให้ก้อนใหญ่","text":"โอนไปเกือบครึ่งของเงินเก็บเดือนนี้","effects":[{"money":-25,"unit":"wageDay"},{"stat":"bond","d":5},{"stat":"happy","d":2}]},
     {"id":"some","label":"ส่งพอประมาณ","text":"ส่งไปพอให้ซื้อข้าวสารกับยา","effects":[{"money":-10,"unit":"wageDay"},{"stat":"bond","d":2}]},
@@ -31,7 +31,7 @@ KI.data.decisions.push(...[
   {"id":"exp-parent-hospital","title":"ค่ารักษาพ่อแม่","body":"พ่อหรือแม่ล้มป่วยต้องนอนโรงพยาบาลหลายวัน ค่ายาและค่าห้องพิเศษเริ่มบานปลาย","when":{"age":[25,75],"flag":{"parentsAlive":true},"chance":0.2},"cooldown":12,"major":true,"choices":[
     {"id":"private","label":"ย้ายไปโรงพยาบาลเอกชน","text":"หมอเก่ง ห้องสบาย แต่ใบเสร็จยาวเหยียด","effects":[{"money":-60,"unit":"wageDay"},{"stat":"bond","d":5}],"roll":[{"p":0.8,"text":"อาการดีขึ้นจนกลับบ้านได้","effects":[{"stat":"happy","d":3}]}]},
     {"id":"public","label":"รักษาตามสิทธิ์ที่โรงพยาบาลรัฐ","text":"รอคิวนานแต่แทบไม่ต้องจ่าย ลางานไปเฝ้าไข้","when":{"year":[2002,9999]},"effects":[{"money":-8,"unit":"wageDay"},{"stat":"bond","d":3},{"stat":"health","d":-1}]},
-    {"id":"old","label":"รักษาโรงพยาบาลอำเภอ จ่ายเอง","text":"ยุคนี้ยังไม่มีบัตรทอง ต้องขายข้าวในยุ้งมาจ่าย","when":{"year":[1970,2001]},"effects":[{"money":-25,"unit":"wageDay"},{"stat":"bond","d":3}]},
+    {"id":"old","label":"รักษาที่โรงพยาบาลอำเภอ จ่ายเอง","text":"ยุคนี้ยังไม่มีบัตรทอง ต้องควักเงินเก็บมาจ่ายเอง","when":{"year":[1970,2001]},"effects":[{"money":-25,"unit":"wageDay"},{"stat":"bond","d":3}]},
     {"id":"sibs","label":"เรียกพี่น้องมาช่วยกันออก","text":"หารกันทุกคน","when":{"flag":{"hasSiblings":true}},"effects":[{"money":-15,"unit":"wageDay"}],"roll":[
       {"p":0.6,"text":"ทุกคนช่วยกันเต็มที่","effects":[{"stat":"bond","d":4}]},
       {"p":0.4,"text":"บางคนบ่ายเบี่ยง จนทะเลาะกัน","effects":[{"stat":"bond","d":-4},{"money":-10,"unit":"wageDay"}]}]}]},
@@ -42,10 +42,10 @@ KI.data.decisions.push(...[
   {"id":"exp-bike-repair","title":"รถพัง","body":"รถที่ใช้ทุกวันสตาร์ทไม่ติด ช่างบอกว่าต้องเปลี่ยนอะไหล่หลายชิ้น","when":{"age":[18,75],"year":[1985,9999],"chance":0.2},"cooldown":9,"choices":[
     {"id":"fix","label":"ซ่อมให้ดีที่ศูนย์","text":"ใช้อะไหล่แท้ ขับได้อีกหลายปี","effects":[{"money":-10,"unit":"wageDay"}]},
     {"id":"cheap","label":"ซ่อมร้านข้างทางแบบประหยัด","text":"ถูกกว่าครึ่ง แต่ไม่แน่ใจว่าจะทนแค่ไหน","effects":[{"money":-4,"unit":"wageDay"}],"roll":[{"p":0.4,"text":"ผ่านไปไม่นานก็พังอีก","effects":[{"money":-6,"unit":"wageDay"},{"stat":"happy","d":-2}]}]},
-    {"id":"new","label":"ดาวน์คันใหม่ ผ่อนเอา","text":"ได้รถใหม่ แต่มีค่างวดทุกเดือน","effects":[{"money":-25,"unit":"wageDay"},{"stat":"happy","d":3}]},
+    {"id":"new","label":"ดาวน์คันใหม่ ผ่อนเอา","text":"ได้รถใหม่ แต่มีค่างวดทุกเดือน","effects":[{"money":-25,"unit":"wageDay"},{"cond":"money-installment","turns":6},{"stat":"happy","d":3}]},
     {"id":"walk","label":"ไม่ซ่อม อาศัยรถคนอื่น","text":"ขอติดรถเพื่อนบ้านไปทำงาน","effects":[{"stat":"bond","d":-1},{"stat":"happy","d":-2}]}]},
   {"id":"exp-house-repair","title":"บ้านต้องซ่อม","body":"ฝนปีนี้หนัก หลังคารั่วหลายจุด ฝาบ้านไม้เริ่มผุ","when":{"age":[25,85],"setting":"rural","season":1,"chance":0.25},"cooldown":15,"choices":[
-    {"id":"full","label":"รื้อทำใหม่ทั้งหลัง","text":"เปลี่ยนเป็นหลังคาเมทัลชีทกับผนังปูน","effects":[{"money":-50,"unit":"wageDay"},{"stat":"happy","d":4},{"stat":"health","d":1}]},
+    {"id":"full","label":"เปลี่ยนหลังคาและฝาบ้านใหม่","text":"เปลี่ยนเป็นหลังคาเมทัลชีทกับผนังปูน","effects":[{"money":-50,"unit":"wageDay"},{"stat":"happy","d":4},{"stat":"health","d":1}]},
     {"id":"patch","label":"ซ่อมเฉพาะจุดที่รั่ว","text":"ปีนขึ้นหลังคาเองกับเพื่อนบ้าน","effects":[{"money":-8,"unit":"wageDay"}]},
     {"id":"wait","label":"เอากะละมังรองไว้ก่อน","text":"รอให้มีเงินก่อนค่อยว่ากัน","effects":[{"stat":"happy","d":-2},{"stat":"health","d":-1}]}]},
   {"id":"exp-kid-school","title":"ค่าใช้จ่ายเปิดเทอมของลูก","body":"เปิดเทอมใหม่ ลูกต้องการชุดนักเรียน รองเท้า หนังสือ และค่าบำรุงการศึกษา","when":{"childAge":[6,17],"season":1,"chance":0.5},"cooldown":3,"choices":[

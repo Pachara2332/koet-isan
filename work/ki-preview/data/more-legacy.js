@@ -25,16 +25,16 @@ KI.data.personalEvents.push(...[
     {"id":"share","label":"แบ่งเงินคืนให้ส่วนหนึ่ง","text":"ยื่นซองให้พร้อมบอกว่าไม่อยากเสียพี่น้องไป","when":{"money":[1,999999999]},"effects":[{"money":-30,"unit":"wageDay"},{"flag":"legacy-feud","v":false},{"stat":"bond","d":12},{"inc":"good"}]},
     {"id":"no","label":"ต่างคนต่างอยู่ต่อไป","text":"นั่งคนละมุมศาลา","effects":[{"stat":"bond","d":-2},{"stat":"happy","d":-2}]}]},
   {"id":"legacy-kid-uni","title":"ลูกอยากเรียนมหาวิทยาลัย","body":"ลูกจบ ม.6 แล้ว ถือใบสมัครมหาวิทยาลัยมาให้ดู ตาเป็นประกาย","w":14,"when":{"childAge":[17,19],"age":[30,70]},"cooldown":"once","major":true,"choices":[
-    {"id":"send","label":"ส่งเรียนเต็มที่ แม้ต้องรัดเข็มขัด","text":"ขายวัวไปสองตัวเป็นค่าเทอมปีแรก","effects":[{"money":-40,"unit":"wageDay"},{"flag":"legacy-kidGrad"},{"stat":"bond","d":5},{"pin":"ส่งลูกเรียนมหาวิทยาลัย"}],"roll":[
+    {"id":"send","label":"ส่งเรียนเต็มที่ แม้ต้องรัดเข็มขัด","text":"ควักเงินเก็บก้อนใหญ่มาเป็นค่าเทอมปีแรก","effects":[{"money":-40,"unit":"wageDay"},{"flag":"legacy-kidGrad"},{"stat":"bond","d":5},{"pin":"ส่งลูกเรียนมหาวิทยาลัย"}],"roll":[
       {"p":0.75,"text":"สี่ปีต่อมา ลูกใส่ชุดครุยถ่ายรูปกับพ่อแม่","effects":[{"stat":"happy","d":8},{"cond":"proud","turns":3}]},
       {"p":0.25,"text":"ลูกเรียนไม่ไหว ลาออกกลางคันกลับมาบ้าน","effects":[{"flag":"legacy-kidGrad","v":false},{"stat":"happy","d":-4}]}]},
     {"id":"loan","label":"ให้ลูกกู้ กยศ. แล้วช่วยค่ากินอยู่","text":"ลูกเรียนได้ แต่จะมีหนี้ติดตัวหลังจบ","when":{"year":[1996,9999]},"effects":[{"money":-10,"unit":"wageDay"},{"flag":"legacy-kidGrad"},{"stat":"bond","d":2}]},
     {"id":"voc","label":"แนะนำให้เรียนสายอาชีพใกล้บ้าน","text":"ค่าใช้จ่ายน้อยกว่า จบเร็วได้ทำงานเร็ว","effects":[{"money":-12,"unit":"wageDay"},{"stat":"bond","d":-1}]},
     {"id":"work","label":"ขอให้ออกมาช่วยหาเงินก่อน","text":"ลูกพับใบสมัครเก็บใส่ลิ้นชัก แล้วไปทำงานกรุงเทพฯ","effects":[{"flag":"legacy-kidAway"},{"stat":"bond","d":-6},{"money":10,"unit":"wageDay"}]}]},
   {"id":"legacy-kid-remit","title":"ลูกส่งเงินกลับบ้าน","body":"ข้อความแจ้งเงินโอนเข้า ลูกที่ทำงานอยู่ไกลส่งเงินมาให้ใช้","w":9,"when":{"age":[40,99],"childAge":[22,60],"any":[{"flag":{"legacy-kidGrad":true}},{"flag":{"legacy-kidAway":true}}]},"cooldown":9,"effects":[{"money":12,"unit":"wageDay"}],"choices":[
-    {"id":"save","label":"เก็บไว้เผื่อยามจำเป็น","text":"ฝากธนาคารไว้ทั้งหมด","effects":[{"stat":"happy","d":2}]},
-    {"id":"house","label":"เอาไปต่อเติมบ้าน","text":"บ้านมีห้องน้ำในตัวและหลังคาใหม่","effects":[{"money":-10,"unit":"wageDay"},{"stat":"happy","d":4}]},
-    {"id":"back","label":"บอกลูกให้เก็บไว้ใช้กับครอบครัวตัวเอง","text":"ลูกบอกว่าแม่กับพ่อสำคัญที่สุด แต่ก็ฟัง","effects":[{"money":-12,"unit":"wageDay"},{"stat":"bond","d":4}]}]},
+    {"id":"save","label":"เก็บไว้เผื่อยามจำเป็น","text":"ฝากธนาคารไว้ทั้งหมด","effects":[{"money":12,"unit":"wageDay"},{"stat":"happy","d":2}]},
+    {"id":"house","label":"เอาไปต่อเติมบ้าน","text":"เงินก้อนนี้กลายเป็นห้องน้ำในตัวและหลังคาใหม่","effects":[{"money":2,"unit":"wageDay"},{"stat":"happy","d":4}]},
+    {"id":"back","label":"บอกลูกให้เก็บไว้ใช้กับครอบครัวตัวเอง","text":"โอนเงินคืนให้ลูก ลูกบอกว่าพ่อแม่สำคัญที่สุด แต่ก็ยอมฟัง","effects":[{"stat":"bond","d":4}]}]},
   {"id":"legacy-kid-wedding","title":"ลูกจะแต่งงาน","body":"ลูกพาแฟนมาไหว้ที่บ้าน บอกว่าอยากแต่งงานกันปลายปีนี้","w":12,"when":{"childAge":[21,36],"age":[38,80]},"cooldown":"once","choices":[
     {"id":"big","label":"จัดงานใหญ่ให้สมฐานะ","text":"เลี้ยงทั้งหมู่บ้าน มีหมอลำมาเล่นทั้งคืน","effects":[{"money":-45,"unit":"wageDay"},{"stat":"happy","d":6},{"stat":"bond","d":4},{"pin":"จัดงานแต่งให้ลูก"}]},
     {"id":"simple","label":"จัดเรียบง่าย ผูกแขนในบ้าน","text":"ญาติใกล้ชิดมาร่วมไม่กี่สิบคน","effects":[{"money":-10,"unit":"wageDay"},{"stat":"happy","d":4},{"stat":"bond","d":2}]},
@@ -47,12 +47,12 @@ KI.data.personalEvents.push(...[
       {"p":0.5,"text":"ลูกกลับไปหาเพื่อนกลุ่มเดิม ถูกจับซ้ำในอีกไม่นาน","effects":[{"stat":"happy","d":-8},{"inc":"spoil"}]}]},
     {"id":"law","label":"ให้ลูกรับผิดตามกฎหมาย","text":"ไปเยี่ยมทุกเดือน แต่ไม่จ่ายเงินช่วย","effects":[{"stat":"happy","d":-6,"by":"attach"},{"stat":"bond","d":-4},{"inc":"firm"}],"roll":[
       {"p":0.6,"text":"พ้นโทษแล้วลูกตั้งใจทำงาน ขอบคุณที่ไม่ปล่อยให้หลงทาง","effects":[{"stat":"bond","d":8}]}]},
-    {"id":"ordain","label":"ขอให้ลูกบวชหลังเรื่องจบ","text":"พาลูกเข้าวัดให้หลวงพ่อช่วยขัดเกลา","effects":[{"money":-8,"unit":"wageDay"},{"stat":"bond","d":3},{"stat":"happy","d":2}]}]},
+    {"id":"ordain","label":"พาลูกเข้าวัดให้หลวงพ่อช่วยสอน","text":"พาลูกไปปฏิบัติธรรมที่วัด ให้หลวงพ่อช่วยขัดเกลา","effects":[{"money":-8,"unit":"wageDay"},{"stat":"bond","d":3},{"stat":"happy","d":2}]}]},
   {"id":"legacy-grandkid-raise","title":"เลี้ยงหลานให้ลูก","body":"ลูกต้องไปทำงานต่างจังหวัด ขอฝากหลานตัวเล็กไว้ให้ช่วยเลี้ยงที่บ้าน","w":12,"when":{"age":[42,85],"flag":{"grandchild":true},"loc":"isan"},"cooldown":"once","choices":[
-    {"id":"yes","label":"รับเลี้ยงหลานเต็มที่","text":"บ้านกลับมามีเสียงเด็กอีกครั้ง","effects":[{"stat":"happy","d":6},{"stat":"bond","d":6},{"stat":"health","d":-2},{"money":4,"unit":"wageDay"},{"pin":"เลี้ยงหลานให้ลูก"}]},
+    {"id":"yes","label":"รับเลี้ยงหลานเต็มที่","text":"บ้านกลับมามีเสียงเด็กอีกครั้ง ลูกส่งค่าเลี้ยงหลานมาให้ทุกเดือน","effects":[{"stat":"happy","d":6},{"stat":"bond","d":6},{"stat":"health","d":-2},{"money":4,"unit":"wageDay"},{"pin":"เลี้ยงหลานให้ลูก"}]},
     {"id":"half","label":"เลี้ยงช่วงปิดเทอม","text":"หลานมาอยู่ด้วยเป็นช่วงๆ","effects":[{"stat":"happy","d":3},{"stat":"bond","d":2}]},
     {"id":"no","label":"ปฏิเสธ แก่แล้วเลี้ยงไม่ไหว","text":"ลูกเข้าใจแต่ก็ลำบากขึ้น","effects":[{"stat":"bond","d":-4}]}]},
-  {"id":"legacy-old-city","title":"ลูกชวนไปอยู่ด้วย","body":"ลูกไม่อยากให้อยู่บ้านคนเดียว ชวนย้ายไปอยู่คอนโดในเมืองด้วยกัน","w":10,"when":{"age":[65,92],"flag":{"child":true},"loc":"isan"},"cooldown":"once","choices":[
+  {"id":"legacy-old-city","title":"ลูกชวนไปอยู่ด้วย","body":"ลูกไม่อยากให้อยู่บ้านคนเดียว ชวนย้ายไปอยู่คอนโดในกรุงเทพฯ ด้วยกัน","w":10,"when":{"age":[65,92],"flag":{"child":true},"loc":"isan"},"cooldown":"once","choices":[
     {"id":"go","label":"ย้ายไปอยู่กับลูก","text":"ห้องสบาย ใกล้โรงพยาบาล แต่ไม่รู้จักใครเลย","effects":[{"move":{"kind":"bangkok"}},{"stat":"health","d":4},{"cond":"lonely","turns":4},{"stat":"bond","d":4},{"pin":"ย้ายไปอยู่กับลูกในเมือง"}]},
     {"id":"stay","label":"ขออยู่บ้านเกิด ใกล้วัดใกล้เพื่อน","text":"ลูกโทรมาถามทุกเย็น","effects":[{"stat":"happy","d":2},{"stat":"health","d":-2}]},
     {"id":"return","label":"ขอให้ลูกกลับมาอยู่บ้านแทน","text":"ลูกลาออกจากงานกลับมาทำสวนที่บ้าน","effects":[{"stat":"bond","d":8},{"stat":"happy","d":5},{"money":-10,"unit":"wageDay"}]}]},

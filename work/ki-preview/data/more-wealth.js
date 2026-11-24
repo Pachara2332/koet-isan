@@ -1,7 +1,7 @@
 globalThis.KI = globalThis.KI || {}; KI.data = KI.data || {};
 KI.data.decisions.push(...[
   {"id":"wl-life-style","title":"ใช้ชีวิตแบบไหน","body":"ที่บ้านมีพร้อม เงินจากครอบครัวและงานของตัวเองพอให้ใช้สบาย ถึงเวลาตั้งหลักว่าจะใช้ชีวิตแบบไหน","when":{"age":[19,26],"season":0,"noFlag":["wl-styleSet"],"any":[{"flag":{"status":"rich"}},{"flag":{"status":"wealthy"}}],"chance":0.35},"cooldown":"once","major":true,"choices":[
-    {"id":"simple","label":"อยู่เรียบง่ายแม้มีพร้อม","text":"ขับรถคันเดิม กินข้าวบ้าน เงินเหลือเก็บทุกเดือน แต่เพื่อนบางกลุ่มว่าเป็นคนงก","effects":[{"flag":"spendLevel","v":"frugal"},{"flag":"wl-styleSet"},{"trait":"grit","d":1},{"stat":"happy","d":-1}]},
+    {"id":"simple","label":"อยู่เรียบง่ายแม้มีพร้อม","text":"ใช้ของเดิมจนกว่าจะพัง กินข้าวบ้าน เงินเหลือเก็บทุกเดือน แต่เพื่อนบางกลุ่มว่าเป็นคนงก","effects":[{"flag":"spendLevel","v":"frugal"},{"flag":"wl-styleSet"},{"trait":"grit","d":1},{"stat":"happy","d":-1}]},
     {"id":"normal","label":"ใช้ตามสมควร","text":"ไม่อดไม่เกิน ซื้อของดีเมื่อจำเป็น","effects":[{"flag":"spendLevel","v":false},{"flag":"wl-styleSet"}]},
     {"id":"comfort","label":"ใช้ให้สมฐานะ","text":"ร้านอาหารดีๆ เสื้อผ้าแบรนด์ และทริปเที่ยวบ่อยขึ้น รายจ่ายเพิ่มขึ้นมาก","effects":[{"flag":"spendLevel","v":"comfort"},{"flag":"wl-styleSet"},{"trait":"social","d":1},{"stat":"happy","d":3}]}]}
 ]);
@@ -26,7 +26,7 @@ KI.data.personalEvents.push(...[
   {"id":"wl-kid-abroad","title":"เที่ยวต่างประเทศกับครอบครัว","body":"ปิดเทอมใหญ่ พ่อแม่จะพาไปเที่ยวสิงคโปร์ เป็นการนั่งเครื่องบินครั้งแรก","w":6,"cooldown":"once","when":{"age":[8,15],"year":[1988,2026],"any":[{"wealth":"rich"},{"flag":{"status":"rich"}},{"flag":{"status":"wealthy"}}]},"choices":[
     {"id":"notes","label":"จดทุกอย่างลงสมุด","text":"ตึกสูง รถไฟฟ้า ภาษาที่ไม่คุ้นหู กลับมาเล่าให้ครูฟังได้ทั้งคาบ","effects":[{"stat":"know","d":3},{"stat":"happy","d":4}]},
     {"id":"gifts","label":"ซื้อของฝากเพื่อนทั้งห้อง","text":"กระเป๋าหนักอึ้งด้วยขนมและพวงกุญแจ เพื่อนๆ ตื่นเต้นกันใหญ่","effects":[{"stat":"bond","d":2},{"stat":"happy","d":2},{"trait":"social","d":1}]},
-    {"id":"stay","label":"ขออยู่บ้านกับย่า","text":"พ่อแม่ไปกันเอง ส่วนตัวเองได้ช่วยย่าทำขนมทั้งสัปดาห์","effects":[{"stat":"bond","d":1},{"stat":"happy","d":-1}]}]},
+    {"id":"stay","label":"ขออยู่บ้าน ไม่ไปด้วย","text":"พ่อแม่ไปกันเอง ส่วนตัวเองอยู่กับญาติ ช่วยงานบ้านทั้งสัปดาห์","effects":[{"stat":"bond","d":1},{"stat":"happy","d":-1}]}]},
   {"id":"wl-kid-village","title":"ลูกคนมีเงิน","body":"เด็กในหมู่บ้านเรียกว่าลูกเถ้าแก่ บางคนอยากเป็นเพื่อนเพราะของเล่น บางคนไม่ยอมเล่นด้วย","w":7,"cooldown":12,"when":{"age":[8,13],"loc":"isan","any":[{"wealth":"rich"},{"flag":{"status":"rich"}},{"flag":{"status":"wealthy"}}]},"choices":[
     {"id":"share","label":"เอาของเล่นออกมาเล่นด้วยกัน","text":"ลานบ้านกลายเป็นที่รวมเด็ก ของเล่นพังไปบ้าง แต่ได้เพื่อนเพิ่ม","effects":[{"stat":"bond","d":2},{"stat":"happy","d":2},{"trait":"social","d":1}]},
     {"id":"true","label":"เล่นกับคนที่ชอบเราจริงๆ","text":"เพื่อนน้อยลง แต่เป็นเพื่อนที่ไว้ใจได้","effects":[{"stat":"bond","d":1},{"stat":"happy","d":1}]},
@@ -42,9 +42,9 @@ KI.data.personalEvents.push(...[
   {"id":"wl-teen-camp","title":"ค่ายภาษาต่างประเทศ","body":"พ่อแม่เสนอส่งไปค่ายภาษาช่วงปิดเทอมที่ออสเตรเลียหนึ่งเดือน พักกับครอบครัวเจ้าบ้าน","w":5,"cooldown":"once","when":{"age":[15,17],"year":[1995,2026],"edu":{"in":["school"]},"any":[{"wealth":"rich"},{"flag":{"status":"rich"}},{"flag":{"status":"wealthy"}}]},"choices":[
     {"id":"go","label":"ไปค่าย","text":"สัปดาห์แรกฟังไม่ทัน พอสัปดาห์ที่สามเริ่มคุยกับเพื่อนต่างชาติได้คล่อง","effects":[{"stat":"know","d":5},{"stat":"happy","d":3},{"inc":"skill-language"},{"cond":"homesick","turns":1},{"flag":"wl-campAbroad"}]},
     {"id":"home","label":"ไม่ไป ขออยู่ช่วยงานที่บ้าน","text":"ปิดเทอมนี้ได้อยู่กับพ่อแม่และเรียนรู้งานของครอบครัว","effects":[{"stat":"bond","d":3},{"stat":"know","d":1}]}]},
-  {"id":"wl-teen-shop","title":"ช่วยกิจการของที่บ้าน","body":"ปิดเทอม พ่อให้ไปช่วยดูกิจการของครอบครัว นับของ จดบัญชี และคุยกับลูกค้า","w":8,"cooldown":6,"when":{"age":[15,17],"any":[{"wealth":"rich"},{"flag":{"status":"rich"}},{"flag":{"status":"wealthy"}}]},"choices":[
-    {"id":"learn","label":"ตั้งใจเรียนรู้งาน","text":"เริ่มรู้ว่าของชิ้นไหนกำไรดี ลูกค้าคนไหนจ่ายตรง พ่อแบ่งค่าขนมให้เป็นค่าแรง","effects":[{"stat":"know","d":3},{"stat":"bond","d":2},{"money":3,"unit":"wageDay"},{"flag":"wl-bizTrained"}]},
-    {"id":"skip","label":"ช่วยพอเป็นพิธี แล้วไปเที่ยว","text":"ได้เที่ยวกับเพื่อนเต็มที่ แต่พ่อเริ่มพูดน้อยลง","effects":[{"stat":"happy","d":2},{"stat":"bond","d":-2}]},
+  {"id":"wl-teen-shop","title":"ช่วยกิจการของที่บ้าน","body":"ปิดเทอม ผู้ใหญ่ที่บ้านให้ไปช่วยดูกิจการของครอบครัว นับของ จดบัญชี และคุยกับลูกค้า","w":8,"cooldown":6,"when":{"age":[15,17],"any":[{"wealth":"rich"},{"flag":{"status":"rich"}},{"flag":{"status":"wealthy"}}]},"choices":[
+    {"id":"learn","label":"ตั้งใจเรียนรู้งาน","text":"เริ่มรู้ว่าของชิ้นไหนกำไรดี ลูกค้าคนไหนจ่ายตรง ผู้ใหญ่แบ่งค่าขนมให้เป็นค่าแรง","effects":[{"stat":"know","d":3},{"stat":"bond","d":2},{"money":3,"unit":"wageDay"},{"flag":"wl-bizTrained"}]},
+    {"id":"skip","label":"ช่วยพอเป็นพิธี แล้วไปเที่ยว","text":"ได้เที่ยวกับเพื่อนเต็มที่ แต่ผู้ใหญ่ที่บ้านเริ่มพูดน้อยลง","effects":[{"stat":"happy","d":2},{"stat":"bond","d":-2}]},
     {"id":"elsewhere","label":"ขอไปทำงานพิเศษที่อื่น","text":"อยากรู้ว่าหาเงินเองได้ไหม ได้ค่าแรงไม่มากแต่ภูมิใจ","effects":[{"money":4,"unit":"wageDay"},{"trait":"grit","d":1},{"stat":"bond","d":-1}]}]},
   {"id":"wl-teen-expect","title":"ความหวังของครอบครัว","body":"ญาติผู้ใหญ่พูดในวงข้าวว่าลูกบ้านนี้ต้องเป็นหมอ ไม่ก็ต้องกลับมาดูแลกิจการ ทุกคนหันมามอง","w":7,"cooldown":"once","when":{"age":[15,17],"any":[{"wealth":"rich"},{"flag":{"status":"rich"}},{"flag":{"status":"wealthy"}}]},"choices":[
     {"id":"promise","label":"รับปากว่าจะทำให้ได้","text":"ทุกคนยิ้ม แต่คืนนั้นนอนไม่หลับ ความคาดหวังหนักกว่าที่คิด","effects":[{"stat":"know","d":2},{"stat":"happy","d":-3},{"flag":"wl-pressure"}]},
@@ -55,7 +55,7 @@ KI.data.personalEvents.push(...[
   {"id":"wl-teen-car","title":"รถคันแรก","body":"อายุครบสิบแปด สอบใบขับขี่ได้แล้ว พ่อแม่บอกว่าจะซื้อรถให้หนึ่งคัน ให้เลือกเอง","w":10,"cooldown":"once","when":{"age":[18,19],"year":[1990,2026],"noFlag":["wl-car"],"any":[{"wealth":"rich"},{"flag":{"status":"rich"}},{"flag":{"status":"wealthy"}}]},"choices":[
     {"id":"sedan","label":"รถเก๋งคันใหม่","text":"รถใหม่กลิ่นเบาะหนัง เพื่อนชวนไปไหนก็ได้ทุกที่","effects":[{"flag":"wl-car"},{"stat":"happy","d":5},{"trait":"social","d":1}]},
     {"id":"pickup","label":"รถกระบะ ใช้งานที่บ้านได้ด้วย","text":"ขนของให้ที่บ้านได้ พาแม่ไปตลาดทุกเช้าวันเสาร์","effects":[{"flag":"wl-car"},{"stat":"happy","d":3},{"stat":"bond","d":2}]},
-    {"id":"cash","label":"ขอเป็นเงินเก็บไว้ก่อน","text":"พ่อแม่ให้เงินครึ่งหนึ่งของราคารถ ใช้มอเตอร์ไซค์ไปก่อน","effects":[{"money":60,"unit":"wageDay"},{"trait":"grit","d":1},{"stat":"happy","d":-1}]}]},
+    {"id":"cash","label":"ขอเป็นเงินเก็บไว้ก่อน","text":"พ่อแม่ให้เงินก้อนหนึ่งไว้ตั้งตัว ส่วนการเดินทางใช้มอเตอร์ไซค์ไปก่อน","effects":[{"money":60,"unit":"wageDay"},{"trait":"grit","d":1},{"stat":"happy","d":-1}]}]},
   {"id":"wl-car-night","title":"ขับรถเที่ยวกลางคืน","body":"เพื่อนรู้ว่ามีรถ ชวนขับไปนั่งร้านริมน้ำในเมืองจนดึก ทุกคนจะดื่มกัน","w":6,"cooldown":12,"when":{"age":[18,26],"flag":{"wl-car":true}},"choices":[
     {"id":"sober","label":"ไปแต่ไม่ดื่ม เป็นคนขับ","text":"เพื่อนแซวว่าเป็นคนขับประจำ แต่ทุกคนถึงบ้านปลอดภัย","effects":[{"stat":"happy","d":2},{"stat":"bond","d":2}]},
     {"id":"drink","label":"ดื่มด้วยแล้วขับกลับเอง","text":"สนุกเต็มที่ ถนนกลับบ้านมืดและยาวกว่าที่คิด","effects":[{"stat":"happy","d":3},{"inc":"vice"}],"roll":[
@@ -67,7 +67,7 @@ KI.data.personalEvents.push(...[
     {"id":"quiet","label":"บริจาคเงียบๆ ไม่ขึ้นป้ายชื่อ","text":"ฝากเงินกับหลวงพ่อโดยไม่บอกใคร ใจสงบกว่าที่คิด","effects":[{"money":-40,"unit":"wageDay"},{"stat":"happy","d":3}]},
     {"id":"decline","label":"ขอผ่าน ปีนี้มีภาระมาก","text":"กรรมการพยักหน้ารับ แต่เสียงซุบซิบตามมาไม่น้อย","effects":[{"stat":"bond","d":-3}]}]},
   {"id":"wl-rental","title":"ห้องแถวให้เช่า","body":"มีห้องแถวในตัวอำเภอประกาศขาย ถ้าซื้อไว้ปล่อยเช่าจะมีรายได้เข้าทุกเดือน","w":6,"cooldown":12,"when":{"age":[28,65],"year":[1985,2026],"loc":"isan","noFlag":["wl-rentOwned"],"any":[{"flag":{"status":"rich"}},{"flag":{"status":"wealthy"}}]},"choices":[
-    {"id":"rent","label":"ซื้อไว้ปล่อยเช่า","text":"ได้ผู้เช่าเป็นร้านขายยากับร้านซ่อมมือถือ ค่าเช่าเข้าทุกเดือน แต่เงินก้อนหายไป","effects":[{"money":-220,"unit":"wageDay"},{"cond":"wl-rent","turns":45},{"flag":"wl-rentOwned"},{"stat":"happy","d":1}]},
+    {"id":"rent","label":"ซื้อไว้ปล่อยเช่า","text":"ได้ผู้เช่าเป็นร้านขายยากับร้านซ่อมรถ ค่าเช่าเข้าทุกเดือน แต่เงินก้อนหายไป","effects":[{"money":-220,"unit":"wageDay"},{"cond":"wl-rent","turns":45},{"flag":"wl-rentOwned"},{"stat":"happy","d":1}]},
     {"id":"shop","label":"ซื้อแล้วเปิดร้านเอง","text":"ตกแต่งหน้าร้านใหม่ ต้องดูแลเองทุกวัน","effects":[{"money":-220,"unit":"wageDay"},{"inc":"biz"},{"flag":"wl-rentOwned"},{"stat":"happy","d":-1}]},
     {"id":"pass","label":"ไม่ซื้อ เก็บเงินไว้","text":"เงินยังอยู่ครบ","effects":[],"roll":[
       {"p":0.5,"text":"ไม่กี่ปีต่อมาราคาห้องแถวแถวนั้นขึ้นไปมาก นึกเสียดายอยู่เหมือนกัน","effects":[{"stat":"happy","d":-2}]}]}]},
@@ -85,7 +85,7 @@ KI.data.personalEvents.push(...[
     {"id":"equal","label":"ขอให้แบ่งเท่ากันทุกคน","text":"ทุกคนพยักหน้า แม้จะมีคนแอบไม่พอใจ","effects":[{"stat":"bond","d":2},{"stat":"happy","d":1}]},
     {"id":"cash","label":"ขอส่วนของตัวเองเป็นเงินไปลงทุนเอง","text":"ได้เงินก้อน แต่พี่น้องมองว่าทิ้งครอบครัว","effects":[{"money":80,"unit":"wageDay"},{"stat":"bond","d":-4},{"flag":"wl-cashedOut"}]},
     {"id":"parents","label":"ให้พ่อแม่ตัดสินเอง","text":"พ่อแม่ขอเวลาคิด","effects":[{"stat":"bond","d":1}],"roll":[
-      {"p":0.4,"text":"พ่อแม่ยกกิจการให้พี่คนโต น้องคนหนึ่งไม่พูดกับใครไปหลายเดือน","effects":[{"stat":"bond","d":-3},{"stat":"happy","d":-2,"by":"attach"}]}]}]},
+      {"p":0.4,"text":"พ่อแม่ยกกิจการให้พี่น้องอีกคน บ้านเงียบไปหลายเดือนเพราะมีคนไม่พอใจ","effects":[{"stat":"bond","d":-3},{"stat":"happy","d":-2,"by":"attach"}]}]}]},
   {"id":"wl-village-status","title":"คนมีหน้ามีตาในหมู่บ้าน","body":"งานบุญ งานศพ หรือสร้างถนนในหมู่บ้าน ชาวบ้านมักมาขอให้ช่วยออกเงินและนั่งหัวโต๊ะ","w":7,"cooldown":12,"when":{"age":[30,75],"loc":"isan","any":[{"flag":{"status":"rich"}},{"flag":{"status":"wealthy"}}]},"choices":[
     {"id":"all","label":"ช่วยทุกงานที่มาขอ","text":"ใครก็ทักทายด้วยความเคารพ แต่เงินออกทุกเดือน","effects":[{"money":-30,"unit":"wageDay"},{"stat":"bond","d":4},{"stat":"happy","d":1}]},
     {"id":"public","label":"ช่วยเฉพาะงานส่วนรวม เช่น ถนนและโรงเรียน","text":"ถนนเข้าหมู่บ้านลาดยางเสร็จ เด็กๆ ได้ห้องสมุดใหม่","effects":[{"money":-15,"unit":"wageDay"},{"stat":"bond","d":2},{"inc":"good"}]},

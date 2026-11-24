@@ -40,7 +40,7 @@ globalThis.KI = globalThis.KI || {}; KI.data = KI.data || {};
   move.cooldown = "once";
   move.choices = [
     { id: "stay", label: "เรียนต่อโรงเรียนใกล้บ้าน", text: "เรียนที่เดิมกับเพื่อนกลุ่มเดิม", effects: [{ stat: "bond", d: 2 }] },
-    { id: "town", label: "ไปเรียนโรงเรียนประจำจังหวัดในตัวเมือง เดินทางไปกลับ", text: "ตื่นเช้าขึ้นรถสองแถวเข้าเมืองทุกวัน", effects: [{ money: -3, unit: "wageDay" }, { stat: "know", d: 3 }, { stat: "health", d: -1 }, { pin: "เข้าเรียนโรงเรียนในตัวเมือง" }] },
+    { id: "town", label: "เรียนโรงเรียนในตัวเมือง ไปกลับทุกวัน", text: "ตื่นเช้าขึ้นรถสองแถวเข้าเมืองทุกวัน", effects: [{ money: -3, unit: "wageDay" }, { stat: "know", d: 3 }, { stat: "health", d: -1 }, { pin: "เข้าเรียนโรงเรียนในตัวเมือง" }] },
     ...Object.keys(provinces).map(away),
     { id: "bkk", label: "ตามพ่อแม่ไปเรียนที่กรุงเทพฯ", text: "ย้ายไปอยู่ห้องเช่ากับพ่อแม่ที่ทำงานอยู่กรุงเทพฯ", when: { flag: { parentsAlive: true } }, effects: [{ move: { kind: "bangkok" } }, { flag: "awayForSchool", v: true }, { stat: "know", d: 2 }, { cond: "homesick", turns: 2, by: "attach" }, { pin: "ย้ายไปเรียนกรุงเทพฯ" }] },
     { id: "novice", label: "บวชเณรเรียนที่วัด ไม่ต้องเสียค่าเรียน", text: "บวชเป็นสามเณร เรียนทั้งทางโลกและทางธรรม", when: { sex: "m", wealth: "poor" }, effects: [{ edu: { in: "novice" } }, { stat: "know", d: 2 }, { pin: "บวชเณรเรียนที่วัด" }] }

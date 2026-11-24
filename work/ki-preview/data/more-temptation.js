@@ -11,8 +11,8 @@ KI.data.decisions.push(...[
   {"id":"tmp-bkk-meet","title":"คนข้างห้องเช่าในกรุงเทพฯ","body":"มาทำงานกรุงเทพฯ คนเดียว แฟนอยู่บ้าน คนข้างห้องชวนไปกินหมูกระทะกับร้องคาราโอเกะทุกวันศุกร์","when":{"age":[18,45],"loc":"bangkok","flag":{"partner":true},"noFlag":["tmp-cheated","tmp-affair"],"chance":0.15},"cooldown":"once","heavy":true,
    "choices":[
     {"id":"faithful","label":"ไปกับเพื่อนกลุ่มใหญ่ กลับห้องเร็ว","text":"สนุกพอประมาณ วันหยุดยาวรีบกลับบ้านไปหาแฟน","effects":[{"stat":"bond","d":4},{"money":-4,"unit":"wageDay"},{"inc":"good"}]},
-    {"id":"flirt","label":"แชตกันดึกๆ ทุกคืน","text":"มีคนเข้าใจชีวิตในเมือง แต่แฟนที่บ้านเริ่มรู้สึกว่าคุยกันน้อยลง","effects":[{"stat":"happy","d":3},{"stat":"bond","d":-3},{"flag":"tmp-affair"}]},
-    {"id":"night","label":"ค้างคืนด้วยกัน","text":"เริ่มมีความสัมพันธ์ลับๆ ต้องคอยระวังโทรศัพท์ตลอดเวลา","effects":[{"stat":"happy","d":4},{"stat":"bond","d":-5},{"flag":"tmp-cheated"},{"flag":"tmp-affair"},{"inc":"vice"},{"inc":"risky"}]},
+    {"id":"flirt","label":"นั่งคุยกันหน้าห้องดึกๆ ทุกคืน","text":"มีคนเข้าใจชีวิตในเมือง แต่แฟนที่บ้านเริ่มรู้สึกว่าคุยกันน้อยลง","effects":[{"stat":"happy","d":3},{"stat":"bond","d":-3},{"flag":"tmp-affair"}]},
+    {"id":"night","label":"ค้างคืนด้วยกัน","text":"เริ่มมีความสัมพันธ์ลับๆ ต้องคอยปิดบังทุกครั้งที่ติดต่อกับคนที่บ้าน","effects":[{"stat":"happy","d":4},{"stat":"bond","d":-5},{"flag":"tmp-cheated"},{"flag":"tmp-affair"},{"inc":"vice"},{"inc":"risky"}]},
     {"id":"home","label":"ลาออกกลับไปอยู่บ้านกับแฟน","text":"รายได้หายไปครึ่ง แต่ได้อยู่ด้วยกันทุกวัน","effects":[{"move":"home"},{"role":"farmer"},{"stat":"bond","d":6},{"money":-10,"unit":"wageDay"}]}
    ]},
   {"id":"tmp-online-meet","title":"ข้อความจากคนแปลกหน้า","body":"มีคนทักมาทางโซเชียล คุยถูกคอ ชมทุกวัน ทั้งที่มีแฟนอยู่แล้ว","when":{"age":[18,50],"year":[2009,2026],"flag":{"partner":true},"noFlag":["tmp-affair"],"chance":0.06},"cooldown":"once",
@@ -22,7 +22,7 @@ KI.data.decisions.push(...[
      "roll":[{"p":0.25,"text":"สุดท้ายอีกฝ่ายขอยืมเงินด่วน พอโอนไปก็ติดต่อไม่ได้อีกเลย","effects":[{"money":-20,"unit":"wageDay"},{"stat":"happy","d":-6}]}]},
     {"id":"meet","label":"นัดเจอตัวจริง","text":"เจอกันแล้วถูกใจ เรื่องเลยเกินคำว่าเพื่อน","effects":[{"flag":"tmp-affair"},{"flag":"tmp-cheated"},{"stat":"happy","d":4},{"stat":"bond","d":-4},{"inc":"vice"},{"inc":"risky"}]}
    ]},
-  {"id":"tmp-found-out","title":"ความลับถูกเปิดเผย","body":"คนที่บ้านเจอข้อความในโทรศัพท์ หรือมีคนรู้จักเอาไปเล่าต่อ ทุกอย่างพังลงในคืนเดียว","when":{"age":[18,60],"flag":{"partner":true,"tmp-affair":true},"noFlag":["tmp-exposed"],"chance":0.3},"cooldown":"once","major":true,
+  {"id":"tmp-found-out","title":"ความลับถูกเปิดเผย","body":"คนที่บ้านจับพิรุธได้ หรือมีคนรู้จักเอาไปเล่าต่อ ทุกอย่างพังลงในคืนเดียว","when":{"age":[18,60],"flag":{"partner":true,"tmp-affair":true},"noFlag":["tmp-exposed"],"chance":0.3},"cooldown":"once","major":true,
    "choices":[
     {"id":"beg","label":"ยอมรับผิด ขอโอกาส","text":"ใช้เวลาอีกนานกว่าความไว้ใจจะกลับมา","effects":[{"flag":"tmp-exposed"},{"flag":"tmp-affair","v":false},{"stat":"happy","d":-6},{"stat":"bond","d":-5}],
      "roll":[{"p":0.55,"text":"อีกฝ่ายยอมให้อภัย แต่ขอให้เลิกติดต่อคนนั้นเด็ดขาด","effects":[{"stat":"bond","d":3}]},{"p":0.45,"text":"อีกฝ่ายรับไม่ได้ ขอแยกทาง","effects":[{"flag":"partner","v":false},{"flag":"married","v":false},{"cond":"heartbroken","turns":4,"by":"attach"},{"pin":"แยกทางเพราะนอกใจ"}]}]},
@@ -32,15 +32,15 @@ KI.data.decisions.push(...[
    ]},
   {"id":"tmp-outside-child","title":"ข่าวจากคนเก่า","body":"คนที่เคยค้างคืนด้วยกันส่งข่าวมาว่าตั้งครรภ์ และยืนยันว่าเป็นลูกของคุณ","when":{"age":[18,55],"sex":"m","flag":{"tmp-cheated":true},"noFlag":["tmp-outchild"],"chance":0.12},"cooldown":"once","major":true,"heavy":true,
    "choices":[
-    {"id":"accept","label":"รับเป็นพ่อ/แม่ ส่งเสียตามหน้าที่","text":"ต้องแบ่งเงินทุกเดือน และต้องเล่าความจริงให้ที่บ้านฟัง","effects":[{"flag":"tmp-outchild"},{"flag":"newChild"},{"money":-30,"unit":"wageDay"},{"stat":"bond","d":-6},{"stat":"happy","d":-3},{"pin":"มีลูกนอกสมรส"}]},
-    {"id":"money","label":"ส่งเงินให้ แต่ไม่ยอมรับเปิดเผย","text":"ความลับยังอยู่ แต่ต้องโกหกต่อไปเรื่อยๆ","effects":[{"flag":"tmp-outchild"},{"money":-20,"unit":"wageDay"},{"stat":"happy","d":-5},{"flag":"tmp-affair"}]},
+    {"id":"accept","label":"รับเป็นพ่อ ส่งเสียตามหน้าที่","text":"ต้องแบ่งเงินทุกเดือน และต้องเล่าความจริงให้ที่บ้านฟัง","effects":[{"flag":"tmp-outchild"},{"flag":"newChild"},{"money":-30,"unit":"wageDay"},{"stat":"bond","d":-6},{"stat":"happy","d":-3},{"pin":"มีลูกนอกสมรส"}]},
+    {"id":"money","label":"แอบส่งเงินให้ แต่ไม่บอกใคร","text":"ความลับยังอยู่ แต่ต้องโกหกต่อไปเรื่อยๆ","effects":[{"flag":"tmp-outchild"},{"money":-20,"unit":"wageDay"},{"stat":"happy","d":-5},{"flag":"tmp-affair"}]},
     {"id":"refuse","label":"ปฏิเสธไม่รับรู้","text":"ตัดขาดได้ แต่เรื่องนี้ค้างอยู่ในใจไม่หาย","effects":[{"flag":"tmp-outchild"},{"stat":"happy","d":-6},{"trait":"attach","d":-2},{"inc":"vice"}]}
    ]},
   {"id":"tmp-partner-cheats","title":"ข่าวลือจากบ้าน","body":"เพื่อนที่บ้านโทรมาเล่าว่าแฟนของคุณไปมาหาสู่กับคนในหมู่บ้านบ่อยผิดปกติ ระหว่างที่คุณไม่อยู่","when":{"age":[20,55],"loc":["abroad","bangkok"],"flag":{"partner":true},"noFlag":["tmp-betrayed"],"partnerYears":[2,60],"chance":0.08},"cooldown":"once","major":true,
    "choices":[
     {"id":"home","label":"ลางานกลับไปคุยกันต่อหน้า","text":"เสียค่าเดินทางก้อนใหญ่ แต่ได้รู้ความจริงจากปากอีกฝ่าย","effects":[{"flag":"tmp-betrayed"},{"money":-20,"unit":"wageDay"}],
      "roll":[{"p":0.5,"text":"แค่ข่าวลือ ทั้งคู่กอดกันแล้วตกลงจะไม่อยู่ห่างกันนานอีก","effects":[{"stat":"bond","d":6},{"stat":"happy","d":4}]},{"p":0.5,"text":"เป็นเรื่องจริง อีกฝ่ายบอกว่าเหงาเกินทน","effects":[{"stat":"happy","d":-8,"by":"attach"},{"cond":"heartbroken","turns":4,"by":"attach"}]}]},
-    {"id":"forgive","label":"ให้อภัย ส่งเงินกลับเหมือนเดิม","text":"ทำใจกว้าง แต่บางคืนก็นอนไม่หลับ","effects":[{"flag":"tmp-betrayed"},{"stat":"happy","d":-4},{"trait":"grit","d":2}]},
+    {"id":"forgive","label":"ไม่ซักถาม ส่งเงินกลับบ้านเหมือนเดิม","text":"ทำใจกว้าง แต่บางคืนก็นอนไม่หลับ","effects":[{"flag":"tmp-betrayed"},{"stat":"happy","d":-4},{"trait":"grit","d":2}]},
     {"id":"split","label":"บอกเลิกทางโทรศัพท์","text":"จบทุกอย่าง เงินที่ส่งไปสร้างบ้านก็ต้องมาแบ่งกันวุ่นวาย","effects":[{"flag":"tmp-betrayed"},{"flag":"partner","v":false},{"flag":"married","v":false},{"money":-25,"unit":"wageDay"},{"cond":"heartbroken","turns":4,"by":"attach"},{"pin":"เลิกกับแฟนที่บ้านระหว่างทำงานไกล"}]},
     {"id":"drink","label":"ไม่พูดอะไร ดื่มให้ลืม","text":"ความเจ็บไม่หายไปไหน แต่ขวดเหล้าเพิ่มขึ้นทุกอาทิตย์","effects":[{"flag":"tmp-betrayed"},{"flag":"drinker"},{"inc":"vice"},{"stat":"health","d":-4},{"stat":"happy","d":-5}]}
    ]}
@@ -71,7 +71,7 @@ KI.data.personalEvents.push(...[
     {"id":"old","label":"หายาเท่าที่หาได้ ยาราคาแพงและหายาก","text":"ยุคนี้ยาต้านยังเข้าถึงยาก ต้องดิ้นรนหาเงินซื้อ","when":{"year":[1985,2005]},"effects":[{"money":-15,"unit":"wageDay"},{"stat":"health","d":-3},{"die":"hiv","p":0.02}]},
     {"id":"skip","label":"อายคนในหมู่บ้าน เลยไม่ไปรับยา","text":"ไม่มีใครรู้เรื่อง แต่อาการทรุดลง","effects":[{"stat":"health","d":-8},{"die":"hiv","p":0.04}]}
    ]},
-  {"id":"tmp-drift","title":"ว่างงานเดินเล่นไปวันๆ","body":"ไม่มีงานทำ ตื่นสาย เย็นนั่งตั้งวงกับเพื่อนหน้าร้านค้าประจำหมู่บ้าน","w":8,"when":{"age":[16,40],"role":["jobless"],"chance":0.35},"cooldown":6,
+  {"id":"tmp-drift","title":"ว่างงานเดินเล่นไปวันๆ","body":"ไม่มีงานทำ ตื่นสาย เย็นนั่งตั้งวงกับเพื่อนหน้าร้านค้าประจำหมู่บ้าน","w":8,"when":{"age":[16,40],"role":["jobless"],"loc":"isan","chance":0.35},"cooldown":6,
    "choices":[
     {"id":"drink","label":"ตั้งวงต่อทุกคืน","text":"เพื่อนเยอะ หัวเราะทุกคืน แต่เงินไม่เคยเหลือ","effects":[{"stat":"happy","d":3},{"stat":"health","d":-3},{"money":-4,"unit":"wageDay"},{"inc":"vice"},{"flag":"tmp-drifter"}]},
     {"id":"help","label":"ไปช่วยพ่อแม่ทำนาทำสวน","text":"เหนื่อยและไม่ได้ค่าจ้าง แต่ที่บ้านยิ้มได้","effects":[{"stat":"bond","d":5},{"stat":"happy","d":-1},{"role":"farmer"},{"inc":"responsible"}]},
@@ -154,7 +154,7 @@ KI.data.personalEvents.push(...[
   {"id":"tmp-police-record","title":"ประวัติติดตัว","body":"เรื่องที่เคยโดนจับยังอยู่ในบันทึก ตอนสมัครงานบริษัทเขาขอใบตรวจประวัติ","w":5,"when":{"age":[18,45],"flag":{"tmp-police":true},"chance":0.25},"cooldown":"once",
    "choices":[
     {"id":"honest","label":"เล่าความจริงกับผู้สัมภาษณ์","text":"บางที่ปฏิเสธ แต่สุดท้ายมีที่หนึ่งให้โอกาส","effects":[{"stat":"happy","d":-2},{"trait":"grit","d":2},{"flag":"tmp-police","v":false}]},
-    {"id":"give","label":"ไม่สมัครแล้ว ทำงานรับจ้างรายวันต่อ","text":"ไม่ต้องอธิบายใคร แต่ทางเลือกในชีวิตแคบลง","effects":[{"stat":"happy","d":-4},{"role":"construction"}]}
+    {"id":"give","label":"ไม่สมัครแล้ว ไปรับจ้างก่อสร้างรายวัน","text":"ไม่ต้องอธิบายใคร แต่ทางเลือกในชีวิตแคบลง","effects":[{"stat":"happy","d":-4},{"role":"construction"}]}
    ]},
   {"id":"tmp-drown","title":"ไปหาปลาตอนน้ำหลาก","body":"ฝนตกหนักหลายวัน น้ำในห้วยไหลเชี่ยว เพื่อนชวนไปทอดแหตรงที่ปลาขึ้นเยอะ","w":6,"when":{"age":[10,65],"season":1,"loc":"isan","chance":0.2},"cooldown":9,"heavy":true,
    "choices":[
@@ -230,7 +230,7 @@ KI.data.personalEvents.push(...[
      "roll":[{"p":0.12,"text":"ลงข้างทาง ถลอกทั้งตัว รถพัง","effects":[{"stat":"health","d":-8},{"money":-6,"unit":"wageDay"}]}]},
     {"id":"sleep","label":"นอนค้างบ้านเพื่อน","text":"คนที่บ้านบ่นแต่เช้า แต่ครบสามสิบสอง","effects":[{"stat":"bond","d":-1}]}
    ]},
-  {"id":"tmp-fight-sibling","title":"เพื่อนรุ่นพี่รังแก","body":"รุ่นพี่ ม.ปลาย ไถเงินค่าขนมทุกเช้า","w":6,"when":{"age":[10,15],"role":"student","chance":0.2},"cooldown":6,
+  {"id":"tmp-fight-sibling","title":"เพื่อนรุ่นพี่รังแก","body":"รุ่นพี่ตัวโตที่โรงเรียนดักไถเงินค่าขนมทุกเช้า","w":6,"when":{"age":[10,15],"role":"student","chance":0.2},"cooldown":6,
    "choices":[
     {"id":"pay","label":"ยอมให้ไป","text":"หิวทั้งวัน แต่ไม่ต้องเจ็บตัว","effects":[{"stat":"happy","d":-3},{"stat":"health","d":-1}]},
     {"id":"fight","label":"สู้ไม่ยอม","text":"โดนหนักกว่าเดิม แต่รุ่นพี่ไม่มายุ่งอีก","effects":[{"inc":"naughty"},{"stat":"health","d":-5},{"trait":"grit","d":2}]},

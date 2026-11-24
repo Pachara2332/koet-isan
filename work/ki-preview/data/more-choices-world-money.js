@@ -29,7 +29,7 @@ globalThis.KI = globalThis.KI || {}; KI.data = KI.data || {};
     ],
     "wr-kyos-1996": [
       c("voc", "กู้เรียนสายอาชีพใกล้บ้าน", "หนี้น้อยกว่าเรียนมหาวิทยาลัย จบไวกว่า แต่เส้นทางแคบกว่า", [{ flag: "wr-studentLoan" }, { edu: { in: "hvoc", grade: 1, place: "วิทยาลัยเทคนิคประจำจังหวัด" } }, s("know", 3)]),
-      c("work-study", "ทำงานไปด้วย เรียนภาคค่ำไปด้วย", "ไม่ต้องเป็นหนี้ แต่เหนื่อยจนแทบไม่มีเวลาพัก", [{ move: { kind: "bangkok" } }, { role: "factory" }, s("know", 2), s("health", -3), { trait: "grit", d: 3 }])
+      c("work-study", "เข้าเมืองทำโรงงาน แล้วเรียนภาคค่ำ", "เข้ากรุงเทพฯ ทำโรงงานกลางวัน เรียนภาคค่ำ ไม่ต้องเป็นหนี้แต่แทบไม่มีเวลาพัก", [{ move: { kind: "bangkok" } }, { role: "factory" }, s("know", 2), s("health", -3), { trait: "grit", d: 3 }])
     ],
     "wr-tomyum-1997": [
       c("sea", "ไปหางานที่ไต้หวัน", "ต้องกู้ค่าเดินทาง เสี่ยงกว่า แต่มีงานรออยู่", [m(-25), { move: { kind: "abroad", country: "ไต้หวัน" } }, { role: "abroad" }, { cond: "homesick", turns: 3 }])
@@ -40,7 +40,7 @@ globalThis.KI = globalThis.KI || {}; KI.data = KI.data || {};
     ],
     "wr-lostjob-1999": [
       c("skill", "ไปเรียนวิชาช่างที่ศูนย์ฝึกอาชีพ", "ยังไม่มีรายได้ แต่ได้ฝีมือติดตัว", [s("know", 4), m(-3)]),
-      c("abroad", "ลองไปทำงานต่างประเทศ", "ต้องกู้ค่านายหน้า หวังเงินที่มากกว่า", [m(-25), { move: { kind: "abroad", country: "ไต้หวัน" } }, { role: "abroad" }, { cond: "indebted", turns: 4 }], { age: [20, 40] })
+      c("abroad", "ลองไปทำงานไต้หวัน", "ต้องกู้ค่านายหน้าไปไต้หวัน หวังเงินที่มากกว่า", [m(-25), { move: { kind: "abroad", country: "ไต้หวัน" } }, { role: "abroad" }, { cond: "indebted", turns: 4 }], { age: [20, 40] })
     ],
     "wr-village-fund-2001": [
       c("tools", "กู้มาซื้อเครื่องสูบน้ำร่วมกับญาติ", "ทำนาปรังได้ แต่ต้องแบ่งคิวใช้กับญาติ", [{ flag: "wr-villageFund" }, { flag: "wr-fundInvest" }, s("bond", 2), m(-2)])
@@ -120,7 +120,7 @@ globalThis.KI = globalThis.KI || {}; KI.data = KI.data || {};
     ],
     "wr-evacuated-again": [
       c("stay", "รอฟังประกาศก่อน ยังไม่ไป", "ได้อยู่บ้านต่อ แต่ใจไม่สงบ", [s("happy", -3)]),
-      c("kids", "ส่งลูกหลานไปก่อน ตัวเองตามทีหลัง", "เด็กๆ ปลอดภัย แต่ครอบครัวต้องแยกกันชั่วคราว", [s("bond", -2), s("happy", -2)])
+      c("kids", "ให้คนในบ้านไปก่อน ตัวเองตามทีหลัง", "คนในบ้านปลอดภัย แต่ครอบครัวต้องแยกกันชั่วคราว", [s("bond", -2), s("happy", -2)])
     ],
     "wr-bueng-kan-bridge-2025": [
       c("job", "สมัครงานด่านศุลกากรหรือบริษัทขนส่ง", "ได้งานประจำ แต่ต้องเริ่มจากตำแหน่งเล็ก", [{ role: "office" }, s("know", 2)], { edu: { top: ["m6", "pvc", "pvs", "ba"] } }),
@@ -174,10 +174,10 @@ globalThis.KI = globalThis.KI || {}; KI.data = KI.data || {};
       c("pawn", "เอารถไปจำนำทะเบียน", "ได้เงินและยังใช้รถได้ แต่ดอกเบี้ยไม่น้อย", [m(15), { cond: "money-installment", turns: 6 }])
     ],
     "money-extra-work": [
-      c("sell", "ทำขนมขายที่ตลาดนัด", "ต้องลงทุนเล็กน้อย กำไรขึ้นกับว่าขายได้แค่ไหน", [m(-2), s("know", 2), { trait: "social", d: 2 }])
+      c("sell", "ทำขนมขายที่ตลาดนัด", "ลงทุนค่าของไปก่อน ช่วงแรกขายได้ไม่มากจนยังไม่คืนทุน แต่ได้รู้จักลูกค้าในตลาด", [m(-2), s("know", 2), { trait: "social", d: 2 }])
     ],
     "money-ask-family": [
-      c("job", "ขอให้ช่วยหางานแทนขอเงิน", "ไม่ต้องเป็นหนี้ญาติ แต่ต้องย้ายไปทำงานไกลบ้าน", [{ move: { kind: "bangkok" } }, { role: "factory" }, { cond: "homesick", turns: 2 }]),
+      c("job", "ขอให้ช่วยหางานแทนขอเงิน", "ญาติฝากงานโรงงานในกรุงเทพฯ ให้ ไม่ต้องเป็นหนี้ แต่ต้องย้ายไปไกลบ้าน", [{ move: { kind: "bangkok" } }, { role: "factory" }, { cond: "homesick", turns: 2 }]),
       c("parents", "ขอพ่อแม่แทน", "ยืมได้ง่ายกว่า แต่รู้สึกผิดที่ไปเอาเงินเก็บของพ่อแม่", [m(10), { flag: "money-owesParents" }, s("happy", -1)], { noFlag: ["money-owesParents"] })
     ],
     "money-debt-clinic": [
@@ -187,7 +187,7 @@ globalThis.KI = globalThis.KI || {}; KI.data = KI.data || {};
       c("used", "ซื้อรถมือสอง", "ราคาถูกกว่าเยอะ แต่อาจต้องซ่อมบ่อย", [m(-20), { flag: "money-bike" }])
     ],
     "money-phone": [
-      c("share", "ใช้เครื่องเดียวกับพี่น้องในบ้าน", "ประหยัดเงิน แต่ต้องรอคิวใช้", [m(-5), s("bond", 2)])
+      c("share", "ลงขันซื้อเครื่องเดียวใช้กันทั้งบ้าน", "ทั้งบ้านช่วยกันออกเงินซื้อเครื่องเดียว ประหยัดแต่ต้องรอคิวใช้", [{ flag: "money-phone" }, m(-5), s("bond", 2)])
     ],
     "money-smartphone": [
       c("used", "ซื้อเครื่องมือสอง", "ถูกกว่าเครื่องใหม่ แต่แบตเสื่อมเร็ว", [m(-6), { flag: "money-smartphone" }])
@@ -197,7 +197,7 @@ globalThis.KI = globalThis.KI || {}; KI.data = KI.data || {};
       c("tools", "เอาเงินไปซื้อเครื่องมือทำกิน", "ไม่มีเงินเก็บสำรอง แต่หาเงินได้คล่องขึ้น", [m(-15), s("know", 2)])
     ],
     "money-send-home": [
-      c("fix", "กลับไปซ่อมหลังคาเอง", "ประหยัดค่าช่าง แต่เสียค่ารถและวันทำงาน", [m(-4), s("bond", 4), s("health", -1)])
+      c("fix", "กลับไปซ่อมหลังคาเอง", "ประหยัดค่าช่าง แต่เสียค่ารถและวันทำงาน", [m(-4), s("bond", 4), s("health", -1)], { loc: "bangkok" })
     ],
     "money-tuition": [
       c("work", "ให้ทำงานพิเศษช่วยออกค่าเทอมเอง", "ภาระที่บ้านน้อยลง แต่เด็กมีเวลาเรียนน้อยลง", [m(-3), s("bond", -1), s("happy", 1)])
@@ -235,7 +235,7 @@ globalThis.KI = globalThis.KI || {}; KI.data = KI.data || {};
     ],
     "money-installment-late": [
       c("talk", "โทรขอไฟแนนซ์ปรับโครงสร้างหนี้", "ค่างวดลดลงแต่ผ่อนนานขึ้น", [{ cond: "money-installment", turns: 9 }, s("happy", -1)]),
-      c("sell", "ขายรถเองก่อนโดนยึด", "ได้ราคาดีกว่าโดนยึด แต่ไม่มีรถใช้", [{ uncond: "money-installment" }, { flag: "money-bike", v: false }, m(5)])
+      c("sell", "ขายรถเองก่อนโดนยึด", "ได้ราคาดีกว่าโดนยึด แต่ไม่มีรถใช้", [{ uncond: "money-installment" }, { flag: "money-bike", v: false }, m(5)], { flag: { "money-bike": true } })
     ]
   };
   for (const list of [KI.data.decisions, KI.data.personalEvents]) for (const item of list) if (add[item.id]) item.choices.push(...add[item.id]);

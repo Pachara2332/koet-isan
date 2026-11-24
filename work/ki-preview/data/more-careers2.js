@@ -56,7 +56,7 @@ KI.data.decisions.push(...[
     {"id":"local","label":"บริษัทซอฟต์แวร์เล็กในเมืองอีสาน","text":"เงินน้อยกว่า งานหลากหลาย ใกล้บ้าน","effects":[{"role":"developer"},{"flag":"job2-placed"},{"move":{"kind":"isan","province":"khon-kaen","setting":"urban"}},{"stat":"bond","d":2},{"pin":"เป็นโปรแกรมเมอร์"}]},
     {"id":"startup","label":"ร่วมก่อตั้งสตาร์ทอัพกับเพื่อน","text":"ไม่มีเงินเดือนแน่นอน แต่ถ้ารอดก็โตไว","when":{"year":[2010,2026]},"effects":[{"role":"developer"},{"flag":"job2-placed"},{"move":{"kind":"bangkok"}},{"money":-20,"unit":"wageDay"}],"roll":[{"p":0.25,"text":"แอปของทีมมีคนใช้จริง นักลงทุนสนใจ","effects":[{"inc":"biz"},{"stat":"happy","d":8}]},{"p":0.75,"text":"เงินทุนหมดในปีครึ่ง คุณไปสมัครงานประจำ","effects":[{"stat":"happy","d":-5,"by":"attach"},{"stat":"know","d":3}]}]}
   ]},
-  {"id":"job2-grad-law","title":"สอบเนติบัณฑิต","body":"จบนิติศาสตร์แล้ว ถ้าอยากว่าความเต็มตัวต้องสอบเนติบัณฑิตซึ่งคนสอบผ่านน้อยมาก","when":{"flag":{"job2-major-law":true},"edu":{"top":"ba"},"noFlag":["job2-placed"]},"major":true,"cooldown":"once","choices":[
+  {"id":"job2-grad-law","title":"สอบเนติบัณฑิต","body":"จบนิติศาสตร์แล้ว ถ้าอยากเป็นทนายที่ก้าวไปถึงผู้พิพากษาหรืออัยการได้ ต้องสอบเนติบัณฑิตซึ่งคนสอบผ่านน้อยมาก","when":{"flag":{"job2-major-law":true},"edu":{"top":"ba"},"noFlag":["job2-placed"]},"major":true,"cooldown":"once","choices":[
     {"id":"exam","label":"ทุ่มสอบเนติฯ","text":"คุณอ่านหนังสือทั้งปี","effects":[{"stat":"know","d":3},{"stat":"happy","d":-2}],"roll":[{"p":0.3,"text":"ผ่านในรอบแรก คุณเริ่มเป็นทนายความ","effects":[{"role":"lawyer"},{"flag":"job2-placed"},{"flag":"job2-barrister"},{"stat":"happy","d":8},{"pin":"เป็นทนายความ"}]},{"p":0.7,"text":"ไม่ผ่าน ต้องรอสอบรอบหน้า","effects":[{"flag":"job2-bar-tries"},{"stat":"happy","d":-4,"by":"attach"}]}]},
     {"id":"firm","label":"เป็นนิติกรในสำนักงานไปก่อน","text":"มีเงินเดือน แต่ยังว่าความเองไม่ได้","effects":[{"role":"office"},{"flag":"job2-bar-tries"}]}
   ]},
@@ -86,7 +86,7 @@ KI.data.decisions.push(...[
   {"id":"job2-selftaught-dev","title":"เขียนโปรแกรมเป็นเอง","body":"คุณหัดเขียนโปรแกรมจากคลิปและเว็บมาหลายปี เพื่อนบอกว่าฝีมือพอสมัครงานได้แล้ว","when":{"year":[2005,2026],"age":[18,40],"any":[{"counter":{"skill-computer":[5,99]}},{"talent":{"computer":[2,3]}}],"noFlag":["job2-placed"],"chance":0.3},"major":true,"cooldown":"once","choices":[
     {"id":"apply","label":"สมัครงานโปรแกรมเมอร์","text":"ไม่มีวุฒิตรงสาย ต้องทำแบบทดสอบหนักกว่าคนอื่น","effects":[{"stat":"happy","d":-1}],"roll":[{"p":0.5,"text":"ผ่านสัมภาษณ์ คุณได้เป็นนักพัฒนาซอฟต์แวร์","effects":[{"role":"developer"},{"flag":"job2-placed"},{"move":{"kind":"bangkok"}},{"stat":"happy","d":8},{"pin":"เป็นโปรแกรมเมอร์โดยไม่มีวุฒิสายตรง"}]},{"p":0.5,"text":"ยังไม่ได้ คุณกลับมาฝึกต่อ","effects":[{"inc":"skill-computer"}]}]},
     {"id":"free","label":"รับงานฟรีแลนซ์ทำเว็บ","text":"รายได้ไม่แน่นอน แต่ทำที่บ้านได้","effects":[{"role":"developer"},{"flag":"job2-placed"},{"stat":"bond","d":2}],"roll":[{"p":0.5,"text":"ลูกค้าบอกต่อกัน งานไม่ขาด","effects":[{"money":10,"unit":"wageDay"}]},{"p":0.5,"text":"ลูกค้าเบี้ยวค่าจ้าง","effects":[{"money":-5,"unit":"wageDay"},{"stat":"happy","d":-3}]}]},
-    {"id":"no","label":"เก็บไว้เป็นงานอดิเรก","text":"งานเดิมมั่นคงกว่า","effects":[{"stat":"happy","d":-1}]}
+    {"id":"no","label":"เก็บไว้เป็นงานอดิเรก","text":"คุณยังไม่พร้อมเอาฝีมือไปแข่งในตลาดงาน","effects":[{"stat":"happy","d":-1}]}
   ]},
   {"id":"job2-police-exam","title":"สอบตำรวจ","body":"ประกาศรับสมัครนักเรียนนายสิบตำรวจ และนักเรียนนายร้อยตำรวจ","when":{"age":[18,27],"edu":{"top":["m6","pvc","pvs","ba"]},"noFlag":["job2-placed","job2-police-tried"],"chance":0.25},"major":true,"cooldown":"once","choices":[
     {"id":"nco","label":"สอบนายสิบตำรวจ","text":"ซ้อมวิ่ง ว่ายน้ำ และอ่านหนังสือ","effects":[{"flag":"job2-police-tried"},{"stat":"health","d":2}],"roll":[{"p":0.35,"text":"ติด คุณผ่านการฝึกและได้ติดยศ","effects":[{"role":"police"},{"flag":"job2-placed"},{"move":{"kind":"bangkok"}},{"stat":"bond","d":3},{"pin":"เป็นตำรวจ"}]},{"p":0.65,"text":"ไม่ติด","effects":[{"stat":"happy","d":-3}]}]},
@@ -109,17 +109,17 @@ KI.data.decisions.push(...[
   {"id":"job2-voc-route","title":"เรียนสายอาชีพ","body":"จบ ม.3 แล้ว วิทยาลัยเทคนิคและอาชีวะประจำจังหวัดรับสมัคร มีสาขาช่างยนต์และอาหาร","when":{"age":[15,16],"edu":{"in":"school","grade":[10,10]},"chance":0.4},"major":true,"cooldown":"once","choices":[
     {"id":"mech","label":"ปวช. ช่างยนต์","text":"มือดำทุกวัน แต่ได้วิชาติดตัว","effects":[{"edu":{"in":"voc","grade":1,"place":"วิทยาลัยเทคนิคประจำจังหวัด"}},{"role":"student"},{"flag":"job2-voc-mech"},{"inc":"skill-mechanic","d":2}]},
     {"id":"cook","label":"ปวช. อาหารและโภชนาการ","text":"ฝึกครัวทุกเช้า","effects":[{"edu":{"in":"voc","grade":1,"place":"วิทยาลัยอาชีวศึกษาประจำจังหวัด"}},{"role":"student"},{"flag":"job2-voc-cook"},{"inc":"skill-cooking","d":2}]},
-    {"id":"work","label":"ออกมาทำงานเลย","text":"บ้านต้องการเงินตอนนี้","effects":[{"role":"jobless"},{"money":3,"unit":"wageDay"},{"stat":"know","d":-1}]}
+    {"id":"work","label":"ออกมาทำงานเลย","text":"บ้านต้องการเงินตอนนี้ คุณออกมารับจ้างทั่วไปช่วยที่บ้าน","effects":[{"role":"jobless"},{"money":3,"unit":"wageDay"},{"stat":"know","d":-1}]}
   ]},
   {"id":"job2-mechanic","title":"งานช่างซ่อมรถ","body":"ศูนย์บริการรถยนต์ในเมืองและร้านซ่อมมอเตอร์ไซค์กำลังหาช่าง","when":{"age":[17,45],"role":["jobless","farmer","factory","construction","trader","student"],"edu":{"in":null},"any":[{"flag":{"job2-voc-mech":true}},{"counter":{"skill-mechanic":[4,99]}},{"talent":{"mechanic":[1,3]}},{"edu":{"top":["pvc","pvs"]}}],"chance":0.35},"major":true,"cooldown":"once","choices":[
     {"id":"center","label":"ช่างในศูนย์บริการ","text":"มีเงินเดือนและประกันสังคม ต้องทำตามขั้นตอน","effects":[{"role":"mechanic"},{"move":{"kind":"isan","province":"khon-kaen","setting":"urban"}},{"inc":"skill-mechanic"},{"pin":"เป็นช่างซ่อมรถ"}]},
     {"id":"village","label":"ช่างร้านซ่อมในอำเภอ","text":"รายได้ตามงาน ได้อยู่บ้าน","effects":[{"role":"mechanic"},{"move":"home"},{"stat":"bond","d":2},{"inc":"skill-mechanic"},{"pin":"เป็นช่างซ่อมรถ"}]},
-    {"id":"no","label":"ทำงานเดิมต่อ","text":"คุณยังไม่อยากเปลี่ยน","effects":[{"stat":"happy","d":-1}]}
+    {"id":"no","label":"ไม่สมัคร","text":"คุณยังไม่อยากเป็นช่างซ่อมรถตอนนี้","effects":[{"stat":"happy","d":-1}]}
   ]},
   {"id":"job2-chef","title":"เข้าครัวมืออาชีพ","body":"ร้านอาหารและโรงแรมในเมืองหาคนครัว คนที่ทำอาหารเก่งเริ่มจากผู้ช่วยได้","when":{"age":[17,45],"role":["jobless","farmer","factory","trader","office","student"],"edu":{"in":null},"any":[{"flag":{"job2-voc-cook":true}},{"counter":{"skill-cooking":[3,99]}},{"talent":{"cooking":[1,3]}}],"chance":0.35},"major":true,"cooldown":"once","choices":[
     {"id":"hotel","label":"ครัวโรงแรมในกรุงเทพฯ","text":"ยืนสิบชั่วโมง เชฟใหญ่ดุ แต่ได้เรียนอาหารหลายชาติ","effects":[{"role":"chef"},{"move":{"kind":"bangkok"}},{"inc":"skill-cooking"},{"stat":"health","d":-2},{"pin":"เป็นพ่อครัวแม่ครัว"}]},
     {"id":"local","label":"ครัวร้านอาหารอีสานในเมือง","text":"เมนูคุ้นมือ ลูกค้าเยอะ","effects":[{"role":"chef"},{"inc":"skill-cooking"},{"stat":"happy","d":2},{"pin":"เป็นพ่อครัวแม่ครัว"}]},
-    {"id":"no","label":"ไม่เปลี่ยนงาน","text":"ทำอาหารที่บ้านก็พอ","effects":[{"stat":"bond","d":1}]}
+    {"id":"no","label":"ไม่สมัคร","text":"ทำอาหารที่บ้านก็พอ","effects":[{"stat":"bond","d":1}]}
   ]},
   {"id":"job2-chef-own","title":"เปิดร้านของตัวเอง","body":"ทำครัวให้คนอื่นมาหลายปี ฝีมือคุณมีลูกค้าตามกิน","when":{"role":"chef","age":[24,55],"chance":0.3},"major":true,"cooldown":"once","choices":[
     {"id":"open","label":"เปิดร้าน","text":"ลงเงินเก็บเกือบหมด","effects":[{"money":-60,"unit":"wageDay"},{"role":"business"}],"roll":[{"p":0.5,"text":"ร้านคนแน่นทุกเย็น","effects":[{"inc":"biz"},{"inc":"biz"},{"stat":"happy","d":8},{"pin":"เปิดร้านอาหารของตัวเอง"}]},{"p":0.3,"text":"ร้านพออยู่ได้","effects":[{"inc":"biz"}]},{"p":0.2,"text":"ทำเลไม่ดี ปิดร้านในปีเดียว กลับไปเป็นลูกจ้าง","effects":[{"role":"chef"},{"cond":"indebted","turns":6},{"stat":"happy","d":-8,"by":"attach"}]}]},
@@ -129,16 +129,16 @@ KI.data.decisions.push(...[
   {"id":"job2-artist","title":"เวทีชีวิต","body":"วงหมอลำรับนักร้องหางเครื่อง รายการประกวดร้องเพลงก็เปิดรับสมัคร","when":{"age":[15,35],"role":["jobless","farmer","factory","trader","student","construction","office"],"any":[{"counter":{"skill-music":[5,99]}},{"talent":{"music":[2,3]}},{"flag":{"tal-music-province":true}}],"chance":0.3},"major":true,"cooldown":"once","choices":[
     {"id":"molam","label":"เข้าวงหมอลำ","text":"ตระเวนเล่นตามงานบุญทั้งภาค นอนบนรถ","when":{"age":[18,35]},"effects":[{"role":"artist"},{"inc":"skill-music"},{"stat":"health","d":-2},{"stat":"happy","d":5},{"pin":"เป็นนักร้องหมอลำ"}]},
     {"id":"contest","label":"ประกวดรายการโทรทัศน์","text":"เดินทางไปกรุงเทพฯ ยืนรอคิวออดิชันทั้งวัน","effects":[{"money":-4,"unit":"wageDay"}],"roll":[{"p":0.3,"text":"คุณเข้ารอบลึก มีค่ายเซ็นสัญญา","effects":[{"role":"artist"},{"move":{"kind":"bangkok"}},{"stat":"happy","d":10},{"pin":"ได้เป็นศิลปิน"}]},{"p":0.7,"text":"ตกรอบแรก","effects":[{"stat":"happy","d":-4,"by":"attach"}]}]},
-    {"id":"no","label":"ร้องเพลงเป็นงานอดิเรก","text":"งานประจำมั่นคงกว่า","effects":[{"stat":"happy","d":-1}]}
+    {"id":"no","label":"ร้องเพลงเป็นงานอดิเรก","text":"คุณร้องเพลงในงานบุญเป็นครั้งคราว แล้วหาทางที่มั่นคงกว่า","effects":[{"stat":"happy","d":-1}]}
   ]},
   {"id":"job2-designer","title":"รับงานออกแบบ","body":"คนเริ่มจ้างออกแบบโลโก้ ฉลากสินค้า และภาพโปรโมตออนไลน์","when":{"year":[2003,2026],"age":[17,40],"role":["jobless","farmer","factory","trader","office","student"],"any":[{"counter":{"skill-art":[5,99]}},{"talent":{"art":[2,3]}}],"chance":0.3},"major":true,"cooldown":"once","choices":[
     {"id":"agency","label":"สมัครงานบริษัทออกแบบ","text":"มีพอร์ตงานก็สมัครได้แม้ไม่มีวุฒิสายตรง","roll":[{"p":0.55,"text":"ได้งาน คุณเป็นนักออกแบบเต็มตัว","effects":[{"role":"designer"},{"move":{"kind":"bangkok"}},{"stat":"happy","d":6},{"pin":"เป็นนักออกแบบ"}]},{"p":0.45,"text":"ยังไม่ได้ เขาว่าพอร์ตยังบาง","effects":[{"inc":"skill-art"},{"stat":"happy","d":-2}]}]},
-    {"id":"free","label":"ฟรีแลนซ์จากบ้าน","text":"รับงานร้านค้าในจังหวัด","effects":[{"role":"designer"},{"stat":"bond","d":2},{"money":-3,"unit":"wageDay"}]},
+    {"id":"free","label":"ฟรีแลนซ์จากบ้าน","text":"ลงทุนซื้อโปรแกรมและอุปกรณ์ แล้วรับงานร้านค้าในจังหวัด","effects":[{"role":"designer"},{"stat":"bond","d":2},{"money":-3,"unit":"wageDay"}]},
     {"id":"no","label":"ไม่เอา","text":"วาดไว้ดูเองก็สุขใจ","effects":[{"stat":"happy","d":1}]}
   ]},
   {"id":"job2-creator","title":"ทำคอนเทนต์เต็มตัว","body":"คลิปของคุณมีคนติดตามหลักหมื่น บางเดือนรายได้จากแพลตฟอร์มมากกว่างานประจำ","when":{"year":[2012,2026],"age":[15,45],"any":[{"flag":{"tal-creator":true}},{"talent":{"speech":[1,3]}},{"talent":{"gaming":[2,3]}},{"talent":{"music":[2,3]}},{"talent":{"cooking":[2,3]}}],"noFlag":["job2-creator-tried"],"chance":0.15},"major":true,"cooldown":"once","choices":[
-    {"id":"full","label":"ลาออกมาทำเต็มเวลา","text":"ไม่มีเงินเดือน ยอดวิวคือรายได้","effects":[{"role":"creator"},{"flag":"job2-creator-tried"},{"money":-5,"unit":"wageDay"},{"pin":"เป็นครีเอเตอร์"}]},
-    {"id":"side","label":"ทำควบงานเดิม","text":"เหนื่อยสองเท่า แต่ไม่เสี่ยง","effects":[{"flag":"job2-creator-tried"},{"stat":"health","d":-2},{"money":4,"unit":"wageDay"}]}
+    {"id":"full","label":"ทุ่มทำคลิปเต็มเวลา","text":"ไม่มีเงินเดือน ยอดวิวคือรายได้","effects":[{"role":"creator"},{"flag":"job2-creator-tried"},{"money":-5,"unit":"wageDay"},{"pin":"เป็นครีเอเตอร์"}]},
+    {"id":"side","label":"ทำคลิปควบคู่งานหรือการเรียน","text":"เหนื่อยสองเท่า แต่ไม่เสี่ยง","effects":[{"flag":"job2-creator-tried"},{"stat":"health","d":-2},{"money":4,"unit":"wageDay"}]}
   ]},
   {"id":"job2-rider","title":"ขี่รถส่งของ","body":"แอปส่งอาหารและพัสดุรับคนขับเพิ่ม เลือกเวลาทำงานเองได้","when":{"year":[2019,2026],"age":[18,55],"role":["jobless","factory","trader","construction","farmer","office"],"noFlag":["career-rider"],"chance":0.15},"major":true,"cooldown":"once","choices":[
     {"id":"go","label":"สมัครไรเดอร์","text":"รายได้ตามจำนวนรอบ แดดฝนต้องสู้","effects":[{"role":"rider"},{"money":-5,"unit":"wageDay"},{"pin":"เป็นไรเดอร์"}]},
@@ -163,8 +163,8 @@ KI.data.decisions.push(...[
     {"id":"shop","label":"เปิดร้านหรือค่ายของตัวเอง","text":"ใช้ชื่อเสียงที่มีดึงลูกค้า","effects":[{"role":"business"},{"money":-30,"unit":"wageDay"}],"roll":[{"p":0.5,"text":"คนมาสมัครเรียนเยอะ","effects":[{"inc":"biz"}]},{"p":0.5,"text":"คนลืมชื่อคุณเร็วกว่าที่คิด","effects":[{"stat":"happy","d":-4}]}]},
     {"id":"guard","label":"ทำงาน รปภ.","text":"งานมั่นคงพอเลี้ยงตัว","effects":[{"role":"security"},{"stat":"happy","d":-3}]}
   ]},
-  {"id":"job2-business","title":"อยากเป็นเถ้าแก่","body":"ทำงานกินเงินเดือนมาหลายปี มีเงินเก็บก้อนหนึ่ง","when":{"age":[28,55],"role":["office","factory","engineer","accountant","banker","developer","nurse","pharmacist","designer","trader"],"money":[100000,999999999],"chance":0.1},"major":true,"cooldown":"once","choices":[
-    {"id":"open","label":"ลาออกมาทำธุรกิจ","text":"คุณเปิดร้านกาแฟกับคาร์แคร์ในอำเภอ","effects":[{"role":"business"},{"move":"home"},{"money":-80,"unit":"wageDay"}],"roll":[{"p":0.45,"text":"กิจการไปได้ดี","effects":[{"inc":"biz"},{"inc":"biz"},{"stat":"happy","d":6},{"pin":"เป็นเจ้าของกิจการ"}]},{"p":0.35,"text":"พออยู่ได้ เหนื่อยกว่าที่คิด","effects":[{"inc":"biz"},{"stat":"health","d":-2}]},{"p":0.2,"text":"ขาดทุนจนต้องปิด กลับไปหางานประจำ","effects":[{"role":"jobless"},{"cond":"indebted","turns":6},{"stat":"happy","d":-8,"by":"attach"}]}]},
+  {"id":"job2-business","title":"อยากเป็นเถ้าแก่","body":"ทำงานมาหลายปี มีเงินเก็บก้อนหนึ่ง และอยากลองเป็นเจ้าของกิจการเต็มตัว","when":{"age":[28,55],"role":["office","factory","engineer","accountant","banker","developer","nurse","pharmacist","designer","trader"],"money":[100000,999999999],"chance":0.1},"major":true,"cooldown":"once","choices":[
+    {"id":"open","label":"ลงทุนเปิดร้านกาแฟกับคาร์แคร์","text":"คุณเปิดร้านกาแฟกับคาร์แคร์ในอำเภอ","effects":[{"role":"business"},{"move":"home"},{"money":-80,"unit":"wageDay"}],"roll":[{"p":0.45,"text":"กิจการไปได้ดี","effects":[{"inc":"biz"},{"inc":"biz"},{"stat":"happy","d":6},{"pin":"เป็นเจ้าของกิจการ"}]},{"p":0.35,"text":"พออยู่ได้ เหนื่อยกว่าที่คิด","effects":[{"inc":"biz"},{"stat":"health","d":-2}]},{"p":0.2,"text":"ขาดทุนจนต้องปิด กลับไปหางานประจำ","effects":[{"role":"jobless"},{"cond":"indebted","turns":6},{"stat":"happy","d":-8,"by":"attach"}]}]},
     {"id":"no","label":"เก็บเงินไว้","text":"ความมั่นคงสำคัญกว่า","effects":[{"stat":"happy","d":-1}]}
   ]},
   {"id":"job2-switch","title":"อยากเปลี่ยนสายงาน","body":"ทำงานเดิมมานาน คุณเริ่มสงสัยว่านี่คือสิ่งที่อยากทำไปจนแก่ไหม","when":{"age":[33,52],"role":["doctor","nurse","engineer","developer","police","lawyer","pharmacist","accountant","banker","chef","mechanic","artist","creator","rider","security","housekeeper","athlete","designer"],"chance":0.08},"major":true,"cooldown":"once","choices":[
@@ -193,8 +193,8 @@ KI.data.personalEvents.push(...[
     {"id":"refer","label":"ส่งต่อเคสหนักไปโรงพยาบาลใหญ่","text":"ปลอดภัยกว่าสำหรับคนไข้ คุณได้พักบ้าง","effects":[{"stat":"health","d":-1}],"roll":[{"p":0.2,"text":"คนไข้หนึ่งรายไปไม่ถึง คุณคิดถึงเรื่องนี้อยู่นาน","effects":[{"stat":"happy","d":-6,"by":"attach"}]}]}
   ]},
   {"id":"job2-doc-clinic","title":"เปิดคลินิกตอนเย็น","body":"ชาวบ้านอยากให้หมอเปิดคลินิกหลังเลิกงาน","when":{"role":"doctor","age":[30,60]},"w":6,"cooldown":"once","choices":[
-    {"id":"open","label":"เปิด","text":"รายได้เพิ่มมาก เวลาพักแทบไม่มี","effects":[{"money":-20,"unit":"wageDay"},{"inc":"biz"},{"stat":"health","d":-3},{"stat":"bond","d":-2}]},
-    {"id":"no","label":"ไม่เปิด","text":"เก็บเวลาไว้ให้ครอบครัว","effects":[{"stat":"bond","d":3}]}
+    {"id":"open","label":"เปิดคลินิกหลังเลิกงาน","text":"ต้องลงทุนเช่าห้องและซื้อยา รายได้จะตามมา แต่เวลาพักแทบไม่มี","effects":[{"money":-20,"unit":"wageDay"},{"inc":"biz"},{"stat":"health","d":-3},{"stat":"bond","d":-2}]},
+    {"id":"no","label":"ไม่เปิด เก็บเวลาไว้พัก","text":"เก็บเวลาไว้ให้ครอบครัว","effects":[{"stat":"bond","d":3}]}
   ]},
   {"id":"job2-nurse-shift","title":"ควงเวร","body":"พยาบาลในวอร์ดลาออกไปสองคน หัวหน้าขอให้ควงเวรดึกต่อเวรเช้า","when":{"role":"nurse"},"w":10,"cooldown":9,"choices":[
     {"id":"yes","label":"รับควงเวร","text":"ได้ค่าเวรเพิ่ม ร่างกายล้า","effects":[{"money":4,"unit":"wageDay"},{"stat":"health","d":-3}]},
@@ -264,9 +264,9 @@ KI.data.personalEvents.push(...[
     {"id":"check","label":"เดินไปตรวจ","text":"แค่คนมารอรับญาติ แต่ลูกบ้านชมว่าใส่ใจ","effects":[{"stat":"happy","d":2}]},
     {"id":"call","label":"แจ้งตำรวจแล้วรอในป้อม","text":"ปลอดภัยกว่า","effects":[{"stat":"health","d":-1}]}
   ]},
-  {"id":"job2-housekeeper-day","title":"แม่บ้านเจอของลืม","body":"ทำความสะอาดห้องแล้วเจอกระเป๋าเงินหนาที่แขกลืมไว้","when":{"role":"housekeeper"},"w":8,"cooldown":"once","choices":[
-    {"id":"return","label":"ส่งคืนเคาน์เตอร์","text":"แขกให้รางวัลและหัวหน้าชม","effects":[{"money":3,"unit":"wageDay"},{"stat":"happy","d":3}]},
-    {"id":"quit","label":"ลาออกไปเปิดร้านซักรีดที่บ้าน","text":"เบื่อเดินทั้งวัน อยากเป็นนายตัวเอง","effects":[{"role":"business"},{"move":"home"},{"money":-20,"unit":"wageDay"}],"roll":[{"p":0.55,"text":"ร้านมีลูกค้าประจำ","effects":[{"inc":"biz"}]},{"p":0.45,"text":"ลูกค้าน้อย รายได้ไม่แน่นอน","effects":[{"stat":"happy","d":-3}]}]}
+  {"id":"job2-housekeeper-day","title":"แม่บ้านเจอของลืม","body":"ทำความสะอาดห้องแล้วเจอกระเป๋าเงินหนาที่แขกลืมไว้ ระหว่างนั้นคุณก็คิดว่าจะเดินทั้งวันแบบนี้ไปอีกนานแค่ไหน","when":{"role":"housekeeper"},"w":8,"cooldown":"once","choices":[
+    {"id":"return","label":"ส่งคืนเคาน์เตอร์ ทำงานต่อ","text":"แขกให้รางวัลและหัวหน้าชม","effects":[{"money":3,"unit":"wageDay"},{"stat":"happy","d":3}]},
+    {"id":"quit","label":"คืนกระเป๋า แล้วลาออกไปเปิดร้านซักรีด","text":"คุณส่งกระเป๋าคืน แล้วตัดสินใจกลับไปเป็นนายตัวเองที่บ้าน","effects":[{"role":"business"},{"move":"home"},{"money":-20,"unit":"wageDay"}],"roll":[{"p":0.55,"text":"ร้านมีลูกค้าประจำ","effects":[{"inc":"biz"}]},{"p":0.45,"text":"ลูกค้าน้อย รายได้ไม่แน่นอน","effects":[{"stat":"happy","d":-3}]}]}
   ]},
   {"id":"job2-athlete-injury","title":"บาดเจ็บระหว่างแข่ง","body":"เข่าบิดกลางเกม หมอบอกต้องพักยาว","when":{"role":"athlete"},"w":8,"cooldown":12,"choices":[
     {"id":"rest","label":"พักรักษาให้หาย","text":"เสียรายได้หลายเดือน","effects":[{"money":-10,"unit":"wageDay"},{"stat":"health","d":-2},{"stat":"happy","d":-2}]},

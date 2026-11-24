@@ -51,7 +51,7 @@ KI.data.decisions.push(...[
     {"id":"quit","label":"ลาออกกลางคัน ไม่อยากเป็นภาระ","text":"เก็บของออกจากหอ ขึ้นรถกลับบ้าน","effects":[{"edu":{"in":null,"grade":0}},{"role":"jobless"},{"stat":"happy","d":-8,"by":"attach"},{"pin":"ออกจากมหาวิทยาลัยเพราะไม่มีค่าเทอม"}]}]},
   {"id":"edu-fees-new","title":"ค่าเทอมปีนี้","body":"ค่าเทอม ค่าหอ ค่าหนังสือ รวมกันแล้วหนักกว่าที่บ้านจะส่งไหว","major":true,"when":{"year":[1996,9999],"season":0,"edu":{"in":["uni"],"grade":[2,4]},"wealth":["poor","mid"],"chance":0.5},"cooldown":3,"choices":[
     {"id":"loan","label":"กู้ กยศ.","text":"ได้เรียนต่อ แต่เรียนจบต้องผ่อนคืน","effects":[{"flag":"career-kyorsor"},{"stat":"happy","d":1}]},
-    {"id":"job","label":"ทำงานพิเศษ","text":"ขับไรเดอร์หรือเป็นพนักงานร้านสะดวกซื้อหลังเลิกเรียน","effects":[{"money":6,"unit":"wageDay"},{"stat":"health","d":-2},{"stat":"know","d":-1}]},
+    {"id":"job","label":"ทำงานพิเศษ","text":"รับจ้างเสิร์ฟอาหารหรือเป็นพนักงานร้านสะดวกซื้อหลังเลิกเรียน","effects":[{"money":6,"unit":"wageDay"},{"stat":"health","d":-2},{"stat":"know","d":-1}]},
     {"id":"family","label":"ให้ที่บ้านช่วย","text":"แม่โอนเงินมาให้ทั้งที่ตัวเองก็ไม่ค่อยมี","when":{"flag":{"parentsAlive":true}},"effects":[{"stat":"bond","d":2},{"stat":"happy","d":-1}]},
     {"id":"quit","label":"ดรอปเรียนออกมาทำงาน","text":"ลาออกกลางคัน ตั้งใจหาเงินก่อน","effects":[{"edu":{"in":null,"grade":0}},{"role":"jobless"},{"stat":"happy","d":-6},{"pin":"ออกจากมหาวิทยาลัยกลางคัน"}]}]},
   {"id":"edu-dropout-mid","title":"เพื่อนชวนออกไปทำงาน","body":"เพื่อนร่วมห้องหลายคนออกไปทำงานโรงงาน มีเงินเดือนเป็นของตัวเอง ส่วนที่บ้านก็ขัดสน","major":true,"when":{"year":[2003,9999],"age":[14,17],"edu":{"in":["school"],"grade":[8,11]},"any":[{"flag":{"status":"poor"}},{"counter":{"naughty":[3,99]}}],"chance":0.12},"cooldown":"once","choices":[
@@ -62,7 +62,7 @@ KI.data.decisions.push(...[
     {"id":"exam","label":"ตั้งใจอ่านหนังสือสอบ","text":"อ่านหนังสือทุกคืนหลังเลิกงาน","effects":[{"flag":"edu-gsn","v":false}],"roll":[
       {"p":0.7,"text":"สอบผ่าน ได้วุฒิ ม.6 เทียบเท่า","effects":[{"edu":{"top":"m6"}},{"stat":"happy","d":6},{"cond":"proud","turns":2},{"pin":"จบ ม.6 จาก กศน."}]},
       {"p":0.3,"text":"สอบไม่ผ่าน ต้องรอรอบหน้า","effects":[{"flag":"edu-gsn"},{"stat":"happy","d":-3}]}]},
-    {"id":"skip","label":"งานยุ่งเกินไป พักไว้ก่อน","text":"ไม่ได้ไปสอบรอบนี้","effects":[{"flag":"edu-gsn","v":false}]}]},
+    {"id":"skip","label":"งานยุ่งเกินไป ขอเลิกเรียน กศน. ไว้ก่อน","text":"ไม่ได้ไปสอบ แล้วก็ค่อยๆ ห่างจาก กศน. ไป","effects":[{"flag":"edu-gsn","v":false}]}]},
   {"id":"edu-gap-tutor","title":"ปีว่างก่อนสอบใหม่","body":"สอบไม่ติดเมื่อปีที่แล้ว ระหว่างรอสอบรอบหน้าจะทำอะไรดี","major":false,"when":{"age":[18,23],"flag":{"edu-failed":true}},"cooldown":"once","choices":[
     {"id":"tutor","label":"ลงเรียนกวดวิชาในเมือง","text":"นั่งเรียนวันละหกชั่วโมงกับเด็กซิ่วคนอื่น","effects":[{"money":-12,"unit":"wageDay"},{"stat":"know","d":8}]},
     {"id":"self","label":"อ่านเองที่บ้าน ช่วยงานที่บ้านไปด้วย","text":"อ่านหนังสือใต้หลอดไฟตอนกลางคืน","effects":[{"stat":"know","d":4},{"stat":"bond","d":2}]},
@@ -94,10 +94,10 @@ KI.data.decisions.push(...[
   const add = (id, choices, front) => { const d = find(id); if (d) d.choices = front ? [...choices, ...d.choices] : [...d.choices, ...choices]; };
   const fx = (id, cid, effects) => { const c = ch(id, cid); if (c) c.effects = [...c.effects, ...effects]; };
   const loanKys = (days) => ({ "loan": { "kind": "kyorsor", "label": "กยศ.", "amountDays": days, "rate": 0.0025, "seasons": 45, "grace": 6 } });
-  const decline = { "id": "edu-decline", "label": "ยังไม่รับ หางานที่ตรงกับตัวเองต่อ", "text": "คุณขอเวลามองหางานที่ใช่กว่านี้ ชีวิตตอนนี้ยังเป็นแบบเดิมไปก่อน", "effects": [{ "flag": "edu-grad-declined" }, { "stat": "happy", "d": -1 }] };
+  const decline = { "id": "edu-decline", "label": "ยังไม่ตัดสินใจ ขอมองหางานอื่นก่อน", "text": "คุณขอเวลามองหางานที่ใช่กว่านี้ ชีวิตตอนนี้ยังเป็นแบบเดิมไปก่อน", "effects": [{ "flag": "edu-grad-declined" }, { "stat": "happy", "d": -1 }] };
   const famBiz = { "id": "edu-family-biz", "label": "เข้าไปช่วยกิจการของที่บ้าน", "text": "เริ่มจากคุมหน้าร้านและบัญชี พ่อแม่สอนงานให้ทีละขั้น ได้อยู่ใกล้บ้านแต่ต้องฟังผู้ใหญ่ทุกเรื่อง", "when": { "age": [18, 60], "any": RICH }, "effects": [{ "role": "business" }, { "move": "home" }, { "stat": "bond", "d": 3 }, { "stat": "happy", "d": -1 }, { "pin": "เข้าช่วยกิจการของครอบครัว" }] };
   const ownBiz = { "id": "edu-family-capital", "label": "ขอทุนจากที่บ้านเปิดกิจการของตัวเอง", "text": "พ่อแม่ให้เงินก้อนตั้งต้น ถ้ารุ่งก็เป็นหน้าเป็นตาของบ้าน ถ้าล้มทุกคนจะรู้", "when": { "age": [20, 60], "any": RICH }, "effects": [{ "role": "business" }, { "stat": "bond", "d": -1 }], "roll": [{ "p": 0.6, "text": "ลูกค้าเริ่มติด กิจการพอมีกำไร", "effects": [{ "inc": "biz" }, { "stat": "happy", "d": 4 }, { "pin": "เปิดกิจการด้วยทุนจากครอบครัว" }] }, { "p": 0.4, "text": "ปีแรกขาดทุน ต้องขอเงินที่บ้านเพิ่มอีกก้อน", "effects": [{ "stat": "happy", "d": -4 }, { "stat": "bond", "d": -2 }] }] };
-  const fit = (id, why, label, text, when, effects) => ({ id: "fit-" + id, label: why + " · " + label, text, when, effects });
+  const fit = (id, why, label, text, when, effects) => ({ id: "fit-" + id, label: label + (why.includes("ทักษะ") ? " · ตามทักษะ" : " · ตรงสาย"), text, when, effects });
   const BA = (f) => ({ "edu": { "top": ["ba"] }, "flag": { [f]: true } });
   const VOC = (f) => ({ "edu": { "top": ["pvc", "pvs", "ba"] }, "flag": { [f]: true } });
   const placed = (role, pin) => [{ "role": role }, { "flag": "job2-placed" }, { "pin": pin }];
@@ -198,7 +198,7 @@ KI.data.decisions.push(...[
   list.forEach((d) => { if (d.id.startsWith("job2-grad-")) d.urgent = true; });
 
   const at = (id) => { const d = find(id); return d ? list.indexOf(d) + 1 : list.length; };
-  const OFFER = "บริษัทที่ไปฝึกงานชวนกลับไปทำงานประจำ · ";
+  const OFFER = "รับงานประจำที่เคยฝึก · ";
   const off = { "flag": "edu-intern-offer", "v": false };
   list.splice(at("job2-faculty"), 0,
     {"id":"edu-stream","urgent":true,"title":"เลือกสายเรียน ม.4","body":"ขึ้นมัธยมปลายต้องเลือกแผนการเรียน สายที่เลือกจะกำหนดว่าเรียนต่อคณะไหนได้บ้าง","when":{"edu":{"in":["school"],"grade":[10,10]},"noFlag":["edu-stream-sci","edu-stream-math","edu-stream-lang"]},"major":true,"cooldown":"once","choices":[
@@ -220,10 +220,10 @@ KI.data.decisions.push(...[
       {"id":"teach-home","label":"ฝึกสอนโรงเรียนใกล้บ้าน","text":"การฝึกสอนในโรงเรียนจริงเป็นเงื่อนไขจบของครู ได้สอนเด็กในอำเภอบ้านเกิด","when":{"flag":{"job2-major-edu":true}},"effects":[{"flag":"edu-intern"},{"stat":"know","d":3},{"stat":"bond","d":3},{"move":"home"}]},
       {"id":"teach-town","label":"ฝึกสอนโรงเรียนใหญ่ในเมือง","text":"ห้องเรียนใหญ่ งานเอกสารเยอะ ได้เรียนรู้จากครูพี่เลี้ยงเก่งๆ","when":{"flag":{"job2-major-edu":true}},"effects":[{"flag":"edu-intern"},{"stat":"know","d":5},{"stat":"happy","d":-1}]}]},
     {"id":"edu-intern-offer","urgent":true,"title":"ข้อเสนองานจากที่ฝึกงาน","body":"ที่ทำงานที่คุณเคยไปฝึกติดต่อมา ถามว่าจะกลับไปทำงานประจำไหม","when":{"edu":{"top":["ba"]},"flag":{"edu-intern-offer":true},"noFlag":["job2-placed"]},"major":true,"cooldown":"once","choices":[
-      {"id":"eng","label":OFFER+"ตรงกับที่เรียนมา: วิศวกรรม","text":"กลับไปทำงานกับทีมเดิม ไม่ต้องเริ่มนับหนึ่งใหม่","when":{"flag":{"job2-major-eng":true}},"effects":[off,...placed("engineer","เป็นวิศวกรที่เดิมที่เคยฝึกงาน")]},
-      {"id":"cs","label":OFFER+"ตรงกับที่เรียนมา: คอมพิวเตอร์","text":"ได้ดูแลระบบที่เคยช่วยทำตอนฝึกงาน","when":{"flag":{"job2-major-cs":true}},"effects":[off,...placed("developer","เป็นโปรแกรมเมอร์ที่เดิมที่เคยฝึกงาน")]},
-      {"id":"acc","label":OFFER+"ตรงกับที่เรียนมา: บัญชี","text":"กลับไปทำบัญชีให้บริษัทเดิม","when":{"flag":{"job2-major-acc":true}},"effects":[off,...placed("accountant","เป็นนักบัญชีที่เดิมที่เคยฝึกงาน")]},
-      {"id":"office","label":OFFER+"งานประจำในสำนักงาน","text":"งานไม่ตรงสาขาเป๊ะ แต่รู้จักทุกคนในที่ทำงานแล้ว","when":{"noFlag":["job2-major-eng","job2-major-cs","job2-major-acc"]},"effects":[off,...placed("office","ได้งานจากที่ฝึกงาน")]},
+      {"id":"eng","label":OFFER+"วิศวกร","text":"กลับไปทำงานกับทีมเดิม ไม่ต้องเริ่มนับหนึ่งใหม่","when":{"flag":{"job2-major-eng":true}},"effects":[off,...placed("engineer","เป็นวิศวกรที่เดิมที่เคยฝึกงาน")]},
+      {"id":"cs","label":OFFER+"โปรแกรมเมอร์","text":"ได้ดูแลระบบที่เคยช่วยทำตอนฝึกงาน","when":{"flag":{"job2-major-cs":true}},"effects":[off,...placed("developer","เป็นโปรแกรมเมอร์ที่เดิมที่เคยฝึกงาน")]},
+      {"id":"acc","label":OFFER+"นักบัญชี","text":"กลับไปทำบัญชีให้บริษัทเดิม","when":{"flag":{"job2-major-acc":true}},"effects":[off,...placed("accountant","เป็นนักบัญชีที่เดิมที่เคยฝึกงาน")]},
+      {"id":"office","label":OFFER+"พนักงานสำนักงาน","text":"งานไม่ตรงสาขาเป๊ะ แต่รู้จักทุกคนในที่ทำงานแล้ว","when":{"noFlag":["job2-major-eng","job2-major-cs","job2-major-acc"]},"effects":[off,...placed("office","ได้งานจากที่ฝึกงาน")]},
       Object.assign({}, decline, { "effects": [off, ...decline.effects] })]},
     {"id":"edu-extern","urgent":true,"title":"นักศึกษาแพทย์ปีหก","body":"ปีสุดท้ายของแพทย์เป็นภาคปฏิบัติเต็มเวลาในโรงพยาบาล ไม่มีใครข้ามได้ เหลือแค่เลือกว่าจะไปฝึกที่ไหน","when":{"edu":{"in":["med"],"grade":[6,6]},"noFlag":["edu-extern"]},"major":true,"cooldown":"once","choices":[
       {"id":"center","label":"ฝึกที่โรงพยาบาลศูนย์ในภาค","text":"เคสหนักทุกคืน ได้ทำหัตถการเยอะ","effects":[{"flag":"edu-extern"},{"stat":"know","d":5},{"stat":"health","d":-4}]},
@@ -245,6 +245,6 @@ KI.data.decisions.push(...[
       ...JSON.parse(JSON.stringify(FITS)), JSON.parse(JSON.stringify(famBiz)), JSON.parse(JSON.stringify(ownBiz)),
       {"id":"general","label":"รับจ้างทั่วไปหรือทำงานโรงงานใกล้บ้าน","text":"ได้ค่าแรงทันที งานหนักแต่ไม่ต้องใช้วุฒิ","when":{"any":PLAIN},"effects":[{"role":"factory"}]},
       {"id":"trade","label":"ค้าขายเล็กๆ ในตลาด","text":"ลงทุนไม่มาก รายได้ขึ้นลงตามวัน","effects":[{"role":"trader"},{"money":-5,"unit":"wageDay"}]},
-      {"id":"edu-decline","label":"ยังไม่รับ หางานที่ตรงกับตัวเองต่อ","text":"คุณยังไม่รีบรับงานไหน","effects":[{"stat":"happy","d":-1}]}]}
+      {"id":"edu-decline","label":"ยังไม่สมัคร ขอดูงานอื่นก่อน","text":"คุณยังไม่รีบรับงานไหน","effects":[{"stat":"happy","d":-1}]}]}
   );
 })();

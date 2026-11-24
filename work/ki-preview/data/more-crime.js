@@ -6,11 +6,11 @@ Object.assign(KI.data.conditions, {
 });
 KI.data.decisions.unshift(...[
   {"id":"crime-release","title":"พ้นโทษออกจากเรือนจำ","body":"วันที่รอคอยมาถึง ประตูเรือนจำเปิดออก โลกข้างนอกเปลี่ยนไปจากวันที่เข้ามา","when":{"role":"prisoner","noCond":["crime-jailed"]},"cooldown":1,"major":true,"choices":[
-    {"id":"home","label":"กลับบ้านไปหาครอบครัว","text":"แม่ยืนรออยู่หน้าประตูบ้าน น้ำตาไหลไม่หยุด","when":{"flag":{"parentsAlive":true}},"effects":[{"role":"jobless"},{"move":"home"},{"flag":"crime-inJail","v":false},{"flag":"crime-record"},{"stat":"happy","d":6},{"stat":"bond","d":4},{"pin":"พ้นโทษกลับบ้าน"}]},
+    {"id":"home","label":"กลับบ้านไปหาครอบครัว","text":"คนที่บ้านยืนรออยู่หน้าประตู น้ำตาไหลไม่หยุด","when":{"flag":{"parentsAlive":true}},"effects":[{"role":"jobless"},{"move":"home"},{"flag":"crime-inJail","v":false},{"flag":"crime-record"},{"stat":"happy","d":6},{"stat":"bond","d":4},{"pin":"พ้นโทษกลับบ้าน"}]},
     {"id":"new","label":"ไปเริ่มต้นใหม่ในที่ที่ไม่มีใครรู้จัก","text":"ย้ายเข้ากรุงเทพฯ หางานโดยไม่บอกใครเรื่องอดีต","effects":[{"role":"jobless"},{"move":{"kind":"bangkok"}},{"flag":"crime-inJail","v":false},{"flag":"crime-record"},{"stat":"happy","d":3},{"trait":"grit","d":2},{"pin":"พ้นโทษ เริ่มต้นใหม่ที่กรุงเทพฯ"}]},
     {"id":"ordain","label":"บวชล้างใจก่อนกลับบ้าน","text":"ขอบวชที่วัดใกล้บ้าน ตั้งใจเริ่มชีวิตใหม่","when":{"sex":"m"},"effects":[{"role":"monk"},{"move":"home"},{"flag":"crime-inJail","v":false},{"flag":"crime-record"},{"inc":"good"},{"stat":"happy","d":4},{"pin":"พ้นโทษแล้วบวช"}]},
     {"id":"old","label":"กลับไปหาเพื่อนกลุ่มเดิม","text":"เพื่อนเก่ามารับถึงหน้าเรือนจำ พร้อมชวนทำงานแบบเดิม","effects":[{"role":"jobless"},{"move":"home"},{"flag":"crime-inJail","v":false},{"flag":"crime-record"},{"inc":"crime"},{"stat":"happy","d":2},{"pin":"พ้นโทษ กลับไปหาเพื่อนกลุ่มเดิม"}]}]},
-  {"id":"crime-arrest-minor","title":"ตำรวจมาถึงบ้าน","body":"ตำรวจถือหมายจับมาถึงบ้าน ข้อหาลักทรัพย์ เพื่อนบ้านยืนมุงดูกันเต็ม","when":{"flag":{"crime-wanted":"minor"},"noFlag":["crime-inJail"]},"cooldown":1,"major":true,"heavy":true,"choices":[
+  {"id":"crime-arrest-minor","title":"ตำรวจมาถึงบ้าน","body":"ตำรวจถือหมายจับมาถึงบ้านตามคดีที่ถูกแจ้งความไว้ เพื่อนบ้านยืนมุงดูกันเต็ม","when":{"flag":{"crime-wanted":"minor"},"noFlag":["crime-inJail"]},"cooldown":1,"major":true,"heavy":true,"choices":[
     {"id":"confess","label":"รับสารภาพ ขอความเมตตาจากศาล","text":"รับสารภาพตั้งแต่ชั้นสอบสวน","effects":[{"flag":"crime-wanted","v":false},{"flag":"crime-record"}],"roll":[
       {"p":0.5,"text":"ศาลให้รอลงอาญา คุมประพฤติ แต่มีประวัติติดตัว","effects":[{"money":-10,"unit":"wageDay"},{"stat":"happy","d":-5},{"stat":"bond","d":-3},{"pin":"ถูกศาลตัดสินให้รอลงอาญา"}]},
       {"p":0.5,"text":"ศาลลดโทษกึ่งหนึ่ง เหลือจำคุกราวหนึ่งปี","effects":[{"role":"prisoner"},{"flag":"crime-inJail"},{"cond":"crime-jailed","turns":3},{"stat":"happy","d":-10},{"pin":"ติดคุกราวหนึ่งปี"}]}]},
@@ -19,7 +19,7 @@ KI.data.decisions.unshift(...[
       {"p":0.35,"text":"ศาลให้รอลงอาญาและปรับ","effects":[{"flag":"crime-record"},{"money":-15,"unit":"wageDay"},{"stat":"happy","d":-4}]},
       {"p":0.3,"text":"สู้แล้วแพ้ ศาลไม่ลดโทษ จำคุกสองปี","effects":[{"flag":"crime-record"},{"role":"prisoner"},{"flag":"crime-inJail"},{"cond":"crime-jailed","turns":6},{"stat":"happy","d":-12},{"pin":"ติดคุกสองปี"}]}]},
     {"id":"flee","label":"หนีออกทางหลังบ้าน","text":"วิ่งหนีเข้าทุ่งไปอย่างไม่คิดชีวิต","effects":[{"inc":"crime"}],"roll":[
-      {"p":0.3,"text":"หนีรอดไปหลบอยู่บ้านญาติต่างจังหวัด แต่ต้องคอยหลบตลอด","effects":[{"flag":"crime-wanted","v":false},{"flag":"crime-fugitive"},{"stat":"happy","d":-6},{"stat":"bond","d":-5},{"move":{"kind":"bangkok"}}]},
+      {"p":0.3,"text":"หนีรอดไปหลบอยู่ในกรุงเทพฯ แต่ต้องคอยหลบตลอด","effects":[{"flag":"crime-wanted","v":false},{"flag":"crime-fugitive"},{"stat":"happy","d":-6},{"stat":"bond","d":-5},{"move":{"kind":"bangkok"}}]},
       {"p":0.7,"text":"ถูกตามจับได้ในอีกไม่กี่วัน โทษหนักขึ้นเพราะหลบหนี","effects":[{"flag":"crime-wanted","v":false},{"flag":"crime-record"},{"role":"prisoner"},{"flag":"crime-inJail"},{"cond":"crime-jailed","turns":9},{"stat":"happy","d":-12},{"pin":"หนีแล้วถูกจับ ติดคุกสามปี"}]}]}]},
   {"id":"crime-arrest-major","title":"ถูกจับคดีใหญ่","body":"เจ้าหน้าที่หลายนายเข้าจับกุมพร้อมหลักฐาน คดีนี้โทษหนัก ข่าวไปทั่วหมู่บ้าน","when":{"flag":{"crime-wanted":"major"},"noFlag":["crime-inJail"]},"cooldown":1,"major":true,"heavy":true,"choices":[
     {"id":"confess","label":"รับสารภาพ","text":"รับสารภาพเพื่อให้ได้ลดโทษ","effects":[{"flag":"crime-wanted","v":false},{"flag":"crime-record"},{"role":"prisoner"},{"flag":"crime-inJail"},{"cond":"crime-jailed","turns":12},{"stat":"happy","d":-15},{"stat":"bond","d":-5},{"pin":"ติดคุกสี่ปี"}]},
@@ -32,8 +32,8 @@ KI.data.decisions.unshift(...[
       {"p":0.9,"text":"แพ้คดี ไม่ได้ลดโทษ จำคุกแปดปี","effects":[{"role":"prisoner"},{"flag":"crime-inJail"},{"cond":"crime-jailed","turns":24},{"stat":"happy","d":-20},{"pin":"ติดคุกแปดปี"}]}]}]}
 ]);
 KI.data.personalEvents.push(...[
-  {"id":"crime-teen-steal","title":"เพื่อนชวนขโมยของในร้าน","body":"เพื่อนในกลุ่มชวนแอบหยิบของในร้านสะดวกซื้อ บอกว่าไม่มีใครเห็นหรอก","w":8,"when":{"age":[11,17],"counter":{"naughty":[2,99]},"noFlag":["crime-inJail"]},"cooldown":12,"choices":[
-    {"id":"steal","label":"หยิบใส่กระเป๋าแล้วเดินออก","text":"ใจเต้นแรงตอนเดินผ่านแคชเชียร์","effects":[{"inc":"crime"},{"inc":"naughty"}],"roll":[
+  {"id":"crime-teen-steal","title":"เพื่อนชวนขโมยของในร้าน","body":"เพื่อนในกลุ่มชวนแอบหยิบของในร้านค้าหน้าโรงเรียน บอกว่าไม่มีใครเห็นหรอก","w":8,"when":{"age":[11,17],"counter":{"naughty":[2,99]},"noFlag":["crime-inJail"]},"cooldown":12,"choices":[
+    {"id":"steal","label":"หยิบใส่กระเป๋าแล้วเดินออก","text":"ใจเต้นแรงตอนเดินผ่านหน้าเจ้าของร้าน","effects":[{"inc":"crime"},{"inc":"naughty"}],"roll":[
       {"p":0.6,"text":"รอดไปได้ รู้สึกตื่นเต้นแปลกๆ","effects":[{"money":2,"unit":"wageDay"},{"stat":"happy","d":2}]},
       {"p":0.4,"text":"เจ้าของร้านจับได้ โทรเรียกพ่อแม่มารับ ถูกตีและดุยกใหญ่","effects":[{"stat":"bond","d":-5},{"stat":"happy","d":-5},{"cond":"crime-guilt","turns":2}]}]},
     {"id":"no","label":"ปฏิเสธ แล้วเดินแยกออกมา","text":"เพื่อนหาว่าขี้ขลาด แต่ก็สบายใจกว่า","effects":[{"inc":"good"},{"stat":"bond","d":-1}]},
@@ -41,7 +41,7 @@ KI.data.personalEvents.push(...[
   {"id":"crime-moto","title":"โอกาสขโมยรถ","body":"เห็นรถมอเตอร์ไซค์จอดเสียบกุญแจทิ้งไว้หน้าร้าน รุ่นพี่บอกว่ารู้แหล่งรับซื้อ","w":6,"when":{"age":[16,45],"year":[1985,9999],"any":[{"counter":{"crime":[1,99]}},{"counter":{"vice":[3,99]}}],"noFlag":["crime-inJail","crime-wanted"]},"cooldown":12,"heavy":true,"choices":[
     {"id":"take","label":"ขี่ออกไปขาย","text":"ขี่รถออกไปอย่างรวดเร็ว","effects":[{"inc":"crime"},{"money":25,"unit":"wageDay"}],"roll":[
       {"p":0.55,"text":"ขายได้เงินก้อน ไม่มีใครตามมา","effects":[{"stat":"happy","d":2},{"cond":"crime-guilt","turns":2,"by":"attach"}]},
-      {"p":0.45,"text":"กล้องวงจรปิดจับภาพไว้ได้ ตำรวจกำลังตามหา","effects":[{"flag":"crime-wanted","v":"minor"}]}]},
+      {"p":0.45,"text":"มีคนเห็นและจำหน้าได้ ตำรวจกำลังตามหา","effects":[{"flag":"crime-wanted","v":"minor"}]}]},
     {"id":"tell","label":"บอกเจ้าของให้เก็บกุญแจ","text":"เจ้าของขอบคุณ ยื่นน้ำให้หนึ่งขวด","effects":[{"inc":"good"},{"inc":"crime","d":-1},{"stat":"happy","d":2}]},
     {"id":"walk","label":"เดินผ่านไปเฉยๆ","text":"ไม่อยากยุ่งกับเรื่องนี้","effects":[]}]},
   {"id":"crime-drug","title":"มีคนชวนเดินยา","body":"คนรู้จักเสนอเงินก้อนให้ช่วยขนยาบ้าข้ามจังหวัดแค่รอบเดียว บอกว่าปลอดภัยแน่นอน","w":6,"when":{"age":[17,50],"year":[1995,9999],"any":[{"counter":{"vice":[2,99]}},{"counter":{"crime":[1,99]}},{"flag":{"status":"poor"}}],"noFlag":["crime-inJail","crime-wanted"],"chance":0.5},"cooldown":15,"heavy":true,"choices":[
@@ -90,7 +90,7 @@ KI.data.personalEvents.push(...[
       {"p":0.6,"text":"ไม่มีจดหมายตอบกลับ ไม่กี่เดือนต่อมาก็ได้ใบหย่า","effects":[{"flag":"partner","v":false},{"flag":"married","v":false},{"cond":"heartbroken","turns":4,"by":"attach"},{"stat":"happy","d":-12,"by":"attach"}]}]}]},
   {"id":"crime-jail-pardon","title":"พระราชทานอภัยโทษ","body":"มีประกาศพระราชทานอภัยโทษ ผู้ต้องขังที่ประพฤติดีได้ลดโทษ","w":4,"when":{"role":"prisoner","cond":["crime-jailed"],"chance":0.5},"cooldown":12,"effects":[{"stat":"happy","d":6}],"choices":[
     {"id":"good","label":"ยื่นเรื่องขอลดโทษ","text":"ผู้คุมรับรองความประพฤติ","when":{"counter":{"good":[1,99]}},"effects":[{"uncond":"crime-jailed"},{"pin":"ได้รับพระราชทานอภัยโทษ"}]},
-    {"id":"wait","label":"ตั้งใจประพฤติตัวดีต่อไป","text":"ได้ลดโทษลงบางส่วน","effects":[{"inc":"good"}]}]},
+    {"id":"wait","label":"ตั้งใจประพฤติตัวดีต่อไป","text":"ยังไม่ยื่นเรื่องรอบนี้ แต่ตั้งใจสะสมความประพฤติไว้","effects":[{"inc":"good"}]}]},
   {"id":"crime-jail-sick","title":"ป่วยในเรือนจำ","body":"ห้องขังแออัด เริ่มมีอาการไอเรื้อรังและไข้","w":5,"when":{"role":"prisoner"},"cooldown":9,"choices":[
     {"id":"clinic","label":"ขอไปสถานพยาบาลเรือนจำ","text":"ได้ยาตามอาการ","effects":[{"stat":"health","d":-3}]},
     {"id":"endure","label":"อดทนไว้","text":"ไม่อยากเป็นภาระใคร","effects":[{"stat":"health","d":-8},{"die":"prison-illness","p":0.04}]}]},

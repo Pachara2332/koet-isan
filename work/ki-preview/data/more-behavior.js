@@ -113,7 +113,7 @@ KI.data.personalEvents.push(...[
     {"id":"accept","label":"ยอมรับ อ่านหนังสือแทน","text":"สองอาทิตย์แรกหงุดหงิด ต่อมานอนหลับดีขึ้น","effects":[{"inc":"naughty","d":-1},{"stat":"know","d":2},{"stat":"health","d":1}]},
     {"id":"rage","label":"ปิดประตูห้องใส่","text":"ทั้งบ้านตึงไปหลายวัน","effects":[{"inc":"naughty"},{"stat":"bond","d":-4}]},
     {"id":"borrow","label":"ยืมเครื่องเพื่อนเล่นแทน","text":"เล่นต่อได้ แต่ต้องคอยระวังตลอด","effects":[{"inc":"naughty"},{"stat":"happy","d":1},{"stat":"know","d":-2}]}]},
-  {"id":"bhv-teen-school","title":"ผู้ปกครองถูกเรียกพบ","body":"หนีเรียนกับเพื่อนไปนั่งร้านเกมจนชื่อติดบัญชีฝ่ายปกครอง โรงเรียนเรียกผู้ปกครองมาพบ","when":{"age":[13,18],"counter":{"naughty":[3,99]}},"w":14,"cooldown":12,
+  {"id":"bhv-teen-school","title":"ผู้ปกครองถูกเรียกพบ","body":"หนีเรียนกับเพื่อนไปเที่ยวเล่นหลายวันจนชื่อติดบัญชีฝ่ายปกครอง โรงเรียนเรียกผู้ปกครองมาพบ","when":{"age":[13,18],"counter":{"naughty":[3,99]}},"w":14,"cooldown":12,
    "choices":[
     {"id":"sign","label":"เซ็นสัญญาปรับพฤติกรรม","text":"ต้องรายงานตัวกับครูทุกเช้าหนึ่งเทอม","effects":[{"inc":"naughty","d":-2},{"stat":"know","d":2},{"stat":"happy","d":-2}]},
     {"id":"blame","label":"บอกว่าเพื่อนชวน","text":"ผู้ใหญ่ไม่ชอบคำตอบนี้","effects":[{"stat":"bond","d":-3}]},
@@ -187,7 +187,7 @@ KI.data.personalEvents.push(...[
     {"id":"confess","label":"บอกครอบครัวตามจริง ขอช่วยวางแผนใช้หนี้","text":"เหนื่อยใจทั้งบ้าน แต่มีแผนผ่อนชัดเจน","effects":[{"inc":"vice","d":-3},{"inc":"responsible"},{"money":-15,"unit":"wageDay"},{"stat":"bond","d":-2}]},
     {"id":"chase","label":"เล่นต่อหวังถอนทุน","text":"หนี้งอกขึ้นจนนอนไม่หลับ","effects":[{"inc":"vice","d":2},{"cond":"indebted","turns":8},{"stat":"happy","d":-5}]},
     {"id":"shark","label":"กู้นอกระบบมาจ่ายเงียบๆ","text":"หนี้ย้ายจากที่หนึ่งไปอีกที่หนึ่ง ดอกหนักกว่าเดิม","effects":[{"cond":"indebted","turns":6},{"stat":"happy","d":-3}]}]},
-  {"id":"bhv-kids-copy","title":"ลูกทำตาม","body":"เห็นลูกเล่นตั้งวงเหล้าด้วยขวดน้ำกับเพื่อน เลียนแบบท่าทางที่เห็นในบ้านทุกเย็น","when":{"age":[26,70],"flag":{"child":true},"counter":{"vice":[3,99]}},"w":14,
+  {"id":"bhv-kids-copy","title":"ลูกทำตาม","body":"เห็นลูกเล่นตั้งวงเหล้าด้วยขวดน้ำกับเพื่อน เลียนแบบท่าทางที่เห็นในบ้านทุกเย็น","when":{"age":[26,70],"flag":{"child":true},"childAge":[4,14],"counter":{"vice":[3,99]}},"w":14,
    "choices":[
     {"id":"stop","label":"ตั้งใจเลิกเพื่อลูก","text":"เย็นต่อมาพาลูกไปเตะบอลแทนวงเหล้า","effects":[{"inc":"vice","d":-3},{"inc":"responsible"},{"stat":"bond","d":4},{"stat":"happy","d":-1}]},
     {"id":"scold","label":"ดุลูกว่าห้ามทำแบบนี้","text":"ลูกงงว่าทำไมผู้ใหญ่ทำได้","effects":[{"stat":"bond","d":-3}]},

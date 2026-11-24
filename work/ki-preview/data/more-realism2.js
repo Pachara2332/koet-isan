@@ -156,7 +156,7 @@ KI.data.personalEvents.push(...[
   {"id":"real-carry-water","title":"หาบน้ำเข้าบ้าน","body":"น้ำในโอ่งใกล้หมด ต้องไปตักน้ำจากบ่อกลางหมู่บ้านก่อนค่ำ","when":{"year":[1970,1988],"age":[7,14],"loc":"isan","setting":"rural"},"w":8,"cooldown":12,"choices":[
     {"id":"carry","label":"หาบน้ำจนเต็มโอ่ง","text":"บ่าระบมแต่แม่ยิ้มชม","effects":[{"stat":"health","d":2},{"stat":"bond","d":2},{"stat":"happy","d":-1},{"inc":"good"}]},
     {"id":"friends","label":"ชวนเพื่อนไปด้วย เล่นน้ำกันก่อน","text":"สนุกจนกลับบ้านมืด น้ำได้ครึ่งโอ่ง","effects":[{"stat":"happy","d":3},{"stat":"bond","d":-1}]},
-    {"id":"rain","label":"ช่วยพ่อทำรางรองน้ำฝนแทน","text":"ใช้เวลาหลายวัน แต่หน้าฝนไม่ต้องเดินไกล","effects":[{"stat":"know","d":2},{"inc":"skill-craft"}]}]},
+    {"id":"rain","label":"หาบพอใช้ แล้วช่วยทำรางรองน้ำฝน","text":"ใช้เวลาหลายวันกว่าจะเสร็จ แต่หน้าฝนไม่ต้องเดินไปตักไกล","effects":[{"stat":"know","d":2},{"inc":"skill-craft"}]}]},
   {"id":"real-lamp-homework","title":"การบ้านใต้แสงตะเกียง","body":"บ้านยังไม่มีไฟฟ้า ตกค่ำต้องจุดตะเกียงน้ำมันก๊าดทำการบ้าน","when":{"year":[1970,1988],"age":[7,14],"loc":"isan","setting":"rural","edu":{"in":["school"]}},"w":8,"cooldown":12,"choices":[
     {"id":"read","label":"นั่งทำจนเสร็จแม้ตาจะล้า","text":"ครูชมว่าทำครบ แต่ตื่นเช้าไม่ค่อยไหว","effects":[{"stat":"know","d":3},{"stat":"health","d":-1}]},
     {"id":"early","label":"เข้านอนเร็ว ตื่นเช้ามาทำ","text":"ประหยัดน้ำมันก๊าด แม่พอใจ","effects":[{"stat":"know","d":1},{"stat":"bond","d":1}]},
@@ -170,7 +170,7 @@ KI.data.personalEvents.push(...[
     {"id":"cook","label":"อยู่ครัวทำกับข้าวเลี้ยงคนงาน","text":"ลาบกับแกงหน่อไม้หมดหม้อ ทุกคนชมฝีมือ","effects":[{"stat":"bond","d":2},{"inc":"skill-cooking"},{"money":-1,"unit":"wageDay"}]},
     {"id":"slack","label":"แอบไปนอนใต้ต้นไม้","text":"ได้พัก แต่มีคนเห็นและเล่าต่อกันไป","effects":[{"stat":"happy","d":2},{"stat":"bond","d":-3},{"inc":"naughty"}]}]},
   {"id":"real-rain-forage","title":"หาปลาจับกบหน้าฝน","body":"ฝนแรกลงหนัก น้ำเต็มทุ่ง กบเขียดร้องระงม แมงเม่าบินออกจากรัง","when":{"year":[1970,2026],"age":[7,16],"season":1,"loc":"isan","setting":"rural"},"w":8,"cooldown":9,"choices":[
-    {"id":"frog","label":"ถือไฟฉายออกไปจับกบกับพี่","text":"ได้กบมาครึ่งถุง แม่เอาไปอ่อมกินทั้งบ้าน","effects":[{"stat":"happy","d":3},{"stat":"bond","d":2},{"money":1,"unit":"wageDay"}]},
+    {"id":"frog","label":"ถือไฟฉายออกไปจับกบตอนกลางคืน","text":"ได้กบมาครึ่งถุง แม่เอาไปอ่อมกินทั้งบ้าน","effects":[{"stat":"happy","d":3},{"stat":"bond","d":2},{"money":1,"unit":"wageDay"}]},
     {"id":"fish","label":"วางลอบดักปลาในนา","text":"ตื่นเช้ามากู้ลอบ ได้ปลาพอทำปลาแดก","effects":[{"stat":"know","d":1},{"stat":"bond","d":2},{"inc":"skill-farming"}]},
     {"id":"stay","label":"อยู่บ้านไม่อยากเปียก","text":"ไม่เหนื่อย แต่พลาดความสนุกที่เพื่อนเล่าให้ฟังทั้งอาทิตย์","effects":[{"stat":"happy","d":-1},{"stat":"health","d":1}]}]},
   {"id":"real-ant-eggs","title":"แหย่ไข่มดแดง","body":"หน้าแล้งต้นไม้ผลัดใบ รังมดแดงเต็มกิ่ง ผักหวานป่าก็เริ่มแตกยอด","when":{"year":[1970,2026],"age":[8,65],"season":0,"loc":"isan","setting":"rural"},"w":7,"cooldown":12,"choices":[
@@ -179,8 +179,8 @@ KI.data.personalEvents.push(...[
     {"id":"leave","label":"เหลือรังไว้ให้มดได้ขยายพันธุ์","text":"ปีหน้ารังยังอยู่ ผู้เฒ่าว่าคิดได้ดี","effects":[{"stat":"know","d":1},{"inc":"good"}]}]},
   {"id":"real-outdoor-film","title":"หนังกลางแปลงที่วัด","body":"งานบุญที่วัดมีหนังกลางแปลงฉายทั้งคืน คนจากหลายหมู่บ้านถือเสื่อมาจองที่","when":{"year":[1970,1995],"age":[6,30],"loc":"isan"},"w":7,"cooldown":12,"choices":[
     {"id":"watch","label":"ดูจนเรื่องสุดท้ายจบตอนเช้ามืด","text":"สนุกแต่ง่วงทั้งวันรุ่งขึ้น","effects":[{"stat":"happy","d":4},{"stat":"health","d":-1}]},
-    {"id":"sell","label":"ช่วยแม่ขายขนมหน้าจอ","text":"ดูหนังได้ครึ่งเรื่อง แต่ขายดีมาก","effects":[{"money":2,"unit":"wageDay"},{"stat":"bond","d":2}]},
-    {"id":"home","label":"กลับบ้านพร้อมยายตั้งแต่หัวค่ำ","text":"พลาดฉากสำคัญที่เพื่อนเล่ากันทั้งอาทิตย์","effects":[{"stat":"bond","d":1},{"stat":"happy","d":-1}]}]},
+    {"id":"sell","label":"ช่วยขายขนมหน้าจอ","text":"ดูหนังได้ครึ่งเรื่อง แต่ขายดีมาก","effects":[{"money":2,"unit":"wageDay"},{"stat":"bond","d":2}]},
+    {"id":"home","label":"กลับบ้านตั้งแต่หัวค่ำ","text":"นอนเต็มอิ่ม แต่พลาดฉากสำคัญที่คนอื่นเล่ากันทั้งอาทิตย์","effects":[{"stat":"bond","d":1},{"stat":"happy","d":-1}]}]},
   {"id":"real-dad-dry-season","title":"พ่อไปรับจ้างหน้าแล้ง","body":"เกี่ยวข้าวเสร็จ พ่อเก็บกระเป๋าไปรับจ้างที่กรุงเทพฯ บอกว่าจะกลับมาก่อนฝนแรก","when":{"year":[1970,1992],"age":[6,13],"season":0,"loc":"isan","setting":"rural","flag":{"fatherAlive":true}},"w":7,"cooldown":12,"choices":[
     {"id":"help","label":"รับปากจะช่วยแม่ดูแลบ้าน","text":"งานบ้านหนักขึ้น แต่โตขึ้นอีกนิด","effects":[{"trait":"grit","d":2},{"stat":"happy","d":-1},{"inc":"good"}]},
     {"id":"cry","label":"ร้องไห้ไม่อยากให้พ่อไป","text":"พ่อกอดแน่น สัญญาว่าจะซื้อของฝากกลับมา","effects":[{"stat":"happy","d":-3,"by":"attach"},{"stat":"bond","d":2}]},
@@ -189,10 +189,10 @@ KI.data.personalEvents.push(...[
     {"id":"clinic","label":"พาไปสถานีอนามัย","text":"เดินทางไกลเสียค่ารถ แต่ได้ยาลดไข้ อาการดีขึ้นเร็ว","effects":[{"money":-1,"unit":"wageDay"},{"stat":"know","d":2},{"stat":"bond","d":1}]},
     {"id":"healer","label":"ไปหาหมอน้ำมนต์ในหมู่บ้าน","text":"ญาติสบายใจ แต่ไข้ลากยาวกว่าจะหาย","effects":[{"stat":"bond","d":2},{"stat":"health","d":-2}]},
     {"id":"both","label":"ทำทั้งสองอย่าง","text":"ผูกแขนรับขวัญแล้วพาไปรับยา ทุกฝ่ายพอใจ","effects":[{"money":-1,"unit":"wageDay"},{"stat":"bond","d":3}]}]},
-  {"id":"real-weaving","title":"ทอผ้าใต้ถุนเรือน","body":"ว่างจากนา ยายตั้งกี่ทอผ้าใต้ถุนเรือน ชวนให้มาหัดทอ","when":{"year":[1970,2005],"age":[9,60],"loc":"isan","setting":"rural","season":0},"w":6,"cooldown":12,"choices":[
-    {"id":"learn","label":"นั่งหัดทอทั้งบ่าย","text":"ผ้าผืนแรกลายเบี้ยว แต่ยายเก็บไว้อย่างดี","effects":[{"inc":"skill-craft"},{"stat":"bond","d":3},{"stat":"happy","d":-1}]},
-    {"id":"help","label":"ช่วยปั่นด้ายอยู่ข้างๆ","text":"ได้ฟังเรื่องเก่าๆ ของยายไปด้วย","effects":[{"stat":"bond","d":2},{"stat":"know","d":1}]},
-    {"id":"play","label":"ขอไปเล่นกับเพื่อน","text":"สนุกกับเพื่อน ยายบอกไว้ว่างค่อยมาหัด","effects":[{"stat":"happy","d":2}]}]},
+  {"id":"real-weaving","title":"ทอผ้าใต้ถุนเรือน","body":"ว่างจากนา แม่เฒ่าข้างบ้านตั้งกี่ทอผ้าใต้ถุนเรือน ชวนให้มาหัดทอ","when":{"year":[1970,2005],"age":[9,60],"loc":"isan","setting":"rural","season":0},"w":6,"cooldown":12,"choices":[
+    {"id":"learn","label":"นั่งหัดทอทั้งบ่าย","text":"ผ้าผืนแรกลายเบี้ยว แต่แม่เฒ่าเก็บไว้อย่างดี","effects":[{"inc":"skill-craft"},{"stat":"bond","d":3},{"stat":"happy","d":-1}]},
+    {"id":"help","label":"ช่วยปั่นด้ายอยู่ข้างๆ","text":"ได้ฟังเรื่องเก่าๆ ของแม่เฒ่าไปด้วย","effects":[{"stat":"bond","d":2},{"stat":"know","d":1}]},
+    {"id":"play","label":"ขอตัวไปทำอย่างอื่นก่อน","text":"ได้ทำเรื่องของตัวเอง แม่เฒ่าบอกว่างเมื่อไหร่ค่อยมาหัด","effects":[{"stat":"happy","d":2}]}]},
   {"id":"real-cart-market","title":"นั่งเกวียนไปตลาดนัด","body":"พ่อเทียมวัวเข้าเกวียน ขนข้าวเปลือกกับผักไปขายที่ตลาดนัดอำเภอ","when":{"year":[1970,1985],"age":[6,14],"loc":"isan","setting":"rural"},"w":6,"cooldown":12,"choices":[
     {"id":"go","label":"ขอตามไปด้วย","text":"ทางขรุขระทั้งวัน แต่ได้กินขนมจากตลาด","effects":[{"stat":"happy","d":3},{"stat":"know","d":1},{"stat":"bond","d":1}]},
     {"id":"sell","label":"ช่วยพ่อต่อราคากับพ่อค้า","text":"ขายได้ราคาดีกว่าที่คิด พ่อหัวเราะชอบใจ","effects":[{"money":1,"unit":"wageDay"},{"trait":"social","d":1}]},
@@ -202,14 +202,14 @@ KI.data.personalEvents.push(...[
     {"id":"borrow","label":"ยืมข้าวเถ้าแก่ ใช้คืนตอนเกี่ยว","text":"อิ่มท้องตอนนี้ แต่หน้าเกี่ยวต้องคืนเกินที่ยืม","effects":[{"money":-2,"unit":"wageDay"},{"stat":"happy","d":-1}]},
     {"id":"forage","label":"หาของป่าหาปลามาเสริม","text":"กินข้าวน้อยลงแต่มีกับข้าวจากทุ่ง","effects":[{"stat":"health","d":-1},{"trait":"grit","d":2}]}]},
   {"id":"real-electricity","title":"ไฟฟ้าเข้าหมู่บ้าน","body":"เจ้าหน้าที่มาปักเสาไฟ คืนแรกที่หลอดไฟสว่างทั้งหมู่บ้านออกมายืนดูกัน","when":{"year":[1978,1992],"age":[4,70],"loc":"isan","setting":"rural","chance":0.5},"w":10,"cooldown":"once","choices":[
-    {"id":"wire","label":"ให้พ่อเดินสายไฟเข้าบ้านทันที","text":"เสียค่าเดินสายก้อนหนึ่ง แต่บ้านสว่างทุกคืน","effects":[{"money":-4,"unit":"wageDay"},{"stat":"happy","d":4},{"stat":"know","d":1},{"pin":"บ้านมีไฟฟ้าครั้งแรก"}]},
+    {"id":"wire","label":"เดินสายไฟเข้าบ้านทันที","text":"เสียค่าเดินสายก้อนหนึ่ง แต่บ้านสว่างทุกคืน","effects":[{"money":-4,"unit":"wageDay"},{"stat":"happy","d":4},{"stat":"know","d":1},{"pin":"บ้านมีไฟฟ้าครั้งแรก"}]},
     {"id":"wait","label":"รอเก็บเงินอีกสักพัก","text":"ยังจุดตะเกียงต่อไป มองบ้านข้างๆ สว่างอยู่หลายเดือน","effects":[{"stat":"happy","d":-1},{"money":1,"unit":"wageDay"}]},
     {"id":"share","label":"ต่อพ่วงจากบ้านญาติไปก่อน","text":"ได้หลอดไฟดวงเดียว ต้องแบ่งค่าไฟกันวุ่นวาย","effects":[{"stat":"happy","d":2},{"stat":"bond","d":-1}]}]},
   {"id":"real-village-tv","title":"ทีวีเครื่องแรกของหมู่บ้าน","body":"บ้านผู้ใหญ่บ้านซื้อทีวีขาวดำ ทุกค่ำเด็กๆ ไปนั่งดูละครจนเต็มลานบ้าน","when":{"year":[1978,1992],"age":[6,16],"loc":"isan","setting":"rural"},"w":7,"cooldown":12,"choices":[
     {"id":"watch","label":"ไปนั่งดูทุกคืน","text":"ดูจนจำบทละครได้ แต่การบ้านไม่ค่อยเสร็จ","effects":[{"stat":"happy","d":4},{"stat":"know","d":-1}]},
     {"id":"news","label":"ไปดูแค่ข่าวกับสารคดี","text":"รู้จักโลกกว้างขึ้น","effects":[{"stat":"know","d":2},{"stat":"happy","d":1}]},
     {"id":"help","label":"ช่วยเจ้าของบ้านกวาดลานก่อนดู","text":"ได้นั่งแถวหน้า ผู้ใหญ่บ้านเอ็นดู","effects":[{"stat":"bond","d":2},{"inc":"good"}]}]},
-  {"id":"real-walking-tractor","title":"รถไถเดินตามหรือควาย","body":"เพื่อนบ้านหลายคนขายควายไปซื้อรถไถเดินตาม พ่อถามความเห็นคนในบ้าน","when":{"year":[1982,1998],"age":[10,65],"loc":"isan","setting":"rural"},"w":6,"cooldown":"once","choices":[
+  {"id":"real-walking-tractor","title":"รถไถเดินตามหรือควาย","body":"เพื่อนบ้านหลายคนขายควายไปซื้อรถไถเดินตาม ที่บ้านเริ่มคุยกันว่าจะเอาอย่างไร","when":{"year":[1982,1998],"age":[10,65],"loc":"isan","setting":"rural"},"w":6,"cooldown":"once","choices":[
     {"id":"buy","label":"ขายควายแล้วผ่อนรถไถ","text":"ไถนาเร็วขึ้นมาก แต่มีค่าน้ำมันกับค่างวด","effects":[{"money":-6,"unit":"wageDay"},{"stat":"health","d":1},{"inc":"skill-mechanic"},{"pin":"บ้านมีรถไถเดินตาม"}]},
     {"id":"keep","label":"เลี้ยงควายต่อ","text":"ไม่มีหนี้ แต่ไถนาช้ากว่าบ้านอื่น","effects":[{"stat":"bond","d":1},{"stat":"health","d":-1}]},
     {"id":"hire","label":"จ้างรถไถเพื่อนบ้านเป็นครั้งๆ","text":"เสียค่าจ้างทุกปี แต่ไม่ต้องลงทุนก้อนใหญ่","effects":[{"money":-2,"unit":"wageDay"}]}]},
@@ -254,7 +254,7 @@ KI.data.personalEvents.push(...[
     {"id":"later","label":"ไว้ปีหน้าค่อยว่ากัน","text":"งานยุ่งเกินไปสำหรับตอนนี้","effects":[{"stat":"happy","d":1}]}]},
   {"id":"real-first-mobile","title":"มือถือเครื่องแรก","body":"ร้านในอำเภอขายมือถือเครื่องเล็กกับบัตรเติมเงิน ใครๆ ก็เริ่มมีเบอร์ของตัวเอง","when":{"year":[2002,2010],"age":[14,60]},"w":7,"cooldown":"once","choices":[
     {"id":"buy","label":"ซื้อเครื่องใหม่กับบัตรเติมเงิน","text":"ติดต่อที่บ้านได้ทุกเมื่อ แต่ค่าโทรหมดไวกว่าที่คิด","effects":[{"money":-4,"unit":"wageDay"},{"stat":"bond","d":3},{"stat":"happy","d":3}]},
-    {"id":"used","label":"รับเครื่องเก่าต่อจากพี่","text":"ไม่เสียเงินมาก ปุ่มกดติดบ้างแต่ใช้ได้","effects":[{"money":-1,"unit":"wageDay"},{"stat":"bond","d":2}]},
+    {"id":"used","label":"รับเครื่องเก่าต่อจากญาติ","text":"ไม่เสียเงินมาก ปุ่มกดติดบ้างแต่ใช้ได้","effects":[{"money":-1,"unit":"wageDay"},{"stat":"bond","d":2}]},
     {"id":"no","label":"ยังไม่ซื้อ","text":"ประหยัด แต่ต้องยืมเครื่องเพื่อนบ่อย","effects":[{"money":1,"unit":"wageDay"},{"trait":"social","d":-1}]}]},
   {"id":"real-seven-eleven","title":"ร้านสะดวกซื้อสาขาแรกในอำเภอ","body":"ร้านสะดวกซื้อเปิดสาขาแรกในตัวอำเภอ เปิดทั้งวันทั้งคืน แอร์เย็นฉ่ำ","when":{"year":[2002,2015],"age":[8,60],"loc":"isan"},"w":5,"cooldown":"once","choices":[
     {"id":"visit","label":"ไปเดินดูตั้งแต่วันแรก","text":"ตื่นตากับของแปลกตา ได้ขนมกลับมาหนึ่งถุง","effects":[{"stat":"happy","d":3},{"money":-1,"unit":"wageDay"}]},
@@ -276,7 +276,7 @@ KI.data.personalEvents.push(...[
     {"id":"active","label":"ส่งรูปทักทายทุกเช้า","text":"ญาติที่อยู่ไกลรู้สึกใกล้ขึ้น","effects":[{"stat":"bond","d":3},{"stat":"happy","d":1}]},
     {"id":"mute","label":"ปิดเสียงกลุ่ม อ่านเป็นบางครั้ง","text":"สมาธิกลับมา แต่พลาดข่าวสำคัญไปเรื่องหนึ่ง","effects":[{"stat":"happy","d":1},{"stat":"bond","d":-1}]},
     {"id":"check","label":"ช่วยเช็คข่าวปลอมที่ญาติแชร์","text":"บางคนขอบคุณ บางคนน้อยใจ","effects":[{"stat":"know","d":2},{"stat":"bond","d":-1}]}]},
-  {"id":"real-video-call","title":"วิดีโอคอลหาลูกหลาน","body":"ลูกหลานที่ทำงานไกลโทรวิดีโอกลับมา อยากเห็นหน้าทุกคนในบ้าน","when":{"year":[2014,2026],"age":[40,90],"flag":{"child":true}},"w":6,"cooldown":12,"choices":[
+  {"id":"real-video-call","title":"วิดีโอคอลหาลูกหลาน","body":"ลูกหลานที่ทำงานไกลโทรวิดีโอกลับมา อยากเห็นหน้าทุกคนในบ้าน","when":{"year":[2014,2026],"age":[40,90],"childAge":[18,90]},"w":6,"cooldown":12,"choices":[
     {"id":"talk","label":"คุยนานจนแบตหมด","text":"ได้เห็นหน้าคนที่รักและพูดคุยกัน","effects":[{"stat":"bond","d":3},{"stat":"happy","d":3,"by":"attach"}]},
     {"id":"show","label":"พาเดินดูนาดูบ้านผ่านกล้อง","text":"ลูกหัวเราะว่าบ้านเปลี่ยนไปเยอะ","effects":[{"stat":"bond","d":2},{"stat":"happy","d":2}]},
     {"id":"short","label":"คุยสั้นๆ ไม่อยากให้เปลืองเน็ต","text":"ได้ยินเสียงก็พอใจ แต่ยังคิดถึง","effects":[{"stat":"happy","d":1},{"cond":"lonely","turns":1}]}]},
@@ -304,7 +304,7 @@ KI.data.personalEvents.push(...[
     {"id":"send","label":"โอนให้แม่ตามปกติ","text":"แม่ส่งสติกเกอร์ขอบคุณกลับมา","effects":[{"money":-3,"unit":"wageDay"},{"stat":"bond","d":3}]},
     {"id":"more","label":"โอนเพิ่มเป็นค่าซ่อมบ้าน","text":"เงินเก็บบางลง แต่บ้านได้หลังคาใหม่","effects":[{"money":-8,"unit":"wageDay"},{"stat":"bond","d":5}]},
     {"id":"skip","label":"เดือนนี้ขอเก็บไว้ก่อน","text":"เงินเก็บพอกพูน แต่รู้สึกผิดเล็กน้อย","effects":[{"stat":"bond","d":-2},{"money":2,"unit":"wageDay"}]}]},
-  {"id":"real-teen-festival-drink","title":"วงเหล้าในงานบุญ","body":"งานบุญบั้งไฟคึกคัก รุ่นพี่ในหมู่บ้านยื่นแก้วเหล้าขาวให้ลองบ้าง","when":{"age":[15,17],"loc":"isan","noFlag":["real-teenDrank"]},"w":8,"cooldown":6,"choices":[
+  {"id":"real-teen-festival-drink","title":"วงเหล้าในงานบุญ","body":"งานบุญในหมู่บ้านคึกคัก รุ่นพี่ในหมู่บ้านยื่นแก้วเหล้าขาวให้ลองบ้าง","when":{"age":[15,17],"loc":"isan","noFlag":["real-teenDrank"]},"w":8,"cooldown":6,"choices":[
     {"id":"try","label":"ลองดื่มตามรุ่นพี่","text":"หัวหมุนจนต้องให้เพื่อนพยุงกลับบ้าน แม่โกรธมาก","effects":[{"flag":"real-teenDrank"},{"stat":"happy","d":2},{"stat":"health","d":-3},{"stat":"bond","d":-2},{"inc":"naughty"}],"roll":[{"p":0.15,"text":"วงเหล้ามีเรื่องวิวาท ถูกลูกหลงจนหน้าบวม","effects":[{"stat":"health","d":-4},{"cond":"sick","turns":1}]}]},
     {"id":"decline","label":"ปฏิเสธ ดื่มน้ำอัดลมแทน","text":"โดนแซวว่าเด็ก แต่ได้เต้นเซิ้งสนุกจนจบงาน","effects":[{"stat":"health","d":1},{"stat":"happy","d":1},{"trait":"grit","d":1}]},
     {"id":"help","label":"ไปช่วยผู้ใหญ่ยกของทำบุญ","text":"เลี่ยงวงเหล้าได้แนบเนียน ผู้ใหญ่ชมว่ามีน้ำใจ","effects":[{"stat":"bond","d":2},{"inc":"good"}]}]},

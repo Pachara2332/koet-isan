@@ -23,7 +23,7 @@ KI.data.decisions.push(...[
 ]);
 KI.data.personalEvents.push(...[
   {"id":"love-new-meet","title":"เจอคนใหม่โดยบังเอิญ","body":"ในงานบุญประจำปี มีคนหนึ่งเข้ามาชวนคุยอย่างเป็นกันเอง ดูจริงใจ","w":12,"when":{"age":[22,70],"noFlag":["partner"],"flag":{"hasEx":true},"chance":0.25},"cooldown":12,"choices":[
-    {"id":"date","label":"แลกเบอร์ ชวนไปกินข้าว","text":"คุยกันได้นานกว่าที่คิด","effects":[{"flag":"partner","v":true},{"cond":"inlove","turns":3},{"stat":"happy","d":5}]},
+    {"id":"date","label":"ชวนไปกินข้าวด้วยกัน","text":"คุยกันได้นานกว่าที่คิด นัดเจอกันอีกหลายครั้งจนเริ่มคบกัน","effects":[{"flag":"partner","v":true},{"cond":"inlove","turns":3},{"stat":"happy","d":5}]},
     {"id":"friend","label":"คุยเป็นเพื่อนไปก่อน","text":"ได้เพื่อนใหม่ไว้คุยด้วย","effects":[{"stat":"bond","d":2}]},
     {"id":"kids-first","label":"บอกตรงๆ ว่าตอนนี้ขอดูแลลูกก่อน","text":"อีกฝ่ายเข้าใจและให้เกียรติ","when":{"flag":{"child":true}},"effects":[{"stat":"bond","d":3}]},
     {"id":"no","label":"ยังไม่อยากเปิดใจกับใคร","text":"เดินกลับบ้านคนเดียวเงียบๆ","effects":[{"stat":"happy","d":-1,"by":"attach"}]}]}

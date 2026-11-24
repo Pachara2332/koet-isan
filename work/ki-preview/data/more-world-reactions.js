@@ -8,7 +8,7 @@ KI.data.decisions.unshift(...[
 {"id":"wr-saudi-visa-1990","title":"พ่อถูกส่งกลับจากซาอุฯ","body":"หลังคดีเพชรซาอุฯ วีซ่าแรงงานไทยไม่ได้ต่อ พ่อกลับบ้านมาพร้อมเงินเก็บก้อนสุดท้าย","when":{"year":[1990,1990],"season":[1,2],"flag":{"wr-fatherAbroad":true}},"cooldown":"once",
  "choices":[
   {"id":"study","label":"ขอเงินก้อนนี้ไปเรียนต่อ","text":"พ่อยอมให้ทุนเรียน แม้ต้องเลื่อนการซ่อมบ้าน","effects":[{"stat":"know","d":3},{"stat":"bond","d":2},{"flag":"wr-fatherFundedStudy"}]},
-  {"id":"land","label":"ให้พ่อซื้อที่นาเพิ่ม","text":"ครอบครัวมีที่ทำกินมากขึ้น งานที่บ้านก็มากขึ้นตาม","effects":[{"money":10,"unit":"wageDay"},{"stat":"happy","d":-1}]}]},
+  {"id":"land","label":"ให้พ่อซื้อที่นาเพิ่ม","text":"ครอบครัวมีที่ทำกินมากขึ้น ได้ข้าวขายเพิ่ม แต่งานที่บ้านก็หนักขึ้นตาม","effects":[{"money":10,"unit":"wageDay"},{"stat":"happy","d":-1}]}]},
 {"id":"wr-taiwan-1993","title":"ไต้หวันเปิดรับแรงงาน","body":"นายหน้าชวนไปทำโรงงานที่ไต้หวัน คนในหมู่บ้านเริ่มไปกันเป็นกลุ่ม ค่าหัวไม่ถูก","when":{"year":[1993,1996],"season":0,"age":[21,38],"loc":"isan","role":["farmer","jobless","construction"],"noFlag":["wr-taiwan"],"chance":0.25},"cooldown":"once","major":true,
  "choices":[
   {"id":"go","label":"กู้ ธ.ก.ส. ไปไต้หวัน","text":"เอาโฉนดค้ำกู้ไปจ่ายนายหน้า","effects":[{"money":-50,"unit":"wageDay"},{"cond":"indebted","turns":9},{"flag":"wr-taiwan"},{"move":{"kind":"abroad","country":"ไต้หวัน"}},{"role":"abroad"},{"pin":"ไปทำงานไต้หวัน"}]},
@@ -21,7 +21,7 @@ KI.data.decisions.unshift(...[
 {"id":"wr-pakmun-1994","title":"เขื่อนปากมูลกับปลาที่หายไป","body":"เขื่อนปากมูลสร้างเสร็จ ชาวประมงริมมูลจับปลาได้น้อยลง ชาวบ้านชวนไปร่วมเรียกร้องค่าชดเชย","when":{"year":[1994,1994],"season":2,"province":"ubon-ratchathani","age":[18,65],"role":["farmer","jobless"]},"cooldown":"once",
  "choices":[
   {"id":"join","label":"ร่วมเรียกร้องกับเพื่อนบ้าน","text":"ไปร่วมชุมนุม เสียเวลาทำกินหลายวัน","effects":[{"money":-10,"unit":"wageDay"},{"stat":"bond","d":4},{"trait":"social","d":2},{"flag":"wr-pakmunProtest"}]},
-  {"id":"leave","label":"เลิกหาปลา ไปหางานในเมือง","text":"ตัดใจจากแม่น้ำ ไปรับจ้างก่อสร้าง","effects":[{"move":{"kind":"bangkok"}},{"role":"construction"},{"stat":"happy","d":-4},{"cond":"homesick","turns":4}]},
+  {"id":"leave","label":"เลิกหาปลา ไปรับจ้างที่กรุงเทพฯ","text":"ตัดใจจากแม่น้ำ ไปรับจ้างก่อสร้าง","effects":[{"move":{"kind":"bangkok"}},{"role":"construction"},{"stat":"happy","d":-4},{"cond":"homesick","turns":4}]},
   {"id":"wait","label":"รอดูไปก่อน","text":"ทำนาเพิ่มแทนรายได้จากปลา","effects":[{"stat":"happy","d":-2}]}]},
 {"id":"wr-pakmun-pay-1995","title":"ได้ค่าชดเชยปากมูล","body":"รัฐบาลตกลงจ่ายค่าชดเชยชาวประมงปากมูล คนที่ร่วมเรียกร้องได้ส่วนแบ่ง","when":{"year":[1995,1995],"season":0,"flag":{"wr-pakmunProtest":true}},"cooldown":"once",
  "choices":[
@@ -36,7 +36,7 @@ KI.data.decisions.unshift(...[
   {"id":"home","label":"กลับไปทำนาที่บ้าน","text":"เก็บข้าวของขึ้นรถทัวร์กลับอีสาน ที่นายังเลี้ยงปากท้องได้","effects":[{"move":"home"},{"role":"farmer"},{"flag":"wr-lostJob"},{"stat":"bond","d":4},{"stat":"happy","d":-5,"by":"-grit"},{"pin":"ตกงานยุคต้มยำกุ้ง กลับบ้าน"}]},
   {"id":"stay","label":"อยู่ต่อ ยอมลดเงินเดือน","text":"ทนทำงานชั่วโมงมากขึ้นแลกกับเงินที่น้อยลง","effects":[{"money":-15,"unit":"wageDay"},{"stat":"health","d":-3},{"stat":"happy","d":-3}],
    "roll":[{"p":0.5,"text":"บริษัทรอดมาได้ งานยังอยู่","effects":[{"trait":"grit","d":2}]},{"p":0.5,"text":"สุดท้ายบริษัทก็ปิด ต้องตกงานอยู่ดี","effects":[{"role":"jobless"},{"flag":"wr-lostJob"},{"stat":"happy","d":-5}]}]},
-  {"id":"stall","label":"เอาเงินชดเชยมาขายของ","text":"เปิดแผงขายส้มตำข้างทาง เริ่มจากศูนย์","effects":[{"role":"trader"},{"money":-10,"unit":"wageDay"},{"flag":"wr-lostJob"},{"trait":"grit","d":2}]}]},
+  {"id":"stall","label":"ลาออกมาเปิดแผงขายของเอง","text":"เปิดแผงขายส้มตำข้างทาง เริ่มจากศูนย์","effects":[{"role":"trader"},{"money":-10,"unit":"wageDay"},{"flag":"wr-lostJob"},{"trait":"grit","d":2}]}]},
 {"id":"wr-tomyum-debt-1998","title":"หนี้บ้านช่วงวิกฤต","body":"ดอกเบี้ยพุ่ง บ้านที่ผ่อนในเมืองเริ่มผ่อนไม่ไหว","when":{"year":[1998,1998],"season":0,"loc":"bangkok","role":["office","civil","teacher"],"age":[25,50],"chance":0.4},"cooldown":"once",
  "choices":[
   {"id":"sell","label":"ขายบ้านขาดทุน","text":"ยอมเจ็บครั้งเดียว ไปเช่าห้องอยู่แทน","effects":[{"money":-30,"unit":"wageDay"},{"stat":"happy","d":-5}]},
@@ -47,14 +47,14 @@ KI.data.decisions.unshift(...[
   {"id":"stay","label":"ปักหลักบ้านเกิด","text":"ขยายนา เลี้ยงไก่ อยู่กับครอบครัว","effects":[{"stat":"bond","d":5},{"stat":"happy","d":2},{"money":-5,"unit":"wageDay"}]}]},
 {"id":"wr-village-fund-2001","title":"กองทุนหมู่บ้านละล้าน","body":"หมู่บ้านได้เงินกองทุนก้อนใหญ่ เปิดให้ชาวบ้านกู้ดอกเบี้ยต่ำ","when":{"year":[2001,2001],"season":2,"loc":"isan","age":[20,60]},"cooldown":"once",
  "choices":[
-  {"id":"invest","label":"กู้มาเลี้ยงวัว","text":"ซื้อลูกวัวมาสองตัว หวังขายได้กำไร","effects":[{"money":20,"unit":"wageDay"},{"flag":"wr-villageFund"},{"flag":"wr-fundInvest"}]},
+  {"id":"invest","label":"กู้มาเลี้ยงวัว","text":"ซื้อลูกวัวมาสองตัว ขุนไว้ขายต่อได้ส่วนต่างเป็นกำไร","effects":[{"money":20,"unit":"wageDay"},{"flag":"wr-villageFund"},{"flag":"wr-fundInvest"}]},
   {"id":"spend","label":"กู้มาซื้อมอเตอร์ไซค์","text":"ได้รถใหม่ขี่ไปไร่สบายขึ้น แต่ต้องผ่อนคืน","effects":[{"stat":"happy","d":5},{"flag":"wr-villageFund"},{"flag":"wr-fundSpend"}]},
   {"id":"no","label":"ไม่กู้","text":"กลัวเป็นหนี้ ปล่อยให้คนอื่นกู้ไป","effects":[{"stat":"happy","d":-1}]}]},
 {"id":"wr-village-fund-repay-2003","title":"ถึงเวลาคืนกองทุน","body":"กรรมการกองทุนหมู่บ้านมาทวงเงินกู้งวดสุดท้าย","when":{"year":[2003,2003],"season":2,"flag":{"wr-villageFund":true}},"cooldown":"once",
  "choices":[
   {"id":"pay","label":"ขายของที่ซื้อมาไปคืน","text":"คืนครบ ไม่มีใครค่อนขอดได้","effects":[{"money":-20,"unit":"wageDay"},{"stat":"bond","d":2}]},
   {"id":"loan","label":"กู้นอกระบบมาโปะ","text":"คืนกองทุนได้ แต่หนี้ย้ายไปอยู่กับเจ้าหนี้รายใหม่","effects":[{"cond":"indebted","turns":9},{"stat":"happy","d":-3}]}]},
-{"id":"wr-30baht-2002","title":"บัตรทอง 30 บาท","body":"แม่ป่วยเรื้อรังมานาน ตอนนี้มีบัตรทองรักษาได้ในราคา 30 บาท แต่ต้องไปรอคิวโรงพยาบาลอำเภอตั้งแต่เช้ามืด","when":{"year":[2002,2002],"season":[0,1],"loc":"isan","age":[18,50],"chance":0.3},"cooldown":"once",
+{"id":"wr-30baht-2002","title":"บัตรทอง 30 บาท","body":"แม่ป่วยเรื้อรังมานาน ตอนนี้มีบัตรทองรักษาได้ในราคา 30 บาท แต่ต้องไปรอคิวโรงพยาบาลอำเภอตั้งแต่เช้ามืด","when":{"year":[2002,2002],"season":[0,1],"loc":"isan","age":[18,50],"flag":{"parentsAlive":true},"chance":0.3},"cooldown":"once",
  "choices":[
   {"id":"go","label":"ลางานพาแม่ไปรักษา","text":"เสียค่าแรงหลายวันแต่แม่ได้ตรวจจริงจัง","effects":[{"money":-4,"unit":"wageDay"},{"stat":"bond","d":5}]},
   {"id":"herb","label":"รักษาสมุนไพรต่อ","text":"ไม่ต้องเสียงาน แต่แม่ยังทรงๆ ทรุดๆ","effects":[{"stat":"bond","d":-2},{"stat":"happy","d":-2}]}]},
@@ -81,7 +81,7 @@ KI.data.decisions.unshift(...[
 {"id":"wr-preah-vihear-2008","title":"ชายแดนพระวิหารตึงเครียด","body":"มีการปะทะใกล้ปราสาทพระวิหาร ทางอำเภอประกาศให้ชาวบ้านใกล้แนวชายแดนอพยพไปศูนย์พักพิง","heavy":true,"when":{"year":[2008,2008],"season":2,"province":"sisaket"},"cooldown":"once",
  "choices":[
   {"id":"go","label":"อพยพไปศูนย์พักพิงทันที","text":"ทิ้งนาที่กำลังจะเกี่ยว ไปนอนศูนย์พักพิงหลายคืน","effects":[{"money":-8,"unit":"wageDay"},{"stat":"happy","d":-4},{"flag":"wr-evacuated"}]},
-  {"id":"stay","label":"อยู่เฝ้าบ้านเฝ้าข้าว","text":"เกี่ยวข้าวทันเวลา แต่นอนไม่หลับทุกคืน","effects":[{"stat":"health","d":-3},{"stat":"happy","d":-5,"by":"attach"}]}]},
+  {"id":"stay","label":"อยู่เฝ้าบ้านเฝ้าข้าว","when":{"age":[15,90]},"text":"เกี่ยวข้าวทันเวลา แต่นอนไม่หลับทุกคืน","effects":[{"stat":"health","d":-3},{"stat":"happy","d":-5,"by":"attach"}]}]},
 {"id":"wr-border-2011","title":"ปะทะชายแดนรอบใหม่","body":"เสียงปืนดังจากแนวชายแดนอีกครั้ง โรงเรียนปิด ชาวบ้านถูกสั่งให้อพยพ","heavy":true,"when":{"year":[2011,2011],"season":0,"province":["sisaket","surin","buriram"]},"cooldown":"once",
  "choices":[
   {"id":"go","label":"พาครอบครัวไปศูนย์พักพิง","text":"ปลอดภัย แต่ต้องอยู่อย่างแออัดหลายวัน","effects":[{"stat":"happy","d":-4},{"stat":"bond","d":2},{"flag":"wr-evacuated"}]},
@@ -119,7 +119,7 @@ KI.data.decisions.unshift(...[
  "choices":[
   {"id":"evac","label":"ไปศูนย์อพยพเลย","text":"คนปลอดภัย แต่ของในบ้านเสียหายมาก","effects":[{"money":-15,"unit":"wageDay"},{"stat":"happy","d":-4}]},
   {"id":"stay","label":"อยู่ชั้นสองเฝ้าบ้าน","text":"ของรอด แต่ไฟดับน้ำประปาไม่ไหลหลายวัน","effects":[{"money":-5,"unit":"wageDay"},{"stat":"health","d":-4}]}]},
-{"id":"wr-covid-2020","title":"โควิด-19 ปิดเมือง","body":"ร้านและโรงงานปิด นายจ้างให้หยุดงานไม่มีกำหนด รถทัวร์กลับอีสานเต็มทุกเที่ยว","when":{"year":[2020,2020],"season":0,"loc":["bangkok","abroad"],"role":["factory","construction","office","driver","trader","abroad"],"age":[17,60]},"cooldown":"once","major":true,
+{"id":"wr-covid-2020","title":"โควิด-19 ปิดเมือง","body":"ร้านและโรงงานปิด นายจ้างให้หยุดงานไม่มีกำหนด คนทำงานไกลบ้านจำนวนมากทยอยกลับบ้าน","when":{"year":[2020,2020],"season":0,"loc":["bangkok","abroad"],"role":["factory","construction","office","driver","trader","abroad"],"age":[17,60]},"cooldown":"once","major":true,
  "choices":[
   {"id":"home","label":"กลับบ้านเกิด","text":"กลับไปกักตัวที่บ้าน ช่วยพ่อแม่ทำนา","effects":[{"move":"home"},{"role":"farmer"},{"flag":"wr-covidHome"},{"stat":"bond","d":5},{"money":-5,"unit":"wageDay"},{"pin":"กลับบ้านช่วงโควิด"}]},
   {"id":"stay","label":"อยู่ห้องเช่ารอเปิดเมือง","text":"จ่ายค่าห้องต่อโดยไม่มีรายได้","effects":[{"money":-20,"unit":"wageDay"},{"cond":"lonely","turns":3},{"stat":"happy","d":-4}]},
@@ -140,7 +140,7 @@ KI.data.decisions.unshift(...[
   {"id":"no","label":"ไม่เสี่ยง","text":"ทำงานเดิมต่อ","effects":[]}]},
 {"id":"wr-israel-2023","title":"ข่าวจากอิสราเอล","body":"มีข่าวแรงงานไทยในอิสราเอลได้รับผลกระทบจากความรุนแรง คนในครอบครัวที่ทำงานอยู่ที่นั่นยังติดต่อได้","heavy":true,"when":{"year":[2023,2023],"season":2,"province":["udon-thani","nong-khai","nong-bua-lamphu","khon-kaen"],"age":[18,70],"chance":0.3},"cooldown":"once",
  "choices":[
-  {"id":"return","label":"ขอให้กลับบ้านทันที","text":"ญาติกลับมาตามเที่ยวบินอพยพ ปลอดภัย แต่หนี้ค่าเดินทางยังค้าง","effects":[{"stat":"bond","d":4},{"cond":"indebted","turns":6}]},
+  {"id":"return","label":"ขอให้กลับบ้านทันที","text":"ญาติกลับมาตามเที่ยวบินอพยพ ปลอดภัย แต่หนี้ที่กู้มาจ่ายค่าไปทำงานยังค้าง","effects":[{"stat":"bond","d":4},{"cond":"indebted","turns":6}]},
   {"id":"stay","label":"ปล่อยให้เขาตัดสินใจเอง","text":"ญาติเลือกทำงานต่อ ทุกคืนต้องโทรถามข่าว","effects":[{"stat":"happy","d":-5,"by":"attach"},{"money":10,"unit":"wageDay"}]}]},
 {"id":"wr-border-2025","title":"ปะทะชายแดนไทย-กัมพูชา","body":"เกิดการปะทะตามแนวชายแดน ทางการสั่งอพยพชาวบ้านหลายอำเภอไปศูนย์พักพิง","heavy":true,"when":{"year":[2025,2025],"season":1,"province":["sisaket","surin","buriram","ubon-ratchathani"]},"cooldown":"once","major":true,
  "choices":[
