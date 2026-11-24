@@ -92,12 +92,12 @@ KI.data.personalEvents.push(...[
     {"id":"stay","label":"อยู่ใกล้ดูแลยาย","text":"พลาดงานและโอกาสบางอย่าง แต่ได้อยู่กับยายช่วงสุดท้าย","effects":[{"flag":"fam-caredGrand"},{"stat":"bond","d":6},{"stat":"know","d":-2}]},
     {"id":"go","label":"ฝากญาติดูแล แล้วไปทำตามแผน","text":"โทรหาทุกอาทิตย์ แต่เสียงยายเลือนลงทุกครั้ง","effects":[{"stat":"happy","d":-3,"by":"attach"}]}
    ]},
-  {"id":"fam-grand-dies","w":10,"cooldown":"once","heavy":true,"title":"ยายจากไป","body":"ยายที่เลี้ยงเรามาจากไปอย่างสงบในบ้านไม้หลังเดิม","when":{"age":[16,40],"flag":{"fam-raisedByGrand":true}},
+  {"id":"fam-grand-dies","w":10,"cooldown":"once","heavy":true,"title":"ยายจากไป","body":"คุณนึกถึงยายที่เคยเลี้ยงดู และวันที่เคยใช้ชีวิตอยู่ด้วยกัน","when":{"age":[16,40],"flag":{"fam-raisedByGrand":true,"grandmotherPassed":true}},
    "choices":[
     {"id":"cry","label":"ปล่อยให้ตัวเองเสียใจ","text":"ร้องไห้จนหมดแรง แล้วค่อยๆ ลุกขึ้นช่วยจัดงาน","effects":[{"stat":"happy","d":-12,"by":"attach"},{"cond":"grieving","turns":4}]},
     {"id":"busy","label":"ทำงานให้ยุ่งเข้าไว้","text":"ทำทุกอย่างให้เรียบร้อย ความเศร้ามาทีหลังตอนกลางคืน","effects":[{"stat":"happy","d":-8,"by":"attach"},{"stat":"health","d":-2},{"cond":"grieving","turns":2}]}
    ]},
-  {"id":"fam-grand-dies-cared","w":14,"cooldown":"once","heavy":true,"title":"อยู่กับยายถึงวันสุดท้าย","body":"เพราะอยู่ใกล้ ได้จับมือยายในคืนสุดท้าย","when":{"flag":{"fam-caredGrand":true}},"effects":[{"stat":"happy","d":-6,"by":"attach"},{"stat":"bond","d":4},{"cond":"grieving","turns":2}]},
+  {"id":"fam-grand-dies-cared","w":14,"cooldown":"once","title":"วันที่ได้ดูแลยาย","body":"คุณนึกถึงเวลาที่เคยอยู่ใกล้และช่วยดูแลยาย ความทรงจำเล็กๆ เหล่านั้นยังอยู่กับคุณ","when":{"flag":{"fam-caredGrand":true}},"effects":[{"stat":"bond","d":3},{"stat":"happy","d":2}]},
   {"id":"fam-ordained-blessing","w":10,"cooldown":"once","title":"แม่ยังเล่าถึงวันบวช","body":"ทุกครั้งที่มีแขกมาบ้าน แม่หยิบรูปวันบวชมาอวด","when":{"flag":{"fam-ordained":true},"age":[22,45]},"effects":[{"stat":"bond","d":3},{"stat":"happy","d":2}]},
   {"id":"fam-teen-phone","w":8,"cooldown":12,"title":"ลูกวัยรุ่นติดจอ","body":"ลูกขังตัวอยู่ในห้องเล่นโทรศัพท์จนดึก เรียกกินข้าวก็ไม่ออก","when":{"flag":{"child":true},"childAge":[13,18],"year":[2012,2026]},
    "choices":[

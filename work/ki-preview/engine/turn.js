@@ -115,7 +115,7 @@ globalThis.KI = globalThis.KI || {};
       if (method && !label.includes(method)) label += ' · ' + method;
       const kidCost = data && KI.game && s.year - s.birthYear >= 6 && s.year - s.birthYear < 15 ? KI.game.moneyCost(c.effects, s, data) : 0;
       if (kidCost > 0) {
-        out.push({ id: c.id + '@parents', label: label + ' · ขอเงินพ่อแม่', tag: null, cost: kidCost, kid: 'parents' });
+        if(s.flags.parentsAlive)out.push({ id: c.id + '@parents', label: label + ' · ขอเงินพ่อแม่', tag: null, cost: kidCost, kid: 'parents' });
         out.push({ id: c.id + '@earn', label: label + ' · ช่วยงานรับจ้างเก็บเงินเอง', tag: null, cost: kidCost, kid: 'earn' });
         continue;
       }
@@ -164,6 +164,21 @@ globalThis.KI = globalThis.KI || {};
   }
 
   const REPEAT_CHANCE = 0.35;
+  const STORY_THEMES = [
+    ['debt', /debt|loan|credit|collector|shark/],
+    ['overseas', /abroad|phinoi|illegalKorea|undocumented|returnee/],
+    ['parent', /parent|father|mother|dad|mom/],
+    ['romance', /partner|marriage|marry|wedding|divorce|breakup/],
+    ['children', /child|kids|parenthood|grandchild/],
+    ['injury', /injury|accident|disability/],
+    ['health', /health|illness|hospital|sick/],
+    ['housing', /house|mortgage|housing/],
+    ['career', /career|job|work|retire|burnout/]
+  ];
+  function storyTheme(id) {
+    const match=STORY_THEMES.find(([,pattern])=>pattern.test(id));
+    return match ? match[0] : null;
+  }
 
   function storyCard(s, data, settings, rng, excluded) {
     const hidden = (x) => (settings.hideHeavy && x.heavy) || ((s.role === 'monk' || s.role === 'prisoner') && !forRole(x.when, s.role));
@@ -172,15 +187,14 @@ globalThis.KI = globalThis.KI || {};
     const choose = (pool) => rng.weighted(pool, (x) => typeof x.w === 'number' ? x.w : 10);
     let selected = choose(decisions.filter((x) => x.urgent));
     if (selected) return card('decision', selected, { major: selected.major !== false, choices: choicesOf(selected, s, rng, data) });
-    selected = choose(decisions.filter((x) => !(x.id in s.seen)));
-    if (selected) return card('decision', selected, { major: selected.major !== false, choices: choicesOf(selected, s, rng, data) });
     const personal = rng.chance(PERSONAL_CHANCE) ? (data.personalEvents || []).filter(eligible) : [];
-    selected = choose(personal.filter((x) => !(x.id in s.seen)));
-    if (selected) return card('personal', selected, { major: false, choices: choicesOf(selected, s, rng, data) });
-    selected = rng.chance(REPEAT_CHANCE) ? choose(decisions) : null;
-    if (selected) return card('decision', selected, { major: selected.major !== false, choices: choicesOf(selected, s, rng, data) });
-    selected = choose(personal);
-    return selected ? card('personal', selected, { major: false, choices: choicesOf(selected, s, rng, data) }) : null;
+    const recent=new Set(Object.entries(s.seen).filter(([,turn])=>s.t-turn<6).map(([id])=>storyTheme(id)).filter(Boolean));
+    if(excluded && storyTheme(excluded))recent.add(storyTheme(excluded));
+    const entries=[...decisions.map(item=>({item,kind:'decision'})),...personal.map(item=>({item,kind:'personal'}))];
+    const pick=(pool)=>{const varied=pool.filter(({item})=>!recent.has(storyTheme(item.id)));return rng.weighted(varied.length?varied:pool,({item})=>typeof item.w==='number'?item.w:10);};
+    let chosen=pick(entries.filter(({item})=>!(item.id in s.seen)));
+    if(!chosen && rng.chance(REPEAT_CHANCE))chosen=pick(entries);
+    return chosen ? card(chosen.kind,chosen.item,{major:chosen.kind==='decision' && chosen.item.major!==false,choices:choicesOf(chosen.item,s,rng,data)}) : null;
   }
 
   function quietCard(s, rng) {
