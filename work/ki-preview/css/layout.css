@@ -97,3 +97,8 @@
   .slot-actions .btn{min-width:0;min-height:48px;padding:6px 10px;font-size:14px;line-height:1.25;white-space:normal}
   .slot-actions .btn-primary{font-size:20px;white-space:nowrap}
 }
+@media (min-width:700px) and (max-width:1023px){
+  .shell{max-width:none;padding:16px 16px calc(var(--bar-h) + 20px);grid-template-columns:minmax(260px,42%) minmax(0,1fr);grid-template-rows:auto 1fr auto;grid-template-areas:"stats head" "stats cards" "trail trail";align-items:start}
+  .slot-stats{position:sticky;top:16px}
+  .slot-actions{padding-left:16px;padding-right:16px}
+}
