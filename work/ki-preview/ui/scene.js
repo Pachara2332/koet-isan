@@ -851,9 +851,9 @@ globalThis.KI = globalThis.KI || {};
       if(/ไต้หวัน|เกาหลี|สิงคโปร์|ญี่ปุ่น|ฮ่องกง|บรูไน|มาเลเซีย/.test(c))return 'asiacity';
       return 'abroad';
     }
-    if(state.loc.kind==='bangkok')return 'bangkok';
     const home=homeFor(state);
     if(home && !['student','factory'].includes(state.role))return home;
+    if(state.loc.kind==='bangkok')return 'bangkok';
     const rich=state.flags && (state.flags.status==='wealthy' || (state.flags.status==='rich' && state.flags.movedOut));
     if(rich && state.role!=='student')return 'town';
     if(state.role==='student')return 'school';

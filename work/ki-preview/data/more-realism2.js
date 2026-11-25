@@ -133,7 +133,7 @@ globalThis.KI = globalThis.KI || {}; KI.data = KI.data || {};
     const days = w.money[0] / 330;
     const bands = [];
     for (let y = 1970; y <= 2026; y += 4) {
-      const b = { year: [y, y + 3], money: [Math.round(days * wageOf(y)), 999999999] };
+      const b = { year: [y, y + 4 > 2026 ? 9999 : y + 3], money: [Math.round(days * wageOf(y)), 999999999] };
       if (w.any) b.any = w.any;
       bands.push(b);
     }

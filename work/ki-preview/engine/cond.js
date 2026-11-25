@@ -41,7 +41,7 @@ globalThis.KI = globalThis.KI || {};
   function evaluate(c, s, rng) {
     const has = (id) => s.conds.some((x) => x.id === id);
     if ('age' in c && !num(s.year - s.birthYear, c.age)) return false;
-    if ('year' in c && !num(s.year, c.year)) return false;
+    if ('year' in c && !num(s.year, Array.isArray(c.year) && c.year[1] === 2026 && c.year[0] < 2025 ? [c.year[0], 9999] : c.year)) return false;
     if ('season' in c && s.season !== null && !num(s.season, c.season)) return false;
     if ('sex' in c && !one(s.sex, c.sex)) return false;
     if ('personality' in c && !one(KI.game.personality(s).id, c.personality)) return false;

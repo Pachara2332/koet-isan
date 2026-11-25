@@ -51,11 +51,11 @@ KI.data.decisions.push(...[
     {"id":"party","label":"ฉลองกันทั้งบ้าน","text":"ออกไปกินข้าวร้านดีๆ ลูกๆ ตื่นเต้นกว่าเจ้าตัว","effects":[{"money":20,"unit":"wageDay"},{"stat":"happy","d":4},{"stat":"bond","d":3}]},
     {"id":"save","label":"เก็บโบนัสไว้เป็นเงินออมครอบครัว","text":"เงินเก็บเพิ่มขึ้นอีกก้อน","effects":[{"money":40,"unit":"wageDay"},{"stat":"bond","d":1}]}
    ]},
-  {"id":"inherit-home","title":"บ้านหลังเก่าของพ่อแม่","body":"พ่อแม่จากไปหมดแล้ว บ้านหลังเก่าที่เติบโตมายังตั้งอยู่ ญาติถามว่าจะจัดการอย่างไร","when":{"age":[30,85],"flag":{"parentsAlive":false},"noFlag":["inheritHomeDone"],"chance":0.5},"cooldown":"once","major":true,
+  {"id":"inherit-home","title":"บ้านหลังเก่าของพ่อแม่","body":"พ่อแม่จากไปหมดแล้ว บ้านหลังเก่าที่เติบโตมายังตั้งอยู่ ญาติถามว่าจะจัดการอย่างไร","when":{"age":[30,85],"flag":{"parentsAlive":false},"noFlag":["inheritHomeDone","noParents"],"chance":0.5},"cooldown":"once","major":true,
    "choices":[
     {"id":"keep","label":"รับบ้านพ่อแม่ไว้เป็นของตัวเอง","text":"ซ่อมบ้านเก่าให้กลับมาน่าอยู่ ทุกมุมยังมีความทรงจำ","when":{"noFlag":["ownsPersonalHome"]},"effects":[{"flag":"inheritHomeDone"},{"personal":"home-medium","free":true},{"stat":"happy","d":3},{"pin":"รับมรดกบ้านพ่อแม่"}]},
-    {"id":"sell","label":"ขายแล้วแบ่งเงินกับพี่น้อง","text":"ได้เงินก้อนหนึ่ง แต่ใจหายตอนเซ็นโอนให้คนอื่น","effects":[{"flag":"inheritHomeDone"},{"money":600,"unit":"wageDay"},{"stat":"happy","d":-1},{"pin":"ขายบ้านมรดกของพ่อแม่"}]},
-    {"id":"give","label":"ยกให้พี่น้องที่ยังลำบาก","text":"พี่น้องน้ำตาซึม ครอบครัวรักกันมากขึ้น","character":"kind","effects":[{"flag":"inheritHomeDone"},{"stat":"bond","d":5},{"inc":"good"}]}
+    {"id":"sell","label":"ขายแล้วแบ่งเงินกับพี่น้อง","when":{"flag":{"hasSiblings":true}},"text":"ได้เงินก้อนหนึ่ง แต่ใจหายตอนเซ็นโอนให้คนอื่น","effects":[{"flag":"inheritHomeDone"},{"money":600,"unit":"wageDay"},{"stat":"happy","d":-1},{"pin":"ขายบ้านมรดกของพ่อแม่"}]},
+    {"id":"give","label":"ยกให้พี่น้องที่ยังลำบาก","when":{"flag":{"hasSiblings":true}},"text":"พี่น้องน้ำตาซึม ครอบครัวรักกันมากขึ้น","character":"kind","effects":[{"flag":"inheritHomeDone"},{"stat":"bond","d":5},{"inc":"good"}]}
    ]},
   {"id":"old-hospital","title":"สุขภาพทรุดลงตามวัย","body":"ความดันขึ้น เข่าเสื่อม ต้องพบหมอบ่อยขึ้นทุกปี","when":{"age":[70,110],"stat":{"health":[0,45]},"chance":0.4},"cooldown":6,
    "choices":[

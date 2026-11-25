@@ -127,7 +127,7 @@ select{-webkit-appearance:none;appearance:none;font:inherit;font-size:15px;color
 .fold[open]>.fold-summary::after{transform:rotate(180deg)}
 .fold h4{margin:14px 0 6px;font-size:15px}
 .fold>h4:first-of-type{margin-top:4px}
-.fold-line{margin:6px 0;font-size:14px;line-height:1.5;overflow-wrap:anywhere}
+.fold-line{margin:6px 0;font-size:14px;line-height:1.5;overflow-wrap:anywhere}.trait-meters{display:grid;gap:8px;margin:2px 0 12px}.trait-meter{display:grid;grid-template-columns:5.5em minmax(0,1fr) 2em;align-items:center;gap:8px;font-size:14px}.trait-meter progress{width:100%;height:10px;margin:0;accent-color:var(--rice)}.trait-meter strong{text-align:right}.fact-list{border-top:1px solid var(--line)}.fact-row{display:flex;justify-content:space-between;align-items:baseline;gap:12px;padding:7px 0;border-bottom:1px solid var(--line);font-size:14px;line-height:1.45}.fact-row span{flex:none;color:var(--ink-2)}.fact-row strong{min-width:0;text-align:right;font-weight:600;overflow-wrap:anywhere}.fold-note{margin:8px 0 0;color:var(--ink-2);font-size:12px;line-height:1.5}
 .fold .people-panel{margin:0;padding:0;border:0;background:none}
 .fold .friends-panel{margin-top:14px;padding-top:12px;border-top:1px solid var(--line)}
 .fold .people-panel h4{margin:0 0 8px}

@@ -25,6 +25,10 @@ globalThis.KI = globalThis.KI || {};
   const CHILD_MORTALITY = 0.1;
   const ADULT_AGE = 18;
   const HEALTH_RISK = [0.6, 1.4];
+  const CARE_RISK = { wealthy: 0.75, rich: 0.85, poor: 1.1 };
+  const ILL_CARE_RISK = { best: 0.45, standard: 0.7, none: 1.6 };
+  const ILL_UNTREATED_RISK = 1.6;
+  const WARN_FIRST = { cancer: 1, kidney: 1, illness: 0.7, liver: 1, diabetes: 1, alcohol: 1, stroke: 0.6, heart: 0.6 };
   const ELDER_AGE = 60;
   const ALLOWANCE_START = 2009;
   const ALLOWANCE_FLAT = 500;
@@ -543,14 +547,25 @@ globalThis.KI = globalThis.KI || {};
     }
     const sick = s.conds.some((c) => c.id === 'sick') ? SICK_MORTALITY : 1;
     const ageFactor = age < ADULT_AGE ? CHILD_MORTALITY : age < 50 ? PRIME_AGE_MORTALITY : OLDER_MORTALITY;
-    const p = KI.tables.mortality(data, age, s.year, s.sex) * clamp(1 + (70 - s.stats.health) / 100, HEALTH_RISK[0], HEALTH_RISK[1]) * sick * ageFactor;
+    const care = CARE_RISK[s.flags.status] || 1, treated = s.flags.illWarn ? (ILL_CARE_RISK[s.flags.illCare] || ILL_UNTREATED_RISK) : 1;
+    const p = KI.tables.mortality(data, age, s.year, s.sex) * clamp(1 + (70 - s.stats.health) / 100, HEALTH_RISK[0], HEALTH_RISK[1]) * sick * ageFactor * care * treated;
     if (!rng.chance(p)) return;
+    if (s.flags.illWarn && s.flags.illWarn !== 'old-age') {
+      s.death = { year: s.year, age, cause: s.flags.illWarn, warnedYears: s.year - (s.flags.illWarnSince || s.year), care: s.flags.illCare || 'none' };
+      return;
+    }
     let cause = 'illness';
     if (age >= 80 && rng.chance(0.5)) cause = 'old-age';
     else if (age >= 35) cause = rng.weighted(ILLNESS, (x) => x[1])[0];
     if (cause !== 'old-age' && s.flags.drinker && rng.chance(0.3)) cause = 'alcohol';
     if (cause !== 'old-age' && s.flags['hl-diabetes'] && rng.chance(0.4)) cause = 'diabetes';
     if (cause !== 'old-age' && age >= 40 && s.flags.rawFish && rng.chance(0.35)) cause = 'liver';
+    if (WARN_FIRST[cause] && rng.chance(WARN_FIRST[cause])) {
+      s.flags.illWarn = cause;
+      s.flags.illWarnSince = s.year;
+      s.flags.illCare = null;
+      return;
+    }
     s.death = { year: s.year, age, cause };
   }
 
@@ -748,6 +763,7 @@ globalThis.KI = globalThis.KI || {};
 
   function causeText(state) {
     const base = CAUSES[state.death.cause] || OTHER_CAUSE;
+    if (Number.isFinite(state.death.warnedYears)) return base + ' · ' + (state.death.care === 'none' ? `รู้อาการมา ${Math.max(1, state.death.warnedYears)} ปีแต่ไม่ได้รักษาจริงจัง` : `ต่อสู้กับโรคมา ${Math.max(1, state.death.warnedYears)} ปี ก่อนจากไปอย่างสงบ`);
     const list = (CAUSE_DETAIL[state.death.cause] || []).filter((x) => state.sex !== 'm' || !/เต้านม|ปากมดลูก/.test(x));
     if (!list.length) return base;
     const seed = Array.from(state.name + state.death.year).reduce((h, c) => (Math.imul(h, 31) + c.codePointAt(0)) >>> 0, 7);

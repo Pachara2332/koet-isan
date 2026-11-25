@@ -614,7 +614,8 @@ globalThis.KI = globalThis.KI || {};
     const household=element('div','family-household');
     household.append(element('h5','','คนรักและลูก'));
     if(state.family.partner){const person=state.family.partner;const row=element('p','family-close');const since=Number.isFinite(person.since)?person.since:state.flags.partnerSince;row.append(element('strong','family-relation',person.married?'คู่สมรส':'คนรัก'),element('span','family-name',person.name),element('span','family-age',`เพศ${sexLabel(person)}`),...(Number.isFinite(person.birthYear)?[element('span','family-age',`อายุ ${state.year-person.birthYear} ปี`)]:[]),element('span','family-age',`งาน ${person.job}`),...(Number.isFinite(since) && since<=state.year?[element('span','family-age',`คบกันรวม ${state.year-since} ปี` )]:[]),...(person.married && Number.isFinite(state.flags.marriedSince)?[element('span','family-age',`สมรสมา ${Math.max(0,state.year-state.flags.marriedSince)} ปี`)]:[]));household.append(row);}
-    state.family.children.forEach(child=>{const row=element('p','family-close');row.append(element('strong','family-relation',childRelation(child)),element('span','family-name',child.name),element('span','family-age',`อายุ ${Math.max(0,state.year-child.birthYear)} ปี`));household.append(row);});
+    const childStatus=(child,first)=>{const age=state.year-child.birthYear;if(age<3)return 'ยังเล็ก';if(age<6)return 'เรียนอนุบาล';if(age<12)return 'เรียนประถม';if(age<18)return 'เรียนมัธยม';if(!child.job)return child.uni?'เรียนมหาวิทยาลัย':'เพิ่งเรียนจบ';return [child.married?'แต่งงานแล้ว':'ยังโสด',child.job,first && state.flags.kidStays?'อยู่บ้านเดียวกัน':child.away?'ทำงานต่างจังหวัด':'อยู่ใกล้บ้าน'].join(' · ');};
+    state.family.children.forEach((child,i)=>{const row=element('p','family-close');row.append(element('strong','family-relation',childRelation(child)),element('span','family-name',child.name),element('span','family-age',`อายุ ${Math.max(0,state.year-child.birthYear)} ปี`),element('span','family-age',childStatus(child,i===0)));household.append(row);});
     if(!state.family.partner && !state.family.children.length)household.append(element('p','muted family-empty','ยังไม่มีคนรักหรือลูก'));
     state.family.grandchildren.forEach(child=>{const row=element('p','family-close');row.append(element('strong','family-relation',grandchildRelation(child)),element('span','family-name',child.name),element('span','family-age',`อายุ ${Math.max(0,state.year-child.birthYear)} ปี`));household.append(row);});
     (state.pets||[]).filter(pet=>pet.alive).forEach(pet=>{const row=element('p','family-close');row.append(element('strong','family-relation',petLabel(pet)),element('span','family-name',pet.name||'ยังไม่มีชื่อ'),element('span','family-age',`อายุ ${Math.max(0,state.year-pet.born)} ปี`));household.append(row);});
@@ -647,16 +648,26 @@ globalThis.KI = globalThis.KI || {};
     }
     const TALENT_LABEL={music:'ดนตรี',sport:'กีฬา',art:'วาดรูป',math:'คณิตศาสตร์',computer:'คอมพิวเตอร์',gaming:'เล่นเกม',chess:'หมากรุก',language:'ภาษา',cooking:'ทำอาหาร',craft:'งานช่าง/งานฝีมือ',speech:'พูดเก่ง/ผู้นำ',mechanic:'ซ่อมเครื่องยนต์',muaythai:'มวยไทย',farming:'เกษตร'};
     const traitsBox=fold('นิสัยและความถนัด');
-    traitsBox.append(element('p','fold-line',`แนวโน้มจากการเลือก: ${KI.game.personality(state).label}`),element('p','fold-line muted','พิจารณาจากการช่วยเหลือหรือทำร้ายผู้อื่นไม่เกิน 8 ครั้งล่าสุด และเปลี่ยนได้ตามสิ่งที่เลือกต่อไป'));
-    const personalityHistory=state.personalityHistory||[];
-    if(personalityHistory.length)traitsBox.append(element('p','fold-line',`การตัดสินใจล่าสุด: ${personalityHistory.slice(-3).reverse().map(item=>`${item.year+543} · ${item.choice}`).join(' / ')}`));
-    traitsBox.append(element('p','fold-line',`ยึดติด ${state.traits.attach} · มุ่งมั่น ${state.traits.grit} · เข้าสังคม ${state.traits.social}`));
+    const traitMeters=element('div','trait-meters');
+    [['attach','ยึดติด'],['grit','มุ่งมั่น'],['social','เข้าสังคม']].forEach(([key,label])=>{const row=element('div','trait-meter');const meter=document.createElement('progress');meter.max=100;meter.value=state.traits[key];meter.setAttribute('aria-label',label);row.append(element('span','',label),meter,element('strong','',String(state.traits[key])));traitMeters.append(row);});
+    const facts=element('div','fact-list'), fact=(label,value)=>{const row=element('div','fact-row');row.append(element('span','',label),element('strong','',value));facts.append(row);};
+    const lifeCounters=state.counters||{}, lifeFlags=state.flags||{}, roots=[lifeFlags['lang-khmer']&&'เขมรถิ่น',lifeFlags['eth-kui']&&'กูย',lifeFlags['eth-phuthai']&&'ผู้ไท'].filter(Boolean);
+    fact('แนวโน้มนิสัย',KI.game.personality(state).label);
+    if(lifeCounters.clout)fact('บารมีในชุมชน',String(lifeCounters.clout));
+    if(lifeCounters.good)fact('ทำความดี',`${lifeCounters.good} ครั้ง`);
+    if(lifeCounters.vice)fact('พัวพันอบายมุข',`${lifeCounters.vice} ครั้ง`);
+    if(roots.length)fact('รากเหง้า',roots.join(' · '));
     if(state.year-state.birthYear>=6 && state.talents) {
       const learn=state.talents.learn||1, gifts=Object.entries(state.talents.gifts||{});
-      traitsBox.append(element('p','fold-line',`หัวการเรียน: ${learn>=1.2?'เรียนรู้เร็ว':learn>=0.9?'ปานกลาง':'เรียนรู้ช้า'}`),element('p','fold-line',`ถนัด: ${gifts.length?gifts.map(([k,v])=>TALENT_LABEL[k]+' '+'★'.repeat(v)).join(', '):'ยังไม่พบความถนัดพิเศษ'}`));
+      fact('หัวการเรียน',learn>=1.2?'เรียนรู้เร็ว':learn>=0.9?'ปานกลาง':'เรียนรู้ช้า');
+      fact('ถนัด',gifts.length?gifts.map(([k,v])=>TALENT_LABEL[k]+' '+'★'.repeat(v)).join(', '):'ยังไม่พบ');
       const skills=Object.entries(state.counters||{}).filter(([k,v])=>k.startsWith('skill-') && v>0);
-      if(skills.length)traitsBox.append(element('p','fold-line muted','ทักษะที่ฝึกมา: '+skills.map(([k,v])=>(TALENT_LABEL[k.slice(6)]||k.slice(6))+' '+v).join(' · ')));
+      if(skills.length)fact('ทักษะที่ฝึกมา',skills.map(([k,v])=>(TALENT_LABEL[k.slice(6)]||k.slice(6))+' '+v).join(' · '));
     }
+    traitsBox.append(traitMeters,facts);
+    const personalityHistory=state.personalityHistory||[];
+    if(personalityHistory.length)traitsBox.append(element('p','fold-note',`ตัดสินใจล่าสุด: ${personalityHistory.slice(-3).reverse().map(item=>`${item.year+543} · ${item.choice}`).join(' / ')}`));
+    traitsBox.append(element('p','fold-note','แนวโน้มนิสัยดูจากการช่วยเหลือหรือทำร้ายผู้อื่นไม่เกิน 8 ครั้งล่าสุด และเปลี่ยนได้ตามสิ่งที่เลือกต่อไป'));
     trail.append(traitsBox);
     const journey=fold('เส้นทางที่ผ่านมาและแผนที่');
     journey.append(element('h4','','ปีที่ผ่านมา'));

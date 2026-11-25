@@ -104,6 +104,7 @@ globalThis.KI = globalThis.KI || {};
     return s.t - s.seen[id] >= cooldown;
   }
 
+  const CHEAP = /รถทัวร์|รถเมล์|โอที|ล่วงเวลา/;
   function choicesOf(src, s, rng, data) {
     if (!src.choices || !src.choices.length) return null;
     const out = [];
@@ -126,9 +127,13 @@ globalThis.KI = globalThis.KI || {};
         continue;
       }
       const cost = data && KI.game && s.year - s.birthYear >= 15 ? KI.game.moneyCost(c.effects, s, data) : 0;
-      out.push({ id: c.id, label, tag: p && p.tag ? PRESET_TAG : null, cost, borrow: cost > 0 && cost > Math.max(0, s.money), travelMethod: method || null });
+      out.push({ id: c.id, label, tag: p && p.tag ? PRESET_TAG : null, cost, borrow: cost > 0 && cost > Math.max(0, s.money), travelMethod: method || null, cheap: CHEAP.test(c.label) });
     }
-    return out.length ? out : null;
+    const wealthy = s.flags && (s.flags.status === 'rich' || s.flags.status === 'wealthy');
+    const kept = wealthy ? out.filter((c) => !c.cheap) : out;
+    const list = kept.length >= 2 ? kept : out;
+    list.forEach((c) => delete c.cheap);
+    return list.length ? list : null;
   }
 
   function card(kind, src, o) {
@@ -186,9 +191,33 @@ globalThis.KI = globalThis.KI || {};
     return match ? match[0] : null;
   }
 
+  const PARENT_TEXT = new Map();
+  function awayOnly(when) {
+    const loc = when && when.loc;
+    return !!loc && [].concat(loc).every((l) => l === 'bangkok' || l === 'abroad');
+  }
+  function parentText(x) {
+    if (!PARENT_TEXT.has(x)) {
+      const t = [x.title, x.body, ...(x.choices || []).flatMap((c) => [c.label, c.text, ...(c.roll || []).map((r) => r.text)])].filter(Boolean).join(' ')
+        .replace(/พ่อแม่(ของ)?(แฟน|คนรัก|สามี|ภรรยา|เขา|เธอ|เด็ก|นักเรียน|ลูกศิษย์|เพื่อน)|แม่(น้ำ|ค้า|ยาย|บ้าน|ครัว|ทัพ|ไก่|ชี|ม่าย|ของลูก|ลูกอ่อน|เลี้ยงเดี่ยว|หมา|แมว)|พ่อ(ค้า|ตา|บ้าน|ครัว|ของลูก|เลี้ยงเดี่ยว|หมอ)|เป็น(พ่อแม่|พ่อ|แม่)/g, '');
+      PARENT_TEXT.set(x, { sib: /พี่น้อง|น้องชาย|น้องสาว|พี่ชาย|พี่สาว/.test(t.replace(/พี่น้อง(ใน|ชาว|ร่วม|คนอีสาน|แรงงาน)|เหมือนพี่น้อง/g, '')), rent: /ห้องเช่า|เจ้าของห้อง|คนที่พักด้วย|ค่าเช่าห้อง|หอพัก/.test(t), home: /คนที่บ้าน|ทางบ้าน|ที่บ้านถาม|โทรกลับบ้าน|ติดต่อกลับบ้าน/.test(t) || (awayOnly(x.when) && /กลับบ้าน|ที่บ้าน/.test(t)), both: /พ่อแม่/.test(t), mom: /แม่/.test(t.replace(/พ่อแม่/g, '')), dad: /พ่อ/.test(t.replace(/พ่อแม่/g, '')) });
+    }
+    return PARENT_TEXT.get(x);
+  }
+  function misfit(x, s) {
+    const p = parentText(x), f = s.flags || {}, own = s.year - s.birthYear < 25 || !f.child;
+    if (f.noParents && own && (p.both || p.mom || p.dad)) return true;
+    if ((f.status === 'rich' || f.status === 'wealthy') && /^away-\d+$/.test(x.id)) return true;
+    if (f.ownsPersonalHome && p.rent) return true;
+    if (p.sib && !f.hasSiblings && !/hasSiblings|youngSibling|elderSibling|siblingInBkk/.test(JSON.stringify(x.when || {}))) return true;
+    if (/parentsAlive|fatherAlive|motherAlive|parentPassed|elderParent/.test(JSON.stringify(x.when || {}))) return false;
+    if (p.home && !f.parentsAlive && !f.grandparentsAlive && !f.hasSiblings) return true;
+    return own && ((p.both && !f.parentsAlive) || (p.mom && !f.motherAlive) || (p.dad && !f.fatherAlive));
+  }
+
   function storyCard(s, data, settings, rng, excluded) {
     const hidden = (x) => (settings.hideHeavy && x.heavy) || ((s.role === 'monk' || s.role === 'prisoner') && !forRole(x.when, s.role));
-    const eligible = (x) => x.id !== excluded && x.id !== 'have-child' && !x.reflectionOnly && !hidden(x) && cooled(s, x.id, x.cooldown) && KI.cond.test(x.when, s, rng);
+    const eligible = (x) => x.id !== excluded && x.id !== 'have-child' && !x.reflectionOnly && !hidden(x) && !misfit(x, s) && cooled(s, x.id, x.cooldown) && KI.cond.test(x.when, s, rng);
     const decisions = (data.decisions || []).filter(eligible);
     const choose = (pool) => rng.weighted(pool, (x) => typeof x.w === 'number' ? x.w : 10);
     let selected = choose(decisions.filter((x) => x.urgent));
@@ -241,7 +270,7 @@ globalThis.KI = globalThis.KI || {};
     if (state.season === 0 && age >= 6 && (!Number.isFinite(state.nextReflectionYear) || state.year >= state.nextReflectionYear)) {
       const candidates = ['have-child','reflect-parenthood','reflect-retirement','child-with-grandparents','career-abroad-return','career-returnee-next','career-burnout','after-p6','after-m3'];
       const entries = [...(data.decisions || []).map((item) => ({item,kind:'decision'})),...(data.personalEvents || []).map((item) => ({item,kind:'personal'}))];
-      const available = entries.filter(({item}) => candidates.includes(item.id) && !(settings.hideHeavy && item.heavy) && cooled(state,item.id,item.cooldown) && KI.cond.test(item.when,state,rng));
+      const available = entries.filter(({item}) => candidates.includes(item.id) && !(settings.hideHeavy && item.heavy) && !misfit(item,state) && cooled(state,item.id,item.cooldown) && KI.cond.test(item.when,state,rng));
       const priorities = available.filter(({item}) => item.id === 'have-child' || item.id === 'reflect-parenthood' || item.id === 'reflect-retirement');
       const reflection = rng.weighted(priorities.length ? priorities : available, ({item}) => typeof item.w === 'number' ? item.w : 10);
       const opts = (data.focus || []).filter((f) => KI.cond.test(f.when, state, rng) && (state.role !== 'monk' || ['merit', 'study', 'health'].includes(f.id)) && (state.role !== 'prisoner' || ['study', 'health', 'merit'].includes(f.id)));

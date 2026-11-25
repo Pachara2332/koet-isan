@@ -166,7 +166,7 @@ KI.data.personalEvents.push(...[
     {"id":"sorry","label":"ขอโทษและสัญญาจะลด","text":"คู่ชีวิตบอกว่าจะรอดูการกระทำ","effects":[{"inc":"vice","d":-1},{"stat":"bond","d":2},{"stat":"happy","d":-2}]},
     {"id":"argue","label":"เถียงว่าเงินตัวเองหามา","text":"ทะเลาะกันจนคนในบ้านได้ยิน","effects":[{"inc":"vice"},{"stat":"bond","d":-6},{"stat":"happy","d":-3}]},
     {"id":"out","label":"ออกไปนอนบ้านเพื่อน","text":"เรื่องยังค้าง และยาวขึ้นทุกครั้ง","effects":[{"stat":"bond","d":-4},{"cond":"lonely","turns":2}]}]},
-  {"id":"bhv-gossip","title":"เสียงซุบซิบในหมู่บ้าน","body":"ร้านค้าหน้าหมู่บ้านเริ่มพูดกันว่าเห็นนั่งวงเหล้าทุกวันหรือติดหนี้หวยหลายเจ้า","when":{"age":[20,70],"counter":{"vice":[2,99]}},"w":14,"cooldown":12,
+  {"id":"bhv-gossip","title":"เสียงซุบซิบในหมู่บ้าน","body":"ร้านค้าหน้าหมู่บ้านเริ่มพูดกันว่าเห็นนั่งวงเหล้าทุกวันหรือติดหนี้หวยหลายเจ้า","when":{"age":[20,70],"counter":{"vice":[2,99]},"any":[{"flag":{"drinker":true}},{"cond":["indebted"]},{"money":[-999999999,-1]}]},"w":14,"cooldown":12,
    "choices":[
     {"id":"change","label":"เลิกวงเดิม ไปช่วยงานวัดแทน","text":"คนเริ่มทักทายด้วยรอยยิ้มอีกครั้ง","effects":[{"inc":"vice","d":-2},{"inc":"responsible"},{"stat":"happy","d":-1}]},
     {"id":"ignore","label":"ช่างมัน","text":"เสียงซุบซิบดังขึ้น ญาติเริ่มไม่ชวนไปงาน","effects":[{"stat":"bond","d":-3},{"trait":"social","d":-1}]},
