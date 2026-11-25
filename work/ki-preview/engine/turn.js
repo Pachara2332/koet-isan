@@ -257,7 +257,7 @@ globalThis.KI = globalThis.KI || {};
     }
     const story = storyCard(state, data, settings, rng, reflectionId);
     if (story) cards.push(story);
-    if (!cards.length) cards.push(quietCard(state, rng));
+    if (!cards.some((c) => c.kind !== 'world' && c.kind !== 'home-news')) cards.push(quietCard(state, rng));
     return { head, cards: localize(state, cards), nextReflectionYear };
   }
 

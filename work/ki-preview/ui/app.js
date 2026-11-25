@@ -674,7 +674,7 @@ globalThis.KI = globalThis.KI || {};
         if(annual.hobbyExpense)detail.append(element('p','',`ในยอดข้างต้น ค่าเล่นร้านเกม ${annual.hobbyExpense.toLocaleString('th-TH')} บาท`));
         item.entries.forEach(entry=>{
           if(entry.pin)detail.append(element('p','',entry.pin));
-          (entry.cards||[]).forEach(card=>{
+          (entry.cards||[]).filter(card=>card.kind!=='world' && card.kind!=='home-news').forEach(card=>{
             const marked=()=> (state.bookmarks||[]).some(mark=>mark.t===entry.t && mark.id===card.id);
             const star=button(`${marked()?'★':'☆'} ${card.title}`,()=>{
               const marks=state.bookmarks || [];
@@ -706,6 +706,7 @@ globalThis.KI = globalThis.KI || {};
 
     cards.append(element('h3','year-events-heading',`เรื่องราว พ.ศ. ${state.year+543}`));
     const renderEvent=(card,previous)=>{
+      if(card.kind==='world' || card.kind==='home-news')return;
       const article=element('article','event-card panel');
       const label = {world:'เหตุการณ์อ้างอิง', 'home-news':'ข่าวจากบ้านเกิด',personal:'เรื่องราวชีวิต',decision:'จุดเปลี่ยน',focus:'ตั้งใจในปีนี้',quiet:'วันธรรมดา'}[card.kind] || 'เรื่องราว';
       article.append(element('div','eyebrow',label),element('h3','',card.title),element('p','',card.body));
@@ -772,7 +773,9 @@ globalThis.KI = globalThis.KI || {};
       names.forEach(name=>chips.append(button(name,()=>{input.value=name;input.focus();},'btn btn-quiet')));
       const save=()=>{const name=input.value.replace(/[\u0000-\u001f\u007f]/g,'').trim().slice(0,20)||randomPetName(unnamedPet.kind);state={...state,pets:state.pets.map(pet=>pet.id===unnamedPet.id?{...pet,name}:pet)};persist();play();};
       input.addEventListener('keydown',event=>{if(event.key==='Enter'){event.preventDefault();save();}});
-      dialog.append(element('div','situation-kicker','ตั้งชื่อก่อนเวลาเดินต่อ'),title,element('p','situation-body',`${petLabel(unnamedPet)}ตัวน้อยมาอยู่บ้านเดียวกันแล้ว จะเรียกว่าอะไรดี`),field('ชื่อ (ไม่เกิน 20 ตัวอักษร)',input),chips,button('ตั้งชื่อนี้',save,'btn btn-primary'));
+      const petHead=element('div','situation-heading'),petTitleBlock=element('div','situation-title-block'),petForm=element('div','pet-form');petTitleBlock.append(element('div','situation-kicker','ตั้งชื่อก่อนเวลาเดินต่อ'),title);petHead.append(petTitleBlock);
+      petForm.append(field('ชื่อ (ไม่เกิน 20 ตัวอักษร)',input),chips,button('ตั้งชื่อนี้',save,'btn btn-primary'));
+      dialog.append(petHead,element('p','situation-body',`${petLabel(unnamedPet)}ตัวน้อยมาอยู่บ้านเดียวกันแล้ว จะเรียกว่าอะไรดี`),petForm);
       root.append(dialog);
       const pageY=window.scrollY, pageX=window.scrollX;
       if(typeof dialog.showModal==='function')dialog.showModal();else {dialog.setAttribute('open','');dialog.setAttribute('aria-modal','true');}
