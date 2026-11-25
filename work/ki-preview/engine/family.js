@@ -9,6 +9,7 @@ globalThis.KI = globalThis.KI || {};
   const both=['ขวัญ','ตูน','ปาย','น้ำ','แสง','ปอ','มด','ออม','บีม','นัท','ไอซ์','นิว','หนึ่ง','กุ้ง'];
   const young=[...boys,...girls,...both];
   const nick=(sex)=>sex==='f'?girls.concat(both):boys.concat(both);
+  const farang=['ปีเตอร์','ฮันส์','จอห์น','มาร์ติน','สเวน','ไมเคิล','เดวิด','ลาร์ส','โทมัส','สตีฟ'];
   const HOME={poor:150,mid:1200,rich:6000};
   const JOBS={
     poor:['ทำนา','รับจ้างทั่วไป','ทำนาและรับจ้างหน้าแล้ง','ไปรับจ้างในกรุงเทพฯ','ตัดอ้อยรับจ้าง','ทำไร่มันสำปะหลัง'],
@@ -81,7 +82,7 @@ globalThis.KI = globalThis.KI || {};
     let splits=Array.isArray(state.pendingSplits)?state.pendingSplits.slice():[];
     let assets=(state.personalAssets||[]).slice();
     if(flags.partner && !family.partner && flags.reconcile && family.formerPartners.length){const back={...family.formerPartners.pop()};splits=splits.filter(x=>!(x.partnerName===back.name && x.partnerSince===back.since));delete back.until;family.partner={...back,married:!!flags.married};flags={...flags,reconcile:false};}
-    if(flags.partner && !family.partner){const r=rngFor(state,200+family.formerPartners.length*7+state.year);const sex=state.sex==='m'?'f':'m';family.partner={name:pickFree(nick(sex),r,used),sex,birthYear:state.birthYear+(state.year-state.birthYear<20?r.int(3)-1:r.int(11)-5),since:Number.isFinite(flags.partnerSince)?flags.partnerSince:state.year,married:!!flags.married};}
+    if(flags.partner && !family.partner){const r=rngFor(state,200+family.formerPartners.length*7+state.year);const sex=state.sex==='m'?'f':'m';family.partner={name:pickFree(flags.partnerForeign?farang:nick(sex),r,used),sex,birthYear:state.birthYear+(state.year-state.birthYear<20?r.int(3)-1:r.int(11)-5),since:Number.isFinite(flags.partnerSince)?flags.partnerSince:state.year,married:!!flags.married};if(flags.partnerForeign)flags={...flags,partnerForeign:false};}
     else if(flags.partner && family.partner)family.partner={...family.partner,married:!!flags.married};
     else if(!flags.partner && family.partner){
       const leaving=family.partner;

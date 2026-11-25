@@ -6,7 +6,7 @@ KI.data.decisions.push(...[
      "roll":[{"p":0.6,"text":"ข้าวงามกว่าทุกปี","effects":[{"money":30,"unit":"wageDay"},{"stat":"happy","d":3}]},{"p":0.4,"text":"ฝนทิ้งช่วง ผลผลิตไม่คุ้มทุน","effects":[{"stat":"happy","d":-4}]}]},
     {"id":"no","label":"ทำเท่าที่มี ไม่กู้","text":"ไม่มีหนี้ แต่ใส่ปุ๋ยได้น้อย ข้าวออกพอกิน","effects":[{"money":-5,"unit":"wageDay"},{"stat":"happy","d":1}]}
    ]},
-  {"id":"money-village-fund","title":"กองทุนหมู่บ้าน","body":"หมู่บ้านได้เงินกองทุนหนึ่งล้านบาท คณะกรรมการเปิดให้ยื่นกู้ไปลงทุน","when":{"year":[2001,2008],"age":[20,60],"loc":"isan","noCond":["money-loanFund"],"chance":0.3},"cooldown":"once","major":true,
+  {"id":"money-village-fund","title":"กองทุนหมู่บ้าน","body":"หมู่บ้านได้เงินกองทุนหนึ่งล้านบาท คณะกรรมการเปิดให้ยื่นกู้ไปลงทุน","when":{"year":[2001,2026],"age":[20,60],"loc":"isan","noCond":["money-loanFund"],"chance":0.3},"cooldown":"once","major":true,
    "choices":[
     {"id":"invest","label":"กู้ไปเลี้ยงวัวหรือเปิดร้านเล็กๆ","text":"เอาเงินไปลงทุน ต้องคืนให้ทันรอบปีเพื่อให้คนอื่นได้กู้ต่อ","effects":[{"money":40,"unit":"wageDay"},{"cond":"money-loanFund","turns":3},{"flag":"money-fund"}],
      "roll":[{"p":0.5,"text":"กิจการไปได้ มีรายได้เสริม","effects":[{"money":35,"unit":"wageDay"},{"stat":"happy","d":3}]},{"p":0.5,"text":"ขายได้น้อย ต้องควักเงินอื่นมาคืน","effects":[{"stat":"happy","d":-3}]}]},
