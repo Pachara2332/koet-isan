@@ -148,6 +148,24 @@ globalThis.KI = globalThis.KI || {};
       if (p.life) pets.forEach((x) => { if (x.alive) x.life = Math.max(s.year - x.born, (x.life || 14) + p.life); });
       s.pets = pets;
       petFlags(s);
+    } else if ('personal' in e) {
+      const def = ((data.assets || {}).personal || []).find((x) => x.id === e.personal);
+      if (!def) throw new Error('effects: unknown personal asset "' + e.personal + '"');
+      const price = Math.round(def.days * KI.tables.wageDay(data, s.year)), down = e.finance ? Math.ceil(price * 0.2) : price, principal = price - down;
+      let serial = (s.personalAssetSerial || 0) + 1;
+      while ((s.personalAssets || []).some((a) => a.id === 'asset-' + serial)) serial++;
+      const asset = { id: 'asset-' + serial, key: def.id, kind: def.kind, label: def.label, year: s.year, price };
+      s.personalAssetSerial = serial;
+      s.personalAssets = [...(s.personalAssets || []), asset];
+      s.money -= down;
+      const age = s.year - s.birthYear;
+      s.financeLog = [...(s.financeLog || []), { year: s.year, age, label: 'ซื้อ' + def.label, delta: -down, familyExpense: 0, category: 'personal' }];
+      if (principal) {
+        const rate = 0.02, seasons = def.kind === 'home' ? 45 : 15;
+        s.loans = [...(s.loans || []), { kind: 'asset-' + asset.id, assetId: asset.id, label: 'ผ่อน' + def.label, principal, balance: principal, rate, payment: Math.ceil(principal * rate / (1 - Math.pow(1 + rate, -seasons))), left: seasons, since: s.year }];
+      }
+      if (def.kind === 'home') s.flags.movedOut = true;
+      addDelta(deltas, 'money', -down);
     } else if ('pin' in e) {
       if (s.turn) s.turn.pin = e.pin;
     } else {

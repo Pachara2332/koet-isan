@@ -819,7 +819,7 @@ globalThis.KI = globalThis.KI || {};
         '<rect x="600" y="496" width="260" height="134" fill="#e8dcc4"/><rect x="680" y="510" width="100" height="120" fill="#7a5442"/><rect x="606" y="496" width="16" height="134" fill="#fffaf0"/><rect x="838" y="496" width="16" height="134" fill="#fffaf0"/><path d="M590 496 H870" stroke="#fffaf0" stroke-width="12"/>' +
         tree(250, 640, 1.2, 'var(--tree)', 'var(--tree2)') + tree(1200, 600, .8, 'var(--tree)', 'var(--tree2)');
     }
-    return g(lawn + g(house, 'transform="translate(-100 294) scale(.85) translate(0 -270)"') + CARS.map(car).join(''), 'class="pl pl-' + kind + '"');
+    return g(lawn + g(house, 'transform="translate(-40 294) scale(.85) translate(0 -270)"') + CARS.map(car).join(''), 'class="pl pl-' + kind + '"');
   }
 
   function homeFor(state) {

@@ -106,6 +106,7 @@ globalThis.KI = globalThis.KI || {};
     if(quote.principal){next.loans.push({kind:'asset-'+asset.id,assetId:asset.id,label:'ผ่อน'+asset.label,principal:quote.principal,balance:quote.principal,rate:quote.rate,payment:quote.payment,left:quote.seasons,since:state.year});next.financeLog.push({year:state.year,age:state.year-state.birthYear,label:'กู้ซื้อ'+asset.label,delta:quote.principal,familyExpense:0,category:'loan'});}
     if(quote.partnerDown)next.financeLog.push({year:state.year,age:state.year-state.birthYear,label:'คู่รักช่วยซื้อ'+asset.label,delta:quote.partnerDown,familyExpense:0,category:'personal'});
     next.financeLog.push({year:state.year,age:state.year-state.birthYear,label:'ซื้อ'+asset.label,delta:-quote.price,familyExpense:0,category:'personal'});
+    if(quote.item.kind==='home')next.flags={...next.flags,movedOut:true};
     next.financeAt=state.t;
     return {ok:true,state:next,asset,quote};
   }

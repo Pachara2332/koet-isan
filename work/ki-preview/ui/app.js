@@ -105,7 +105,7 @@ globalThis.KI = globalThis.KI || {};
     if(parentsHere && f.parents && f.parents.mother && pi.mother && y<pi.mother.deathYear)add('แม่',f.parents.mother,pi.mother.birthYear,'f',{role:/นา|ไร่|อ้อย/.test(pi.mother.job)?'farmer':''});
     (home?f.grandparents||[]:[]).filter(p=>y<p.deathYear).forEach(p=>add(p.relation,p.name,p.birthYear,p.relation==='ย่า'||p.relation==='ยาย'?'f':'m'));
     if(withPartner)add(f.partner.married?'คู่สมรส':'คนรัก',f.partner.name,f.partner.birthYear||state.birthYear,f.partner.sex);
-    (home?f.siblings||[]:[]).filter(p=>!(p.deathYear<=y)).forEach(p=>add(p.birthYear<state.birthYear?'พี่':'น้อง',p.name,p.birthYear,p.sex));
+    (home?f.siblings||[]:state.loc.kind==='bangkok' && state.flags.siblingInBkk?(f.siblings||[]).filter(p=>!(p.deathYear<=y) && y-p.birthYear>=18).slice(0,1):[]).filter(p=>!(p.deathYear<=y)).forEach(p=>add(p.birthYear<state.birthYear?'พี่':'น้อง',p.name,p.birthYear,p.sex));
     (home || withPartner || ownHome?f.children||[]:[]).forEach(p=>add(childRelation(p).replace('บุญธรรม',''),p.name,p.birthYear,p.sex));
     (home || withPartner?f.grandchildren||[]:[]).forEach(p=>add(grandchildRelation(p),p.name,p.birthYear,p.sex));
     return out.slice(0,10);
@@ -295,7 +295,7 @@ globalThis.KI = globalThis.KI || {};
     if(!list.length)body.append(element('p','muted','ยังไม่มี'));
     else {
       const table=element('div','pf-table'), header=element('div','pf-row pf-row-head'), total={units:0,basis:0,value:0};
-      ['ชื่อ','หน่วย','ต้นทุน (บาท)','มูลค่า (บาท)','กำไร/ขาดทุน'].forEach(text=>header.append(element('span','',text)));table.append(header);
+      ['ชื่อ','หน่วย','ต้นทุน (บาท)','มูลค่า (บาท)','ผลตอบแทน'].forEach(text=>header.append(element('span','',text)));table.append(header);
       list.forEach(item=>{total.units+=item.units;total.basis+=item.basis;total.value+=item.value;table.append(holdingRow(item.label,item.units,item.basis,item.value));});
       table.append(holdingRow('รวม',total.units,total.basis,total.value,'pf-total'));
       body.append(table);
@@ -303,7 +303,11 @@ globalThis.KI = globalThis.KI || {};
     body.append(element('h3','pf-heading','ตลาด'));
     const listed=KI.finance.assets(state,data).filter(item=>item.kind===kind);
     const market=[...listed,...list.filter(h=>!listed.some(item=>item.key===h.key)).map(h=>({key:h.key,label:h.label,note:'ไม่เปิดซื้อเพิ่มแล้ว ขายได้อย่างเดียว'}))];
-    market.forEach(item=>{
+    const foreignKeys=new Set(((data.assets||{}).stocks||[]).filter(d=>d.foreign).map(d=>'stock:'+d.id));
+    market.sort((a,b)=>foreignKeys.has(a.key)-foreignKeys.has(b.key));
+    market.forEach((item,i)=>{
+      const foreign=foreignKeys.has(item.key);
+      if(kind==='stock' && (i===0 || foreign!==foreignKeys.has(market[i-1].key)))body.append(element('h4','pf-subhead',foreign?'หุ้นต่างประเทศ (DR ซื้อขายในไทย)':'หุ้นไทย'));
       const units=KI.finance.held(state,item.key).units, unit=KI.finance.price(state,data,item.key), last=KI.finance.priceAt(data,item.key,state.year-1), change=last?Math.round((unit-last)/last*100):0, max=KI.finance.maxBuy(state,data,item.key);
       const row=element('details','pf-market');row.open=portfolioRow===item.key;
       row.addEventListener('toggle',()=>{if(row.open)portfolioRow=item.key;else if(portfolioRow===item.key)portfolioRow=null;});
@@ -355,7 +359,7 @@ globalThis.KI = globalThis.KI || {};
     KI.scene.motion(settings.motion);
     const avatar=element('div','character-avatar'); avatar.append(KI.avatar.create(state),element('span','character-name',state.name)); view.append(avatar);
     const kin=state.role==='prisoner'?[]:familyFigures(), pets=state.role==='prisoner' || state.loc.kind!=='isan' || state.loc.province!==state.home.province && !/^home-/.test(p)?[]:(state.pets||[]).filter(pet=>pet.alive).slice(0,2);
-    if(kin.length || pets.length){const row=element('div','family-row');kin.forEach(person=>{const box=element('div','family-figure');box.append(KI.avatar.create(person),element('span','',person.label));row.append(box);});pets.forEach(pet=>{const box=element('div','family-figure');box.append(KI.avatar.pet(pet.kind),element('span','',pet.name||petLabel(pet)));row.append(box);});view.append(row);}
+    if(kin.length || pets.length){const row=element('div','family-row');kin.forEach(person=>{const box=element('div','family-figure');box.append(KI.avatar.create(person),element('span','',person.label));row.append(box);});pets.forEach(pet=>{const box=element('div','family-figure');box.append(KI.avatar.pet(pet.kind),element('span','',pet.name||petLabel(pet)));row.append(box);});const figs=[...row.children];row.insertBefore(element('div','family-gap'),figs[Math.ceil(figs.length/2)]||null);view.append(row);}
     while(autoMode && (state.pendingSplits||[]).length){const sp=state.pendingSplits[0];const resolved=sp.assets && sp.assets.length?KI.finance.resolveSplit(state,data,sp.assets[0],'sell'):state;state=resolved!==state?resolved:{...state,pendingSplits:state.pendingSplits.slice(1)};}
     if(autoMode && (state.pets||[]).some(pet=>pet.alive && !pet.name))state={...state,pets:state.pets.map(pet=>pet.alive && !pet.name?{...pet,name:randomPetName(pet.kind)}:pet)};
     const splitWaiting=(state.pendingSplits||[]).length>0;
@@ -404,7 +408,9 @@ globalThis.KI = globalThis.KI || {};
     if(state.year-state.birthYear>=18) {
       const worth=KI.finance.portfolioValue(state,data), held=[...KI.finance.holdings(state,data,'stock'),...KI.finance.holdings(state,data,'prop')];
       const basis=held.reduce((sum,item)=>sum+item.basis,0), value=worth.stocks+worth.property, gain=basis?Math.round((value-basis)/basis*100):0;
-      cash.append(button(held.length?`พอร์ต ${value.toLocaleString('th-TH')} บาท ${gain>0?'+':''}${gain}% · ดูทั้งหมด ›`:'ตลาดหุ้นและอสังหาฯ ›',openPortfolio,'btn pf-open'));
+      const open=button(held.length?`พอร์ต ${value.toLocaleString('th-TH')} บาท `:'ตลาดหุ้นและอสังหาฯ ›',openPortfolio,'btn pf-open');
+      if(held.length)open.append(element('span',gain>0?'pf-change up':gain<0?'pf-change down':'pf-change',`${gain>0?'+':''}${gain}%`),document.createTextNode(' · ดูทั้งหมด ›'));
+      cash.append(open);
     }
     const partner=state.family.partner;
     if(partner || state.partnerLoan){
