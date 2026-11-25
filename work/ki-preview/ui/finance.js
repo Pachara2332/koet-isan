@@ -251,7 +251,7 @@ globalThis.KI = globalThis.KI || {};
   function maxBuy(state,data,key) { const unit=price(state,data,key); return unit>0?Math.max(0,Math.floor(state.money/unit)):0; }
   function canTrade(state,data,key,side,qty) {
     const n=qty===undefined?1:qty, age=state.year-state.birthYear;
-    if(!Number.isInteger(n) || n<1 || state.death || age<MIN_ASSET_AGE || used(state,categoryOf(key)) || !assets(state,data).some(a=>a.key===key) && side==='buy')return false;
+    if(!Number.isInteger(n) || n<1 || state.death || age<MIN_ASSET_AGE || !assets(state,data).some(a=>a.key===key) && side==='buy')return false;
     return side==='sell'?held(state,key).units>=n:state.money>=price(state,data,key)*n;
   }
   function move(next,state,data,key,side,n) {
@@ -397,5 +397,5 @@ globalThis.KI = globalThis.KI || {};
     next.financeLog=[...(state.financeLog||[]),{year:state.year,age:state.year-state.birthYear,label:'ปิด'+loan.label,delta:-loan.balance,familyExpense:0,category:'loan'}];
     return next;
   }
-  KI.finance={householdWorth,splitQuote,resolveSplit,loanBalance,legacyDebt,payLegacyDebt,partnerTransfer,needsFamilyHelp,familyHelpOptions,askFamilyHelp,personalInventory,personalValue,personalSalePrice,personalQuote,buyPersonal,runway,LENDERS,loanLimit,loanReview,borrow,payOff,maxUnits,status,STATUS_LABEL,actions,price,saleValue,cost,annual,history,canAct,setHobby,act,assets,held,portfolioValue,canTrade,trade,priceAt,holdings,maxBuy,canSellAll,sellAll,sellAllValue,used};
+  KI.finance={householdWorth,splitQuote,resolveSplit,loanBalance,legacyDebt,payLegacyDebt,partnerTransfer,needsFamilyHelp,familyHelpOptions,askFamilyHelp,personalInventory,personalValue,personalSalePrice,personalQuote,buyPersonal,runway,LENDERS,loanLimit,loanReview,borrow,payOff,maxUnits,status,STATUS_LABEL,actions,price,saleValue,cost,annual,history,canAct,setHobby,act,assets,held,portfolioValue,canTrade,trade,priceAt,holdings,maxBuy,canSellAll,sellAll,sellAllValue};
 })();

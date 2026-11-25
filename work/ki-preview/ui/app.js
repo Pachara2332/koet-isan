@@ -96,17 +96,17 @@ globalThis.KI = globalThis.KI || {};
   function sexLabel(person) {return person.sex==='m'?'ชาย':person.sex==='f'?'หญิง':'ไม่ระบุ';}
   function childRelation(person) {return 'ลูก'+(person.sex==='m'?'ชาย':person.sex==='f'?'สาว':'')+(person.adopted?'บุญธรรม':'');}
   function grandchildRelation(person) {return 'หลาน'+(person.sex==='m'?'ชาย':person.sex==='f'?'สาว':'');}
-  function familyFigures() {
+  function familyFigures(all) {
     const f=state.family||{}, y=state.year, out=[];
     const add=(label,name,birthYear,sex,extra)=>{if(Number.isFinite(birthYear) && birthYear<=y)out.push({label,name,birthYear,year:y,sex,role:y-birthYear<18&&y-birthYear>=6?'student':'',conds:[],...(extra||{})});};
-    const pi=f.parentInfo||{};
-    if(f.parents && f.parents.father && pi.father && y<pi.father.deathYear)add('พ่อ',f.parents.father,pi.father.birthYear,'m',{role:/ครู|ข้าราชการ/.test(pi.father.job)?'teacher':/นา|ไร่|อ้อย/.test(pi.father.job)?'farmer':''});
-    if(f.parents && f.parents.mother && pi.mother && y<pi.mother.deathYear)add('แม่',f.parents.mother,pi.mother.birthYear,'f',{role:/นา|ไร่|อ้อย/.test(pi.mother.job)?'farmer':''});
-    (f.grandparents||[]).filter(p=>y<p.deathYear).forEach(p=>add(p.relation,p.name,p.birthYear,p.relation==='ย่า'||p.relation==='ยาย'?'f':'m'));
-    if(f.partner && KI.family.together(state,f.partner))add(f.partner.married?'คู่สมรส':'คนรัก',f.partner.name,f.partner.birthYear||state.birthYear,f.partner.sex);
-    (f.siblings||[]).filter(p=>!(p.deathYear<=y)).forEach(p=>add(p.birthYear<state.birthYear?'พี่':'น้อง',p.name,p.birthYear,p.sex));
-    (f.children||[]).forEach(p=>add(childRelation(p).replace('บุญธรรม',''),p.name,p.birthYear,p.sex));
-    (f.grandchildren||[]).forEach(p=>add(grandchildRelation(p),p.name,p.birthYear,p.sex));
+    const pi=f.parentInfo||{}, home=all || state.loc.kind==='isan' && state.loc.province===state.home.province, withPartner=!!f.partner && (all || KI.family.together(state,f.partner));
+    if(home && f.parents && f.parents.father && pi.father && y<pi.father.deathYear)add('พ่อ',f.parents.father,pi.father.birthYear,'m',{role:/ครู|ข้าราชการ/.test(pi.father.job)?'teacher':/นา|ไร่|อ้อย/.test(pi.father.job)?'farmer':''});
+    if(home && f.parents && f.parents.mother && pi.mother && y<pi.mother.deathYear)add('แม่',f.parents.mother,pi.mother.birthYear,'f',{role:/นา|ไร่|อ้อย/.test(pi.mother.job)?'farmer':''});
+    (home?f.grandparents||[]:[]).filter(p=>y<p.deathYear).forEach(p=>add(p.relation,p.name,p.birthYear,p.relation==='ย่า'||p.relation==='ยาย'?'f':'m'));
+    if(withPartner)add(f.partner.married?'คู่สมรส':'คนรัก',f.partner.name,f.partner.birthYear||state.birthYear,f.partner.sex);
+    (home?f.siblings||[]:[]).filter(p=>!(p.deathYear<=y)).forEach(p=>add(p.birthYear<state.birthYear?'พี่':'น้อง',p.name,p.birthYear,p.sex));
+    (home || withPartner?f.children||[]:[]).forEach(p=>add(childRelation(p).replace('บุญธรรม',''),p.name,p.birthYear,p.sex));
+    (home || withPartner?f.grandchildren||[]:[]).forEach(p=>add(grandchildRelation(p),p.name,p.birthYear,p.sex));
     return out.slice(0,10);
   }
   function persist() {
@@ -161,6 +161,8 @@ globalThis.KI = globalThis.KI || {};
     const saved = KI.save.read(storage);
     if (saved) form.append(button('เล่นต่อจากที่บันทึก', () => {state = {...saved}; delete state.peers; play();}));
     form.append(musicButton(),button('ชีวิตที่ผ่านมา', lives, 'btn btn-quiet'),button('แหล่งข้อมูล', sources, 'btn btn-quiet'),button('ตั้งค่า', settingsPage, 'btn btn-quiet'),supportBox());
+    const supporters=data.supporters||[];
+    if(supporters.length){const sky=element('div',settings.motion?'thanks-sky':'thanks-sky without-motion');supporters.forEach((s,i)=>{const rock=element('div','thanks-rock',`ขอบคุณ ${s.name} · ${s.amount.toLocaleString('th-TH')} บาท`);rock.style.setProperty('--y',`${12+(i*37)%70}%`);rock.style.setProperty('--x',`${8+(i*29)%70}%`);rock.style.setProperty('--d',`${38+(i*7)%20}s`);rock.style.setProperty('--delay',`${-(10+i*13)}s`);sky.append(rock);});page.append(sky);}
     page.append(scene,hero,form); root.append(page);
   }
   function recentNames() {
@@ -268,7 +270,7 @@ globalThis.KI = globalThis.KI || {};
   }
   function drawPortfolio() {
     if(!portfolio)return;
-    const fmt=v=>v.toLocaleString('th-TH'), kinds={stock:'หุ้น',prop:'อสังหาฯ'}, kind=portfolioTab, category=kind==='stock'?'stock':'property';
+    const fmt=v=>v.toLocaleString('th-TH'), kinds={stock:'หุ้น',prop:'อสังหาฯ'}, kind=portfolioTab;
     const old=portfolio.querySelector('.pf-body'), scrollTop=old?old.scrollTop:0;
     const refresh=next=>{state=next;persist();play();drawPortfolio();};
     const trade=(key,side,n)=>refresh(KI.finance.trade(state,data,key,side,n));
@@ -298,7 +300,6 @@ globalThis.KI = globalThis.KI || {};
       body.append(table);
     }
     body.append(element('h3','pf-heading','ตลาด'));
-    if(KI.finance.used(state,category))body.append(element('p','pf-used',`ซื้อขาย${kinds[kind]}ไปแล้วในฤดูนี้ ซื้อขายได้อีกครั้งฤดูหน้า`));
     const listed=KI.finance.assets(state,data).filter(item=>item.kind===kind);
     const market=[...listed,...list.filter(h=>!listed.some(item=>item.key===h.key)).map(h=>({key:h.key,label:h.label,note:'ไม่เปิดซื้อเพิ่มแล้ว ขายได้อย่างเดียว'}))];
     market.forEach(item=>{
@@ -318,7 +319,7 @@ globalThis.KI = globalThis.KI || {};
       const every=button(`ทั้งหมด ${units}`,()=>trade(item.key,'sell',units),'btn pf-qty-btn');every.disabled=!units || !KI.finance.canTrade(state,data,item.key,'sell',units);sells.append(every);
       row.append(line,element('p','muted pf-note',item.note),buys,sells);body.append(row);
     });
-    body.append(element('p','muted finance-note','ชื่อหุ้นเป็นบริษัทจริง แต่ราคาเป็นราคาจำลองของเกม ไม่ใช่ราคาตลาดจริง ปีวิกฤตอิงเหตุการณ์จริงโดยประมาณ ซื้อขายได้ประเภทละครั้งต่อฤดู แต่ละครั้งซื้อหรือขายหลายหน่วยได้'));
+    body.append(element('p','muted finance-note','ชื่อหุ้นเป็นบริษัทจริง แต่ราคาเป็นราคาจำลองของเกม ไม่ใช่ราคาตลาดจริง ปีวิกฤตอิงเหตุการณ์จริงโดยประมาณ ซื้อขายได้ทุกเมื่อที่มีเงินพอ ครั้งละหลายหน่วย'));
     portfolio.append(head,body);
     body.scrollTop=scrollTop;
   }
@@ -352,8 +353,8 @@ globalThis.KI = globalThis.KI || {};
     KI.scene.set({season:state.season,place:p,country:KI.scene.countryFor(state),year:state.year,mood:state.conds.some(c => ['heartbroken','grieving'].includes(c.id)) ? 'sad' : 'normal'});
     KI.scene.motion(settings.motion);
     const avatar=element('div','character-avatar'); avatar.append(KI.avatar.create(state),element('span','character-name',state.name)); view.append(avatar);
-    const kin=state.role==='prisoner'?[]:familyFigures();
-    if(kin.length){const row=element('div','family-row');kin.forEach(person=>{const box=element('div','family-figure');box.append(KI.avatar.create(person),element('span','',person.label));row.append(box);});view.append(row);}
+    const kin=state.role==='prisoner'?[]:familyFigures(), pets=state.role==='prisoner' || state.loc.kind!=='isan' || state.loc.province!==state.home.province?[]:(state.pets||[]).filter(pet=>pet.alive).slice(0,2);
+    if(kin.length || pets.length){const row=element('div','family-row');kin.forEach(person=>{const box=element('div','family-figure');box.append(KI.avatar.create(person),element('span','',person.label));row.append(box);});pets.forEach(pet=>{const box=element('div','family-figure');box.append(KI.avatar.pet(pet.kind),element('span','',pet.name||petLabel(pet)));row.append(box);});view.append(row);}
     while(autoMode && (state.pendingSplits||[]).length){const sp=state.pendingSplits[0];const resolved=sp.assets && sp.assets.length?KI.finance.resolveSplit(state,data,sp.assets[0],'sell'):state;state=resolved!==state?resolved:{...state,pendingSplits:state.pendingSplits.slice(1)};}
     if(autoMode && (state.pets||[]).some(pet=>pet.alive && !pet.name))state={...state,pets:state.pets.map(pet=>pet.alive && !pet.name?{...pet,name:randomPetName(pet.kind)}:pet)};
     const splitWaiting=(state.pendingSplits||[]).length>0;
@@ -847,7 +848,7 @@ globalThis.KI = globalThis.KI || {};
     const shareCanvas=async()=>{
       try{if(document.fonts && document.fonts.ready)await document.fonts.ready;}catch(e){}
       const pets=(state.pets||[]).filter(pet=>pet.alive).slice(0,2);
-      const kin=familyFigures().filter(p=>p.label!==undefined).slice(0,7-pets.length);
+      const kin=familyFigures(true).filter(p=>p.label!==undefined).slice(0,7-pets.length);
       const fam=state.family||{};const familyLine=[fam.partner?`${fam.partner.married?'คู่ชีวิต':'คนรัก'} ${fam.partner.name}`:'',(fam.children||[]).length?`ลูก ${(fam.children||[]).length} คน`:'',(fam.grandchildren||[]).length?`หลาน ${(fam.grandchildren||[]).length} คน`:''].filter(Boolean).join(' · ');
       const canvas=await KI.share.life({...summary,stats:state.stats,worth:summary.financeFinal.cash+summary.financeFinal.stocks.value+summary.financeFinal.property.value+summary.financeFinal.cars.value-summary.financeFinal.loans,familyLine},titles,gameUrl,[{svg:KI.avatar.create(state),label:'',name:state.name},...kin.map(p=>({svg:KI.avatar.create(p),label:p.label,name:p.name})),...pets.map(pet=>({svg:KI.avatar.pet(pet.kind),label:petLabel(pet),name:pet.name||''}))]);
       return canvas;
