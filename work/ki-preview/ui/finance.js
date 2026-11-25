@@ -239,25 +239,47 @@ globalThis.KI = globalThis.KI || {};
     const unit=price(state,data,key);
     return unit>0?Math.max(0,Math.floor(state.money/unit)):0;
   }
+  function categoryOf(key) { return key.startsWith('stock:')?'stock':'property'; }
+  function labelOf(state,data,key) {
+    const listed=assets(state,data).find(a=>a.key===key);if(listed)return listed.label;
+    const found=defOf(data,key);if(!found)return key;
+    return found.kind==='stock'?`${found.def.id} · ${found.def.name}`:found.def.name;
+  }
+  function holdings(state,data,kind) {
+    return Object.keys(state.portfolio||{}).filter(key=>key.startsWith(kind+':') && defOf(data,key) && held(state,key).units>0).map(key=>{const h=held(state,key);return {key,label:labelOf(state,data,key),units:h.units,basis:h.basis||0,value:h.units*price(state,data,key)};}).sort((a,b)=>b.value-a.value);
+  }
+  function maxBuy(state,data,key) { const unit=price(state,data,key); return unit>0?Math.max(0,Math.floor(state.money/unit)):0; }
   function canTrade(state,data,key,side,qty) {
-    const n=Number.isInteger(qty) && qty>0?qty:1;
-    const age=state.year-state.birthYear, category=key.startsWith('stock:')?'stock':'property';
-    if(state.death || age<MIN_ASSET_AGE || used(state,category) || !assets(state,data).some(a=>a.key===key) && side==='buy')return false;
+    const n=qty===undefined?1:qty, age=state.year-state.birthYear;
+    if(!Number.isInteger(n) || n<1 || state.death || age<MIN_ASSET_AGE || used(state,categoryOf(key)) || !assets(state,data).some(a=>a.key===key) && side==='buy')return false;
     return side==='sell'?held(state,key).units>=n:state.money>=price(state,data,key)*n;
   }
-  function trade(state,data,key,side,qty) {
-    const n=Number.isInteger(qty) && qty>0?qty:1;
-    if(!canTrade(state,data,key,side,n))return state;
-    const next=JSON.parse(JSON.stringify(state)), unit=price(state,data,key), h=held(state,key), category=key.startsWith('stock:')?'stock':'property';
-    const label=(assets(state,data).find(a=>a.key===key)||{label:key}).label;
+  function move(next,state,data,key,side,n) {
+    const unit=price(state,data,key), h=held(next,key), category=categoryOf(key);
     let units=h.units, basis=h.basis||0, delta;
-    if(side==='buy'){units+=n;basis+=unit*n;delta=-unit*n;}else{delta=saleValue(state,data,key)*n;basis=Math.max(0,Math.round(basis*(units-n)/units));units-=n;}
+    if(side==='buy'){units+=n;basis+=unit*n;delta=-unit*n;}else{delta=saleValue(state,data,key)*n;basis=units>n?Math.round(basis*(units-n)/units):0;units-=n;}
     next.money+=delta;
-    next.portfolio={...(state.portfolio||{}),[key]:{units,basis}};
-    const categories=state.financeUsed && state.financeUsed.turn===state.t?state.financeUsed.categories:{};
+    next.portfolio={...(next.portfolio||{}),[key]:{units,basis}};
+    const categories=next.financeUsed && next.financeUsed.turn===state.t?next.financeUsed.categories:{};
     next.financeUsed={turn:state.t,categories:{...categories,[category]:true}};
     next.financeAt=state.t;
-    next.financeLog=[...(state.financeLog||[]),{year:state.year,age:state.year-state.birthYear,label:(side==='buy'?'ซื้อ ':'ขาย ')+label+(n>1?` ${n} หน่วย`:''),delta,familyExpense:0,category}];
+    next.financeLog=[...(next.financeLog||[]),{year:state.year,age:state.year-state.birthYear,label:(side==='buy'?'ซื้อ ':'ขาย ')+labelOf(state,data,key)+(n>1?` ${n} หน่วย`:''),delta,familyExpense:0,category}];
+    return next;
+  }
+  function trade(state,data,key,side,qty) {
+    const n=qty===undefined?1:qty;
+    if(!canTrade(state,data,key,side,n))return state;
+    return move(JSON.parse(JSON.stringify(state)),state,data,key,side,n);
+  }
+  function canSellAll(state,data,kinds) {
+    const list=kinds.flatMap(kind=>holdings(state,data,kind));
+    return list.length>0 && list.every(item=>canTrade(state,data,item.key,'sell',item.units));
+  }
+  function sellAllValue(state,data,kinds) { return kinds.flatMap(kind=>holdings(state,data,kind)).reduce((sum,item)=>sum+saleValue(state,data,item.key)*item.units,0); }
+  function sellAll(state,data,kinds) {
+    if(!canSellAll(state,data,kinds))return state;
+    const next=JSON.parse(JSON.stringify(state));
+    kinds.flatMap(kind=>holdings(state,data,kind)).forEach(item=>move(next,state,data,item.key,'sell',item.units));
     return next;
   }
   function annual(state,year) {
@@ -375,5 +397,5 @@ globalThis.KI = globalThis.KI || {};
     next.financeLog=[...(state.financeLog||[]),{year:state.year,age:state.year-state.birthYear,label:'ปิด'+loan.label,delta:-loan.balance,familyExpense:0,category:'loan'}];
     return next;
   }
-  KI.finance={householdWorth,splitQuote,resolveSplit,loanBalance,legacyDebt,payLegacyDebt,partnerTransfer,needsFamilyHelp,familyHelpOptions,askFamilyHelp,personalInventory,personalValue,personalSalePrice,personalQuote,buyPersonal,runway,LENDERS,loanLimit,loanReview,borrow,payOff,maxUnits,status,STATUS_LABEL,actions,price,saleValue,cost,annual,history,canAct,setHobby,act,assets,held,portfolioValue,canTrade,trade,priceAt};
+  KI.finance={householdWorth,splitQuote,resolveSplit,loanBalance,legacyDebt,payLegacyDebt,partnerTransfer,needsFamilyHelp,familyHelpOptions,askFamilyHelp,personalInventory,personalValue,personalSalePrice,personalQuote,buyPersonal,runway,LENDERS,loanLimit,loanReview,borrow,payOff,maxUnits,status,STATUS_LABEL,actions,price,saleValue,cost,annual,history,canAct,setHobby,act,assets,held,portfolioValue,canTrade,trade,priceAt,holdings,maxBuy,canSellAll,sellAll,sellAllValue,used};
 })();

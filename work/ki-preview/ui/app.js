@@ -243,6 +243,85 @@ globalThis.KI = globalThis.KI || {};
     Object.entries(kept.scrolls).forEach(([key,top])=>{if(key==='slot-cards' && !sameTurn)return;const node=root.querySelector('.shell .'+key);if(node)node.scrollTop=top;});
     window.scrollTo(kept.x,kept.y);
   }
+  let portfolio=null, portfolioTab='stock', portfolioRow=null, portfolioResume=false;
+  function holdingRow(label,units,basis,value,cls) {
+    const fmt=v=>v.toLocaleString('th-TH'), gain=basis?Math.round((value-basis)/basis*100):0;
+    const row=element('div','pf-row'+(cls?' '+cls:''));
+    row.append(element('span','pf-name',label),element('span','pf-units',`${units} หน่วย`),element('span','pf-basis',`ทุน ${fmt(basis)}`),element('span','pf-value',fmt(value)),element('span',gain>0?'pf-gain up':gain<0?'pf-gain down':'pf-gain',`${gain>0?'+':''}${gain}%`));
+    return row;
+  }
+  function closePortfolio() {
+    if(!portfolio)return;
+    const node=portfolio;portfolio=null;
+    if(typeof node.close==='function' && node.open)node.close();node.remove();
+    if(portfolioResume && clock.isPaused()){clock.resume();play();}
+  }
+  function openPortfolio() {
+    if(portfolio)return;
+    portfolioResume=!clock.isPaused();clock.pause();
+    portfolio=element('dialog','portfolio-dialog');portfolio.setAttribute('aria-labelledby','portfolio-title');
+    portfolio.addEventListener('cancel',event=>{event.preventDefault();closePortfolio();});
+    portfolio.addEventListener('click',event=>{if(event.target===portfolio)closePortfolio();});
+    (document.body || root).append(portfolio);
+    drawPortfolio();
+    if(typeof portfolio.showModal==='function')portfolio.showModal();else portfolio.setAttribute('open','');
+  }
+  function drawPortfolio() {
+    if(!portfolio)return;
+    const fmt=v=>v.toLocaleString('th-TH'), kinds={stock:'หุ้น',prop:'อสังหาฯ'}, kind=portfolioTab, category=kind==='stock'?'stock':'property';
+    const old=portfolio.querySelector('.pf-body'), scrollTop=old?old.scrollTop:0;
+    const refresh=next=>{state=next;persist();play();drawPortfolio();};
+    const trade=(key,side,n)=>refresh(KI.finance.trade(state,data,key,side,n));
+    const sellAll=(list,label,what)=>{
+      const b=button(label,()=>gameDialog({title:label,message:`ขาย${what}ทุกตัวที่ถืออยู่ รับเงินราว ${fmt(KI.finance.sellAllValue(state,data,list))} บาท`,confirmLabel:'ขายเลย',cancelLabel:'ยกเลิก',onConfirm:()=>refresh(KI.finance.sellAll(state,data,list))}),'btn pf-sell-all');
+      b.disabled=!KI.finance.canSellAll(state,data,list);return b;
+    };
+    portfolio.replaceChildren();
+    const head=element('div','pf-head');
+    const title=element('h2','','พอร์ตการลงทุน');title.id='portfolio-title';
+    const close=button('✕',closePortfolio,'btn pf-close');close.setAttribute('aria-label','ปิดพอร์ต');
+    const worth=KI.finance.portfolioValue(state,data);
+    const top=element('div','pf-title');top.append(title,close);
+    const bulk=element('div','pf-bulk');bulk.append(sellAll(['stock'],'ขายหุ้นทั้งหมด','หุ้น'),sellAll(['stock','prop'],'ขายทั้งหมด','หุ้นและอสังหาฯ'));
+    const tabs=element('div','pf-tabs');tabs.setAttribute('role','tablist');
+    Object.entries(kinds).forEach(([id,label])=>{const tab=button(label,()=>{portfolioTab=id;portfolioRow=null;drawPortfolio();},'btn pf-tab');tab.setAttribute('role','tab');tab.setAttribute('aria-selected',String(kind===id));tabs.append(tab);});
+    head.append(top,element('p','pf-cash',`เงินสด ${fmt(state.money)} บาท · หุ้น ${fmt(worth.stocks)} บาท · อสังหาฯ ${fmt(worth.property)} บาท`),bulk,tabs);
+    const body=element('div','pf-body');
+    const list=KI.finance.holdings(state,data,kind);
+    body.append(element('h3','pf-heading',`${kinds[kind]}ที่ถืออยู่`));
+    if(!list.length)body.append(element('p','muted','ยังไม่มี'));
+    else {
+      const table=element('div','pf-table'), header=element('div','pf-row pf-row-head'), total={units:0,basis:0,value:0};
+      ['ชื่อ','หน่วย','ต้นทุน (บาท)','มูลค่า (บาท)','กำไร/ขาดทุน'].forEach(text=>header.append(element('span','',text)));table.append(header);
+      list.forEach(item=>{total.units+=item.units;total.basis+=item.basis;total.value+=item.value;table.append(holdingRow(item.label,item.units,item.basis,item.value));});
+      table.append(holdingRow('รวม',total.units,total.basis,total.value,'pf-total'));
+      body.append(table);
+    }
+    body.append(element('h3','pf-heading','ตลาด'));
+    if(KI.finance.used(state,category))body.append(element('p','pf-used',`ซื้อขาย${kinds[kind]}ไปแล้วในฤดูนี้ ซื้อขายได้อีกครั้งฤดูหน้า`));
+    const listed=KI.finance.assets(state,data).filter(item=>item.kind===kind);
+    const market=[...listed,...list.filter(h=>!listed.some(item=>item.key===h.key)).map(h=>({key:h.key,label:h.label,note:'ไม่เปิดซื้อเพิ่มแล้ว ขายได้อย่างเดียว'}))];
+    market.forEach(item=>{
+      const units=KI.finance.held(state,item.key).units, unit=KI.finance.price(state,data,item.key), last=KI.finance.priceAt(data,item.key,state.year-1), change=last?Math.round((unit-last)/last*100):0, max=KI.finance.maxBuy(state,data,item.key);
+      const row=element('details','pf-market');row.open=portfolioRow===item.key;
+      row.addEventListener('toggle',()=>{if(row.open)portfolioRow=item.key;else if(portfolioRow===item.key)portfolioRow=null;});
+      const line=element('summary','pf-market-line');
+      line.append(element('span','pf-name',item.label),element('span','pf-price',`${fmt(unit)} บาท`),element('span',change>0?'pf-change up':change<0?'pf-change down':'pf-change',`${change>0?'+':''}${change}%`));
+      if(units)line.append(element('span','pf-badge',`ถือ ${units}`));
+      const buys=element('div','pf-qty'), sells=element('div','pf-qty');
+      buys.append(element('span','pf-qty-label','ซื้อ'));sells.append(element('span','pf-qty-label',`ขาย · รับ ${fmt(KI.finance.saleValue(state,data,item.key))} บาท/หน่วย`));
+      [1,5,10].forEach(n=>{
+        const buy=button(String(n),()=>trade(item.key,'buy',n),'btn pf-qty-btn');buy.disabled=!KI.finance.canTrade(state,data,item.key,'buy',n);buys.append(buy);
+        const sell=button(String(n),()=>trade(item.key,'sell',n),'btn pf-qty-btn');sell.disabled=!KI.finance.canTrade(state,data,item.key,'sell',n);sells.append(sell);
+      });
+      const most=button(`สูงสุด ${max}`,()=>trade(item.key,'buy',max),'btn pf-qty-btn');most.disabled=!max || !KI.finance.canTrade(state,data,item.key,'buy',max);buys.append(most);
+      const every=button(`ทั้งหมด ${units}`,()=>trade(item.key,'sell',units),'btn pf-qty-btn');every.disabled=!units || !KI.finance.canTrade(state,data,item.key,'sell',units);sells.append(every);
+      row.append(line,element('p','muted pf-note',item.note),buys,sells);body.append(row);
+    });
+    body.append(element('p','muted finance-note','ชื่อหุ้นเป็นบริษัทจริง แต่ราคาเป็นราคาจำลองของเกม ไม่ใช่ราคาตลาดจริง ปีวิกฤตอิงเหตุการณ์จริงโดยประมาณ ซื้อขายได้ประเภทละครั้งต่อฤดู แต่ละครั้งซื้อหรือขายหลายหน่วยได้'));
+    portfolio.append(head,body);
+    body.scrollTop=scrollTop;
+  }
   function play() {
     const kept=keepView();
     renderPlay();
@@ -320,6 +399,11 @@ globalThis.KI = globalThis.KI || {};
     const cash=element('div','cash-card');
     let personalShop=null;
     cash.append(element('p',state.money<0?'money money-negative':'money',state.money<0?`เงินคงเหลือติดลบ ${Math.abs(state.money).toLocaleString('th-TH')} บาท`:`เงินสด ${state.money.toLocaleString('th-TH')} บาท`));
+    if(state.year-state.birthYear>=18) {
+      const worth=KI.finance.portfolioValue(state,data), held=[...KI.finance.holdings(state,data,'stock'),...KI.finance.holdings(state,data,'prop')];
+      const basis=held.reduce((sum,item)=>sum+item.basis,0), value=worth.stocks+worth.property, gain=basis?Math.round((value-basis)/basis*100):0;
+      cash.append(button(held.length?`พอร์ต ${value.toLocaleString('th-TH')} บาท ${gain>0?'+':''}${gain}% · ดูทั้งหมด ›`:'ตลาดหุ้นและอสังหาฯ ›',openPortfolio,'btn pf-open'));
+    }
     const partner=state.family.partner;
     if(partner || state.partnerLoan){
       const partnerBox=element('div','partner-finance');
@@ -490,7 +574,6 @@ globalThis.KI = globalThis.KI || {};
       finance.append(loanBox);
     }
     if(age>=18) {
-      const worth=KI.finance.portfolioValue(state,data);
       const personal=KI.finance.personalValue(state,data);
       personalShop=element('details','asset-list personal-shop');personalShop.append(element('summary','','บ้านและรถ'));
       const owned=KI.finance.personalInventory(state,data);
@@ -509,32 +592,6 @@ globalThis.KI = globalThis.KI || {};
       personalShop.append(field('เลือกรายการ',itemSelect),field('วิธีชำระ',methodSelect),field('ผู้ซื้อ',ownerSelect),field('ทรัพย์สินเดิม',oldSelect),quoteText,element('p','muted finance-note','ซื้อร่วมกันถือคนละครึ่ง คู่รักช่วยผ่อนสูงสุดครึ่งหนึ่งตามเงินที่มี ส่วนที่ขาดผู้เล่นรับผิดชอบ เมื่อขายจะแบ่งเงินหลังปิดหนี้คนละครึ่ง'),purchase);
       finance.append(personalShop);
       if(personal.homes||personal.cars)finance.append(element('p','finance-line',`บ้าน ${fmt(personal.homes)} บาท · รถ ${fmt(personal.cars)} บาท`));
-      finance.append(element('p','finance-line',`พอร์ตหุ้น ${fmt(worth.stocks)} บาท · อสังหาฯ ${fmt(worth.property)} บาท`));
-      const foreignIds=new Set(((data.assets||{}).stocks||[]).filter(d=>d.foreign).map(d=>'stock:'+d.id));
-      const groupOf=key=>key.startsWith('prop:')?'prop':foreignIds.has(key)?'foreign':'stock';
-      [['stock','หุ้นไทย (ตลาดหลักทรัพย์ฯ)'],['foreign','หุ้นต่างประเทศ (DR ซื้อขายในไทย)'],['prop','ที่ดินและอสังหาฯ']].forEach(([kind,heading])=>{
-        const list=KI.finance.assets(state,data).filter(item=>groupOf(item.key)===kind);
-        const owned=Object.keys(state.portfolio||{}).filter(key=>groupOf(key)===kind && KI.finance.held(state,key).units>0 && !list.some(item=>item.key===key));
-        if(!list.length && !owned.length)return;
-        const box=element('details','asset-list');box.append(element('summary','',heading));
-        list.forEach(item=>{
-          const units=KI.finance.held(state,item.key).units, unit=KI.finance.price(state,data,item.key), last=KI.finance.priceAt(data,item.key,state.year-1);
-          const change=last?Math.round((unit-last)/last*100):0;
-          const row=element('div','asset-row');
-          row.append(element('strong','',item.label),element('p','muted',item.note),element('p','finance-line',`ราคา ${fmt(unit)} บาท/หน่วย · จากปีก่อน ${change>0?'+':''}${change}% · ถืออยู่ ${units} หน่วย`));
-          const maxBuy=KI.finance.maxUnits(state,data,item.key,'buy'), maxSell=KI.finance.maxUnits(state,data,item.key,'sell');
-          const qty=document.createElement('input');qty.type='number';qty.min='1';qty.step='1';qty.value='1';qty.inputMode='numeric';qty.className='trade-qty';qty.setAttribute('aria-label','จำนวนหน่วยของ '+item.label);
-          const count=()=>{const n=Math.floor(Number(qty.value));return Number.isFinite(n) && n>0?n:1;};
-          const buy=button('',()=>{state=KI.finance.trade(state,data,item.key,'buy',count());persist();play();},'btn finance-action');
-          const sell=button('',()=>{state=KI.finance.trade(state,data,item.key,'sell',count());persist();play();},'btn finance-action');
-          const refresh=()=>{const n=count();buy.textContent=`ซื้อ ${n} หน่วย · จ่าย ${fmt(unit*n)} บาท`;sell.textContent=`ขาย ${n} หน่วย · รับ ${fmt(KI.finance.saleValue(state,data,item.key)*n)} บาท`;buy.disabled=!KI.finance.canTrade(state,data,item.key,'buy',n);sell.disabled=!KI.finance.canTrade(state,data,item.key,'sell',n);};
-          qty.addEventListener('input',refresh);refresh();
-          const quick=element('div','trade-quick');[['ซื้อได้สูงสุด',maxBuy],['ขายทั้งหมด',maxSell]].forEach(([label,n])=>{const b=button(`${label} (${n})`,()=>{qty.value=String(Math.max(1,n));refresh();},'btn btn-quiet trade-max');b.disabled=n<1;quick.append(b);});
-          const grid=element('div','finance-grid');grid.append(buy,sell);row.append(field('จำนวนหน่วย',qty),quick,grid);box.append(row);
-        });
-        finance.append(box);
-      });
-      finance.append(element('p','muted finance-note','ชื่อหุ้นเป็นบริษัทจริง แต่ราคาเป็นราคาจำลองของเกม ไม่ใช่ราคาตลาดจริง ปีวิกฤตอิงเหตุการณ์จริงโดยประมาณ ซื้อขายได้ประเภทละครั้งต่อฤดู'));
     }
     if(age<15)finance.append(element('p','muted finance-note','รายจ่ายเด็กเป็นค่าประมาณที่ครอบครัวรับผิดชอบ ไม่หักจากเงินส่วนตัว'));
     if(age>=7)finance.append(element('p','muted finance-note','ทำรายการได้หนึ่งครั้งต่อประเภทในแต่ละฤดู เมื่อเงินเพียงพอ'));
