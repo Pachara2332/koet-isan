@@ -53,6 +53,7 @@ globalThis.KI = globalThis.KI || {};
   const INCOME_AGE = 15;
   const PET_COST = { dog: 4, cat: 3 };
   const ABROAD_MAX_YEARS = 20;
+  const PARENT_CARE_DAYS = 18;
   const TALENTS = ['music', 'sport', 'art', 'math', 'computer', 'gaming', 'chess', 'language', 'cooking', 'craft', 'speech', 'mechanic', 'muaythai', 'farming'];
   const BIZ_INCOME = [0, 25, 70, 180, 450, 1100, 2500];
 
@@ -635,6 +636,14 @@ globalThis.KI = globalThis.KI || {};
         if (s.season === 2) {
           for (const p of pets) if (s.year - p.born >= (p.life || 14)) { p.alive = false; p.died = s.year; s.flags['pet-grief'] = true; }
           KI.effects.petFlags(s);
+        }
+      }
+      if (s.flags.parentsWithUs && s.season !== null && s.family && s.family.parentInfo) {
+        const living = ['father', 'mother'].filter((k) => s.family.parentInfo[k] && s.year < s.family.parentInfo[k].deathYear).length;
+        if (living) {
+          const cost = Math.round(living * PARENT_CARE_DAYS * KI.tables.wageDay(data, s.year));
+          s.money -= cost;
+          s.financeLog = [...(s.financeLog || []), { year: s.year, age: ageOf(s), label: 'ค่ากินอยู่และค่ายาของพ่อแม่ที่อยู่ด้วย', delta: -cost, familyExpense: 0, category: 'family' }];
         }
       }
       if (s.loc.kind === 'abroad') {
