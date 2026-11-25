@@ -217,7 +217,7 @@ KI.data.personalEvents.push(...[
     {"id":"help","label":"ช่วยงานแรง แต่ไม่ถือเงิน","text":"ยังเหนื่อยเหมือนกัน แต่สบายใจกว่า","effects":[{"stat":"happy","d":1},{"stat":"health","d":-1}]}]},
   {"id":"bhv-committee","title":"ชวนเป็นกรรมการหมู่บ้าน","body":"ผู้ใหญ่บ้านมาชวนให้เป็นกรรมการหมู่บ้าน ดูแลกองทุนและเรื่องส่วนรวม","when":{"age":[35,70],"counter":{"responsible":[6,99]}},"w":14,
    "choices":[
-    {"id":"yes","label":"รับเป็นกรรมการ","text":"ประชุมถี่ เสียเวลาทำกินบ้าง แต่ได้ช่วยคนทั้งหมู่บ้าน","effects":[{"flag":"bhvCommittee"},{"trait":"social","d":3},{"stat":"happy","d":3},{"money":-3,"unit":"wageDay"},{"pin":"ได้เป็นกรรมการหมู่บ้าน"}]},
+    {"id":"yes","label":"รับเป็นกรรมการ","text":"ประชุมถี่ เสียเวลาทำกินบ้าง แต่ได้ช่วยคนทั้งหมู่บ้าน","effects":[{"flag":"bhvCommittee"},{"inc":"clout","d":3},{"trait":"social","d":3},{"stat":"happy","d":3},{"money":-3,"unit":"wageDay"},{"pin":"ได้เป็นกรรมการหมู่บ้าน"}]},
     {"id":"no","label":"ปฏิเสธอย่างสุภาพ","text":"ยังช่วยงานเท่าที่ทำได้","effects":[{"stat":"happy","d":0}]},
     {"id":"suggest","label":"เสนอชื่อคนรุ่นใหม่แทน","text":"คนหนุ่มสาวได้โอกาส ผู้ใหญ่ชมว่ามองการณ์ไกล","effects":[{"stat":"bond","d":2}]}]},
   {"id":"bhv-kids-well","title":"ลูกโตมาดี","body":"ลูกโทรมาเล่าว่าได้งานประจำ แล้วบอกว่าที่มาถึงวันนี้ได้เพราะเห็นพ่อแม่ทำให้ดู","when":{"age":[40,80],"flag":{"child":true},"counter":{"responsible":[5,99]}},"w":14,

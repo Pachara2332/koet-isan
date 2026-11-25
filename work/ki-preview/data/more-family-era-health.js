@@ -287,7 +287,7 @@ KI.data.personalEvents.push(...[
    ]},
   {"id":"hl-osm","w":6,"cooldown":"once","title":"ถูกชวนเป็น อสม.","body":"ผู้ใหญ่บ้านชวนให้เป็นอาสาสมัครสาธารณสุขประจำหมู่บ้าน ต้องเดินเยี่ยมบ้านและอบรม","when":{"age":[30,60],"loc":"isan"},
    "choices":[
-    {"id":"yes","label":"รับเป็น อสม.","text":"เสียเวลางานบ้าง แต่คนทั้งหมู่บ้านรู้จักและไว้ใจ","effects":[{"flag":"hl-osm"},{"stat":"know","d":3},{"trait":"social","d":2},{"money":-3,"unit":"wageDay"},{"pin":"เป็น อสม. ประจำหมู่บ้าน"}]},
+    {"id":"yes","label":"รับเป็น อสม.","text":"เสียเวลางานบ้าง แต่คนทั้งหมู่บ้านรู้จักและไว้ใจ","effects":[{"flag":"hl-osm"},{"inc":"clout","d":2},{"stat":"know","d":3},{"trait":"social","d":2},{"money":-3,"unit":"wageDay"},{"pin":"เป็น อสม. ประจำหมู่บ้าน"}]},
     {"id":"no","label":"ขอปฏิเสธ","text":"มีเวลาทำมาหากินเต็มที่","effects":[{"money":2,"unit":"wageDay"}]}
    ]},
   {"id":"hl-debt-stress","w":10,"cooldown":12,"title":"นอนไม่หลับเพราะหนี้","body":"ค่างวดหลายทางชนกัน นอนตาค้างทุกคืน","when":{"cond":["indebted"],"age":[20,80]},

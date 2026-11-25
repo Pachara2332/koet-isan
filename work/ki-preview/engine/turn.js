@@ -72,7 +72,12 @@ globalThis.KI = globalThis.KI || {};
     }
   };
 
+  const POL_TITLES = ['', 'ผู้ใหญ่บ้าน', 'นายก อบต.', 'ส.ส.'];
   function roleLabel(s) {
+    const title = POL_TITLES[s.flags && s.flags.polRank];
+    return baseRole(s) + (title ? ' · ' + title : '');
+  }
+  function baseRole(s) {
     if (s.role === 'student' || (s.role === 'child' && s.edu.in)) {
       const g = s.edu.grade;
       if (s.edu.in === 'school') return g <= 6 ? 'นักเรียน ป.' + g : 'นักเรียน ม.' + (g - 6);

@@ -54,6 +54,8 @@ globalThis.KI = globalThis.KI || {};
   const PET_COST = { dog: 4, cat: 3 };
   const ABROAD_MAX_YEARS = 20;
   const PARENT_CARE_DAYS = 18;
+  const OFFICE_PAY_DAYS = [0, 85, 210, 900];
+  const OFFICE_NAMES = ['', 'ผู้ใหญ่บ้าน', 'นายก อบต.', 'ส.ส.'];
   const TALENTS = ['music', 'sport', 'art', 'math', 'computer', 'gaming', 'chess', 'language', 'cooking', 'craft', 'speech', 'mechanic', 'muaythai', 'farming'];
   const BIZ_INCOME = [0, 25, 70, 180, 450, 1100, 2500];
 
@@ -637,6 +639,11 @@ globalThis.KI = globalThis.KI || {};
           for (const p of pets) if (s.year - p.born >= (p.life || 14)) { p.alive = false; p.died = s.year; s.flags['pet-grief'] = true; }
           KI.effects.petFlags(s);
         }
+      }
+      if (OFFICE_PAY_DAYS[s.flags.polRank] && s.season !== null) {
+        const pay = Math.round(OFFICE_PAY_DAYS[s.flags.polRank] * KI.tables.wageDay(data, s.year));
+        s.money += pay;
+        s.financeLog = [...(s.financeLog || []), { year: s.year, age: ageOf(s), label: 'เงินประจำตำแหน่ง' + OFFICE_NAMES[s.flags.polRank], delta: pay, familyExpense: 0, category: 'income' }];
       }
       if (s.flags.parentsWithUs && s.season !== null && s.family && s.family.parentInfo) {
         const living = ['father', 'mother'].filter((k) => s.family.parentInfo[k] && s.year < s.family.parentInfo[k].deathYear).length;
