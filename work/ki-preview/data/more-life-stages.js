@@ -48,7 +48,7 @@ KI.data.decisions.push(...[
    ]},
   {"id":"partner-promoted","title":"คู่ชีวิตได้ดีในงาน","body":"คู่ชีวิตกลับบ้านมาพร้อมข่าวดี ได้ขึ้นเงินเดือนและโบนัสก้อนโต","when":{"age":[25,60],"flag":{"partner":true},"chance":0.08},"cooldown":15,
    "choices":[
-    {"id":"party","label":"ฉลองกันทั้งบ้าน","text":"ออกไปกินข้าวร้านดีๆ ลูกๆ ตื่นเต้นกว่าเจ้าตัว","effects":[{"money":20,"unit":"wageDay"},{"stat":"happy","d":4},{"stat":"bond","d":3}]},
+    {"id":"party","label":"ฉลองกันทั้งบ้าน","text":"ออกไปกินข้าวร้านดีๆ คนในบ้านตื่นเต้นกว่าเจ้าตัว","effects":[{"money":20,"unit":"wageDay"},{"stat":"happy","d":4},{"stat":"bond","d":3}]},
     {"id":"save","label":"เก็บโบนัสไว้เป็นเงินออมครอบครัว","text":"เงินเก็บเพิ่มขึ้นอีกก้อน","effects":[{"money":40,"unit":"wageDay"},{"stat":"bond","d":1}]}
    ]},
   {"id":"inherit-home","title":"บ้านหลังเก่าของพ่อแม่","body":"พ่อแม่จากไปหมดแล้ว บ้านหลังเก่าที่เติบโตมายังตั้งอยู่ ญาติถามว่าจะจัดการอย่างไร","when":{"age":[30,85],"flag":{"parentsAlive":false},"noFlag":["inheritHomeDone","noParents"],"chance":0.5},"cooldown":"once","major":true,

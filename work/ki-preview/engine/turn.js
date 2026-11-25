@@ -104,7 +104,7 @@ globalThis.KI = globalThis.KI || {};
     return s.t - s.seen[id] >= cooldown;
   }
 
-  const CHEAP = /รถทัวร์|รถเมล์|โอที|ล่วงเวลา/;
+  const CHEAP = /รถทัวร์|รถเมล์|โอที|ล่วงเวลา|ไม่มีเงิน/;
   function choicesOf(src, s, rng, data) {
     if (!src.choices || !src.choices.length) return null;
     const out = [];
@@ -240,6 +240,7 @@ globalThis.KI = globalThis.KI || {};
   }
 
   function words(state, text) {
+    if (typeof text === 'string' && state.loc && state.loc.kind !== 'isan') text = text.replace(/ในหมู่บ้าน/g, 'ในละแวกบ้าน');
     if (typeof text !== 'string' || text.indexOf('{') < 0) return text;
     const female = state.sex === 'f';
     const partner = state.family && state.family.partner;
