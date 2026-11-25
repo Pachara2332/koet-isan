@@ -138,6 +138,7 @@
 .ki-scene[data-place="home-small"] .pl-home-small,
 .ki-scene[data-place="home-medium"] .pl-home-medium,
 .ki-scene[data-place="home-large"] .pl-home-large,
+.ki-scene[data-place="office"] .pl-office,
 .ki-scene[data-place="garden"] .pl-garden{opacity:1;visibility:visible;transition:opacity 1.2s ease,visibility 0s}
 .ki-scene .hills{transition:opacity 1.2s ease}
 .ki-scene[data-place="bangkok"] .hills,

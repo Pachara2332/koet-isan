@@ -96,6 +96,7 @@ globalThis.KI = globalThis.KI || {};
   function sexLabel(person) {return person.sex==='m'?'ชาย':person.sex==='f'?'หญิง':'ไม่ระบุ';}
   function childRelation(person) {return 'ลูก'+(person.sex==='m'?'ชาย':person.sex==='f'?'สาว':'')+(person.adopted?'บุญธรรม':'');}
   function grandchildRelation(person) {return 'หลาน'+(person.sex==='m'?'ชาย':person.sex==='f'?'สาว':'');}
+  let lastFxTurn=null;
   function familyFigures(all) {
     const f=state.family||{}, y=state.year, out=[];
     const add=(label,name,birthYear,sex,extra)=>{if(Number.isFinite(birthYear) && birthYear<=y)out.push({label,name,birthYear,year:y,sex,role:y-birthYear<18&&y-birthYear>=6?'student':'',conds:[],...(extra||{})});};
@@ -106,8 +107,9 @@ globalThis.KI = globalThis.KI || {};
     (home?f.grandparents||[]:[]).filter(p=>y<p.deathYear).forEach(p=>add(p.relation,p.name,p.birthYear,p.relation==='ย่า'||p.relation==='ยาย'?'f':'m'));
     if(withPartner)add(f.partner.married?'คู่สมรส':'คนรัก',f.partner.name,f.partner.birthYear||state.birthYear,f.partner.sex);
     (home?f.siblings||[]:state.loc.kind==='bangkok' && state.flags.siblingInBkk?(f.siblings||[]).filter(p=>!(p.deathYear<=y) && y-p.birthYear>=18).slice(0,1):[]).filter(p=>!(p.deathYear<=y)).forEach(p=>add(p.birthYear<state.birthYear?'พี่':'น้อง',p.name,p.birthYear,p.sex));
-    (home || withPartner || ownHome?f.children||[]:[]).forEach(p=>add(childRelation(p).replace('บุญธรรม',''),p.name,p.birthYear,p.sex));
-    (home || withPartner?f.grandchildren||[]:[]).forEach(p=>add(grandchildRelation(p),p.name,p.birthYear,p.sex));
+    const stayKid=state.flags.kidStays && (f.children||[]).find(c=>y-c.birthYear>=23);
+    (home || withPartner || ownHome?f.children||[]:[]).filter(p=>all || y-p.birthYear<23 || p===stayKid).forEach(p=>add(childRelation(p).replace('บุญธรรม',''),p.name,p.birthYear,p.sex));
+    (all || (home || withPartner || ownHome) && state.flags.grandkidsWithUs?f.grandchildren||[]:[]).forEach(p=>add(grandchildRelation(p),p.name,p.birthYear,p.sex));
     return out.slice(0,10);
   }
   function persist() {
@@ -355,7 +357,9 @@ globalThis.KI = globalThis.KI || {};
     shell.append(head,cards,stats,trail,actions); root.append(shell);
     if (fresh) KI.scene.mount(view);
     const p = KI.scene.placeFor(state,data);
-    KI.scene.set({season:state.season,place:p,country:KI.scene.countryFor(state),car:KI.scene.carFor(state),year:state.year,mood:state.conds.some(c => ['heartbroken','grieving'].includes(c.id)) ? 'sad' : 'normal'});
+    const fxCard=state.turn && state.turn.cards.find(c=>c.fx), fx=fxCard && lastFxTurn!==state.t?fxCard.fx:null;
+    if(fx)lastFxTurn=state.t;
+    KI.scene.set({fx,season:state.season,place:p,country:KI.scene.countryFor(state),car:KI.scene.carFor(state),year:state.year,mood:state.conds.some(c => ['heartbroken','grieving'].includes(c.id)) ? 'sad' : 'normal'});
     KI.scene.motion(settings.motion);
     const avatar=element('div','character-avatar'); avatar.append(KI.avatar.create(state),element('span','character-name',state.name)); view.append(avatar);
     const kin=state.role==='prisoner'?[]:familyFigures(), pets=state.role==='prisoner' || state.loc.kind!=='isan' || state.loc.province!==state.home.province && !/^home-/.test(p)?[]:(state.pets||[]).filter(pet=>pet.alive).slice(0,2);
@@ -898,6 +902,25 @@ globalThis.KI = globalThis.KI || {};
     if(summary.friends.length)main.append(element('p','',`เพื่อนในชีวิต: ${summary.friends.map(friend=>friend.name).join(' · ')}`));
     if(summary.family) {const names=[...summary.family.children,...(summary.family.grandchildren||[])].map(child=>child.name);if(summary.family.partner)names.unshift(summary.family.partner.name);if(names.length)main.append(element('p','',`คนสำคัญในชีวิต: ${names.join(' · ')}`));}
     if((state.pets||[]).length)main.append(element('p','',`สัตว์เลี้ยงในชีวิต: ${state.pets.map(pet=>`${pet.name||'ไม่มีชื่อ'} (${petLabel(pet)}${pet.alive?'':' · จากไปแล้ว'})`).join(' · ')}`));
+    const endFlags=state.flags||{}, endOwned=(state.personalAssets||[]).map(a=>a.label), endAbroad=Math.floor(((state.counters||{}).abroadSeasons||0)/3), endKids=(state.family && state.family.children) || [];
+    const endLines=[];
+    if(endFlags.polMax)endLines.push(`ตำแหน่งการเมืองสูงสุด: ${['','ผู้ใหญ่บ้าน','นายก อบต.','ส.ส.'][endFlags.polMax]}`);
+    if(endOwned.length)endLines.push(`บ้านและรถที่มีตอนจากไป: ${endOwned.join(' · ')}`);
+    if(endAbroad)endLines.push(`ทำงานต่างประเทศรวม ${endAbroad} ปี`);
+    if(endFlags.caredParents)endLines.push('ได้รับพ่อแม่มาดูแลในบ้านของตัวเอง');
+    if(endFlags.madeWill)endLines.push(endFlags.madeWill==='equal'?'ทำพินัยกรรมแบ่งให้ลูกทุกคนเท่ากัน':endFlags.madeWill==='carer'?'ทำพินัยกรรมยกให้ลูกที่ดูแล':'ทำพินัยกรรมยกส่วนหนึ่งให้วัดและโรงเรียน');
+    else if(endKids.length>1)endLines.push('ไม่ได้ทำพินัยกรรม ลูกๆ ต้องตกลงแบ่งมรดกกันเอง');
+    const endTitles=[];
+    if(endFlags.polMax===3)endTitles.push(endFlags.bornRich?'ทายาทการเมืองสู่สภา':'ลูกชาวนาสู่สภา');
+    else if(endFlags.polMax)endTitles.push('ผู้นำท้องถิ่น');
+    if(state.birthWealth==='poor' && endFlags.status==='wealthy')endTitles.push('จากศูนย์สู่เศรษฐี');
+    if(endFlags.status==='wealthy' && ((state.counters||{}).good||0)>=3)endTitles.push('เศรษฐีใจบุญ');
+    if(endFlags.caredParents)endTitles.push('กตัญญูถึงวาระสุดท้าย');
+    if(endAbroad>=10)endTitles.push('นักสู้แดนไกล');
+    if(endFlags.oldOrdained)endTitles.push('ธรรมะในวัยชรา');
+    if((state.personalAssets||[]).filter(a=>a.kind==='car').length>=3)endTitles.push('นักสะสมรถ');
+    if(((state.counters||{}).crime||0)>=3)endTitles.push('เส้นทางสีเทา');
+    if(endTitles.length || endLines.length){const endBox=element('section','comparison-panel');endBox.append(element('h2','',endTitles.length?'ฉายาชีวิตนี้: '+endTitles.join(' · '):'เรื่องราวชีวิตนี้'));endLines.forEach(line=>endBox.append(element('p','',line)));main.append(endBox);}
     const kids=(state.family && state.family.children) || [];
     if(kids.length){
       const heirs=element('section','comparison-panel');

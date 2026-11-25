@@ -2,7 +2,7 @@ globalThis.KI = globalThis.KI || {};
 (function () {
   const W = 1600, H = 900, VPX = 800, VPY = 520;
   const NS = 'http://www.w3.org/2000/svg';
-  const PLACES = ['rural', 'town', 'mekong', 'bangkok', 'abroad', 'school', 'factory', 'market', 'garden', 'temple', 'desert', 'asiacity', 'nordic', 'prison', 'home-small', 'home-medium', 'home-large'];
+  const PLACES = ['rural', 'town', 'mekong', 'bangkok', 'abroad', 'school', 'factory', 'market', 'garden', 'temple', 'desert', 'asiacity', 'nordic', 'prison', 'home-small', 'home-medium', 'home-large', 'office'];
   const HOMES = ['home-small', 'home-medium', 'home-large'], CARS = ['bike', 'car-small', 'car-electric', 'car-pickup', 'car-luxury'];
   const PARK = { 'car-luxury': [335, .72], 'car-small': [530, .72], bike: [965, 2.8], 'car-electric': [1115, .72], 'car-pickup': [1290, .72] };
   const MOODS = ['normal', 'sad', 'bright'];
@@ -822,6 +822,15 @@ globalThis.KI = globalThis.KI || {};
     return g(lawn + g(house, 'transform="translate(-40 294) scale(.85) translate(0 -270)"') + CARS.map(car).join(''), 'class="pl pl-' + kind + '"');
   }
 
+  function office() {
+    const windows = [470, 560, 650, 860, 950, 1040].map((x) => '<rect x="' + x + '" y="470" width="62" height="70" fill="#9ab4b8" stroke="#f6eddd" stroke-width="7"/>').join('');
+    return g('<rect x="-200" y="600" width="2000" height="330" fill="#c9c2a6"/>' +
+      '<rect x="420" y="430" width="760" height="190" fill="#f4ecd8" stroke="#c4ae87" stroke-width="8"/><path d="M380 440 L800 330 L1220 440 Z" fill="#7d5a44"/><path d="M380 440 H1220" stroke="#f6eddd" stroke-width="9"/>' +
+      windows + '<rect x="745" y="500" width="110" height="120" fill="#7a5442"/><rect x="640" y="388" width="320" height="44" rx="6" fill="#2f4a6b"/><path d="M670 410 H930" stroke="#f6eddd" stroke-width="6" stroke-dasharray="18 10"/>' +
+      '<path d="M300 620 V420" stroke="#9aa1a8" stroke-width="7"/><path d="M300 424 h70 v18 h-70 Z" fill="#c8463c"/><path d="M300 442 h70 v14 h-70 Z" fill="#f6eddd"/><path d="M300 456 h70 v18 h-70 Z" fill="#2f4a6b"/>' +
+      tree(200, 650, 1, 'var(--tree)', 'var(--tree2)') + tree(1400, 650, 1, 'var(--tree)', 'var(--tree2)'), 'class="pl pl-office"');
+  }
+
   function homeFor(state) {
     const owned = (state.personalAssets || []).map((a) => a.key);
     return HOMES.filter((k) => owned.includes(k)).pop() || null;
@@ -850,7 +859,7 @@ globalThis.KI = globalThis.KI || {};
     if(state.role==='student')return 'school';
     if(state.role==='factory')return 'factory';
     if(state.role==='trader')return 'market';
-    if(state.role==='politician')return 'town';
+    if(state.role==='politician')return 'office';
     if(state.role==='retired')return 'garden';
     const province=data.places.provinces[state.loc.province];
     if(state.loc.setting==='rural' && province && province.mekong)return 'mekong';
@@ -893,7 +902,7 @@ globalThis.KI = globalThis.KI || {};
     root.setAttribute('aria-hidden', 'true');
     seed = 7;
     const markup = '<svg class="scene-svg" xmlns="' + NS + '" viewBox="0 0 ' + W + ' ' + H + '" preserveAspectRatio="xMidYMax slice" focusable="false">' +
-      defs() + sky() + hills() + rural() + town() + mekong() + bangkok() + abroad() + school() + factory() + market() + garden() + HOMES.map(ownHome).join('') + temple() + prison() + desert() + asiacity() + nordic() + landmarks() + fx() + '</svg>' +
+      defs() + sky() + hills() + rural() + town() + mekong() + bangkok() + abroad() + school() + factory() + market() + garden() + office() + HOMES.map(ownHome).join('') + temple() + prison() + desert() + asiacity() + nordic() + landmarks() + fx() + '</svg>' +
       '<div class="scene-ground"></div><canvas class="scene-particles"></canvas>' +
       '<div class="scene-mood scene-mood-sad"></div><div class="scene-mood scene-mood-sad2"></div><div class="scene-mood scene-mood-bright"></div><div class="scene-veil"></div>';
     root.innerHTML = markup;

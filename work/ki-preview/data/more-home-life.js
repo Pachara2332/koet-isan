@@ -1,6 +1,6 @@
 globalThis.KI = globalThis.KI || {}; KI.data = KI.data || {};
 KI.data.decisions.push(...[
-  {"id":"home-move-out","title":"อยากมีบ้านเป็นของตัวเอง","body":"อยู่บ้านพ่อแม่มานาน คนรักเริ่มพูดถึงบ้านของเราเองบ่อยขึ้น อยากมีห้องนอนที่ไม่ต้องเกรงใจใคร","when":{"age":[24,50],"loc":"isan","flag":{"partner":true},"noFlag":["movedOut","ownsPersonalHome"],"chance":0.3},"cooldown":9,"major":true,
+  {"id":"home-move-out","fx":"fireworks","title":"อยากมีบ้านเป็นของตัวเอง","body":"อยู่บ้านพ่อแม่มานาน คนรักเริ่มพูดถึงบ้านของเราเองบ่อยขึ้น อยากมีห้องนอนที่ไม่ต้องเกรงใจใคร","when":{"age":[24,50],"loc":"isan","flag":{"partner":true},"noFlag":["movedOut","ownsPersonalHome"],"chance":0.3},"cooldown":9,"major":true,
    "choices":[
     {"id":"town","label":"ผ่อนทาวน์เฮาส์ในเมือง (ดาวน์ 20% ผ่อนต่อ 15 ปี)","text":"ได้บ้านหลังเล็กในหมู่บ้านจัดสรร ย้ายข้าวของออกจากบ้านพ่อแม่ คืนแรกในบ้านใหม่นอนไม่หลับเพราะตื่นเต้น","effects":[{"personal":"home-small","finance":true},{"stat":"happy","d":5},{"stat":"bond","d":2},{"pin":"ย้ายออกไปอยู่ทาวน์เฮาส์กับคนรัก"}]},
     {"id":"house","label":"ผ่อนบ้านเดี่ยวสำหรับครอบครัว (ดาวน์ 20% ผ่อนต่อ 15 ปี)","text":"บ้านมีสนามหญ้าเล็กๆ หน้าบ้าน ค่างวดหนักแต่คิดว่าคุ้ม","effects":[{"personal":"home-medium","finance":true},{"stat":"happy","d":6},{"stat":"bond","d":2},{"pin":"ย้ายออกไปอยู่บ้านเดี่ยวกับคนรัก"}]},

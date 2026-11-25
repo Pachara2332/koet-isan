@@ -53,6 +53,7 @@ globalThis.KI = globalThis.KI || {};
   const INCOME_AGE = 15;
   const PET_COST = { dog: 4, cat: 3 };
   const ABROAD_MAX_YEARS = 20;
+  const VEHICLE_DAYS = { bike: 2, 'car-small': 5, 'car-pickup': 6, 'car-electric': 3, 'car-luxury': 10 };
   const PARENT_CARE_DAYS = 18;
   const OFFICE_PAY_DAYS = [0, 85, 210, 900];
   const OFFICE_NAMES = ['', 'ผู้ใหญ่บ้าน', 'นายก อบต.', 'ส.ส.'];
@@ -641,6 +642,20 @@ globalThis.KI = globalThis.KI || {};
         }
       }
       if (s.flags.siblingInBkk && s.loc.kind !== 'bangkok') s.flags.siblingInBkk = false;
+      if (s.loc.kind === 'abroad' && s.season !== null) s.counters = { ...(s.counters || {}), abroadSeasons: ((s.counters || {}).abroadSeasons || 0) + 1 };
+      if ((s.flags.polRank || 0) > (s.flags.polMax || 0)) s.flags.polMax = s.flags.polRank;
+      if (s.flags.parentsWithUs) s.flags.caredParents = true;
+      const vehicles = (s.personalAssets || []).filter((a) => a.kind === 'car');
+      if (vehicles.length && s.season !== null) {
+        const wageNow = KI.tables.wageDay(data, s.year), run = Math.round(vehicles.reduce((n, a) => n + (VEHICLE_DAYS[a.key] || 4), 0) * wageNow);
+        s.money -= run;
+        s.financeLog = [...(s.financeLog || []), { year: s.year, age: ageOf(s), label: 'ค่าน้ำมันและค่าซ่อมรถ', delta: -run, familyExpense: 0, category: 'personal' }];
+        if (vehicles.some((a) => a.key === 'car-pickup') && ['farmer', 'trader'].includes(s.role)) {
+          const bonus = Math.round(10 * wageNow);
+          s.money += bonus;
+          s.financeLog = [...(s.financeLog || []), { year: s.year, age: ageOf(s), label: 'รายได้เพิ่มจากใช้กระบะขนผลผลิตและสินค้า', delta: bonus, familyExpense: 0, category: 'income' }];
+        }
+      }
       if (s.flags.polRank && s.role !== 'politician' && s.role !== 'prisoner') { s.flags.prevRole = s.role; s.role = 'politician'; }
       if (!s.flags.polRank && s.role === 'politician') { s.role = s.flags.prevRole && s.flags.prevRole !== 'politician' ? s.flags.prevRole : 'jobless'; s.flags.prevRole = false; }
       if (OFFICE_PAY_DAYS[s.flags.polRank] && s.season !== null) {
