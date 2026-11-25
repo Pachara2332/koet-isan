@@ -201,7 +201,7 @@ KI.data.personalEvents.push(...[
      "roll":[{"p":0.08,"text":"เผลอหลับในตอนคุมเครื่อง มือติดเครื่องจักร ต้องผ่าตัด","effects":[{"stat":"health","d":-15},{"die":"work","p":0.1}]}]},
     {"id":"rest","label":"ทำแค่กะปกติ","text":"เงินน้อยลง แต่ได้นอนพอ","effects":[{"stat":"health","d":2}]}
    ]},
-  {"id":"tmp-dengue","title":"ยุงชุมหน้าฝน","body":"โอ่งน้ำรอบบ้านมีลูกน้ำเต็ม ข่าวว่าคนในตำบลเป็นไข้เลือดออกหลายคน","w":6,"when":{"season":1,"loc":"isan","age":[3,80],"chance":0.2},"cooldown":9,"heavy":true,
+  {"id":"tmp-dengue","title":"ยุงชุมหน้าฝน","body":"โอ่งน้ำรอบบ้านมีลูกน้ำเต็ม ข่าวว่าคนในตำบลเป็นไข้เลือดออกหลายคน","w":6,"when":{"season":1,"loc":"isan","age":[10,80],"chance":0.2},"cooldown":9,"heavy":true,
    "choices":[
     {"id":"clean","label":"คว่ำภาชนะ ปิดฝาโอ่ง ใส่ทราย","text":"เหนื่อยครึ่งวัน แต่ยุงลดลงชัดเจน","effects":[{"stat":"health","d":1},{"inc":"responsible"}]},
     {"id":"skip","label":"ช่างมัน ยุงมีทุกปี","text":"ไม่เสียเวลา แต่ต้องลุ้นเอา","effects":[],
@@ -236,7 +236,7 @@ KI.data.personalEvents.push(...[
     {"id":"fight","label":"สู้ไม่ยอม","text":"โดนหนักกว่าเดิม แต่รุ่นพี่ไม่มายุ่งอีก","effects":[{"inc":"naughty"},{"stat":"health","d":-5},{"trait":"grit","d":2}]},
     {"id":"tell","label":"บอกพ่อแม่กับครู","text":"ครูเรียกรุ่นพี่ไปคุย เรื่องจบ แต่ต้องคอยหลบตาอยู่พักใหญ่","effects":[{"inc":"good"},{"stat":"bond","d":2}]}
    ]},
-  {"id":"tmp-fire","title":"เผาตอซังข้าว","body":"หลังเกี่ยวข้าว เพื่อนบ้านเผาตอซังกันทั้งทุ่ง ลมแรงพัดเข้าหาบ้านไม้ที่มีกองฟางอยู่","w":5,"when":{"season":[0,2],"loc":"isan","setting":"rural","age":[14,75],"chance":0.12},"cooldown":12,"heavy":true,
+  {"id":"tmp-fire","title":"เผาตอซังข้าว","body":"หลังเกี่ยวข้าว เพื่อนบ้านเผาตอซังกันทั้งทุ่ง ลมแรงพัดเข้าหาบ้านไม้ที่มีกองฟางอยู่","w":5,"when":{"season":[0,2],"loc":"isan","setting":"rural","age":[15,75],"chance":0.12},"cooldown":12,"heavy":true,
    "choices":[
     {"id":"burn","label":"เผาตามเขา ประหยัดแรง","text":"ทุ่งโล่งเร็ว แต่ไฟลามเข้าใกล้กองฟาง","effects":[{"money":1,"unit":"wageDay"},{"stat":"health","d":-2}],
      "roll":[{"p":0.12,"text":"ไฟลุกกองฟางลามถึงยุ้งข้าว ต้องช่วยกันดับทั้งหมู่บ้าน","effects":[{"money":-20,"unit":"wageDay"},{"stat":"health","d":-6},{"die":"fire","p":0.05}]}]},
