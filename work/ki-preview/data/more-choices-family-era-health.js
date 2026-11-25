@@ -108,7 +108,7 @@ globalThis.KI = globalThis.KI || {}; KI.data = KI.data || {};
       {"id":"deal","label":"ตกลงกับพ่อแม่ เล่นได้เฉพาะวันหยุด","text":"เกรดค่อยๆ ขึ้น และยังได้เล่นกับเพื่อนวันเสาร์","effects":[{"stat":"know","d":2},{"stat":"bond","d":2}]},
       {"id":"pro","label":"ตั้งใจจะเป็นนักแข่งเกม","text":"คุณซ้อมหนักกว่าเดิม เกรดตกต่อ แต่ฝีมือดีขึ้นจริง","effects":[{"stat":"know","d":-3},{"stat":"happy","d":2},{"trait":"grit","d":1}]}
     ],
-    "tech-hi5": [{"id":"sell","label":"รับแต่งหน้าให้เพื่อน","text":"เพื่อนจ้างคนละไม่กี่บาท คุณเก่งโค้ดหน้าเว็บขึ้นมาก","effects":[{"money":1,"unit":"wageDay"},{"stat":"know","d":2}]}],
+    "tech-hi5": [{"id":"sell","label":"รับแต่งหน้าไฮไฟว์ให้เพื่อน","text":"เพื่อนจ้างคนละไม่กี่บาท คุณเก่งโค้ดหน้าเว็บขึ้นมาก","effects":[{"money":1,"unit":"wageDay"},{"stat":"know","d":2}]}],
     "tech-facebook": [
       {"id":"sell","label":"สมัครเพื่อเปิดเพจขายของ","text":"มีลูกค้าจากอำเภออื่นทักมา ยอดขายเพิ่มแต่ต้องตอบแชตทั้งคืน","when":{"age":[18,60]},"effects":[{"flag":"tech-social"},{"money":8,"unit":"wageDay"},{"stat":"health","d":-1}]},
       {"id":"family","label":"สมัครไว้ดูรูปคนรู้จัก","text":"ได้เห็นรูปคนรู้จักที่อยู่ไกลโดยไม่ต้องโพสต์อะไร","effects":[{"flag":"tech-social"},{"stat":"bond","d":2}]}

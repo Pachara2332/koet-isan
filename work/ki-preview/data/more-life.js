@@ -255,7 +255,7 @@ KI.data.personalEvents.push(...[
     {"id":"borrow","label":"ยืมเงินมาจ่ายเบี้ยต่อ","text":"ความคุ้มครองยังอยู่ แต่หนี้เพิ่มขึ้น","effects":[{"cond":"indebted","turns":6},{"stat":"happy","d":-2}]}]}
 ]);
 KI.data.decisions.push(...[
-  {"id":"life2-house-wedding","title":"แต่งแล้วจะอยู่ที่ไหน","body":"หลังงานแต่ง ทั้งสองครอบครัวถามว่าคู่บ่าวสาวจะไปอยู่บ้านไหน","when":{"flag":{"married":true},"marriedYears":[0,2],"noFlag":["life2-housed"]},"major":true,
+  {"id":"life2-house-wedding","title":"แต่งแล้วจะอยู่ที่ไหน","body":"หลังงานแต่ง ทั้งสองครอบครัวถามว่าคู่แต่งงานใหม่จะไปอยู่บ้านไหน","when":{"flag":{"married":true},"marriedYears":[0,2],"noFlag":["life2-housed"]},"major":true,
    "choices":[
     {"id":"own","label":"อยู่บ้านพ่อแม่ของตัวเอง","text":"ประหยัดค่าใช้จ่าย ได้ช่วยดูแลพ่อแม่ แต่คู่ครองต้องปรับตัวกับบ้านเรา","when":{"flag":{"parentsAlive":true}},"effects":[{"flag":"life2-housed"},{"flag":"life2-liveParents"},{"flag":"movedOut","v":false},{"stat":"bond","d":3},{"stat":"happy","d":-1}]},
     {"id":"inlaws","label":"ย้ายไปอยู่บ้านครอบครัวคู่ครอง","text":"ได้ช่วยทำนาของบ้านนั้นและมีที่ทำกิน แต่ต้องเกรงใจผู้ใหญ่ฝ่ายคู่ครอง","effects":[{"flag":"life2-housed"},{"flag":"life2-liveInlaws"},{"flag":"movedOut"},{"stat":"bond","d":1},{"cond":"homesick","turns":1}]},

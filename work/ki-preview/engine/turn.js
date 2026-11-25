@@ -204,6 +204,24 @@ globalThis.KI = globalThis.KI || {};
     return card('quiet', { id: 'quiet-' + s.season + '-' + i, title: QUIET_TITLES[s.season], body: list[i] });
   }
 
+  function words(state, text) {
+    if (typeof text !== 'string' || text.indexOf('{') < 0) return text;
+    const female = state.sex === 'f';
+    const partner = state.family && state.family.partner;
+    const partnerFemale = partner && partner.sex ? partner.sex === 'f' : !female;
+    const map = {
+      '{ผม}': female ? 'ฉัน' : 'ผม', '{ครับ}': female ? 'ค่ะ' : 'ครับ', '{คะ}': female ? 'คะ' : 'ครับ',
+      '{แฟน}': partnerFemale ? 'แฟนสาว' : 'แฟนหนุ่ม', '{คู่}': partnerFemale ? 'ภรรยา' : 'สามี', '{เขา}': partnerFemale ? 'เธอ' : 'เขา',
+      '{ลูกผู้}': female ? 'ลูกสาว' : 'ลูกชาย', '{พี่}': female ? 'พี่สาว' : 'พี่ชาย', '{น้อง}': female ? 'น้องสาว' : 'น้องชาย',
+      '{หนุ่มสาว}': female ? 'สาว' : 'หนุ่ม', '{นาย}': female ? 'นาง' : 'นาย'
+    };
+    return text.replace(/\{[^{}]{1,10}\}/g, (m) => (m in map ? map[m] : m));
+  }
+
+  function localize(state, cards) {
+    return cards.map((c) => ({ ...c, title: words(state, c.title), body: words(state, c.body), choices: c.choices ? c.choices.map((x) => ({ ...x, label: words(state, x.label) })) : c.choices }));
+  }
+
   function build(state, data, settings, rng) {
     settings = settings || {};
     const age = state.year - state.birthYear;
@@ -234,8 +252,8 @@ globalThis.KI = globalThis.KI || {};
     const story = storyCard(state, data, settings, rng, reflectionId);
     if (story) cards.push(story);
     if (!cards.length) cards.push(quietCard(state, rng));
-    return { head, cards, nextReflectionYear };
+    return { head, cards: localize(state, cards), nextReflectionYear };
   }
 
-  KI.turn = { build, choicesOf, roleLabel, placeLabel, ROLE_LABELS };
+  KI.turn = { words, build, choicesOf, roleLabel, placeLabel, ROLE_LABELS };
 })();

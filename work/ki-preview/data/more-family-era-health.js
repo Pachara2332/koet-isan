@@ -98,7 +98,7 @@ KI.data.personalEvents.push(...[
     {"id":"busy","label":"ทำงานให้ยุ่งเข้าไว้","text":"ทำทุกอย่างให้เรียบร้อย ความเศร้ามาทีหลังตอนกลางคืน","effects":[{"stat":"happy","d":-8,"by":"attach"},{"stat":"health","d":-2},{"cond":"grieving","turns":2}]}
    ]},
   {"id":"fam-grand-dies-cared","w":14,"cooldown":"once","title":"วันที่ได้ดูแลยาย","body":"คุณนึกถึงเวลาที่เคยอยู่ใกล้และช่วยดูแลยาย ความทรงจำเล็กๆ เหล่านั้นยังอยู่กับคุณ","when":{"flag":{"fam-caredGrand":true}},"effects":[{"stat":"bond","d":3},{"stat":"happy","d":2}]},
-  {"id":"fam-ordained-blessing","w":10,"cooldown":"once","title":"แม่ยังเล่าถึงวันบวช","body":"ทุกครั้งที่มีแขกมาบ้าน แม่หยิบรูปวันบวชมาอวด","when":{"flag":{"fam-ordained":true},"age":[22,45]},"effects":[{"stat":"bond","d":3},{"stat":"happy","d":2}]},
+  {"id":"fam-ordained-blessing","w":10,"cooldown":"once","title":"แม่ยังเล่าถึงวันบวช","body":"ทุกครั้งที่มีแขกมาบ้าน แม่หยิบรูปวันบวชมาอวด","when":{"sex":"m","flag":{"fam-ordained":true},"age":[22,45]},"effects":[{"stat":"bond","d":3},{"stat":"happy","d":2}]},
   {"id":"fam-teen-phone","w":8,"cooldown":12,"title":"ลูกวัยรุ่นติดจอ","body":"ลูกขังตัวอยู่ในห้องเล่นโทรศัพท์จนดึก เรียกกินข้าวก็ไม่ออก","when":{"flag":{"child":true},"childAge":[13,18],"year":[2012,2026]},
    "choices":[
     {"id":"rule","label":"ตั้งกติกาเวลาเล่น","text":"ลูกงอนไปหลายวัน แต่เกรดดีขึ้น","effects":[{"stat":"bond","d":-3},{"stat":"happy","d":1}]},

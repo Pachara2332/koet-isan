@@ -93,14 +93,14 @@ globalThis.KI = globalThis.KI || {}; KI.data = KI.data || {};
     const inl = ch("life2-house-wedding", "inlaws");
     if (own && inl) {
       const ownM = clone(own); const inlF = clone(inl);
-      own.id = "own"; own.label = "อยู่บ้านพ่อแม่ตัวเอง ให้สามีย้ายเข้ามาตามธรรมเนียม"; own.when = merge(own.when, { sex: "f" });
-      inl.label = "ย้ายไปอยู่บ้านพ่อแม่ภรรยาตามธรรมเนียมเขย"; inl.text = "เป็นเขยในบ้านภรรยา ช่วยพ่อตาทำนา ต้องปรับตัวกับบ้านใหม่"; inl.when = merge(inl.when, { sex: "m" });
-      ownM.id = "real-own-m"; ownM.label = "พาภรรยามาอยู่บ้านพ่อแม่ตัวเอง"; ownM.text = "ไม่ค่อยตรงธรรมเนียม ญาติฝ่ายภรรยาบางคนไม่สบายใจ"; ownM.when = merge(ownM.when, { sex: "m" }); ownM.effects.push({ stat: "bond", d: -2 });
-      inlF.id = "real-inlaws-f"; inlF.label = "ย้ายไปอยู่บ้านพ่อแม่สามี"; inlF.text = "ไม่ค่อยตรงธรรมเนียม ต้องปรับตัวกับบ้านสามีและคิดถึงแม่บ่อยๆ"; inlF.when = merge(inlF.when, { sex: "f" }); inlF.effects.push({ cond: "homesick", turns: 2, by: "attach" });
+      own.id = "own"; own.label = "อยู่บ้านพ่อแม่ตัวเอง ให้{คู่}ย้ายเข้ามาตามธรรมเนียม"; own.when = merge(own.when, { sex: "f" });
+      inl.label = "ย้ายไปอยู่บ้านพ่อแม่{คู่}ตามธรรมเนียมเขย"; inl.text = "เป็นเขยในบ้าน{คู่} ช่วยพ่อตาทำนา ต้องปรับตัวกับบ้านใหม่"; inl.when = merge(inl.when, { sex: "m" });
+      ownM.id = "real-own-m"; ownM.label = "พา{คู่}มาอยู่บ้านพ่อแม่ตัวเอง"; ownM.text = "ไม่ค่อยตรงธรรมเนียม ญาติฝ่าย{คู่}บางคนไม่สบายใจ"; ownM.when = merge(ownM.when, { sex: "m" }); ownM.effects.push({ stat: "bond", d: -2 });
+      inlF.id = "real-inlaws-f"; inlF.label = "ย้ายไปอยู่บ้านพ่อแม่{คู่}"; inlF.text = "ไม่ค่อยตรงธรรมเนียม ต้องปรับตัวกับบ้าน{คู่}และคิดถึงแม่บ่อยๆ"; inlF.when = merge(inlF.when, { sex: "f" }); inlF.effects.push({ cond: "homesick", turns: 2, by: "attach" });
       hw.choices.splice(hw.choices.indexOf(inl) + 1, 0, ownM, inlF);
     }
   }
-  addCh("money-bride-price", [{ id: "real-groom-moves", label: "ตกลงค่าสินสอดพอประมาณ แล้วย้ายไปอยู่บ้านฝ่ายหญิง", text: "ผู้ใหญ่ฝ่ายหญิงพอใจที่จะได้เขยมาช่วยทำนา สินสอดส่วนหนึ่งกลับมาเป็นทุนตั้งตัว", when: { sex: "m" }, effects: [{ money: -60, unit: "wageDay" }, { flag: "money-dowryDone" }, { flag: "movedOut" }, { stat: "bond", d: 3 }, { cond: "homesick", turns: 1 }] }]);
+  addCh("money-bride-price", [{ id: "real-groom-moves", label: "ตกลงค่าสินสอดพอประมาณ แล้วย้ายไปอยู่บ้านฝ่าย{คู่}", text: "ผู้ใหญ่ฝ่าย{คู่}พอใจที่จะได้เขยมาช่วยทำนา สินสอดส่วนหนึ่งกลับมาเป็นทุนตั้งตัว", when: { sex: "m" }, effects: [{ money: -60, unit: "wageDay" }, { flag: "money-dowryDone" }, { flag: "movedOut" }, { stat: "bond", d: 3 }, { cond: "homesick", turns: 1 }] }]);
   addCh("inherit-land", [{ id: "real-daughter-home", label: "รับเรือนพ่อแม่ไว้ แลกกับดูแลพ่อแม่ยามแก่", text: "ตามธรรมเนียมลูกสาวที่อยู่ดูแลพ่อแม่ได้เรือนกับนาผืนหนึ่ง ภาระดูแลก็หนักตามมา", when: { sex: "f", flag: { parentsAlive: true } }, effects: [{ role: "farmer" }, { stat: "bond", d: 5 }, { stat: "happy", d: -1 }] }]);
 
   gate("ordain", { age: [24, 70] });

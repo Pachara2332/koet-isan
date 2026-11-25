@@ -266,7 +266,7 @@ globalThis.KI = globalThis.KI || {};
       const r = KI.effects.apply(s, fx.effects, data, rng);
       s = r.state;
       if(c.kind==='personal')s=KI.friends.react(s,c.id);
-      s.turn.cards[i].result = { text: fx.text, deltas: r.deltas };
+      s.turn.cards[i].result = { text: KI.turn.words(s, fx.text), deltas: r.deltas };
       changed = true;
     }
     if (!changed) return state;
@@ -323,7 +323,7 @@ globalThis.KI = globalThis.KI || {};
       }
     }
     s.turn.cards[cardIndex].picked = choiceId;
-    s.turn.cards[cardIndex].result = { text: petText(state, text), deltas };
+    s.turn.cards[cardIndex].result = { text: KI.turn.words(s, petText(state, text)), deltas };
     s.rng = rng.state();
     return s;
   }
