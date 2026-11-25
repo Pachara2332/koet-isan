@@ -1,5 +1,14 @@
 globalThis.KI = globalThis.KI || {}; KI.data = KI.data || {};
 KI.data.decisions.unshift(...[
+  {"id":"family-broke","title":"เงินที่บ้านหมด","body":"ปีนี้รายจ่ายของบ้านมากกว่ารายได้มาหลายฤดู เงินเก็บของพ่อแม่หมด เริ่มมีหนี้ติดตัว ต้องตัดสินใจว่าจะหาเงินมาจากไหน","when":{"flag":{"parentsBroke":true}},"cooldown":9,"major":true,"urgent":true,
+   "choices":[
+    {"id":"baac","label":"ให้พ่อแม่กู้ ธ.ก.ส. หรือธนาคาร","text":"พ่อแม่เอาโฉนดที่นาไปค้ำ ได้เงินก้อนมาประคองบ้าน ต้องผ่อนคืนหลายปี","when":{"flag":{"parentsAlive":true}},"effects":[{"parents":150},{"cond":"indebted","turns":6},{"stat":"happy","d":-2}]},
+    {"id":"fund","label":"กู้กองทุนหมู่บ้าน","text":"ได้เงินไม่มาก แต่ดอกเบี้ยต่ำ คณะกรรมการยอมให้กู้เพราะครอบครัวไม่เคยผิดนัด","when":{"year":[2001,2100],"loc":"isan"},"effects":[{"parents":60},{"stat":"happy","d":-1}]},
+    {"id":"shark","label":"กู้เงินนอกระบบมาก่อน","text":"ได้เงินทันที แต่ดอกเบี้ยรายวันทำให้หนี้โตเร็ว","effects":[{"parents":100},{"cond":"indebted","turns":8},{"stat":"health","d":-2}],"roll":[{"p":0.3,"text":"ผ่านไปไม่นาน เจ้าหนี้เริ่มมาทวงถึงบ้าน","effects":[{"parents":-40},{"stat":"happy","d":-4}]}]},
+    {"id":"sell","label":"ขายที่นาบางส่วนหรือทองที่เก็บไว้","text":"ปลดหนี้ได้เกือบหมด แต่ที่ดินที่ตกทอดมาหายไปส่วนหนึ่ง","effects":[{"parents":250},{"flag":"money-land","v":false},{"stat":"happy","d":-5,"by":"attach"}]},
+    {"id":"help","label":"ออกไปทำงานส่งเงินช่วยบ้าน","text":"รายได้ของคุณส่วนหนึ่งต้องส่งกลับบ้านทุกเดือน","when":{"age":[15,70]},"effects":[{"money":-40,"unit":"wageDay"},{"parents":40},{"stat":"bond","d":4},{"stat":"happy","d":-2}]},
+    {"id":"tighten","label":"รัดเข็มขัด ตัดรายจ่ายทุกอย่าง","text":"งดของไม่จำเป็น กินอยู่อย่างประหยัด หนี้ไม่เพิ่มแต่ก็ยังไม่หมด","effects":[{"parents":20},{"stat":"happy","d":-3},{"stat":"health","d":-1}]}
+   ]},
   {"id":"debt-collector","title":"เจ้าหนี้มาทวงถึงบ้าน","body":"หนี้พอกจนเกินกำลัง เจ้าหนี้ขับรถมาจอดหน้าบ้าน บอกว่ารอต่อไปไม่ได้แล้ว","when":{"any":[{"flag":{"debtHeavy":true}},{"flag":{"sharkLate":true}}],"age":[18,90]},"cooldown":6,"major":true,"urgent":true,
    "choices":[
     {"id":"sell","label":"ขายของมีค่าที่เหลือทั้งหมด","text":"ทองและที่นาที่เก็บไว้ถูกขายไปใช้หนี้ หนี้ลดลงมาก แต่ไม่เหลืออะไรไว้พึ่งยามลำบาก","when":{"any":[{"flag":{"money-land":true}},{"flag":{"money-gold":true}}]},

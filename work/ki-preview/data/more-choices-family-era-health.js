@@ -92,7 +92,7 @@ globalThis.KI = globalThis.KI || {}; KI.data = KI.data || {};
     "tech-tv-neighbour": [{"id":"pay","label":"เอาขนมไปฝากเจ้าของบ้าน","text":"เจ้าของบ้านยิ้มรับ คุณได้ที่นั่งหน้าจอแถวแรก","effects":[{"money":-1,"unit":"wageDay"},{"stat":"happy","d":3},{"trait":"social","d":1}]}],
     "tech-own-tv": [
       {"id":"radio","label":"ซื้อวิทยุแทน ถูกกว่า","text":"บ้านได้ฟังข่าวและหมอลำ ประหยัดเงินไว้ซื้อปุ๋ย","effects":[{"money":-3,"unit":"wageDay"},{"stat":"know","d":1},{"stat":"happy","d":1}]},
-      {"id":"charge","label":"ซื้อแล้วเก็บค่าดูจากเพื่อนบ้าน","text":"ได้เงินคืนทีละนิด แต่บางบ้านว่าคุณงก","when":{"age":[18,40]},"effects":[{"money":-15,"unit":"wageDay"},{"money":5,"unit":"wageDay"},{"trait":"social","d":-1}]}
+      {"id":"charge","label":"ซื้อแล้วเก็บค่าดูจากเพื่อนบ้าน","text":"ได้เงินคืนทีละนิด แต่บางบ้านว่าคุณงก","when":{"age":[18,40]},"effects":[{"flag":"tech-tv"},{"money":-15,"unit":"wageDay"},{"money":5,"unit":"wageDay"},{"trait":"social","d":-1}]}
     ],
     "tech-cassette": [{"id":"sell","label":"อัดเทปขายในตลาดนัด","text":"ขายดีอยู่พักหนึ่ง จนมีคนเตือนว่าเป็นของละเมิดลิขสิทธิ์","when":{"age":[15,45]},"effects":[{"money":4,"unit":"wageDay"},{"trait":"grit","d":-1}]}],
     "tech-payphone": [
@@ -100,8 +100,8 @@ globalThis.KI = globalThis.KI || {}; KI.data = KI.data || {};
       {"id":"skip","label":"ไม่ติดต่อ รอญาติกลับมาเอง","text":"ประหยัดเงิน แต่ข่าวจากเมืองมาถึงช้าไปหลายเดือน","effects":[{"stat":"bond","d":-2}]}
     ],
     "tech-first-mobile": [
-      {"id":"share","label":"ใช้เครื่องเดียวกันทั้งบ้าน","text":"ทุกคนผลัดกันใช้ ต้องแย่งกันบ้าง แต่ถูกกว่าซื้อหลายเครื่อง","effects":[{"flag":"tech-mobile"},{"money":-5,"unit":"wageDay"},{"stat":"bond","d":1}]},
-      {"id":"business","label":"ซื้อเครื่องไว้รับสายลูกค้า","text":"รับงานได้มากขึ้นเพราะลูกค้าโทรหาได้ทันที","when":{"age":[18,60]},"effects":[{"flag":"tech-mobile"},{"money":-10,"unit":"wageDay"},{"money":12,"unit":"wageDay"}]}
+      {"id":"share","label":"ใช้เครื่องเดียวกันทั้งบ้าน","text":"ทุกคนผลัดกันใช้ ต้องแย่งกันบ้าง แต่ถูกกว่าซื้อหลายเครื่อง","effects":[{"flag":"money-phone"},{"money":-5,"unit":"wageDay"},{"stat":"bond","d":1}]},
+      {"id":"business","label":"ซื้อเครื่องไว้รับสายลูกค้า","text":"รับงานได้มากขึ้นเพราะลูกค้าโทรหาได้ทันที","when":{"age":[18,60]},"effects":[{"flag":"money-phone"},{"money":-10,"unit":"wageDay"},{"money":12,"unit":"wageDay"}]}
     ],
     "tech-netcafe": [{"id":"work","label":"ขอทำงานเฝ้าร้านเน็ต","text":"ได้ค่าขนมและเรียนรู้คอมพิวเตอร์ แต่กลับบ้านดึกจนยายบ่น","when":{"age":[15,22]},"effects":[{"money":3,"unit":"wageDay"},{"stat":"know","d":2},{"stat":"health","d":-1}]}],
     "tech-gamer-grades": [
@@ -119,7 +119,7 @@ globalThis.KI = globalThis.KI || {}; KI.data = KI.data || {};
     ],
     "tech-smartphone": [
       {"id":"wait","label":"ยังใช้เครื่องปุ่มกดต่อ","text":"แบตอยู่ได้เป็นอาทิตย์ แต่รับรูปจากคนรู้จักไม่ได้","effects":[{"stat":"bond","d":-1},{"money":2,"unit":"wageDay"}]},
-      {"id":"hand-me","label":"ขอเครื่องเก่าจากคนรู้จัก","text":"ได้เครื่องฟรี คนรู้จักช่วยลงแอปให้","effects":[{"flag":"tech-smartphone"},{"stat":"bond","d":2}]}
+      {"id":"hand-me","label":"ขอเครื่องเก่าจากคนรู้จัก","text":"ได้เครื่องฟรี คนรู้จักช่วยลงแอปให้","effects":[{"flag":"money-smartphone"},{"stat":"bond","d":2}]}
     ],
     "tech-scam-sms": [
       {"id":"call-bank","label":"โทรเช็กกับธนาคารเอง","text":"ธนาคารยืนยันว่าเป็นข้อความหลอก คุณช่วยเตือนคนในหมู่บ้านต่อ","effects":[{"stat":"know","d":2},{"trait":"social","d":1}]},

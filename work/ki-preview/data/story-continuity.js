@@ -22,7 +22,7 @@ globalThis.KI = globalThis.KI || {}; KI.data = KI.data || {};
       {id:'repair',label:'จ้างช่างมาซ่อม',text:'บ้านได้รับการดูแลและคุณเก็บใบค่าใช้จ่ายไว้',requiresFunds:true,effects:[{money:-8,unit:'wageDay'},{stat:'happy',d:2}]},
       {id:'plan',label:'วางแผนเก็บเงินซ่อมก่อน',text:'คุณจดรายการซ่อมและค่อยๆ วางแผนค่าใช้จ่าย',effects:[{stat:'know',d:1}]}
     ]},
-    {id:'followup-owned-car',title:'ดูแลรถที่ใช้อยู่',body:'รถที่มีเริ่มถึงระยะตรวจสภาพ คุณกำลังคิดว่าจะจัดการค่าใช้จ่ายอย่างไร',when:{age:[18,100],flag:{ownsPersonalCar:true}},cooldown:'once',w:12,choices:[
+    {id:'followup-owned-car',title:'ดูแลรถที่ใช้อยู่',body:'รถที่มีเริ่มถึงระยะตรวจสภาพ คุณกำลังคิดว่าจะจัดการค่าใช้จ่ายอย่างไร',when:{age:[18,100],any:[{flag:{ownsPersonalCar:true}},{flag:{'wl-car':true}}]},cooldown:'once',w:12,choices:[
       {id:'service',label:'นำรถเข้าตรวจและบำรุงรักษา',text:'คุณจ่ายค่าดูแลรถเพื่อเตรียมพร้อมสำหรับการเดินทาง',requiresFunds:true,effects:[{money:-5,unit:'wageDay'},{stat:'happy',d:1}]},
       {id:'schedule',label:'ตรวจรายการและวางแผนค่าใช้จ่าย',text:'คุณจดสิ่งที่ต้องทำและจัดลำดับก่อนหลัง',effects:[{stat:'know',d:1}]}
     ]},

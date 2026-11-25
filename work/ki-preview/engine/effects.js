@@ -49,6 +49,14 @@ globalThis.KI = globalThis.KI || {};
   }
 
   const SOFT_CAP = 60;
+  const PET_LIFE = { dog: [10, 15], cat: [12, 18] };
+
+  function petFlags(s) {
+    const alive = (s.pets || []).filter((x) => x.alive);
+    s.flags['pet-has'] = alive.length > 0;
+    s.flags['pet-dog'] = alive.some((x) => x.kind === 'dog');
+    s.flags['pet-cat'] = alive.some((x) => x.kind === 'cat');
+  }
 
   function one(s, e, data, rng, deltas) {
     const m = mult(s, e.by);
@@ -64,6 +72,11 @@ globalThis.KI = globalThis.KI || {};
       const old = s.traits[e.trait];
       s.traits[e.trait] = clamp(old + Math.round(e.d * m), 0, 100);
       addDelta(deltas, e.trait, s.traits[e.trait] - old);
+    } else if ('parents' in e) {
+      const amount = Math.round(e.parents * KI.tables.wageDay(data, s.year));
+      s.parentsWealth = (Number.isFinite(s.parentsWealth) ? s.parentsWealth : 0) + amount;
+      s.flags.parentsBroke = s.parentsWealth < 0;
+      addDelta(deltas, 'parents', amount);
     } else if ('money' in e) {
       if (e.unit !== undefined && e.unit !== 'wageDay') throw new Error('effects: unknown money unit "' + e.unit + '"');
       const base = e.unit === 'wageDay' ? e.money * KI.tables.wageDay(data, s.year) : e.money;
@@ -124,6 +137,16 @@ globalThis.KI = globalThis.KI || {};
       const d = Math.round((s.flags.estate || 0) * e.inherit);
       s.money += d;
       addDelta(deltas, 'money', d);
+    } else if ('pet' in e) {
+      const p = e.pet, pets = (s.pets || []).slice();
+      if (p.kind) {
+        if (!PET_LIFE[p.kind]) throw new Error('effects: unknown pet kind "' + p.kind + '"');
+        const span = PET_LIFE[p.kind];
+        pets.push({ id: pets.reduce((n, x) => Math.max(n, x.id || 0), 0) + 1, kind: p.kind, name: null, born: s.year - (p.age || 0), since: s.year, alive: true, life: span[0] + (rng ? rng.int(span[1] - span[0] + 1) : 2) });
+      }
+      if (p.life) pets.forEach((x) => { if (x.alive) x.life = Math.max(s.year - x.born, (x.life || 14) + p.life); });
+      s.pets = pets;
+      petFlags(s);
     } else if ('pin' in e) {
       if (s.turn) s.turn.pin = e.pin;
     } else {
@@ -159,5 +182,5 @@ globalThis.KI = globalThis.KI || {};
     return { state: s, deltas };
   }
 
-  KI.effects = { apply, tick, roles: ROLES };
+  KI.effects = { apply, tick, petFlags, roles: ROLES };
 })();

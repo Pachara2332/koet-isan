@@ -32,7 +32,6 @@ globalThis.KI = globalThis.KI || {};
   const REMIT_DAYS = 5;
   const PENSION_DAYS = 40;
   const PARENT_START = { poor: 150, mid: 1200, rich: 6000 };
-  const PARENT_GROWTH = { poor: 0.01, mid: 0.03, rich: 0.05 };
   const PARENT_PAY_DAYS = 600;
   const REMIT_AGE = 22;
   const MONTHS = [4, 5, 3];
@@ -52,6 +51,7 @@ globalThis.KI = globalThis.KI || {};
   const SKIP_LIMIT = 400;
   const SCHOOL_AGE = 6;
   const INCOME_AGE = 15;
+  const PET_COST = { dog: 4, cat: 3 };
   const TALENTS = ['music', 'sport', 'art', 'math', 'computer', 'gaming', 'chess', 'language', 'cooking', 'craft', 'speech', 'mechanic', 'muaythai', 'farming'];
   const BIZ_INCOME = [0, 25, 70, 180, 450, 1100, 2500];
 
@@ -123,6 +123,13 @@ globalThis.KI = globalThis.KI || {};
       else out.push({ k: x.k, d: x.d });
     }
     return out.filter((x) => x.d !== 0);
+  }
+
+  function petText(s, t) {
+    if (typeof t !== 'string' || t.indexOf('{') < 0) return t;
+    const pets = s.pets || [], alive = pets.filter((p) => p.alive), lost = pets.filter((p) => !p.alive).slice(-1)[0];
+    const name = (p) => (p && p.name) || 'เจ้าตัวเล็ก';
+    return t.replace(/\{(pet|dog|cat)\}/g, (m, k) => name(k === 'pet' ? (s.flags['pet-grief'] && lost) || alive[0] : alive.find((p) => p.kind === k)));
   }
 
   function newGame(cfg, data) {
@@ -249,6 +256,7 @@ globalThis.KI = globalThis.KI || {};
       s.turn = { head: built.head, cards: built.cards, pin: null };
       if (built.nextReflectionYear !== null) s.nextReflectionYear = built.nextReflectionYear;
       for (const c of built.cards) if (c.kind === 'personal' || c.kind === 'decision') s.seen[c.id] = s.t;
+      if (s.pets) for (const c of s.turn.cards) { c.title = petText(s, c.title); c.body = petText(s, c.body); (c.choices || []).forEach((x) => { x.label = petText(s, x.label); }); }
       changed = true;
     }
     for (let i = 0; i < s.turn.cards.length; i++) {
@@ -292,7 +300,7 @@ globalThis.KI = globalThis.KI || {};
       s = r.state;
       deltas = r.deltas;
       text = refused ? 'พ่อแม่บอกว่าช่วงนี้เงินไม่พอ เรื่องนี้ต้องรอไปก่อน' : (kidMode === 'earn' ? 'ช่วยงานรับจ้างและเก็บเงินอยู่หลายสัปดาห์จนพอ ' : kidMode === 'parents' ? 'พ่อแม่ควักเงินให้ ' : '') + (choice.text || '');
-      if (kidMode === 'parents' && !refused && cost && Number.isFinite(s.parentsWealth)) s.parentsWealth = Math.max(0, s.parentsWealth - cost);
+      if (kidMode === 'parents' && !refused && cost && Number.isFinite(s.parentsWealth)) s.parentsWealth = s.parentsWealth - cost;
       if (kidMode === 'parents' && !refused && cost) s.financeLog = [...(s.financeLog || []), { year: s.year, age: ageOf(s), label: 'พ่อแม่จ่ายให้ · ' + (src.title || ''), delta: 0, familyExpense: cost, category: 'family' }];
       if (choice.roll && !s.death && !refused) {
         const x = rng.next();
@@ -315,7 +323,7 @@ globalThis.KI = globalThis.KI || {};
       }
     }
     s.turn.cards[cardIndex].picked = choiceId;
-    s.turn.cards[cardIndex].result = { text, deltas };
+    s.turn.cards[cardIndex].result = { text: petText(state, text), deltas };
     s.rng = rng.state();
     return s;
   }
@@ -366,17 +374,52 @@ globalThis.KI = globalThis.KI || {};
     return cost*({frugal:0.85,comfort:1.3}[s.flags.spendLevel] || 1)+kids*living;
   }
 
+  function parentRetireAge(s, key) {
+    const seed=Array.from((s.name||'')+key).reduce((h,c)=>(Math.imul(h,31)+c.codePointAt(0))>>>0,s.birthYear>>>0);
+    return 60+seed%6;
+  }
+
+  function parentEarnDays(job) {
+    if (!job) return 0;
+    if (/ข้าราชการ|ครู|พยาบาล|เจ้าของ|ผู้รับเหมา|โรงสี|หลายแปลง/.test(job)) return 120;
+    if (/ค้าขาย|โรงงาน|ช่าง|ขับรถ|อ้อย|เลี้ยงวัว/.test(job)) return 45;
+    return 20;
+  }
+
+  function parentsIncome(s, data) {
+    const wage=KI.tables.wageDay(data,s.year), info=(s.family && s.family.parentInfo) || {};
+    let days=0, baht=0;
+    const out={working:0,retired:0};
+    for (const key of ['father','mother']) {
+      const p=info[key];
+      if (!p || !Number.isFinite(p.birthYear) || (Number.isFinite(p.deathYear) && s.year>=p.deathYear)) continue;
+      const age=s.year-p.birthYear;
+      if (age<parentRetireAge(s,key)) { days+=parentEarnDays(p.job); out.working++; }
+      else {
+        out.retired++;
+        if (/ข้าราชการ|ครู/.test(p.job||'')) days+=40;
+        else days-=15;
+        if (s.year>=ALLOWANCE_START) baht+=12*(s.year>2011?(ALLOWANCE_TIERS.find(([from])=>age>=from)||[0,600])[1]:ALLOWANCE_FLAT);
+      }
+    }
+    out.amount=Math.round(days*wage+baht);
+    return out;
+  }
+
   function updateParents(s, data) {
     const wage=KI.tables.wageDay(data,s.year);
     if (!Number.isFinite(s.parentsWealth)) s.parentsWealth=Math.round((PARENT_START[s.birthWealth||s.wealth]||PARENT_START.mid)*wage);
     const alive=s.flags.parentsAlive!==false;
     if (alive && (s.season===null || s.season===2)) {
       const rng=KI.rng.make((s.rng ^ 0x9e3779b9 ^ s.year)>>>0);
-      const growth=(PARENT_GROWTH[s.birthWealth||s.wealth]||0.03)+(rng.next()-0.5)*0.12;
+      const income=parentsIncome(s,data);
+      const assetReturn=s.parentsWealth>=0?s.parentsWealth*(0.01+(rng.next()-0.5)*0.04):s.parentsWealth*0.06;
       s.parentsWealthPrev=s.parentsWealth;
-      s.parentsWealth=Math.max(0,Math.round(s.parentsWealth*(1+growth)));
+      s.parentsWealth=Math.round(s.parentsWealth+income.amount*(0.8+rng.next()*0.4)+assetReturn);
+      s.parentsWork=income;
     }
     s.flags.parentsCanPay=alive && s.parentsWealth>=PARENT_PAY_DAYS*wage;
+    s.flags.parentsBroke=alive && s.parentsWealth<0;
   }
 
   function elderAllowance(s) {
@@ -543,7 +586,8 @@ globalThis.KI = globalThis.KI || {};
       if(s.money!==moneyBefore)entry.cashFlow.push({label:'งานอดิเรก: '+hobby.label,delta:s.money-moneyBefore});
       updateParents(s, data);
       entry.economy = seasonMoney(s, data);
-      s.parentsWealth = Math.max(0, s.parentsWealth - (entry.economy.familySupport || 0) - (entry.economy.familyExpense || 0));
+      s.parentsWealth = s.parentsWealth - (entry.economy.familySupport || 0) - (entry.economy.familyExpense || 0);
+      s.flags.parentsBroke = s.flags.parentsAlive !== false && s.parentsWealth < 0;
       const partner=s.family && s.family.partner;
       if(partner && s.season!==null && s.flags.partner){
         const months=[4,5,3][s.season], age=s.year-partner.birthYear, wage=KI.tables.wageDay(data,s.year);
@@ -575,6 +619,23 @@ globalThis.KI = globalThis.KI || {};
       const conditionNames=s.conds.filter(cond=>(data.conditions[cond.id]?.perTurn||[]).some(effect=>typeof effect.money==='number')).map(cond=>data.conditions[cond.id]?.name || cond.id);
       s = KI.effects.tick(s, data, rng).state;
       if(s.money!==moneyBefore)entry.cashFlow.push({label:'ค่าใช้จ่ายจากสถานะ: '+conditionNames.join(', '),delta:s.money-moneyBefore});
+      const pets = (s.pets || []).filter((p) => p.alive);
+      if (pets.length && s.season !== null) {
+        const cost = Math.round(pets.reduce((sum, p) => sum + (PET_COST[p.kind] || 3), 0) * KI.tables.wageDay(data, s.year));
+        s.stats.happy = clamp(s.stats.happy + Math.min(2, pets.length) * (s.stats.happy < 50 ? 2 : 1), 0, 100);
+        if (s.season === 2) s.stats.bond = clamp(s.stats.bond + 1, 0, 100);
+        if (ageOf(s) < INCOME_AGE) {
+          if (Number.isFinite(s.parentsWealth)) s.parentsWealth = Math.max(0, s.parentsWealth - cost);
+          s.financeLog = [...(s.financeLog || []), { year: s.year, age: ageOf(s), label: 'พ่อแม่จ่ายค่าเลี้ยงสัตว์เลี้ยง', delta: 0, familyExpense: cost, category: 'pet' }];
+        } else {
+          s.money -= cost;
+          s.financeLog = [...(s.financeLog || []), { year: s.year, age: ageOf(s), label: 'ค่าอาหารและดูแลสัตว์เลี้ยง', delta: -cost, familyExpense: 0, category: 'pet' }];
+        }
+        if (s.season === 2) {
+          for (const p of pets) if (s.year - p.born >= (p.life || 14)) { p.alive = false; p.died = s.year; s.flags['pet-grief'] = true; }
+          KI.effects.petFlags(s);
+        }
+      }
       if (s.season === 0) autoPin = promote(s);
       if (s.role === 'child' && !s.edu.in && ageOf(s) >= INCOME_AGE) s.role = 'jobless';
       if (s.season === 1 && ageOf(s) >= 60 && (s.role === 'civil' || (s.role === 'teacher' && s.flags.governmentTeacher))) {
@@ -679,5 +740,5 @@ globalThis.KI = globalThis.KI || {};
     };
   }
 
-  KI.game = { updateParents, newGame, begin, choose, canEnd, end, skip, auto, summary, personality, restorePersonality, debtInfo, moneyCost, elderAllowance, livingMonthly, monthlyCost };
+  KI.game = { updateParents, parentRetireAge, newGame, begin, choose, canEnd, end, skip, auto, summary, personality, restorePersonality, debtInfo, moneyCost, elderAllowance, livingMonthly, monthlyCost };
 })();

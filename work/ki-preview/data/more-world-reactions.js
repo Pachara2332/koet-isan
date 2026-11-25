@@ -48,7 +48,7 @@ KI.data.decisions.unshift(...[
 {"id":"wr-village-fund-2001","title":"กองทุนหมู่บ้านละล้าน","body":"หมู่บ้านได้เงินกองทุนก้อนใหญ่ เปิดให้ชาวบ้านกู้ดอกเบี้ยต่ำ","when":{"year":[2001,2001],"season":2,"loc":"isan","age":[20,60]},"cooldown":"once",
  "choices":[
   {"id":"invest","label":"กู้มาเลี้ยงวัว","text":"ซื้อลูกวัวมาสองตัว ขุนไว้ขายต่อได้ส่วนต่างเป็นกำไร","effects":[{"money":20,"unit":"wageDay"},{"flag":"wr-villageFund"},{"flag":"wr-fundInvest"}]},
-  {"id":"spend","label":"กู้มาซื้อมอเตอร์ไซค์","text":"ได้รถใหม่ขี่ไปไร่สบายขึ้น แต่ต้องผ่อนคืน","effects":[{"stat":"happy","d":5},{"flag":"wr-villageFund"},{"flag":"wr-fundSpend"}]},
+  {"id":"spend","label":"กู้มาซื้อมอเตอร์ไซค์","text":"ได้รถใหม่ขี่ไปไร่สบายขึ้น แต่ต้องผ่อนคืน","when":{"noFlag":["money-bike"]},"effects":[{"stat":"happy","d":5},{"flag":"money-bike"},{"flag":"wr-villageFund"},{"flag":"wr-fundSpend"}]},
   {"id":"no","label":"ไม่กู้","text":"กลัวเป็นหนี้ ปล่อยให้คนอื่นกู้ไป","effects":[{"stat":"happy","d":-1}]}]},
 {"id":"wr-village-fund-repay-2003","title":"ถึงเวลาคืนกองทุน","body":"กรรมการกองทุนหมู่บ้านมาทวงเงินกู้งวดสุดท้าย","when":{"year":[2003,2003],"season":2,"flag":{"wr-villageFund":true}},"cooldown":"once",
  "choices":[

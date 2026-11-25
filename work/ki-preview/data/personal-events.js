@@ -768,6 +768,10 @@ KI.data.personalEvents = [
       "age": [
         13,
         18
+      ],
+      "noFlag": [
+        "partner",
+        "hasEx"
       ]
     },
     "w": 10,

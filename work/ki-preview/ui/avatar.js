@@ -340,5 +340,22 @@ globalThis.KI = globalThis.KI || {};
     if(stage==='baby')figure.append(line('M112 154 Q120 163 128 154','#c4915f',2));
     svg.append(figure);return svg;
   }
-  KI.avatar={create};
+  function pet(kind) {
+    const cat=kind==='cat', fur=cat?'#e0a25a':'#b9824f', dark=cat?'#b8743a':'#7a5233';
+    const svg=shape('svg',{viewBox:'0 0 240 330',role:'img','aria-label':cat?'แมว':'หมา'});
+    svg.append(
+      path(cat?'M176 268 Q222 250 206 196':'M174 262 Q214 240 200 214','none',{stroke:dark,'stroke-width':12,'stroke-linecap':'round'}),
+      shape('ellipse',{cx:128,cy:268,rx:56,ry:34,fill:fur,stroke:OUTLINE,'stroke-width':3}),
+      shape('rect',{x:88,y:280,width:16,height:34,rx:7,fill:fur,stroke:OUTLINE,'stroke-width':3}),
+      shape('rect',{x:146,y:280,width:16,height:34,rx:7,fill:fur,stroke:OUTLINE,'stroke-width':3}),
+      cat?path('M66 186 L74 146 L100 176 Z M134 176 L156 146 L162 186 Z',fur,{stroke:OUTLINE,'stroke-width':3,'stroke-linejoin':'round'}):path('M64 190 Q48 196 56 234 Q72 232 80 200 Z M148 200 Q156 232 172 234 Q180 196 164 190 Z',dark,{stroke:OUTLINE,'stroke-width':3}),
+      shape('circle',{cx:114,cy:212,r:48,fill:fur,stroke:OUTLINE,'stroke-width':3}),
+      shape('circle',{cx:98,cy:206,r:5,fill:OUTLINE}),
+      shape('circle',{cx:130,cy:206,r:5,fill:OUTLINE}),
+      shape('ellipse',{cx:114,cy:224,rx:cat?5:8,ry:cat?4:6,fill:cat?'#c96a6a':OUTLINE})
+    );
+    if(cat)svg.append(path('M70 222 L94 226 M70 232 L94 230 M158 222 L134 226 M158 232 L134 230','none',{stroke:OUTLINE,'stroke-width':2}));
+    return svg;
+  }
+  KI.avatar={create,pet};
 })();

@@ -212,9 +212,9 @@ KI.data.personalEvents.push(...[
    ]},
   {"id":"fort-child-newhouse","title":"บ้านใหม่","body":"ฐานะที่บ้านดีขึ้น พ่อแม่สร้างบ้านปูนหลังใหม่ ได้ห้องนอนของตัวเองครั้งแรก","w":12,"when":{"age":[6,17],"flag":{"parentsAlive":true},"any":[{"flag":{"fort-windfall":true}},{"flag":{"fort-boomed":true}},{"flag":{"fort-recovered":true}}],"wealth":["mid","rich"]},"cooldown":"once",
    "choices":[
-    {"id":"proud","label":"ชวนเพื่อนมาดูบ้าน","text":"เพื่อนบางคนตื่นเต้น บางคนเงียบไป","effects":[{"stat":"happy","d":5},{"trait":"social","d":1}],
+    {"id":"proud","label":"ชวนเพื่อนมาดูบ้าน","text":"เพื่อนบางคนตื่นเต้น บางคนเงียบไป","effects":[{"flag":"money-house"},{"stat":"happy","d":5},{"trait":"social","d":1}],
      "roll":[{"p":0.3,"text":"เพื่อนสนิทคนหนึ่งเริ่มห่างเหิน","effects":[{"stat":"happy","d":-3}]}]},
-    {"id":"humble","label":"ดีใจเงียบๆ กับพ่อแม่","text":"คืนแรกในห้องใหม่นอนหลับสบาย","effects":[{"stat":"happy","d":3},{"stat":"bond","d":3}]}
+    {"id":"humble","label":"ดีใจเงียบๆ กับพ่อแม่","text":"คืนแรกในห้องใหม่นอนหลับสบาย","effects":[{"flag":"money-house"},{"stat":"happy","d":3},{"stat":"bond","d":3}]}
    ]},
   {"id":"fort-child-pocket-up","title":"เงินขนมเพิ่มขึ้น","body":"ช่วงนี้กิจการที่บ้านดี แม่ให้เงินไปโรงเรียนเพิ่ม","w":10,"when":{"age":[7,17],"flag":{"parentsAlive":true},"any":[{"flag":{"fort-windfall":true}},{"flag":{"fort-boomed":true}}],"wealth":["mid","rich"]},"cooldown":"once",
    "choices":[

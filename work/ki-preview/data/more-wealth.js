@@ -52,7 +52,7 @@ KI.data.personalEvents.push(...[
     {"id":"talk","label":"ขอคุยกับพ่อแม่เรื่องสิ่งที่อยากเรียน","text":"เล่าความฝันของตัวเองให้พ่อแม่ฟังอย่างตั้งใจ","effects":[{"stat":"happy","d":1}],"roll":[
       {"p":0.55,"text":"พ่อแม่ฟังจนจบ แล้วบอกว่าจะสนับสนุนทางที่เลือก","effects":[{"stat":"bond","d":4},{"stat":"happy","d":2}]},
       {"p":0.45,"text":"พ่อแม่ยังอยากให้เลือกทางที่มั่นคงกว่า เรื่องนี้ค้างคาอยู่ในใจ","effects":[{"stat":"bond","d":-2},{"stat":"happy","d":-2,"by":"attach"}]}]}]},
-  {"id":"wl-teen-car","title":"รถคันแรก","body":"อายุครบสิบแปด สอบใบขับขี่ได้แล้ว พ่อแม่บอกว่าจะซื้อรถให้หนึ่งคัน ให้เลือกเอง","w":10,"cooldown":"once","when":{"age":[18,19],"year":[1990,2026],"noFlag":["wl-car"],"any":[{"wealth":"rich"},{"flag":{"status":"rich"}},{"flag":{"status":"wealthy"}}]},"choices":[
+  {"id":"wl-teen-car","title":"รถคันแรก","body":"อายุครบสิบแปด สอบใบขับขี่ได้แล้ว พ่อแม่บอกว่าจะซื้อรถให้หนึ่งคัน ให้เลือกเอง","w":10,"cooldown":"once","when":{"age":[18,19],"year":[1990,2026],"noFlag":["wl-car","ownsPersonalCar"],"any":[{"wealth":"rich"},{"flag":{"status":"rich"}},{"flag":{"status":"wealthy"}}]},"choices":[
     {"id":"sedan","label":"รถเก๋งคันใหม่","text":"รถใหม่กลิ่นเบาะหนัง เพื่อนชวนไปไหนก็ได้ทุกที่","effects":[{"flag":"wl-car"},{"stat":"happy","d":5},{"trait":"social","d":1}]},
     {"id":"pickup","label":"รถกระบะ ใช้งานที่บ้านได้ด้วย","text":"ขนของให้ที่บ้านได้ พาแม่ไปตลาดทุกเช้าวันเสาร์","effects":[{"flag":"wl-car"},{"stat":"happy","d":3},{"stat":"bond","d":2}]},
     {"id":"cash","label":"ขอเป็นเงินเก็บไว้ก่อน","text":"พ่อแม่ให้เงินก้อนหนึ่งไว้ตั้งตัว ส่วนการเดินทางใช้มอเตอร์ไซค์ไปก่อน","effects":[{"money":60,"unit":"wageDay"},{"trait":"grit","d":1},{"stat":"happy","d":-1}]}]},

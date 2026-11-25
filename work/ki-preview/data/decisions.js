@@ -1469,7 +1469,8 @@ KI.data.decisions = [
       "noFlag": [
         "partner",
         "crushUnrequited",
-        "crushNotShared"
+        "crushNotShared",
+        "hasEx"
       ],
       "noCond": [
         "heartbroken"

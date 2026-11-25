@@ -205,7 +205,7 @@ KI.data.personalEvents.push(...[
     {"id":"wire","label":"เดินสายไฟเข้าบ้านทันที","text":"เสียค่าเดินสายก้อนหนึ่ง แต่บ้านสว่างทุกคืน","effects":[{"money":-4,"unit":"wageDay"},{"stat":"happy","d":4},{"stat":"know","d":1},{"pin":"บ้านมีไฟฟ้าครั้งแรก"}]},
     {"id":"wait","label":"รอเก็บเงินอีกสักพัก","text":"ยังจุดตะเกียงต่อไป มองบ้านข้างๆ สว่างอยู่หลายเดือน","effects":[{"stat":"happy","d":-1},{"money":1,"unit":"wageDay"}]},
     {"id":"share","label":"ต่อพ่วงจากบ้านญาติไปก่อน","text":"ได้หลอดไฟดวงเดียว ต้องแบ่งค่าไฟกันวุ่นวาย","effects":[{"stat":"happy","d":2},{"stat":"bond","d":-1}]}]},
-  {"id":"real-village-tv","title":"ทีวีเครื่องแรกของหมู่บ้าน","body":"บ้านผู้ใหญ่บ้านซื้อทีวีขาวดำ ทุกค่ำเด็กๆ ไปนั่งดูละครจนเต็มลานบ้าน","when":{"year":[1978,1992],"age":[6,16],"loc":"isan","setting":"rural"},"w":7,"cooldown":12,"choices":[
+  {"id":"real-village-tv","title":"ทีวีเครื่องแรกของหมู่บ้าน","body":"บ้านผู้ใหญ่บ้านซื้อทีวีขาวดำ ทุกค่ำเด็กๆ ไปนั่งดูละครจนเต็มลานบ้าน","when":{"year":[1978,1992],"age":[6,16],"loc":"isan","setting":"rural","noFlag":["tech-tv"]},"w":7,"cooldown":"once","choices":[
     {"id":"watch","label":"ไปนั่งดูทุกคืน","text":"ดูจนจำบทละครได้ แต่การบ้านไม่ค่อยเสร็จ","effects":[{"stat":"happy","d":4},{"stat":"know","d":-1}]},
     {"id":"news","label":"ไปดูแค่ข่าวกับสารคดี","text":"รู้จักโลกกว้างขึ้น","effects":[{"stat":"know","d":2},{"stat":"happy","d":1}]},
     {"id":"help","label":"ช่วยเจ้าของบ้านกวาดลานก่อนดู","text":"ได้นั่งแถวหน้า ผู้ใหญ่บ้านเอ็นดู","effects":[{"stat":"bond","d":2},{"inc":"good"}]}]},
@@ -221,8 +221,8 @@ KI.data.personalEvents.push(...[
     {"id":"ride","label":"ปั่นไปกลับทุกวัน","text":"ขาแข็งแรง แต่เหนื่อยจนหลับในห้องบางคาบ","effects":[{"stat":"health","d":2},{"stat":"know","d":1}]},
     {"id":"group","label":"รอเพื่อนไปเป็นกลุ่ม","text":"คุยกันตลอดทาง สนิทกันมากขึ้น","effects":[{"stat":"happy","d":2},{"trait":"social","d":1}]},
     {"id":"songthaew","label":"ขอเงินแม่ขึ้นรถสองแถว","text":"ไม่เหนื่อย แต่บ้านเสียเงินเพิ่มทุกเดือน","effects":[{"money":-1,"unit":"wageDay"},{"stat":"happy","d":1}]}]},
-  {"id":"real-summer-novice","title":"บวชเณรภาคฤดูร้อน","body":"ปิดเทอมใหญ่ วัดในหมู่บ้านรับเด็กบวชเณรช่วงสั้นๆ แม่อยากให้ไป","when":{"year":[1980,2026],"age":[9,15],"sex":"m","season":0,"loc":"isan"},"w":10,"cooldown":"once","choices":[
-    {"id":"ordain","label":"บวชตามที่แม่ขอ","text":"ตื่นตีสี่ บิณฑบาต ท่องบทสวด กลับมาใจเย็นขึ้น","effects":[{"stat":"bond","d":4},{"stat":"know","d":2},{"stat":"happy","d":-1},{"inc":"good"}]},
+  {"id":"real-summer-novice","title":"บวชเณรภาคฤดูร้อน","body":"ปิดเทอมใหญ่ วัดในหมู่บ้านรับเด็กบวชเณรช่วงสั้นๆ แม่อยากให้ไป","when":{"year":[1980,2026],"age":[9,15],"sex":"m","season":0,"loc":"isan","noFlag":["real-summerNovice"]},"w":10,"cooldown":"once","choices":[
+    {"id":"ordain","label":"บวชตามที่แม่ขอ","text":"ตื่นตีสี่ บิณฑบาต ท่องบทสวด กลับมาใจเย็นขึ้น","effects":[{"flag":"real-summerNovice"},{"stat":"bond","d":4},{"stat":"know","d":2},{"stat":"happy","d":-1},{"inc":"good"}]},
     {"id":"no","label":"ขอเล่นกับเพื่อนช่วงปิดเทอม","text":"สนุกเต็มที่ แต่แม่ผิดหวังเล็กน้อย","effects":[{"stat":"happy","d":3},{"stat":"bond","d":-2}]},
     {"id":"work","label":"ไปรับจ้างเก็บเงินช่วยบ้าน","text":"ได้เงินค่าเทอม แต่ปิดเทอมนี้เหนื่อย","when":{"age":[15,15]},"effects":[{"money":2,"unit":"wageDay"},{"stat":"health","d":-1}]}]},
   {"id":"real-letter-bkk","title":"จดหมายถึงคนที่กรุงเทพฯ","body":"ไม่ได้ข่าวญาติที่ไปทำงานกรุงเทพฯ มาหลายเดือน ที่บ้านอยากเขียนจดหมายไปถาม","when":{"year":[1975,1997],"age":[9,45],"loc":"isan"},"w":6,"cooldown":12,"choices":[
@@ -233,9 +233,9 @@ KI.data.personalEvents.push(...[
     {"id":"clean","label":"ไล่คว่ำกะลา ใส่ทรายกำจัดลูกน้ำทั้งบ้าน","text":"เหนื่อยครึ่งวัน แต่ยุงในบ้านลดลง","effects":[{"stat":"health","d":2},{"inc":"good"}]},
     {"id":"net","label":"นอนกางมุ้งทุกคืน","text":"ร้อนอบอ้าว แต่ปลอดภัยกว่า","effects":[{"stat":"health","d":1},{"stat":"happy","d":-1}]},
     {"id":"ignore","label":"คิดว่าไม่เป็นไร","text":"ไม่เสียเวลา แต่บ้านยังมีลูกน้ำเต็มโอ่ง","effects":[{"stat":"health","d":-2}],"roll":[{"p":0.15,"text":"ไข้ขึ้นสูงหลายวัน ต้องไปนอนโรงพยาบาล","effects":[{"cond":"sick","turns":2},{"stat":"health","d":-6},{"money":-2,"unit":"wageDay"}]}]}]},
-  {"id":"real-first-motorbike","title":"มอเตอร์ไซค์คันแรกของบ้าน","body":"บ้านมีเงินพอวางดาวน์มอเตอร์ไซค์คันแรก ทุกคนมีความเห็นว่าจะเอาแบบไหน","when":{"year":[1988,2004],"age":[10,50],"loc":"isan","setting":"rural"},"w":7,"cooldown":"once","choices":[
-    {"id":"down","label":"ผ่อนคันใหม่","text":"ไปตลาดไปนาสะดวกขึ้นมาก แต่มีค่างวดทุกเดือน","effects":[{"money":-5,"unit":"wageDay"},{"stat":"happy","d":4},{"pin":"บ้านมีมอเตอร์ไซค์คันแรก"}]},
-    {"id":"used","label":"ซื้อมือสองเงินสด","text":"ราคาถูก ซ่อมบ่อยแต่ไม่มีหนี้","effects":[{"money":-3,"unit":"wageDay"},{"stat":"happy","d":2},{"inc":"skill-mechanic"}]},
+  {"id":"real-first-motorbike","title":"มอเตอร์ไซค์คันแรกของบ้าน","body":"บ้านมีเงินพอวางดาวน์มอเตอร์ไซค์คันแรก ทุกคนมีความเห็นว่าจะเอาแบบไหน","when":{"year":[1988,2004],"age":[10,50],"loc":"isan","setting":"rural","noFlag":["money-bike","homeBike"]},"w":7,"cooldown":"once","choices":[
+    {"id":"down","label":"ผ่อนคันใหม่","text":"ไปตลาดไปนาสะดวกขึ้นมาก แต่มีค่างวดทุกเดือน","effects":[{"money":-5,"unit":"wageDay"},{"flag":"homeBike"},{"stat":"happy","d":4},{"pin":"บ้านมีมอเตอร์ไซค์คันแรก"}]},
+    {"id":"used","label":"ซื้อมือสองเงินสด","text":"ราคาถูก ซ่อมบ่อยแต่ไม่มีหนี้","effects":[{"money":-3,"unit":"wageDay"},{"flag":"homeBike"},{"stat":"happy","d":2},{"inc":"skill-mechanic"}]},
     {"id":"no","label":"ยังใช้จักรยานต่อ","text":"ประหยัดเงิน แต่ไปไหนไกลลำบาก","effects":[{"money":1,"unit":"wageDay"},{"stat":"health","d":1}]}]},
   {"id":"real-payphone","title":"ตู้โทรศัพท์หน้าร้านค้า","body":"ร้านค้าในตำบลมีตู้โทรศัพท์สาธารณะ คนที่ทำงานไกลนัดโทรมาตอนสองทุ่ม","when":{"year":[1990,2004],"age":[12,60],"loc":"isan"},"w":6,"cooldown":12,"choices":[
     {"id":"wait","label":"ไปยืนรอสายตามนัด","text":"ยุงกัดทั้งตัว แต่ได้ยินเสียงคนที่คิดถึง","effects":[{"stat":"bond","d":3},{"stat":"happy","d":2}]},
@@ -252,9 +252,9 @@ KI.data.personalEvents.push(...[
   {"id":"real-gns","title":"สมัครเรียน กศน.","body":"ศูนย์การศึกษานอกโรงเรียนในอำเภอเปิดรับสมัครเรียนวันหยุด จบแล้วได้วุฒิไปสมัครงาน","when":{"year":[1993,2026],"age":[18,45],"edu":{"top":["none","p6","m3"]},"noFlag":["real-gns"]},"w":5,"cooldown":12,"choices":[
     {"id":"enroll","label":"สมัครเรียนวันอาทิตย์","text":"เหนื่อยเพราะต้องทำงานไปด้วย แต่ได้ความรู้กลับมา","effects":[{"flag":"real-gns"},{"stat":"know","d":4},{"stat":"happy","d":-1},{"money":-1,"unit":"wageDay"}]},
     {"id":"later","label":"ไว้ปีหน้าค่อยว่ากัน","text":"งานยุ่งเกินไปสำหรับตอนนี้","effects":[{"stat":"happy","d":1}]}]},
-  {"id":"real-first-mobile","title":"มือถือเครื่องแรก","body":"ร้านในอำเภอขายมือถือเครื่องเล็กกับบัตรเติมเงิน ใครๆ ก็เริ่มมีเบอร์ของตัวเอง","when":{"year":[2002,2010],"age":[14,60]},"w":7,"cooldown":"once","choices":[
-    {"id":"buy","label":"ซื้อเครื่องใหม่กับบัตรเติมเงิน","text":"ติดต่อที่บ้านได้ทุกเมื่อ แต่ค่าโทรหมดไวกว่าที่คิด","effects":[{"money":-4,"unit":"wageDay"},{"stat":"bond","d":3},{"stat":"happy","d":3}]},
-    {"id":"used","label":"รับเครื่องเก่าต่อจากญาติ","text":"ไม่เสียเงินมาก ปุ่มกดติดบ้างแต่ใช้ได้","effects":[{"money":-1,"unit":"wageDay"},{"stat":"bond","d":2}]},
+  {"id":"real-first-mobile","title":"มือถือเครื่องแรก","body":"ร้านในอำเภอขายมือถือเครื่องเล็กกับบัตรเติมเงิน ใครๆ ก็เริ่มมีเบอร์ของตัวเอง","when":{"year":[2002,2010],"age":[14,60],"noFlag":["money-phone"]},"w":7,"cooldown":"once","choices":[
+    {"id":"buy","label":"ซื้อเครื่องใหม่กับบัตรเติมเงิน","text":"ติดต่อที่บ้านได้ทุกเมื่อ แต่ค่าโทรหมดไวกว่าที่คิด","effects":[{"money":-4,"unit":"wageDay"},{"flag":"money-phone"},{"stat":"bond","d":3},{"stat":"happy","d":3}]},
+    {"id":"used","label":"รับเครื่องเก่าต่อจากญาติ","text":"ไม่เสียเงินมาก ปุ่มกดติดบ้างแต่ใช้ได้","effects":[{"money":-1,"unit":"wageDay"},{"flag":"money-phone"},{"stat":"bond","d":2}]},
     {"id":"no","label":"ยังไม่ซื้อ","text":"ประหยัด แต่ต้องยืมเครื่องเพื่อนบ่อย","effects":[{"money":1,"unit":"wageDay"},{"trait":"social","d":-1}]}]},
   {"id":"real-seven-eleven","title":"ร้านสะดวกซื้อสาขาแรกในอำเภอ","body":"ร้านสะดวกซื้อเปิดสาขาแรกในตัวอำเภอ เปิดทั้งวันทั้งคืน แอร์เย็นฉ่ำ","when":{"year":[2002,2015],"age":[8,60],"loc":"isan"},"w":5,"cooldown":"once","choices":[
     {"id":"visit","label":"ไปเดินดูตั้งแต่วันแรก","text":"ตื่นตากับของแปลกตา ได้ขนมกลับมาหนึ่งถุง","effects":[{"stat":"happy","d":3},{"money":-1,"unit":"wageDay"}]},

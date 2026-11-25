@@ -118,10 +118,10 @@ KI.data.personalEvents.push(...[
     {"id":"sign","label":"เซ็นสัญญาปรับพฤติกรรม","text":"ต้องรายงานตัวกับครูทุกเช้าหนึ่งเทอม","effects":[{"inc":"naughty","d":-2},{"stat":"know","d":2},{"stat":"happy","d":-2}]},
     {"id":"blame","label":"บอกว่าเพื่อนชวน","text":"ผู้ใหญ่ไม่ชอบคำตอบนี้","effects":[{"stat":"bond","d":-3}]},
     {"id":"quit","label":"ขู่ว่าจะเลิกเรียน","text":"ผู้ใหญ่ทั้งโกรธทั้งกลัว เรื่องเรียนกลายเป็นเรื่องทะเลาะทุกวัน","effects":[{"inc":"naughty"},{"stat":"bond","d":-6},{"stat":"know","d":-2}]}]},
-  {"id":"bhv-teen-novice","title":"บวชเณรภาคฤดูร้อน","body":"ผู้ใหญ่ในบ้านคุยกับหลวงพ่อ อยากให้ไปบวชเณรช่วงปิดเทอมหน้าร้อน จะได้ใจเย็นลง","when":{"age":[12,16],"sex":"m","season":0,"counter":{"naughty":[3,99]}},"w":14,
+  {"id":"bhv-teen-novice","title":"บวชเณรภาคฤดูร้อน","body":"ผู้ใหญ่ในบ้านคุยกับหลวงพ่อ อยากให้ไปบวชเณรช่วงปิดเทอมหน้าร้อน จะได้ใจเย็นลง","when":{"age":[12,16],"sex":"m","season":0,"counter":{"naughty":[3,99]},"noFlag":["real-summerNovice"]},"w":14,
    "choices":[
-    {"id":"go","label":"ยอมไปบวชด้วยใจ","text":"ตื่นตีสี่ บิณฑบาต ท่องบทสวด กลับมาใจนิ่งขึ้นจริง","effects":[{"inc":"naughty","d":-3},{"inc":"good"},{"stat":"bond","d":4},{"stat":"know","d":2}]},
-    {"id":"grudge","label":"ไปแบบจำใจ","text":"นับวันรอสึก แต่ก็ได้ข้อคิดติดตัวบ้าง","effects":[{"inc":"naughty","d":-1},{"stat":"happy","d":-2}]},
+    {"id":"go","label":"ยอมไปบวชด้วยใจ","text":"ตื่นตีสี่ บิณฑบาต ท่องบทสวด กลับมาใจนิ่งขึ้นจริง","effects":[{"flag":"real-summerNovice"},{"inc":"naughty","d":-3},{"inc":"good"},{"stat":"bond","d":4},{"stat":"know","d":2}]},
+    {"id":"grudge","label":"ไปแบบจำใจ","text":"นับวันรอสึก แต่ก็ได้ข้อคิดติดตัวบ้าง","effects":[{"flag":"real-summerNovice"},{"inc":"naughty","d":-1},{"stat":"happy","d":-2}]},
     {"id":"refuse","label":"ไม่ยอมไป","text":"ผู้ใหญ่ผิดหวัง หลวงพ่อบอกว่าไม่เป็นไร ไว้พร้อมค่อยมา","effects":[{"stat":"bond","d":-4}]}]},
   {"id":"bhv-teen-friends","title":"เพื่อนกลุ่มเดิมมีเรื่อง","body":"เพื่อนที่เที่ยวด้วยกันประจำไปมีเรื่องชกต่อยในงานวัด ตำรวจเรียกคนในกลุ่มไปสอบถาม","when":{"age":[14,19],"counter":{"naughty":[3,99]}},"w":14,"heavy":true,
    "choices":[

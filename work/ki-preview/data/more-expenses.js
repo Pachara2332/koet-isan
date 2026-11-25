@@ -1,6 +1,6 @@
 globalThis.KI = globalThis.KI || {}; KI.data = KI.data || {};
 KI.data.decisions.push(...[
-  {"id":"exp-budget","title":"ตั้งงบรายจ่ายในบ้าน","body":"สิ้นเดือนนั่งดูบัญชี เงินเข้าเท่าไหร่ ออกเท่าไหร่ ถึงเวลาตัดสินใจว่าจะใช้ชีวิตแบบไหน","when":{"age":[22,75],"role":["farmer","factory","construction","driver","civil","teacher","office","trader","abroad","soldier","doctor","nurse","engineer","developer","police","lawyer","pharmacist","accountant","banker","chef","mechanic","artist","creator","rider","security","housekeeper","athlete","designer","business","jobless","retired"],"chance":0.3},"cooldown":15,"major":true,"choices":[
+  {"id":"exp-budget","title":"ตั้งงบรายจ่ายในบ้าน","body":"สิ้นเดือนนั่งดูบัญชี เงินเข้าเท่าไหร่ ออกเท่าไหร่ ถึงเวลาตัดสินใจว่าจะใช้ชีวิตแบบไหน","when":{"age":[22,75],"role":["farmer","factory","construction","driver","civil","teacher","office","trader","abroad","soldier","doctor","nurse","engineer","developer","police","lawyer","pharmacist","accountant","banker","chef","mechanic","artist","creator","rider","security","housekeeper","athlete","designer","business","jobless","retired"],"chance":0.3},"cooldown":30,"major":true,"choices":[
     {"id":"frugal","label":"รัดเข็มขัด ใช้เท่าที่จำเป็น","text":"กินข้าวบ้าน งดของฟุ่มเฟือย รายจ่ายลดลงราว 15%","effects":[{"flag":"spendLevel","v":"frugal"},{"stat":"happy","d":-2}]},
     {"id":"normal","label":"ใช้ตามปกติ","text":"ไม่ฟุ่มเฟือย ไม่อดอยาก","effects":[{"flag":"spendLevel","v":false}]},
     {"id":"comfort","label":"ใช้ให้สบาย ชีวิตมีครั้งเดียว","text":"กินร้านบ้าง ซื้อของที่อยากได้บ้าง รายจ่ายเพิ่มราว 30%","effects":[{"flag":"spendLevel","v":"comfort"},{"stat":"happy","d":3}]}]},
@@ -39,7 +39,7 @@ KI.data.decisions.push(...[
     {"id":"all","label":"ไปทุกงาน ใส่ซองเต็มที่","text":"หน้าตาไม่เสียกับใคร","effects":[{"money":-12,"unit":"wageDay"},{"stat":"bond","d":3},{"trait":"social","d":1}]},
     {"id":"some","label":"ไปเฉพาะงานคนสนิท","text":"ฝากซองไปกับเพื่อนสำหรับงานที่เหลือ","effects":[{"money":-5,"unit":"wageDay"},{"stat":"bond","d":1}]},
     {"id":"skip","label":"ไม่ไปสักงาน","text":"ประหยัดเงิน แต่มีคนเริ่มนินทา","effects":[{"stat":"bond","d":-3}]}]},
-  {"id":"exp-bike-repair","title":"รถพัง","body":"รถที่ใช้ทุกวันสตาร์ทไม่ติด ช่างบอกว่าต้องเปลี่ยนอะไหล่หลายชิ้น","when":{"age":[18,75],"year":[1985,9999],"chance":0.2},"cooldown":9,"choices":[
+  {"id":"exp-bike-repair","title":"รถพัง","body":"รถที่ใช้ทุกวันสตาร์ทไม่ติด ช่างบอกว่าต้องเปลี่ยนอะไหล่หลายชิ้น","when":{"age":[18,75],"year":[1985,9999],"any":[{"flag":{"money-bike":true}},{"flag":{"wl-car":true}},{"flag":{"ownsPersonalCar":true}}],"chance":0.2},"cooldown":9,"choices":[
     {"id":"fix","label":"ซ่อมให้ดีที่ศูนย์","text":"ใช้อะไหล่แท้ ขับได้อีกหลายปี","effects":[{"money":-10,"unit":"wageDay"}]},
     {"id":"cheap","label":"ซ่อมร้านข้างทางแบบประหยัด","text":"ถูกกว่าครึ่ง แต่ไม่แน่ใจว่าจะทนแค่ไหน","effects":[{"money":-4,"unit":"wageDay"}],"roll":[{"p":0.4,"text":"ผ่านไปไม่นานก็พังอีก","effects":[{"money":-6,"unit":"wageDay"},{"stat":"happy","d":-2}]}]},
     {"id":"new","label":"ดาวน์คันใหม่ ผ่อนเอา","text":"ได้รถใหม่ แต่มีค่างวดทุกเดือน","effects":[{"money":-25,"unit":"wageDay"},{"cond":"money-installment","turns":6},{"stat":"happy","d":3}]},

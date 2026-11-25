@@ -140,14 +140,14 @@ KI.data.personalEvents.push(...[
     {"id":"avoid","label":"ทำเป็นไม่เห็น","text":"งานจบไปอย่างอึดอัด","effects":[{"stat":"happy","d":-3}]}
    ]},
 
-  {"id":"tech-tv-neighbour","w":10,"cooldown":6,"title":"ไปดูทีวีบ้านเพื่อนบ้าน","body":"ทั้งหมู่บ้านมีทีวีไม่กี่เครื่อง คืนนี้มีมวยและละคร เด็กๆ นั่งเต็มลานบ้านเขา","when":{"year":[1975,1989],"loc":"isan","setting":"rural","age":[4,16]},
+  {"id":"tech-tv-neighbour","w":10,"cooldown":6,"title":"ไปดูทีวีบ้านเพื่อนบ้าน","body":"ทั้งหมู่บ้านมีทีวีไม่กี่เครื่อง คืนนี้มีมวยและละคร เด็กๆ นั่งเต็มลานบ้านเขา","when":{"year":[1975,1989],"loc":"isan","setting":"rural","age":[4,16],"noFlag":["tech-tv"]},
    "choices":[
     {"id":"go","label":"ไปนั่งดูจนจบ","text":"สนุกจนลืมเวลา กลับบ้านดึก ตื่นสายไปโรงเรียน","effects":[{"stat":"happy","d":3},{"trait":"social","d":1},{"stat":"know","d":-1}]},
     {"id":"home","label":"อยู่บ้านทำการบ้าน","text":"วันรุ่งขึ้นเพื่อนคุยกันแต่เรื่องละคร เราฟังไม่รู้เรื่อง","effects":[{"stat":"know","d":2},{"stat":"happy","d":-1}]}
    ]},
   {"id":"tech-own-tv","w":8,"cooldown":"once","title":"บ้านเราจะซื้อทีวี","body":"พ่อคุยว่าจะผ่อนทีวีขาวดำจากร้านในอำเภอ","when":{"year":[1978,1992],"loc":"isan","age":[6,40]},
    "choices":[
-    {"id":"buy","label":"ผ่อนซื้อ","text":"บ้านกลายเป็นที่รวมตัวของเพื่อนบ้านทุกคืน","effects":[{"money":-15,"unit":"wageDay"},{"stat":"happy","d":4},{"trait":"social","d":1}]},
+    {"id":"buy","label":"ผ่อนซื้อ","text":"บ้านกลายเป็นที่รวมตัวของเพื่อนบ้านทุกคืน","effects":[{"flag":"tech-tv"},{"money":-15,"unit":"wageDay"},{"stat":"happy","d":4},{"trait":"social","d":1}]},
     {"id":"wait","label":"เก็บเงินไว้ก่อน","text":"ยังต้องไปดูบ้านคนอื่น แต่เงินเก็บไม่หาย","effects":[{"money":3,"unit":"wageDay"}]}
    ]},
   {"id":"tech-cassette","w":10,"cooldown":9,"title":"เทปหมอลำม้วนใหม่","body":"รถเร่ขายเทปจอดหน้าวัด มีหมอลำกับลูกทุ่งชุดใหม่เพิ่งออก","when":{"year":[1982,2000],"age":[10,45]},
@@ -160,9 +160,9 @@ KI.data.personalEvents.push(...[
     {"id":"call","label":"ต่อคิวโทรหาญาติในเมือง","text":"เหรียญหมดก่อนคุยจบ แต่ได้ยินเสียงคนไกล","effects":[{"money":-1,"unit":"wageDay"},{"stat":"bond","d":3}]},
     {"id":"letter","label":"เขียนจดหมายแทน","text":"ถูกกว่า แต่รอคำตอบเป็นอาทิตย์","effects":[{"stat":"know","d":1},{"stat":"bond","d":1}]}
    ]},
-  {"id":"tech-first-mobile","w":10,"cooldown":"once","title":"มือถือเครื่องแรก","body":"มือถือราคาถูกลงจนคนในหมู่บ้านเริ่มมีกัน","when":{"year":[2001,2010],"age":[15,60]},
+  {"id":"tech-first-mobile","w":10,"cooldown":"once","title":"มือถือเครื่องแรก","body":"มือถือราคาถูกลงจนคนในหมู่บ้านเริ่มมีกัน","when":{"year":[2001,2010],"age":[15,60],"noFlag":["money-phone"]},
    "choices":[
-    {"id":"buy","label":"ซื้อเครื่องจอขาวดำ","text":"โทรหาที่บ้านได้ทุกเมื่อ แต่ค่าบัตรเติมเงินกินเงินทุกเดือน","effects":[{"flag":"tech-mobile"},{"money":-10,"unit":"wageDay"},{"stat":"bond","d":3}]},
+    {"id":"buy","label":"ซื้อเครื่องจอขาวดำ","text":"โทรหาที่บ้านได้ทุกเมื่อ แต่ค่าบัตรเติมเงินกินเงินทุกเดือน","effects":[{"flag":"money-phone"},{"money":-10,"unit":"wageDay"},{"stat":"bond","d":3}]},
     {"id":"no","label":"ยังไม่จำเป็น","text":"ใช้ตู้โทรศัพท์ต่อไป ประหยัดเงินได้","effects":[{"money":2,"unit":"wageDay"}]}
    ]},
   {"id":"tech-netcafe","w":10,"cooldown":9,"title":"ร้านเน็ตในอำเภอ","body":"ร้านเกมออนไลน์เปิดใหม่ เพื่อนชวนไปเล่นหลังเลิกเรียนชั่วโมงละไม่กี่บาท","when":{"year":[2002,2012],"age":[11,22]},
@@ -191,12 +191,12 @@ KI.data.personalEvents.push(...[
     {"id":"active","label":"ทักทายทุกวัน","text":"รู้สึกใกล้กันแม้อยู่คนละจังหวัด","effects":[{"stat":"bond","d":4}]},
     {"id":"mute","label":"ปิดแจ้งเตือน","text":"โทรศัพท์เงียบขึ้น แต่พลาดข่าวงานบุญไปครั้งหนึ่ง","effects":[{"stat":"happy","d":1},{"stat":"bond","d":-1}]}
    ]},
-  {"id":"tech-smartphone","w":10,"cooldown":"once","title":"สมาร์ทโฟนเครื่องแรก","body":"ร้านในตลาดให้ผ่อนสมาร์ทโฟนรายเดือน ดูคลิปได้ วิดีโอคอลได้","when":{"year":[2012,2020],"age":[12,70]},
+  {"id":"tech-smartphone","w":10,"cooldown":"once","title":"สมาร์ทโฟนเครื่องแรก","body":"ร้านในตลาดให้ผ่อนสมาร์ทโฟนรายเดือน ดูคลิปได้ วิดีโอคอลได้","when":{"year":[2012,2020],"age":[12,70],"noFlag":["money-smartphone"]},
    "choices":[
-    {"id":"install","label":"ผ่อนเครื่องใหม่","text":"วิดีโอคอลหาครอบครัวได้เห็นหน้า แต่ผ่อนอีกเป็นปี","effects":[{"flag":"tech-smartphone"},{"money":-12,"unit":"wageDay"},{"stat":"bond","d":3},{"stat":"happy","d":2}]},
-    {"id":"cheap","label":"ใช้เครื่องมือสองต่อ","text":"ช้าหน่อย แต่ไม่มีหนี้","effects":[{"flag":"tech-smartphone"},{"money":-4,"unit":"wageDay"}]}
+    {"id":"install","label":"ผ่อนเครื่องใหม่","text":"วิดีโอคอลหาครอบครัวได้เห็นหน้า แต่ผ่อนอีกเป็นปี","effects":[{"flag":"money-smartphone"},{"money":-12,"unit":"wageDay"},{"stat":"bond","d":3},{"stat":"happy","d":2}]},
+    {"id":"cheap","label":"ใช้เครื่องมือสองต่อ","text":"ช้าหน่อย แต่ไม่มีหนี้","effects":[{"flag":"money-smartphone"},{"money":-4,"unit":"wageDay"}]}
    ]},
-  {"id":"tech-scam-sms","w":8,"cooldown":12,"title":"ข้อความแปลก","body":"มีข้อความบอกว่าบัญชีมีปัญหา ให้กดลิงก์เพื่อยืนยันตัวตน","when":{"year":[2015,2026],"age":[20,80],"flag":{"tech-smartphone":true}},
+  {"id":"tech-scam-sms","w":8,"cooldown":12,"title":"ข้อความแปลก","body":"มีข้อความบอกว่าบัญชีมีปัญหา ให้กดลิงก์เพื่อยืนยันตัวตน","when":{"year":[2015,2026],"age":[20,80],"flag":{"money-smartphone":true}},
    "choices":[
     {"id":"ignore","label":"ลบทิ้ง แล้วถามคนรู้จัก","text":"คนรู้จักบอกว่าเป็นมิจฉาชีพ โชคดีที่ไม่กด","effects":[{"stat":"know","d":2}]},
     {"id":"click","label":"กดลิงก์ตามที่บอก","text":"กดไปแล้วใจไม่ดี","effects":[],"roll":[{"p":0.5,"text":"เงินในบัญชีหายไปก้อนหนึ่ง","effects":[{"money":-20,"unit":"wageDay"},{"stat":"happy","d":-6}]},{"p":0.5,"text":"ธนาคารโทรมาเตือนทัน อายัดบัญชีไว้ได้","effects":[{"stat":"happy","d":-2}]}]}
@@ -211,13 +211,13 @@ KI.data.personalEvents.push(...[
     {"id":"learn","label":"ให้คนรู้จักช่วยสอน","text":"ใช้เป็นแล้ว ซื้อของถูกลงหลายเดือน","effects":[{"money":5,"unit":"wageDay"},{"stat":"bond","d":2}]},
     {"id":"skip","label":"ไม่ลง ยุ่งยาก","text":"ไม่ต้องปวดหัวกับแอป แต่พลาดสิทธิ์ไป","effects":[{"stat":"happy","d":-1}]}
    ]},
-  {"id":"tech-live-sell","w":8,"cooldown":"once","title":"ไลฟ์ขายของ","body":"เพื่อนบ้านไลฟ์ขายปลาร้ากับผ้าไหมผ่านโทรศัพท์ ขายได้ทั่วประเทศ","when":{"year":[2018,2026],"age":[18,60],"flag":{"tech-smartphone":true}},
+  {"id":"tech-live-sell","w":8,"cooldown":"once","title":"ไลฟ์ขายของ","body":"เพื่อนบ้านไลฟ์ขายปลาร้ากับผ้าไหมผ่านโทรศัพท์ ขายได้ทั่วประเทศ","when":{"year":[2018,2026],"age":[18,60],"flag":{"money-smartphone":true}},
    "choices":[
     {"id":"try","label":"ลองไลฟ์ขายของบ้าง","text":"ตื่นเต้นตอนกดไลฟ์ครั้งแรก","effects":[{"money":-5,"unit":"wageDay"},{"trait":"social","d":1}],
      "roll":[{"p":0.4,"text":"มีลูกค้าประจำ ได้รายได้เสริม","effects":[{"money":25,"unit":"wageDay"},{"stat":"happy","d":4}]},{"p":0.6,"text":"คนดูไม่กี่คน ของค้างเต็มบ้าน","effects":[{"stat":"happy","d":-3}]}]},
     {"id":"no","label":"ทำงานแบบเดิม","text":"รายได้คงที่ ไม่เสี่ยง","effects":[]}
    ]},
-  {"id":"tech-tiktok","w":8,"cooldown":"once","title":"ทำคลิปลง TikTok","body":"คลิปชีวิตบ้านนาของคนในหมู่บ้านมียอดวิวเป็นแสน","when":{"year":[2019,2026],"age":[13,40],"flag":{"tech-smartphone":true}},
+  {"id":"tech-tiktok","w":8,"cooldown":"once","title":"ทำคลิปลง TikTok","body":"คลิปชีวิตบ้านนาของคนในหมู่บ้านมียอดวิวเป็นแสน","when":{"year":[2019,2026],"age":[13,40],"flag":{"money-smartphone":true}},
    "choices":[
     {"id":"create","label":"ถ่ายคลิปลงทุกวัน","text":"ใช้เวลาวันละหลายชั่วโมง","effects":[{"stat":"know","d":-1},{"trait":"social","d":1}],
      "roll":[{"p":0.25,"text":"คลิปหนึ่งดังขึ้นมา มีคนติดตามเยอะ","effects":[{"money":15,"unit":"wageDay"},{"stat":"happy","d":5}]},{"p":0.75,"text":"ยอดวิวไม่ขยับ เริ่มท้อ","effects":[{"stat":"happy","d":-2}]}]},
