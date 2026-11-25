@@ -625,7 +625,7 @@ globalThis.KI = globalThis.KI || {};
         s.stats.happy = clamp(s.stats.happy + Math.min(2, pets.length) * (s.stats.happy < 50 ? 2 : 1), 0, 100);
         if (s.season === 2) s.stats.bond = clamp(s.stats.bond + 1, 0, 100);
         if (ageOf(s) < INCOME_AGE) {
-          if (Number.isFinite(s.parentsWealth)) s.parentsWealth = Math.max(0, s.parentsWealth - cost);
+          if (Number.isFinite(s.parentsWealth)) s.parentsWealth -= cost;
           s.financeLog = [...(s.financeLog || []), { year: s.year, age: ageOf(s), label: 'พ่อแม่จ่ายค่าเลี้ยงสัตว์เลี้ยง', delta: 0, familyExpense: cost, category: 'pet' }];
         } else {
           s.money -= cost;

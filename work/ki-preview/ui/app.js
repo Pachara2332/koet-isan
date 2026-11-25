@@ -19,6 +19,9 @@ globalThis.KI = globalThis.KI || {};
     if (text !== undefined) node.textContent = text;
     return node;
   };
+  const PET_NAMES={dog:['ด่าง','ดำ','โบ้','ทองแดง','ส้มตำ','ข้าวเหนียว','มอม'],cat:['เหมียว','ส้ม','มะลิ','ขาวมณี','สีสวาด','ข้าวต้ม']};
+  const petLabel=pet=>pet.kind==='cat'?'แมว':'หมา';
+  const randomPetName=kind=>{const names=PET_NAMES[kind]||PET_NAMES.dog;return names[Math.floor(Math.random()*names.length)];};
   function button(text, action, cls) {
     const b = element('button', cls || 'btn', text);
     b.type = 'button';
@@ -273,11 +276,13 @@ globalThis.KI = globalThis.KI || {};
     const kin=state.role==='prisoner'?[]:familyFigures();
     if(kin.length){const row=element('div','family-row');kin.forEach(person=>{const box=element('div','family-figure');box.append(KI.avatar.create(person),element('span','',person.label));row.append(box);});view.append(row);}
     while(autoMode && (state.pendingSplits||[]).length){const sp=state.pendingSplits[0];const resolved=sp.assets && sp.assets.length?KI.finance.resolveSplit(state,data,sp.assets[0],'sell'):state;state=resolved!==state?resolved:{...state,pendingSplits:state.pendingSplits.slice(1)};}
+    if(autoMode && (state.pets||[]).some(pet=>pet.alive && !pet.name))state={...state,pets:state.pets.map(pet=>pet.alive && !pet.name?{...pet,name:randomPetName(pet.kind)}:pet)};
     const splitWaiting=(state.pendingSplits||[]).length>0;
+    const unnamedPet=(state.pets||[]).find(pet=>pet.alive && !pet.name);
     const pendingIndex=state.turn.cards.findIndex(card=>card.choices && card.picked===null);
     const h = state.turn.head;
     const playback=element('div','playback');
-    const waiting=(pendingIndex>=0 && !autoMode) || splitWaiting;
+    const waiting=(pendingIndex>=0 && !autoMode) || splitWaiting || !!unnamedPet;
     const status=element('p','clock-status');
     const showStatus=()=>{status.textContent=waiting?'เวลาหยุดรอคุณเลือก':clock.isPaused()?'เวลาหยุดอยู่':'เวลากำลังเดิน';};
     const pause=button(clock.isPaused()?'เล่นต่อ':'หยุดเวลา',()=>{if(clock.isPaused())clock.resume();else clock.pause();pause.textContent=clock.isPaused()?'เล่นต่อ':'หยุดเวลา';showStatus();drawProgress();},'btn');
@@ -543,6 +548,7 @@ globalThis.KI = globalThis.KI || {};
     state.family.children.forEach(child=>{const row=element('p','family-close');row.append(element('strong','family-relation',childRelation(child)),element('span','family-name',child.name),element('span','family-age',`อายุ ${Math.max(0,state.year-child.birthYear)} ปี`));household.append(row);});
     if(!state.family.partner && !state.family.children.length)household.append(element('p','muted family-empty','ยังไม่มีคนรักหรือลูก'));
     state.family.grandchildren.forEach(child=>{const row=element('p','family-close');row.append(element('strong','family-relation',grandchildRelation(child)),element('span','family-name',child.name),element('span','family-age',`อายุ ${Math.max(0,state.year-child.birthYear)} ปี`));household.append(row);});
+    (state.pets||[]).filter(pet=>pet.alive).forEach(pet=>{const row=element('p','family-close');row.append(element('strong','family-relation',petLabel(pet)),element('span','family-name',pet.name||'ยังไม่มีชื่อ'),element('span','family-age',`อายุ ${Math.max(0,state.year-pet.born)} ปี`));household.append(row);});
     family.append(household,element('h5','family-origin-title','พ่อแม่และญาติ'));
     const parents=state.family.parents;
     if(parents.father)family.append(element('p','person-row',parentLine('พ่อ','father')));
@@ -653,8 +659,8 @@ globalThis.KI = globalThis.KI || {};
         renderEvent({...card,body:card.body || source?.body || '',result:{text:card.resultText || '',deltas:card.deltas || []}},true);
       });
     });
-    const next=button('ไปต่อ',advance,'btn btn-primary'); next.disabled=splitWaiting || (!KI.game.canEnd(state)&&!autoMode);
-    const jump=button('ข้ามไปเรื่องสำคัญ',()=>{if(splitWaiting || !KI.game.canEnd(state))return;state=KI.game.skip(state,data,settings);persist();play();},'btn'); jump.disabled=!KI.game.canEnd(state);
+    const next=button('ไปต่อ',advance,'btn btn-primary'); next.disabled=splitWaiting || !!unnamedPet || (!KI.game.canEnd(state)&&!autoMode);
+    const jump=button('ข้ามไปเรื่องสำคัญ',()=>{if(splitWaiting || unnamedPet || !KI.game.canEnd(state))return;state=KI.game.skip(state,data,settings);persist();play();},'btn'); jump.disabled=!!unnamedPet || !KI.game.canEnd(state);
     actions.append(button('หน้าแรก',start,'btn'),jump,next);
     persist();
     if(splitWaiting) {
@@ -686,6 +692,22 @@ globalThis.KI = globalThis.KI || {};
       root.append(dialog);
       const pageY=window.scrollY, pageX=window.scrollX;
       if(typeof dialog.showModal==='function')dialog.showModal();else {dialog.setAttribute('open','');dialog.setAttribute('aria-modal','true');}
+      window.scrollTo(pageX,pageY);
+    } else if(unnamedPet) {
+      const names=PET_NAMES[unnamedPet.kind]||PET_NAMES.dog;
+      const dialog=element('dialog','situation-dialog pet-dialog');dialog.setAttribute('aria-labelledby','pet-title');
+      dialog.addEventListener('cancel',event=>event.preventDefault());
+      const title=element('h2','',`ตั้งชื่อให้${petLabel(unnamedPet)}ตัวใหม่`);title.id='pet-title';
+      const input=document.createElement('input');input.type='text';input.maxLength=20;input.placeholder='เว้นว่างเพื่อสุ่มชื่อ';
+      const chips=element('div','quick-years');
+      names.forEach(name=>chips.append(button(name,()=>{input.value=name;input.focus();},'btn btn-quiet')));
+      const save=()=>{const name=input.value.replace(/[\u0000-\u001f\u007f]/g,'').trim().slice(0,20)||randomPetName(unnamedPet.kind);state={...state,pets:state.pets.map(pet=>pet.id===unnamedPet.id?{...pet,name}:pet)};persist();play();};
+      input.addEventListener('keydown',event=>{if(event.key==='Enter'){event.preventDefault();save();}});
+      dialog.append(element('div','situation-kicker','ตั้งชื่อก่อนเวลาเดินต่อ'),title,element('p','situation-body',`${petLabel(unnamedPet)}ตัวน้อยมาอยู่บ้านเดียวกันแล้ว จะเรียกว่าอะไรดี`),field('ชื่อ (ไม่เกิน 20 ตัวอักษร)',input),chips,button('ตั้งชื่อนี้',save,'btn btn-primary'));
+      root.append(dialog);
+      const pageY=window.scrollY, pageX=window.scrollX;
+      if(typeof dialog.showModal==='function')dialog.showModal();else {dialog.setAttribute('open','');dialog.setAttribute('aria-modal','true');}
+      input.focus({preventScroll:true});
       window.scrollTo(pageX,pageY);
     } else if(pendingIndex>=0 && !autoMode) {
       const dialog=element('dialog','situation-dialog');
@@ -767,9 +789,10 @@ globalThis.KI = globalThis.KI || {};
     const shareImg=document.createElement('img');shareImg.className='share-image';shareImg.alt='ภาพสรุปชีวิตสำหรับแชร์';
     const shareCanvas=async()=>{
       try{if(document.fonts && document.fonts.ready)await document.fonts.ready;}catch(e){}
-      const kin=familyFigures().filter(p=>p.label!==undefined);
+      const pets=(state.pets||[]).filter(pet=>pet.alive).slice(0,2);
+      const kin=familyFigures().filter(p=>p.label!==undefined).slice(0,7-pets.length);
       const fam=state.family||{};const familyLine=[fam.partner?`${fam.partner.married?'คู่ชีวิต':'คนรัก'} ${fam.partner.name}`:'',(fam.children||[]).length?`ลูก ${(fam.children||[]).length} คน`:'',(fam.grandchildren||[]).length?`หลาน ${(fam.grandchildren||[]).length} คน`:''].filter(Boolean).join(' · ');
-      const canvas=await KI.share.life({...summary,stats:state.stats,worth:summary.financeFinal.cash+summary.financeFinal.stocks.value+summary.financeFinal.property.value+summary.financeFinal.cars.value-summary.financeFinal.loans,familyLine},titles,gameUrl,[{svg:KI.avatar.create(state),label:'',name:state.name},...kin.map(p=>({svg:KI.avatar.create(p),label:p.label,name:p.name}))]);
+      const canvas=await KI.share.life({...summary,stats:state.stats,worth:summary.financeFinal.cash+summary.financeFinal.stocks.value+summary.financeFinal.property.value+summary.financeFinal.cars.value-summary.financeFinal.loans,familyLine},titles,gameUrl,[{svg:KI.avatar.create(state),label:'',name:state.name},...kin.map(p=>({svg:KI.avatar.create(p),label:p.label,name:p.name})),...pets.map(pet=>({svg:KI.avatar.pet(pet.kind),label:petLabel(pet),name:pet.name||''}))]);
       return canvas;
     };
     const canvasReady=shareCanvas();
@@ -809,6 +832,7 @@ globalThis.KI = globalThis.KI || {};
 
     if(summary.friends.length)main.append(element('p','',`เพื่อนในชีวิต: ${summary.friends.map(friend=>friend.name).join(' · ')}`));
     if(summary.family) {const names=[...summary.family.children,...(summary.family.grandchildren||[])].map(child=>child.name);if(summary.family.partner)names.unshift(summary.family.partner.name);if(names.length)main.append(element('p','',`คนสำคัญในชีวิต: ${names.join(' · ')}`));}
+    if((state.pets||[]).length)main.append(element('p','',`สัตว์เลี้ยงในชีวิต: ${state.pets.map(pet=>`${pet.name||'ไม่มีชื่อ'} (${petLabel(pet)}${pet.alive?'':' · จากไปแล้ว'})`).join(' · ')}`));
     const kids=(state.family && state.family.children) || [];
     if(kids.length){
       const heirs=element('section','comparison-panel');
