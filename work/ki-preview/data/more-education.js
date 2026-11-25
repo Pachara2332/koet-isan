@@ -43,13 +43,13 @@ globalThis.KI = globalThis.KI || {}; KI.data = KI.data || {};
   list.splice(list.indexOf(adm) + 1, 0, retry);
 })();
 KI.data.decisions.push(...[
-  {"id":"edu-fees-old","title":"ค่าเทอมปีนี้","body":"ถึงเวลาจ่ายค่าเทอมกับค่าหอ ยุคนี้ยังไม่มีกองทุนให้กู้ยืมเรียน ที่บ้านต้องหาเงินเอง","major":true,"when":{"year":[1970,1995],"season":0,"edu":{"in":["uni"]},"wealth":["poor","mid"]},"cooldown":3,"choices":[
+  {"id":"edu-fees-old","title":"ค่าเทอมปีนี้","body":"ถึงเวลาจ่ายค่าเทอมกับค่าหอ ยุคนี้ยังไม่มีกองทุนให้กู้ยืมเรียน ที่บ้านต้องหาเงินเอง","major":true,"when":{"year":[1970,1995],"season":0,"edu":{"in":["uni"]},"wealth":["poor","mid"],"noFlag":["parentsCanPay"]},"cooldown":3,"choices":[
     {"id":"cattle","label":"พ่อแม่ขายวัวควายส่งเรียน","text":"วัวในคอกหายไปสองตัว พ่อบอกว่าไม่เป็นไร","when":{"flag":{"parentsAlive":true}},"effects":[{"stat":"bond","d":3},{"stat":"happy","d":-2,"by":"attach"},{"stat":"know","d":1}]},
     {"id":"borrow","label":"ยืมเงินญาติมาจ่ายก่อน","text":"เป็นหนี้ญาติไว้ สัญญาว่าเรียนจบจะใช้คืน","effects":[{"cond":"indebted","turns":6},{"stat":"know","d":1}]},
     {"id":"job","label":"ทำงานพิเศษหาเงินเอง","text":"รับจ้างล้างจานตอนกลางคืน ตื่นเช้าไปเรียนแทบไม่ไหว","effects":[{"stat":"health","d":-3},{"stat":"know","d":-1},{"trait":"grit","d":2}]},
     {"id":"scholar","label":"สมัครทุนเรียนดี","text":"อาจารย์เซ็นรับรองให้ เพราะเกรดดีทุกเทอม","when":{"stat":{"know":[70,100]}},"effects":[{"stat":"happy","d":4},{"stat":"know","d":1},{"pin":"ได้ทุนเรียนดี"}]},
     {"id":"quit","label":"ลาออกกลางคัน ไม่อยากเป็นภาระ","text":"เก็บของออกจากหอ ขึ้นรถกลับบ้าน","effects":[{"edu":{"in":null,"grade":0}},{"role":"jobless"},{"stat":"happy","d":-8,"by":"attach"},{"pin":"ออกจากมหาวิทยาลัยเพราะไม่มีค่าเทอม"}]}]},
-  {"id":"edu-fees-new","title":"ค่าเทอมปีนี้","body":"ค่าเทอม ค่าหอ ค่าหนังสือ รวมกันแล้วหนักกว่าที่บ้านจะส่งไหว","major":true,"when":{"year":[1996,9999],"season":0,"edu":{"in":["uni"],"grade":[2,4]},"wealth":["poor","mid"],"chance":0.5},"cooldown":3,"choices":[
+  {"id":"edu-fees-new","title":"ค่าเทอมปีนี้","body":"ค่าเทอม ค่าหอ ค่าหนังสือ รวมกันแล้วหนักกว่าที่บ้านจะส่งไหว","major":true,"when":{"year":[1996,9999],"season":0,"edu":{"in":["uni"],"grade":[2,4]},"wealth":["poor","mid"],"noFlag":["parentsCanPay"],"chance":0.5},"cooldown":3,"choices":[
     {"id":"loan","label":"กู้ กยศ.","text":"ได้เรียนต่อ แต่เรียนจบต้องผ่อนคืน","effects":[{"flag":"career-kyorsor"},{"stat":"happy","d":1}]},
     {"id":"job","label":"ทำงานพิเศษ","text":"รับจ้างเสิร์ฟอาหารหรือเป็นพนักงานร้านสะดวกซื้อหลังเลิกเรียน","effects":[{"money":6,"unit":"wageDay"},{"stat":"health","d":-2},{"stat":"know","d":-1}]},
     {"id":"family","label":"ให้ที่บ้านช่วย","text":"แม่โอนเงินมาให้ทั้งที่ตัวเองก็ไม่ค่อยมี","when":{"flag":{"parentsAlive":true}},"effects":[{"stat":"bond","d":2},{"stat":"happy","d":-1}]},
@@ -174,7 +174,7 @@ KI.data.decisions.push(...[
   const kys = find("career-kyorsor");
   if (kys) {
     kys.body = "เปิดเทอมมหาวิทยาลัย ค่าเทอมกับค่าหอเกินกว่าที่บ้านจะส่งไหว ถ้าอยากเรียนต่อต้องหาทางเอง";
-    kys.when = { "role": "student", "edu": { "in": ["uni"], "grade": [1, 3] }, "any": [{ "wealth": "poor" }, { "flag": { "status": "poor" } }, { "wealth": "mid", "chance": 0.25 }] };
+    kys.when = { "role": "student", "edu": { "in": ["uni"], "grade": [1, 3] }, "noFlag": ["parentsCanPay"], "any": [{ "wealth": "poor" }, { "flag": { "status": "poor" } }, { "wealth": "mid", "chance": 0.25 }] };
     const loan = ch("career-kyorsor", "loan");
     if (loan) Object.assign(loan, { "label": "กู้ กยศ.", "text": "กองทุนจ่ายค่าเทอมและค่าครองชีพให้ ดอกเบี้ยร้อยละ 1 ต่อปี เรียนจบแล้วปลอดหนี้ 2 ปีจึงเริ่มผ่อน", "when": { "year": [1996, 9999] }, "effects": [loanKys(30), { "flag": "edu-kyorsor" }, { "stat": "happy", "d": 2 }] });
     fx("career-kyorsor", "scholar", [{ "money": 20, "unit": "wageDay" }]);

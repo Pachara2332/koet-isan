@@ -1,10 +1,14 @@
 globalThis.KI = globalThis.KI || {};
 (function () {
-  const elderMen=['คำพูน','บุญมี','ทองดี','สมบัติ','คำมี','บุญเพ็ง','ทองใบ','สีทน','คำสิงห์','บุญถม','หนูพิน','คำผาย','ทองสุข','สุวรรณ','บุญช่วย','คำปั่น','บัวลอง','ทองคำ','สีดา','จันทา'];
+  const elderMen=['คำพูน','บุญมี','ทองดี','สมบัติ','คำมี','บุญเพ็ง','ทองใบ','สีทน','คำสิงห์','บุญถม','บุญเกิด','คำผาย','ทองสุข','สุวรรณ','บุญช่วย','คำปั่น','บัวลอง','ทองคำ','คำสอน','คำพัน'];
   const elderWomen=['คำแพง','บุญเรือน','บัวจันทร์','ทองม้วน','คำปุน','สีนวล','บุญหลาย','จันทร์เพ็ญ','คำมูล','ทองพูน','บัวผัน','คำภา','หนูเวียง','สุดใจ','บุญยัง','คำใบ','ทองสา','มาลี','บัวพา','แพงศรี'];
   const midMen=['ประเสริฐ','สมชาย','วิชัย','สุรชัย','ไพโรจน์','อำนาจ','สมศักดิ์','บุญเลิศ','ชาตรี','สุวิทย์','ประยูร','ทองหล่อ','สมพงษ์','วีระ','คำเดื่อง','เสถียร','อุดม','ไพศาล','สำราญ','ณรงค์'];
-  const midWomen=['วันเพ็ญ','สมพร','สุภาพ','บุญเรือง','อำพร','สายใจ','ทองเหรียญ','รัตนา','ดวงใจ','วาสนา','พิมพา','ลำดวน','สุนันทา','คำปิ่น','อรุณี','จำปา','นิตยา','ประนอม','ละเอียด','บุษบา'];
-  const young=['ขวัญ','ต้น','แสง','นิด','ดาว','ภูมิ','เดือน','แก้ว','ฝน','ไหม','ปอ','เพชร','น้ำ','นุ่น','บีม','พลอย','ต่าย','เอ','บอล','จอย','กิ๊ฟ','ตูน','มด','อ้อม','หนิง','ป๊อป','ฟ้า','ข้าวหอม','ใบเตย','ภู','ตะวัน','มิ้นท์','เฟิร์น','ก้อง','ปาล์ม','ไอซ์','นนท์','แบม','ออม','เบนซ์','ปุ้ย','แนน','เบิร์ด','โอ๊ต','กอล์ฟ','แบงค์','เก่ง','ตั้ม','ปลา','ส้ม','ฝ้าย','แพร','โบว์','เมย์','บุ๋ม','จูน','นัท','ป่าน','ปาย','นิว','เจมส์','ทราย','อิ๋ว','หญิง','ตาล','อุ้ม','เปิ้ล','หนึ่ง','โจ้','เต้ย','ปิ๊ก','ก้อย','แป้ง','กุ้ง','เบล','อาร์ม','แจ๊ค','ไผ่','ฟาง'];
+  const midWomen=['วันเพ็ญ','สมพร','สุภาพร','สมจิตร','อำพร','สายใจ','ทองเหรียญ','รัตนา','ดวงใจ','วาสนา','พิมพา','ลำดวน','สุนันทา','คำปิ่น','อรุณี','จำปา','นิตยา','ประนอม','ละเอียด','บุษบา'];
+  const boys=['ต้น','ภูมิ','เพชร','เอ','บอล','ภู','ตะวัน','ก้อง','ปาล์ม','นนท์','เบนซ์','เบิร์ด','โอ๊ต','กอล์ฟ','แบงค์','เก่ง','ตั้ม','เจมส์','โจ้','เต้ย','ปิ๊ก','อาร์ม','แจ๊ค','ไผ่','ป๊อป','บอส','เอก','ตี๋','อ๊อด','บิ๊ก','ปอนด์','โต้ง','บาส','ต๊อบ','แทน'];
+  const girls=['ฝน','ไหม','นุ่น','พลอย','ดาว','เดือน','แก้ว','จอย','กิ๊ฟ','อ้อม','หนิง','ฟ้า','มิ้นท์','เฟิร์น','แบม','ข้าวหอม','ใบเตย','นิด','ปุ้ย','แนน','ปลา','ส้ม','ฝ้าย','แพร','โบว์','เมย์','บุ๋ม','จูน','ป่าน','ทราย','อิ๋ว','หญิง','ตาล','อุ้ม','เปิ้ล','ก้อย','แป้ง','เบล','ฟาง','ต่าย'];
+  const both=['ขวัญ','ตูน','ปาย','น้ำ','แสง','ปอ','มด','ออม','บีม','นัท','ไอซ์','นิว','หนึ่ง','กุ้ง'];
+  const young=[...boys,...girls,...both];
+  const nick=(sex)=>sex==='f'?girls.concat(both):boys.concat(both);
   const HOME={poor:150,mid:1200,rich:6000};
   const JOBS={
     poor:['ทำนา','รับจ้างทั่วไป','ทำนาและรับจ้างหน้าแล้ง','ไปรับจ้างในกรุงเทพฯ','ตัดอ้อยรับจ้าง','ทำไร่มันสำปะหลัง'],
@@ -61,9 +65,10 @@ globalThis.KI = globalThis.KI || {};
     for(const p of [parentInfo.father,parentInfo.mother])if(p && p.deathYear===null)p.deathYear=Math.max(state.birthYear+1,p.birthYear+52+base.int(42));
     const siblings=Array.isArray(old.siblings)?old.siblings.slice():Array.from({length:siblingCount(state,base)},()=>{
       const offset=base.chance(0.2)?(base.chance(0.5)?1:-1)*(8+base.int(8)):base.int(13)-6;
-      return {name:pickFree(young,base,used),birthYear:state.birthYear+(offset===0?1:offset),sex:base.chance(0.5)?'m':'f'};
+      const sex=base.chance(0.5)?'m':'f';
+      return {name:pickFree(nick(sex),base,used),birthYear:state.birthYear+(offset===0?1:offset),sex};
     }).filter(x=>!parentInfo.mother || x.birthYear<=parentInfo.mother.deathYear);
-    if(orphan && !siblings.some(x=>x.birthYear<=state.birthYear-10))siblings.push({name:pickFree(young,base,used),birthYear:state.birthYear-10-base.int(9),sex:base.chance(0.5)?'m':'f'});
+    if(orphan && !siblings.some(x=>x.birthYear<=state.birthYear-10)){const sex=base.chance(0.5)?'m':'f';siblings.push({name:pickFree(nick(sex),base,used),birthYear:state.birthYear-10-base.int(9),sex});}
     const family={parents,parentInfo,grandparents,siblings,partner:old.partner || null,formerPartners:Array.isArray(old.formerPartners)?old.formerPartners.slice():[],children:Array.isArray(old.children)?old.children.slice():[],grandchildren:Array.isArray(old.grandchildren)?old.grandchildren.slice():[]};
     let flags=state.flags || {};
     if(flags.siblingLost && !family.siblings.some(x=>x.lost)){
@@ -71,10 +76,11 @@ globalThis.KI = globalThis.KI || {};
       const lostOne=candidates[candidates.length-1];
       if(lostOne)family.siblings=family.siblings.map(x=>x===lostOne?{...x,lost:true,deathYear:state.year}:x);
     }
-    const pick=(salt)=>pickFree(young,rngFor(state,salt),used);
+    const pick=(salt,sex)=>pickFree(nick(sex),rngFor(state,salt),used);
+    const sexAt=(salt)=>rngFor(state,salt).chance(0.5)?'m':'f';
     let splits=Array.isArray(state.pendingSplits)?state.pendingSplits.slice():[];
     if(flags.partner && !family.partner && flags.reconcile && family.formerPartners.length){const back={...family.formerPartners.pop()};splits=splits.filter(x=>!(x.partnerName===back.name && x.partnerSince===back.since));delete back.until;family.partner={...back,married:!!flags.married};flags={...flags,reconcile:false};}
-    if(flags.partner && !family.partner){const r=rngFor(state,200+family.formerPartners.length*7+state.year);family.partner={name:pickFree(young,r,used),sex:state.sex==='m'?'f':'m',birthYear:state.birthYear+r.int(11)-5,since:Number.isFinite(flags.partnerSince)?flags.partnerSince:state.year,married:!!flags.married};}
+    if(flags.partner && !family.partner){const r=rngFor(state,200+family.formerPartners.length*7+state.year);const sex=state.sex==='m'?'f':'m';family.partner={name:pickFree(nick(sex),r,used),sex,birthYear:state.birthYear+r.int(11)-5,since:Number.isFinite(flags.partnerSince)?flags.partnerSince:state.year,married:!!flags.married};}
     else if(flags.partner && family.partner)family.partner={...family.partner,married:!!flags.married};
     else if(!flags.partner && family.partner){
       const leaving=family.partner;
@@ -100,9 +106,9 @@ globalThis.KI = globalThis.KI || {};
       }
       family.partner=partner;
     }
-    if(flags.child && family.children.length===0)family.children.push({name:pick(300),birthYear:Number.isFinite(flags.childSince)?flags.childSince:state.year,...(flags.adoptedChild?{adopted:true}:{})});
-    if(flags.newChild){family.children.push({name:pick(300+family.children.length*13+state.year),birthYear:state.year});flags={...flags,newChild:false,child:true};}
-    if(flags.grandchild && family.children.length && family.grandchildren.length===0)family.grandchildren.push({name:pick(500),birthYear:Number.isFinite(flags.grandchildSince)?flags.grandchildSince:state.year});
+    if(flags.child && family.children.length===0){const sex=sexAt(9000);family.children.push({name:pick(300,sex),sex,birthYear:Number.isFinite(flags.childSince)?flags.childSince:state.year,...(flags.adoptedChild?{adopted:true}:{})});}
+    if(flags.newChild){const sex=sexAt(9000+family.children.length);family.children.push({name:pick(300+family.children.length*13+state.year,sex),sex,birthYear:state.year});flags={...flags,newChild:false,child:true};}
+    if(flags.grandchild && family.children.length && family.grandchildren.length===0){const sex=sexAt(10000);family.grandchildren.push({name:pick(500,sex),sex,birthYear:Number.isFinite(flags.grandchildSince)?flags.grandchildSince:state.year});}
     family.children=family.children.map((person,i)=>person.sex==='m' || person.sex==='f'?person:{...person,sex:rngFor(state,9000+i).chance(0.5)?'m':'f'});
     family.grandchildren=family.grandchildren.map((person,i)=>person.sex==='m' || person.sex==='f'?person:{...person,sex:rngFor(state,10000+i).chance(0.5)?'m':'f'});
     for(const [role,key,p] of [['พ่อ','father',parentInfo.father],['แม่','mother',parentInfo.mother]])if(p && !p.noted && state.year>=p.deathYear && !state.death){
@@ -120,5 +126,5 @@ globalThis.KI = globalThis.KI || {};
     flags={...flags,hasEx:family.formerPartners.length>0,hasSiblings:family.siblings.some(x=>x.birthYear<=state.year && !(x.deathYear<=state.year)),kids:family.children.length,fatherAlive,motherAlive,parentsAlive:fatherAlive||motherAlive,grandparentsAlive:family.grandparents.some(p=>state.year<p.deathYear),youngSibling,elderSibling,orphan:!fatherAlive && !motherAlive && age<20 && !!(parentInfo.father || parentInfo.mother)};
     return {...state,flags,family,pendingSplits:splits,...(orphan?{wealth:'poor',birthWealth:'poor'}:{})};
   }
-  KI.family={sync,namesOf,together,NICKNAMES:young};
+  KI.family={sync,namesOf,together,nick,NICKNAMES:young};
 })();

@@ -5,11 +5,11 @@ globalThis.KI = globalThis.KI || {};
     'nong-bua-lamphu', 'udon-thani', 'ubon-ratchathani', 'amnat-charoen'];
   const NAMES = {
     old: {
-      m: ['สมศักดิ์', 'ประเสริฐ', 'บุญมี', 'วิชัย', 'สุรชัย', 'สมชาย', 'อำนาจ', 'ไพศาล', 'วสันต์', 'ชัยวัฒน์', 'สมพงษ์', 'ประยูร', 'บุญเลิศ', 'ชาตรี', 'สุวิทย์', 'ทองหล่อ', 'วีระ', 'เสถียร', 'อุดม', 'สำราญ', 'ณรงค์', 'ไพโรจน์', 'สมบัติ', 'บุญช่วย', 'คำพอง', 'ทองใบ', 'บุญส่ง', 'สมหมาย', 'สมบูรณ์', 'ประสิทธิ์', 'สุพจน์', 'บุญธรรม', 'ชูชาติ', 'สุรศักดิ์', 'เกรียงไกร', 'พิชัย', 'มานพ', 'สมเกียรติ', 'ธีระ', 'วิเชียร', 'ประจักษ์', 'บรรจง', 'ศักดิ์ชัย', 'สุนทร', 'อนันต์', 'ไพบูลย์', 'ชาญ', 'สายัณห์', 'บุญยืน', 'คำแสน', 'ทองสุข', 'สมยศ', 'ประสาน', 'วิโรจน์', 'สุเมธ', 'เฉลิม', 'สงวน', 'จำลอง', 'ปัญญา', 'เสน่ห์', 'พยุง', 'สนิท', 'ประเทือง', 'ยุทธนา', 'สมนึก', 'ทวี', 'กิตติ', 'บุญชู', 'สุชาติ', 'วรวุฒิ', 'ประพันธ์', 'อดุลย์', 'ชัยยา', 'สมัย', 'คำมี', 'สุขสันต์', 'อุทัย', 'ธนู', 'ไชยา', 'บัวลอง', 'ทองดี'],
-      f: ['สุภาพร', 'วันเพ็ญ', 'กาญจนา', 'อรอุมา', 'จันทร์เพ็ญ', 'พรทิพย์', 'สมพร', 'บุญเรือน', 'อำพร', 'สายใจ', 'วาสนา', 'รัตนา', 'ดวงใจ', 'มาลี', 'สุชาดา', 'พิมพ์ใจ', 'นภา', 'ศิริพร', 'อรทัย', 'นิตยา', 'ประนอม', 'สุนันทา', 'บุษบา', 'ลำดวน', 'จำปา', 'พิมพา', 'อรุณี', 'ทองเหรียญ', 'ละเอียด', 'บัวผัน', 'คำแพง', 'บุญมา', 'สุดารัตน์', 'ยุพิน', 'วิไล', 'เพ็ญศรี', 'ศรีสุดา', 'สุพัตรา', 'บังอร', 'จันทร์ทิพย์', 'สมใจ', 'ประภา', 'อัมพร', 'มยุรี', 'ราตรี', 'สุนีย์', 'บุญหลาย', 'สร้อยทอง', 'เยาวลักษณ์', 'วิภา', 'กัลยา', 'สมปอง', 'ดารุณี', 'ปราณี', 'สุมาลี', 'รำไพ', 'พัชรี', 'สุกัญญา', 'อุไร', 'จินตนา', 'นงลักษณ์', 'แสงเดือน', 'บัวเรียน', 'คำปุน', 'ทองม้วน', 'สมศรี', 'ชนิดา', 'ลัดดา', 'อุบล', 'วนิดา', 'สมคิด', 'อนงค์', 'บุญยัง', 'มณี', 'หนูเวียง', 'ทองพูน']
+      m: ['สมศักดิ์', 'ประเสริฐ', 'บุญมี', 'วิชัย', 'สุรชัย', 'สมชาย', 'อำนาจ', 'ไพศาล', 'วสันต์', 'ชัยวัฒน์', 'สมพงษ์', 'ประยูร', 'บุญเลิศ', 'ชาตรี', 'สุวิทย์', 'ทองหล่อ', 'วีระ', 'เสถียร', 'อุดม', 'สำราญ', 'ณรงค์', 'ไพโรจน์', 'สมบัติ', 'บุญช่วย', 'คำพอง', 'ทองใบ', 'บุญส่ง', 'สมหมาย', 'สมบูรณ์', 'ประสิทธิ์', 'สุพจน์', 'บุญธรรม', 'ชูชาติ', 'สุรศักดิ์', 'เกรียงไกร', 'พิชัย', 'มานพ', 'สมเกียรติ', 'ธีระ', 'วิเชียร', 'ประจักษ์', 'บรรจง', 'ศักดิ์ชัย', 'สุนทร', 'อนันต์', 'ไพบูลย์', 'ชาญ', 'สายัณห์', 'บุญยืน', 'คำแสน', 'ทองสุข', 'สมยศ', 'ประสาน', 'วิโรจน์', 'สุเมธ', 'เฉลิม', 'สงวน', 'จำลอง', 'ปัญญา', 'เสน่ห์', 'พยุง', 'สนิท', 'ประเทือง', 'ยุทธนา', 'สมนึก', 'ทวี', 'กิตติ', 'บุญชู', 'สุชาติ', 'วรวุฒิ', 'ประพันธ์', 'อดุลย์', 'ชัยยา', 'สมาน', 'คำมี', 'สุขสันต์', 'อุทัย', 'ธนู', 'ไชยา', 'บัวลอง', 'ทองดี'],
+      f: ['สุภาพร', 'วันเพ็ญ', 'กาญจนา', 'อรอุมา', 'จันทร์เพ็ญ', 'พรทิพย์', 'สมพร', 'บุญเรือน', 'อำพร', 'สายใจ', 'วาสนา', 'รัตนา', 'ดวงใจ', 'มาลี', 'สุชาดา', 'พิมพ์ใจ', 'นภา', 'ศิริพร', 'อรทัย', 'นิตยา', 'ประนอม', 'สุนันทา', 'บุษบา', 'ลำดวน', 'จำปา', 'พิมพา', 'อรุณี', 'ทองเหรียญ', 'ละเอียด', 'บัวผัน', 'คำแพง', 'สุพรรณี', 'สุดารัตน์', 'ยุพิน', 'วิไล', 'เพ็ญศรี', 'ศรีสุดา', 'สุพัตรา', 'บังอร', 'จันทร์ทิพย์', 'สมใจ', 'ประภา', 'อัมพร', 'มยุรี', 'ราตรี', 'สุนีย์', 'บุญหลาย', 'สร้อยทอง', 'เยาวลักษณ์', 'วิภา', 'กัลยา', 'เรณู', 'ดารุณี', 'ปราณี', 'สุมาลี', 'รำไพ', 'พัชรี', 'สุกัญญา', 'อุไร', 'จินตนา', 'นงลักษณ์', 'แสงเดือน', 'บัวเรียน', 'คำปุน', 'ทองม้วน', 'สมศรี', 'ชนิดา', 'ลัดดา', 'อุบล', 'วนิดา', 'พิกุล', 'อนงค์', 'บุญยัง', 'มณี', 'หนูเวียง', 'ทองพูน']
     },
     new: {
-      m: ['อนุชา', 'ธนากร', 'วีระพงษ์', 'กิตติพงษ์', 'นพดล', 'ศุภชัย', 'ธวัชชัย', 'ภูวดล', 'พงศกร', 'ณัฐวุฒิ', 'ภาคิน', 'ก้องภพ', 'ชาญชัย', 'สิทธิชัย', 'ธนกร', 'ณัฐพล', 'ปิยะพงษ์', 'จิรายุ', 'ธีรภัทร', 'ศุภกร', 'ภานุวัฒน์', 'อภิสิทธิ์', 'ชยพล', 'กฤษดา', 'ณัฐพงศ์', 'วรากร', 'พีรพัฒน์', 'ธนวัฒน์', 'ปฏิภาณ', 'ศักดิ์สิทธิ์', 'เอกชัย', 'สุทธิพงษ์', 'อนุวัฒน์', 'ภัทรพล', 'ธีรวัฒน์', 'จักรพันธ์', 'ณัฐดนัย', 'กฤษณะ', 'ปัณณวัฒน์', 'วุฒิชัย', 'อิทธิพล', 'ธนพล', 'รัฐพล', 'ชนาธิป', 'วชิรวิทย์', 'พงษ์พันธ์', 'ภูริ', 'ปกรณ์', 'ศิวกร', 'กิตติศักดิ์', 'สหรัฐ', 'ธนดล', 'อัครพล', 'ทินกร', 'ณภัทร', 'ปริญญา', 'กิตติภูมิ', 'ณัฐกิตติ์', 'พชร', 'นันทวัฒน์', 'ภูมิพัฒน์', 'ธีรเดช', 'วรวิทย์', 'อดิศักดิ์', 'สุรเชษฐ์', 'พิทักษ์', 'ศรัณย์', 'ธันวา', 'ปวริศ', 'กันตพงศ์', 'ณัฐวัฒน์', 'จิรพัฒน์', 'ตะวัน', 'ภาณุพงศ์', 'อนันตชัย', 'วัชรพล', 'ทศพล', 'เจษฎา', 'พีรวิชญ์'],
+      m: ['อนุชา', 'ธนากร', 'วีระพงษ์', 'กิตติพงษ์', 'นพดล', 'ศุภชัย', 'ธวัชชัย', 'ภูวดล', 'พงศกร', 'ณัฐวุฒิ', 'ภาคิน', 'ก้องภพ', 'ชาญชัย', 'สิทธิชัย', 'ธนกร', 'ณัฐพล', 'ปิยะพงษ์', 'จิรายุ', 'ธีรภัทร', 'ศุภกร', 'ภานุวัฒน์', 'อภิสิทธิ์', 'ชยพล', 'กฤษดา', 'ณัฐพงศ์', 'วรากร', 'พีรพัฒน์', 'ธนวัฒน์', 'ปฏิภาณ', 'ศักดิ์สิทธิ์', 'เอกชัย', 'สุทธิพงษ์', 'อนุวัฒน์', 'ภัทรพล', 'ธีรวัฒน์', 'จักรพันธ์', 'ณัฐดนัย', 'กฤษณะ', 'ปัณณวัฒน์', 'วุฒิชัย', 'อิทธิพล', 'ธนพล', 'รัฐพล', 'ชนาธิป', 'วชิรวิทย์', 'พงษ์พันธ์', 'ภูริ', 'ปกรณ์', 'ศิวกร', 'กิตติศักดิ์', 'สหรัฐ', 'ธนดล', 'อัครพล', 'ทินกร', 'ธีรศักดิ์', 'ปริญญา', 'กิตติภูมิ', 'ณัฐกิตติ์', 'พชร', 'นันทวัฒน์', 'ภูมิพัฒน์', 'ธีรเดช', 'วรวิทย์', 'อดิศักดิ์', 'สุรเชษฐ์', 'พิทักษ์', 'ศรัณย์', 'ธันวา', 'ปวริศ', 'กันตพงศ์', 'ณัฐวัฒน์', 'จิรพัฒน์', 'ตะวัน', 'ภาณุพงศ์', 'อนันตชัย', 'วัชรพล', 'ทศพล', 'เจษฎา', 'พีรวิชญ์'],
       f: ['ชลธิชา', 'ธัญญา', 'กมลชนก', 'ปาริชาติ', 'พิมพ์ชนก', 'ณัฐธิดา', 'สุธิดา', 'ศศิธร', 'อรอนงค์', 'จิราพร', 'ปิยะนุช', 'กนกวรรณ', 'ณัฐริกา', 'พัชราภรณ์', 'วรรณิศา', 'ธนพร', 'ศิรินทร์', 'อภิญญา', 'ณัฐณิชา', 'เบญจมาศ', 'ชนัญชิดา', 'ปวีณา', 'สุนิสา', 'กัญญารัตน์', 'พรรณนิภา', 'ธิดารัตน์', 'จุฑามาศ', 'วิลาวัณย์', 'อรวรรณ', 'กาญจนาภา', 'มัลลิกา', 'ทิพวรรณ', 'นันทิดา', 'ปภาวดี', 'ภัทรา', 'ณิชา', 'พิชญา', 'ชุติมา', 'สิริกร', 'อัญชลี', 'รุ่งนภา', 'ขวัญใจ', 'ณัฐกานต์', 'ปณิตา', 'ภัทราภรณ์', 'ศุภาวรรณ', 'ธมลวรรณ', 'ปิยธิดา', 'กชกร', 'ญาณิศา', 'พิชชาพร', 'ชญานิศ', 'สุพิชชา', 'วรัญญา', 'อารีรัตน์', 'เกศินี', 'ณัฐนันท์', 'ภาวินี', 'ธนัชพร', 'ลลิตา', 'มนัสนันท์', 'นภัสสร', 'ปุณยวีร์', 'กุลธิดา', 'ธนาภรณ์', 'สุจิตรา', 'เพ็ญพิชชา', 'อริสา', 'ศิริลักษณ์', 'จารุวรรณ', 'กัลยรัตน์', 'ธัญชนก', 'พรนภา', 'รัชนีกร', 'วรรณวิสา', 'อมรรัตน์', 'สุพรรษา', 'จันทร์จิรา']
     }
   };
@@ -31,6 +31,9 @@ globalThis.KI = globalThis.KI || {};
   const ALLOWANCE_TIERS = [[90, 1000], [80, 800], [70, 700], [60, 600]];
   const REMIT_DAYS = 5;
   const PENSION_DAYS = 40;
+  const PARENT_START = { poor: 150, mid: 1200, rich: 6000 };
+  const PARENT_GROWTH = { poor: 0.01, mid: 0.03, rich: 0.05 };
+  const PARENT_PAY_DAYS = 600;
   const REMIT_AGE = 22;
   const MONTHS = [4, 5, 3];
   const INCOME_SCALE = 0.4;
@@ -283,12 +286,13 @@ globalThis.KI = globalThis.KI || {};
     } else {
       const noMoney = (list) => kidMode ? (list || []).filter((e) => typeof e.money !== 'number') : (list || []);
       const cost = kidMode ? moneyCost(choice.effects, s, data) : 0;
-      const refused = kidMode === 'parents' && !rng.chance(PARENT_YES[s.wealth] || 0.75);
+      const refused = kidMode === 'parents' && !s.flags.parentsCanPay && !rng.chance(PARENT_YES[s.wealth] || 0.75);
       const extra = kidMode === 'earn' ? [{ stat: 'health', d: -2 }, { stat: 'happy', d: -1 }, { trait: 'grit', d: 2 }] : kidMode === 'parents' && !refused ? [{ stat: 'bond', d: 1 }] : [];
       const r = KI.effects.apply(s, refused ? [{ stat: 'happy', d: -3 }] : [...noMoney(choice.effects), ...extra], data, rng);
       s = r.state;
       deltas = r.deltas;
       text = refused ? 'พ่อแม่บอกว่าช่วงนี้เงินไม่พอ เรื่องนี้ต้องรอไปก่อน' : (kidMode === 'earn' ? 'ช่วยงานรับจ้างและเก็บเงินอยู่หลายสัปดาห์จนพอ ' : kidMode === 'parents' ? 'พ่อแม่ควักเงินให้ ' : '') + (choice.text || '');
+      if (kidMode === 'parents' && !refused && cost && Number.isFinite(s.parentsWealth)) s.parentsWealth = Math.max(0, s.parentsWealth - cost);
       if (kidMode === 'parents' && !refused && cost) s.financeLog = [...(s.financeLog || []), { year: s.year, age: ageOf(s), label: 'พ่อแม่จ่ายให้ · ' + (src.title || ''), delta: 0, familyExpense: cost, category: 'family' }];
       if (choice.roll && !s.death && !refused) {
         const x = rng.next();
@@ -343,7 +347,7 @@ globalThis.KI = globalThis.KI || {};
     const remit=childRemittance(s,wage);
     const pension=s.role==='retired' && s.flags.retiredFrom ? PENSION_DAYS*wage : 0;
     income+=allowance+remit+pension;
-    const supportRate={poor:0.6,mid:0.85,rich:1}[s.wealth] || 0;
+    const supportRate=s.flags.parentsCanPay?1:({poor:0.6,mid:0.85,rich:1}[s.wealth] || 0);
     const familySupport=(s.role==='student' && age<=22) || (s.role==='jobless' && age<ADULT_AGE) ? Math.round(expense*supportRate) : 0;
     const hobbyExpense=gaming && s.money+income+familySupport-expense>=gaming?gaming:0;
     expense+=hobbyExpense;
@@ -360,6 +364,19 @@ globalThis.KI = globalThis.KI || {};
     if (['student','monk','prisoner'].includes(s.role)) return cost;
     const kids=((s.family && s.family.children) || []).reduce((sum,c)=>sum+KI.tables.childWeight(data,s.year-c.birthYear),0);
     return cost*({frugal:0.85,comfort:1.3}[s.flags.spendLevel] || 1)+kids*living;
+  }
+
+  function updateParents(s, data) {
+    const wage=KI.tables.wageDay(data,s.year);
+    if (!Number.isFinite(s.parentsWealth)) s.parentsWealth=Math.round((PARENT_START[s.birthWealth||s.wealth]||PARENT_START.mid)*wage);
+    const alive=s.flags.parentsAlive!==false;
+    if (alive && (s.season===null || s.season===2)) {
+      const rng=KI.rng.make((s.rng ^ 0x9e3779b9 ^ s.year)>>>0);
+      const growth=(PARENT_GROWTH[s.birthWealth||s.wealth]||0.03)+(rng.next()-0.5)*0.12;
+      s.parentsWealthPrev=s.parentsWealth;
+      s.parentsWealth=Math.max(0,Math.round(s.parentsWealth*(1+growth)));
+    }
+    s.flags.parentsCanPay=alive && s.parentsWealth>=PARENT_PAY_DAYS*wage;
   }
 
   function elderAllowance(s) {
@@ -524,7 +541,9 @@ globalThis.KI = globalThis.KI || {};
         if (s.money >= cost) s = KI.effects.apply(s, [...hobby.effects, ...(cost ? [{ money: -cost }] : [])], data, rng).state;
       }
       if(s.money!==moneyBefore)entry.cashFlow.push({label:'งานอดิเรก: '+hobby.label,delta:s.money-moneyBefore});
+      updateParents(s, data);
       entry.economy = seasonMoney(s, data);
+      s.parentsWealth = Math.max(0, s.parentsWealth - (entry.economy.familySupport || 0) - (entry.economy.familyExpense || 0));
       const partner=s.family && s.family.partner;
       if(partner && s.season!==null && s.flags.partner){
         const months=[4,5,3][s.season], age=s.year-partner.birthYear, wage=KI.tables.wageDay(data,s.year);
@@ -660,5 +679,5 @@ globalThis.KI = globalThis.KI || {};
     };
   }
 
-  KI.game = { newGame, begin, choose, canEnd, end, skip, auto, summary, personality, restorePersonality, debtInfo, moneyCost, elderAllowance, livingMonthly, monthlyCost };
+  KI.game = { updateParents, newGame, begin, choose, canEnd, end, skip, auto, summary, personality, restorePersonality, debtInfo, moneyCost, elderAllowance, livingMonthly, monthlyCost };
 })();

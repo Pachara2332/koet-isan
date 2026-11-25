@@ -5,6 +5,7 @@ globalThis.KI = globalThis.KI || {};
   let state = null;
   let autoMode = false;
   let sceneView = null;
+  let financeView = {t:null,year:null};
   let storage;
   try { storage = window.localStorage; } catch (e) { storage = null; }
   let settings = KI.save.settings(storage);
@@ -371,7 +372,8 @@ globalThis.KI = globalThis.KI || {};
       }
     }
     cash.append(element('p','muted cash-meta',`ค่าครองชีพปีนี้ ${KI.game.livingMonthly(state,data).toLocaleString('th-TH')} บาท/เดือน/คน (${{rural:'ชนบทอีสาน',town:'ในเมืองอีสาน',bangkok:'กรุงเทพฯ',abroad:'ต่างประเทศ'}[KI.tables.livingPlace(state.loc)]})`));
-    cash.append(element('p','cash-meta',`ฐานะตอนนี้ ${KI.finance.STATUS_LABEL[state.flags.status]||'-'} · ตอนเกิด ${KI.finance.STATUS_LABEL[state.birthWealth||state.wealth]||'-'}`));
+    cash.append(element('p','cash-meta',`ฐานะตอนนี้ ${KI.finance.STATUS_LABEL[state.flags.status]||'-'} · ตอนเกิด ${KI.finance.STATUS_LABEL[state.birthWealth||state.wealth]||'-'}`))
+    if(Number.isFinite(state.parentsWealth) && state.flags.parentsAlive!==false){const prev=state.parentsWealthPrev,change=prev?Math.round((state.parentsWealth-prev)/prev*100):0;cash.append(element('p','cash-meta'+(change<0?' money-negative':''),`ทรัพย์สินพ่อแม่ราว ${state.parentsWealth.toLocaleString('th-TH')} บาท${prev?` · ${change>=0?'▲ +':'▼ '}${change}% จากปีก่อน`:''}${state.flags.parentsCanPay?' · ส่งเสียค่าเรียนได้':''}`));};
     const bizLevel=Math.min(6,(state.counters && state.counters.biz)||0);
     if(bizLevel)cash.append(element('p','cash-meta',`กิจการ: ${['','แผงลอย','ร้านเล็ก','ร้านขาประจำ','กิจการหลายสาขา','บริษัทในจังหวัด','เจ้าสัวท้องถิ่น'][bizLevel]} (ระดับ ${bizLevel})`));
     const lastFinance=(state.financeLog||[]).slice(-1)[0]; if(lastFinance && state.financeAt===state.t)cash.append(element('p','muted cash-meta',`${lastFinance.label} · ${lastFinance.familyExpense?'ครอบครัวจ่าย '+lastFinance.familyExpense.toLocaleString('th-TH')+' บาท':'เงินเปลี่ยน '+lastFinance.delta.toLocaleString('th-TH')+' บาท'}`));
@@ -389,18 +391,48 @@ globalThis.KI = globalThis.KI || {};
     }
     const fold=(title,cls)=>{const box=element('details','fold'+(cls?' '+cls:''));box.append(element('summary','fold-summary',title));return box;};
     const finance=fold('การเงิน กู้ยืม และลงทุน','finance-panel');
-    const financeYear=(state.log.some(entry=>entry.year===state.year)||(state.financeLog||[]).some(item=>item.year===state.year))?state.year:(state.log.length?state.log[state.log.length-1].year:state.year);
-    const yearTotals=KI.finance.annual(state,financeYear), fmt=value=>value.toLocaleString('th-TH');
-    finance.append(element('p','finance-year',`รายการที่บันทึกแล้ว พ.ศ. ${financeYear+543}`));
-    finance.append(element('p','finance-line',`รายรับ ${fmt(yearTotals.income)} บาท · รายจ่ายประจำ ${fmt(yearTotals.expense)} บาท`));
-    if(yearTotals.familyExpense)finance.append(element('p','finance-line',`ครอบครัวจ่ายให้ ${fmt(yearTotals.familyExpense)} บาท`));
-    if(yearTotals.familySupport)finance.append(element('p','finance-line',`ครอบครัวช่วยค่าใช้จ่าย ${fmt(yearTotals.familySupport)} บาท`));
-    if(yearTotals.otherCash)finance.append(element('p','finance-line',`กิจกรรมและซื้อขายสินทรัพย์ ${yearTotals.otherCash>0?'+':''}${fmt(yearTotals.otherCash)} บาท`));
-    if(yearTotals.hobbyExpense)finance.append(element('p','finance-line',`ในยอดข้างต้น ค่าเล่นร้านเกม ${fmt(yearTotals.hobbyExpense)} บาท`));
-    if(yearTotals.allowance)finance.append(element('p','finance-line',`ในรายรับ มีเบี้ยยังชีพผู้สูงอายุ ${fmt(yearTotals.allowance)} บาท`));
-    if(yearTotals.pension)finance.append(element('p','finance-line',`ในรายรับ มีบำนาญ ${fmt(yearTotals.pension)} บาท`));
-    if(yearTotals.remit)finance.append(element('p','finance-line',`ในรายรับ มีเงินที่ลูกส่งมาให้ ${fmt(yearTotals.remit)} บาท`));
-    if(yearTotals.interest)finance.append(element('p','finance-line money-negative',`ดอกเบี้ยหนี้ ${fmt(yearTotals.interest)} บาท`));
+    const currentFinanceYear=(state.log.some(entry=>entry.year===state.year)||(state.financeLog||[]).some(item=>item.year===state.year))?state.year:(state.log.length?state.log[state.log.length-1].year:state.year);
+    const fmt=value=>value.toLocaleString('th-TH');
+    const financeYears=Array.from(new Set([...KI.finance.history(state).map(item=>item.year),currentFinanceYear])).sort((x,y)=>x-y);
+    if(financeView.t!==state.t || !financeYears.includes(financeView.year))financeView={t:state.t,year:currentFinanceYear};
+    const yearBox=element('div','finance-years');
+    const yearNav=element('div','finance-year-nav');
+    const prevYear=button('‹',()=>showFinanceYear(-1),'btn finance-year-step');prevYear.setAttribute('aria-label','ปีก่อนหน้า');
+    const nextYear=button('›',()=>showFinanceYear(1),'btn finance-year-step');nextYear.setAttribute('aria-label','ปีถัดไป');
+    const yearLabel=element('p','finance-year','');yearLabel.setAttribute('aria-live','polite');
+    yearNav.append(prevYear,yearLabel,nextYear);
+    const yearBody=element('div','finance-year-body');
+    yearBox.append(yearNav,yearBody);
+    function drawFinanceYear(){
+      const year=financeView.year, totals=KI.finance.annual(state,year), index=financeYears.indexOf(year);
+      yearLabel.textContent=`พ.ศ. ${year+543}${year===currentFinanceYear?' · ปีนี้':''} (${index+1}/${financeYears.length})`;
+      prevYear.disabled=index<=0;nextYear.disabled=index>=financeYears.length-1;
+      const lines=[[`รายรับ ${fmt(totals.income)} บาท · รายจ่ายประจำ ${fmt(totals.expense)} บาท`,'']];
+      if(totals.familyExpense)lines.push([`ครอบครัวจ่ายให้ ${fmt(totals.familyExpense)} บาท`,'']);
+      if(totals.familySupport)lines.push([`ครอบครัวช่วยค่าใช้จ่าย ${fmt(totals.familySupport)} บาท`,'']);
+      if(totals.otherCash)lines.push([`กิจกรรมและซื้อขายสินทรัพย์ ${totals.otherCash>0?'+':''}${fmt(totals.otherCash)} บาท`,'']);
+      if(totals.hobbyExpense)lines.push([`ในยอดข้างต้น ค่าเล่นร้านเกม ${fmt(totals.hobbyExpense)} บาท`,'']);
+      if(totals.allowance)lines.push([`ในรายรับ มีเบี้ยยังชีพผู้สูงอายุ ${fmt(totals.allowance)} บาท`,'']);
+      if(totals.pension)lines.push([`ในรายรับ มีบำนาญ ${fmt(totals.pension)} บาท`,'']);
+      if(totals.remit)lines.push([`ในรายรับ มีเงินที่ลูกส่งมาให้ ${fmt(totals.remit)} บาท`,'']);
+      if(totals.borrowed)lines.push([`กู้เงินเข้ามา ${fmt(totals.borrowed)} บาท`,'']);
+      if(totals.loanPaid)lines.push([`ผ่อนเงินกู้ ${fmt(totals.loanPaid)} บาท`,'']);
+      if(totals.interest)lines.push([`ดอกเบี้ยหนี้ ${fmt(totals.interest)} บาท`,' money-negative']);
+      const net=totals.income+totals.familySupport-totals.expense+totals.otherCash-(totals.interest||0);
+      lines.push([`สุทธิทั้งปี ${net>=0?'+':''}${fmt(net)} บาท`,net<0?' money-negative finance-net':' finance-net']);
+      yearBody.replaceChildren(...lines.map(([text,cls])=>element('p','finance-line'+cls,text)));
+    }
+    function showFinanceYear(step){
+      const index=financeYears.indexOf(financeView.year)+step;
+      if(index<0 || index>=financeYears.length)return;
+      financeView={t:state.t,year:financeYears[index]};drawFinanceYear();
+    }
+    let swipeX=null;
+    yearBox.addEventListener('touchstart',event=>{swipeX=event.touches[0].clientX;},{passive:true});
+    yearBox.addEventListener('touchend',event=>{if(swipeX===null)return;const dx=event.changedTouches[0].clientX-swipeX;swipeX=null;if(Math.abs(dx)>40)showFinanceYear(dx<0?1:-1);});
+    yearBox.addEventListener('keydown',event=>{if(event.key==='ArrowLeft'){event.preventDefault();showFinanceYear(-1);}if(event.key==='ArrowRight'){event.preventDefault();showFinanceYear(1);}});
+    drawFinanceYear();
+    finance.append(element('h4','finance-heading','สมุดรายรับรายจ่าย เลื่อนดูย้อนหลังได้'),yearBox);
     if(state.role==='retired' && !state.flags.retiredFrom)finance.append(element('p','muted finance-note','รายได้หลังเกษียณไม่ได้รับประกัน แบบจำลองยังไม่รวมบำนาญ'));
     const age=state.year-state.birthYear;
     if(age>=6 && state.role!=='monk' && state.role!=='prisoner') {
@@ -428,8 +460,6 @@ globalThis.KI = globalThis.KI || {};
       finance.append(grid);
     }
     (state.exDebts||[]).filter(d=>d.amount>0).forEach(d=>finance.append(element('p','finance-line money-negative',`${d.name} ค้างคุณ ${d.amount.toLocaleString('th-TH')} บาท จากการแบ่ง${d.label} พ.ศ. ${d.year+543}`)));
-    if(yearTotals.borrowed)finance.append(element('p','finance-line',`กู้เงินเข้ามา ${fmt(yearTotals.borrowed)} บาท`));
-    if(yearTotals.loanPaid)finance.append(element('p','finance-line',`ผ่อนเงินกู้ ${fmt(yearTotals.loanPaid)} บาท`));
     if(age>=20 && state.role!=='prisoner') {
       const loanBox=element('details','asset-list loan-box');loanBox.append(element('summary','','เงินกู้'));
       if((state.loans||[]).length)loanBox.append(element('p','finance-line',`ค้างอยู่ ${state.loans.length} ก้อน`));
