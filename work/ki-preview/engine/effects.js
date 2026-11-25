@@ -3,7 +3,7 @@ globalThis.KI = globalThis.KI || {};
   const STATS = ['health', 'happy', 'know', 'bond'];
   const TRAITS = ['attach', 'grit', 'social'];
   const ROLES = ['child', 'student', 'farmer', 'factory', 'construction', 'driver', 'civil', 'teacher', 'office',
-    'trader', 'abroad', 'monk', 'soldier', 'jobless', 'retired', 'doctor', 'nurse', 'engineer', 'developer', 'police', 'lawyer', 'pharmacist', 'accountant', 'banker', 'chef', 'mechanic', 'artist', 'creator', 'rider', 'security', 'housekeeper', 'athlete', 'designer', 'business', 'prisoner'];
+    'trader', 'abroad', 'monk', 'soldier', 'jobless', 'retired', 'doctor', 'nurse', 'engineer', 'developer', 'police', 'lawyer', 'pharmacist', 'accountant', 'banker', 'chef', 'mechanic', 'artist', 'creator', 'rider', 'security', 'housekeeper', 'athlete', 'designer', 'business', 'prisoner', 'politician'];
   const LOCS = ['isan', 'bangkok', 'abroad'];
 
   function clone(x) {

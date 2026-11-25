@@ -1,4 +1,5 @@
 globalThis.KI = globalThis.KI || {}; KI.data = KI.data || {};
+KI.data.stats.roles.politician = { "incomeDays": [0, 0, 0], "costDays": [30, 30, 30], "estimate": true };
 KI.data.decisions.push(...[
   {"id":"pol-merit-host","title":"งานบุญประจำปีของหมู่บ้าน","body":"งานบุญบั้งไฟปีนี้ยังขาดเจ้าภาพและคนช่วยจัด ใครออกหน้าออกตาก็จะเป็นที่รู้จักของคนทั้งตำบล","when":{"age":[25,70],"loc":"isan","chance":0.25},"cooldown":9,
    "choices":[

@@ -122,6 +122,12 @@ globalThis.KI = globalThis.KI || {};
     } else if(role==='farmer') {
       Object.assign(kit,{top:faded(choose(['#3e5a78','#5d6f7c','#7a6450','#4d6b5a','#2f4a6b'],roll.palette)),sleeve:'long',neck:female?'blouse':'collar',lower:female?'sin':roll.cloth<.4?'sarong':'trousers',lowerColor:'#3f4650',feet:era==='new' && roll.feet<.35?'boots':roll.feet<.25?'bare':'sandals',feetColor:'#2f3a33',hat:roll.hat<.65?'straw':female?'wrap':null});
       kit.extras.push(kit.lower==='sarong' || roll.cloth<.6?'maShoulder':'maWaist');
+    } else if(role==='politician') {
+      const rank=(state.flags||{}).polRank||1;
+      if(rank===1)Object.assign(kit,{top:khaki,lower:female?'skirt':'trousers',lowerColor:mix(khaki,'#2a2418',.25),feetColor:'#25252b'});
+      else if(rank===2)Object.assign(kit,{top:'#fbfcfd',sleeve:'long',neck:female?'blouse':'collar',lower:female?'skirt':'trousers',lowerColor:'#2f3342',feetColor:'#25252b'});
+      else Object.assign(kit,{top:'#23283a',sleeve:'long',neck:female?'blouse':'collar',lower:female?'skirt':'trousers',lowerColor:'#23283a',feetColor:'#1d1d22',tie:female?null:'#8a1c2b'});
+      kit.extras.push(...(rank===1?['boards','pockets','badge']:rank===2?['badge']:['badge','gold']));
     } else if(role==='civil' || role==='police' || (role==='teacher' && roll.cloth<.34)) {
       const tone=role==='police'?'#6b5a3e':khaki;
       Object.assign(kit,{top:tone,lower:female && role!=='police'?'skirt':'trousers',lowerColor:mix(tone,'#2a2418',.25),feetColor:'#25252b'});

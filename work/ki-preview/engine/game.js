@@ -640,6 +640,8 @@ globalThis.KI = globalThis.KI || {};
           KI.effects.petFlags(s);
         }
       }
+      if (s.flags.polRank && s.role !== 'politician' && s.role !== 'prisoner') { s.flags.prevRole = s.role; s.role = 'politician'; }
+      if (!s.flags.polRank && s.role === 'politician') { s.role = s.flags.prevRole && s.flags.prevRole !== 'politician' ? s.flags.prevRole : 'jobless'; s.flags.prevRole = false; }
       if (OFFICE_PAY_DAYS[s.flags.polRank] && s.season !== null) {
         const pay = Math.round(OFFICE_PAY_DAYS[s.flags.polRank] * KI.tables.wageDay(data, s.year));
         s.money += pay;

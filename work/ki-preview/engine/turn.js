@@ -10,7 +10,7 @@ globalThis.KI = globalThis.KI || {};
   const ROLE_LABELS = {
     child: 'เด็ก', student: 'นักเรียน', farmer: 'ชาวนา', factory: 'คนงานโรงงาน', construction: 'คนงานก่อสร้าง',
     driver: 'คนขับรถ', civil: 'ข้าราชการ', teacher: 'ครู', office: 'พนักงานออฟฟิศ', trader: 'ค้าขาย',
-    abroad: 'แรงงานต่างประเทศ', monk: 'พระสงฆ์', soldier: 'ทหาร', jobless: 'ว่างงาน', prisoner: 'ผู้ต้องขัง', retired: 'เกษียณ',
+    abroad: 'แรงงานต่างประเทศ', politician: 'นักการเมือง', monk: 'พระสงฆ์', soldier: 'ทหาร', jobless: 'ว่างงาน', prisoner: 'ผู้ต้องขัง', retired: 'เกษียณ',
     doctor: 'แพทย์', nurse: 'พยาบาล', engineer: 'วิศวกร', developer: 'นักพัฒนาซอฟต์แวร์', police: 'ตำรวจ', lawyer: 'ทนายความ', pharmacist: 'เภสัชกร', accountant: 'นักบัญชี', banker: 'พนักงานธนาคาร', chef: 'เชฟ/พ่อครัวแม่ครัว', mechanic: 'ช่างซ่อมรถ', artist: 'ศิลปิน/นักแสดง', creator: 'ครีเอเตอร์ออนไลน์', rider: 'ไรเดอร์ส่งของ', security: 'พนักงานรักษาความปลอดภัย', housekeeper: 'แม่บ้าน/พนักงานทำความสะอาด', athlete: 'นักกีฬาอาชีพ', designer: 'นักออกแบบ', business: 'เจ้าของกิจการ'
   };
 
@@ -75,7 +75,8 @@ globalThis.KI = globalThis.KI || {};
   const POL_TITLES = ['', 'ผู้ใหญ่บ้าน', 'นายก อบต.', 'ส.ส.'];
   function roleLabel(s) {
     const title = POL_TITLES[s.flags && s.flags.polRank];
-    return baseRole(s) + (title ? ' · ' + title : '');
+    if (s.role === 'politician') return title || ROLE_LABELS.politician;
+    return baseRole(s);
   }
   function baseRole(s) {
     if (s.role === 'student' || (s.role === 'child' && s.edu.in)) {

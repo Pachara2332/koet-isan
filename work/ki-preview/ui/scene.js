@@ -850,6 +850,7 @@ globalThis.KI = globalThis.KI || {};
     if(state.role==='student')return 'school';
     if(state.role==='factory')return 'factory';
     if(state.role==='trader')return 'market';
+    if(state.role==='politician')return 'town';
     if(state.role==='retired')return 'garden';
     const province=data.places.provinces[state.loc.province];
     if(state.loc.setting==='rural' && province && province.mekong)return 'mekong';
