@@ -52,6 +52,7 @@ globalThis.KI = globalThis.KI || {};
   const SCHOOL_AGE = 6;
   const INCOME_AGE = 15;
   const PET_COST = { dog: 4, cat: 3 };
+  const ABROAD_MAX_YEARS = 20;
   const TALENTS = ['music', 'sport', 'art', 'math', 'computer', 'gaming', 'chess', 'language', 'cooking', 'craft', 'speech', 'mechanic', 'muaythai', 'farming'];
   const BIZ_INCOME = [0, 25, 70, 180, 450, 1100, 2500];
 
@@ -634,6 +635,16 @@ globalThis.KI = globalThis.KI || {};
         if (s.season === 2) {
           for (const p of pets) if (s.year - p.born >= (p.life || 14)) { p.alive = false; p.died = s.year; s.flags['pet-grief'] = true; }
           KI.effects.petFlags(s);
+        }
+      }
+      if (s.loc.kind === 'abroad') {
+        if (!Number.isFinite(s.loc.since)) s.loc.since = s.year;
+        if (s.year - s.loc.since >= ABROAD_MAX_YEARS) {
+          const country = s.loc.country || 'ต่างประเทศ';
+          const partner = s.family && s.family.partner, withPartner = partner && KI.family.together(s, partner);
+          KI.effects.move(s, 'home');
+          if (withPartner) partner.location = { ...s.loc };
+          s.turn.pin = `อยู่${country}ครบ ${ABROAD_MAX_YEARS} ปี กลับบ้านเกิด`;
         }
       }
       if (s.season === 0) autoPin = promote(s);

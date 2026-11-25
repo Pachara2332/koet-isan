@@ -44,7 +44,8 @@ globalThis.KI = globalThis.KI || {};
       const province = m.province || (s.loc.kind === 'isan' ? s.loc.province : s.home.province);
       s.loc = { kind: 'isan', province, setting: m.setting || s.loc.setting || s.home.setting, country: null };
     } else {
-      s.loc = { kind: m.kind, province: null, setting: 'urban', country: m.kind === 'abroad' ? (m.country || null) : null, ...(m.kind === 'abroad' && m.method ? { method: m.method } : {}) };
+      const since = s.loc.kind === 'abroad' && Number.isFinite(s.loc.since) ? s.loc.since : s.year;
+      s.loc = { kind: m.kind, province: null, setting: 'urban', country: m.kind === 'abroad' ? (m.country || null) : null, ...(m.kind === 'abroad' && m.method ? { method: m.method } : {}), ...(m.kind === 'abroad' ? { since } : {}) };
     }
   }
 
@@ -182,5 +183,5 @@ globalThis.KI = globalThis.KI || {};
     return { state: s, deltas };
   }
 
-  KI.effects = { apply, tick, petFlags, roles: ROLES };
+  KI.effects = { apply, tick, petFlags, move, roles: ROLES };
 })();

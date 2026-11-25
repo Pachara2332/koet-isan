@@ -79,8 +79,8 @@ globalThis.KI = globalThis.KI || {};
       if(stage==='child')hairstyle=role==='student' && state.year<2013?choose(['bob','pony'],roll.hair):choose(['bob','pony','long'],roll.hair);
       else if(role==='student' && age<18 && state.year<2013)hairstyle='bob';
       else if(role==='nurse')hairstyle='bun';
-      else if(stage==='elder')hairstyle=choose(['perm','bun','perm','crop'],roll.hair);
-      else if(['factory','construction','farmer','abroad','soldier'].includes(role))hairstyle=choose(['pony','bun','crop'],roll.hair);
+      else if(stage==='elder')hairstyle=choose(['perm','long','perm','perm'],roll.hair);
+      else if(['factory','construction','farmer','abroad','soldier'].includes(role))hairstyle=choose(['pony','bun','long'],roll.hair);
       else hairstyle=choose(['long','bun','bob','pony','long'],roll.hair);
     }
     const swept='M78 78 Q72 30 120 27 Q168 30 162 78 Q152 52 120 48 Q88 52 78 78Z';
@@ -102,8 +102,7 @@ globalThis.KI = globalThis.KI || {};
       bob:['M73 82 Q69 26 120 24 Q171 26 167 82 L168 116 Q156 122 148 112 L92 112 Q84 122 72 116Z',bangs],
       pony:['M146 40 Q184 48 177 104 Q173 126 160 134 Q167 100 150 62Z',swept],
       bun:['M104 30 Q104 12 120 12 Q136 12 136 30 Q136 42 120 42 Q104 42 104 30Z',swept],
-      perm:[null,'M78 80 Q66 68 75 54 Q72 37 89 34 Q97 22 111 28 Q120 19 130 28 Q143 22 151 34 Q168 37 165 54 Q174 68 162 80 Q158 62 146 55 Q120 63 94 55 Q82 62 78 80Z'],
-      crop:['M76 84 Q70 30 120 28 Q170 30 164 84 L164 102 L76 102Z',shortCut]
+      perm:['M64 86 Q54 26 120 18 Q186 26 176 86 L180 124 Q168 136 156 122 Q146 134 134 124 L106 124 Q94 134 84 122 Q72 136 60 124Z','M78 80 Q66 68 75 54 Q72 37 89 34 Q97 22 111 28 Q120 19 130 28 Q143 22 151 34 Q168 37 165 54 Q174 68 162 80 Q158 62 146 55 Q120 63 94 55 Q82 62 78 80Z'],
     };
     const ma=choose(['#b7473d','#3d5f8f','#4f7f4f','#8a4f8a'],roll.cloth);
     const sinColor=choose(['#5a3d5c','#3d4f6b','#6b3f3a','#4a5a3f','#7a4a2e'],roll.accent);
@@ -306,7 +305,7 @@ globalThis.KI = globalThis.KI || {};
       const noses=['M119 99 Q117 107 121 108','M116 106 Q120 110 124 106','M113 108 Q116 111 120 109 Q124 111 127 108','M120 96 L118 106 Q120 109 123 107'];
       figure.append(line(stage==='baby'?'M118 106 Q120 108 122 106':choose(noses,roll.nose),shadow,2));
       const width=stage==='baby'?7:9+Math.round(roll.mouth*40)/10, left=120-width, right=120+width;
-      const lip=female && age>=18 && roll.lips<.5 && era!=='old'?'#a8524a':'#894e42';
+      const lip=female && age>=18?'#a8524a':'#894e42';
       if(expression==='open')figure.append(path(`M${left} 116 Q120 130 ${right} 116 Q120 120 ${left} 116Z`,'#8c4038',thin(lip)),path(`M${left+2.5} 117 Q120 120 ${right-2.5} 117 L${right-4} 119.5 Q120 122.5 ${left+4} 119.5Z`,'#fffaf0'));
       else figure.append(line(expression==='smile'?`M${left} 117 Q120 126 ${right} 117`:expression==='small'?`M${left+2} 118 Q120 122 ${right-2} 118`:expression==='flat'?`M${left+2} 120 Q120 121.5 ${right-2} 120`:`M${left+1} 122 Q120 115 ${right-1} 122`,lip,2.5));
       if(!female && age>=20 && !monk && !['student','soldier'].includes(role)) {
