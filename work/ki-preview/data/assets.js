@@ -45,6 +45,7 @@ KI.data.assets = {
     {"id":"home-small","kind":"home","label":"ทาวน์เฮาส์หลังเล็ก","days":3000},
     {"id":"home-medium","kind":"home","label":"บ้านเดี่ยวสำหรับครอบครัว","days":6000},
     {"id":"home-large","kind":"home","label":"บ้านเดี่ยวหลังใหญ่","days":12000},
+    {"id":"bike","kind":"car","label":"รถมอเตอร์ไซค์","days":130},
     {"id":"car-small","kind":"car","label":"รถยนต์ขนาดเล็ก","days":1800},
     {"id":"car-pickup","kind":"car","label":"รถกระบะ","days":2600},
     {"id":"car-luxury","kind":"car","label":"รถยนต์ระดับหรู","days":6500},

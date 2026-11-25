@@ -1040,7 +1040,7 @@ KI.data.decisions = [
     "id": "school-crush",
     "when": {
       "age": [
-        12,
+        15,
         18
       ],
       "role": "student",
@@ -1049,7 +1049,7 @@ KI.data.decisions = [
           "school"
         ],
         "grade": [
-          6,
+          9,
           12
         ]
       },
@@ -1152,7 +1152,7 @@ KI.data.decisions = [
     "id": "crush-followup",
     "when": {
       "age": [
-        13,
+        15,
         20
       ],
       "flag": {

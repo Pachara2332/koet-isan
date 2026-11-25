@@ -135,6 +135,9 @@
 .ki-scene[data-place="asiacity"] .pl-asiacity,
 .ki-scene[data-place="nordic"] .pl-nordic,
 .ki-scene[data-place="prison"] .pl-prison,
+.ki-scene[data-place="home-small"] .pl-home-small,
+.ki-scene[data-place="home-medium"] .pl-home-medium,
+.ki-scene[data-place="home-large"] .pl-home-large,
 .ki-scene[data-place="garden"] .pl-garden{opacity:1;visibility:visible;transition:opacity 1.2s ease,visibility 0s}
 .ki-scene .hills{transition:opacity 1.2s ease}
 .ki-scene[data-place="bangkok"] .hills,
@@ -232,3 +235,4 @@
 .ki-scene.still.fading .scene-veil{animation:ki-veil .3s ease!important}
 
 .ki-scene[data-place="asiacity"] .hills,.ki-scene[data-place="temple"] .hills .ridge-near{opacity:0}
+.ki-scene .car{display:none}.ki-scene[data-car~="bike"] .bike,.ki-scene[data-car~="car-small"] .car-small,.ki-scene[data-car~="car-pickup"] .car-pickup,.ki-scene[data-car~="car-electric"] .car-electric,.ki-scene[data-car~="car-luxury"] .car-luxury{display:inline}

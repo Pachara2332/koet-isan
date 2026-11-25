@@ -40,7 +40,7 @@
 .map-card{margin:12px 0 20px;padding:16px;border:1px solid #e7dac2;border-radius:18px;background:linear-gradient(150deg,#fffaf0,#f4ead6)}
 .map-card-heading{display:flex;align-items:center;justify-content:space-between;gap:10px}.map-card-kicker{font-size:12px;font-weight:700;color:#936b46;letter-spacing:.03em}.map-current{padding:5px 11px;border-radius:999px;background:#e1efd9;color:#28642b;font-size:14px;line-height:1.4}.isan-map{display:block;width:100%;height:auto;margin:10px auto;max-width:430px}.map-province{fill:#e9dabe;stroke:#fffaf1;stroke-width:1.6;stroke-linejoin:round;vector-effect:non-scaling-stroke}.map-province.is-current{fill:#3b8036;stroke:#fffaf1;stroke-width:2}.map-note,.map-credit{font-size:12px;line-height:1.5;color:#675d51}.map-note{margin:4px 0}.map-credit{display:inline-block;text-decoration:underline;text-underline-offset:2px}
 .slot-stats .slot-window{border-radius:14px}
-.slot-window .scene-svg{height:100%}
+.slot-window .scene-svg{height:100%;left:0;width:100%}
 .slot-window .scene-ground{top:calc(100% - 70px)}
 .slot-stats .character-avatar{height:125px}
 @media(max-width:600px){.slot-stats .character-avatar{height:125px}}

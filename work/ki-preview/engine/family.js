@@ -80,7 +80,7 @@ globalThis.KI = globalThis.KI || {};
     const sexAt=(salt)=>rngFor(state,salt).chance(0.5)?'m':'f';
     let splits=Array.isArray(state.pendingSplits)?state.pendingSplits.slice():[];
     if(flags.partner && !family.partner && flags.reconcile && family.formerPartners.length){const back={...family.formerPartners.pop()};splits=splits.filter(x=>!(x.partnerName===back.name && x.partnerSince===back.since));delete back.until;family.partner={...back,married:!!flags.married};flags={...flags,reconcile:false};}
-    if(flags.partner && !family.partner){const r=rngFor(state,200+family.formerPartners.length*7+state.year);const sex=state.sex==='m'?'f':'m';family.partner={name:pickFree(nick(sex),r,used),sex,birthYear:state.birthYear+r.int(11)-5,since:Number.isFinite(flags.partnerSince)?flags.partnerSince:state.year,married:!!flags.married};}
+    if(flags.partner && !family.partner){const r=rngFor(state,200+family.formerPartners.length*7+state.year);const sex=state.sex==='m'?'f':'m';family.partner={name:pickFree(nick(sex),r,used),sex,birthYear:state.birthYear+(state.year-state.birthYear<20?r.int(3)-1:r.int(11)-5),since:Number.isFinite(flags.partnerSince)?flags.partnerSince:state.year,married:!!flags.married};}
     else if(flags.partner && family.partner)family.partner={...family.partner,married:!!flags.married};
     else if(!flags.partner && family.partner){
       const leaving=family.partner;
@@ -104,6 +104,7 @@ globalThis.KI = globalThis.KI || {};
       if(flags.partnerJoinAbroad && state.loc.kind==='abroad'){
         partner.location={kind:'abroad',country:state.loc.country};partner.job='แรงงานต่างประเทศ';flags={...flags,partnerJoinAbroad:false};
       }
+      if(state.loc.kind==='isan' && !together(state,partner)){partner.location={...state.loc};if(partner.job==='แรงงานต่างประเทศ')partner.job='รับจ้างทั่วไป';}
       family.partner=partner;
     }
     if(flags.child && family.children.length===0){const sex=sexAt(9000);family.children.push({name:pick(300,sex),sex,birthYear:Number.isFinite(flags.childSince)?flags.childSince:state.year,...(flags.adoptedChild?{adopted:true}:{})});}
@@ -122,7 +123,7 @@ globalThis.KI = globalThis.KI || {};
     const youngSibling=family.siblings.some(x=>!(x.deathYear<=state.year) && x.birthYear>=state.birthYear+8 && state.year-x.birthYear>=6 && state.year-x.birthYear<=22);
     const elderSibling=family.siblings.some(x=>!(x.deathYear<=state.year) && x.birthYear<=state.birthYear-8 && state.year-x.birthYear>=20);
     const fatherAlive=alive(parentInfo.father), motherAlive=alive(parentInfo.mother);
-    flags={...flags,missingFatherEarly:!parents.father || !!(parentInfo.father && parentInfo.father.deathYear<=state.birthYear+5),missingMotherEarly:!parents.mother || !!(parentInfo.mother && parentInfo.mother.deathYear<=state.birthYear+5),grandmotherPassed:family.grandparents.some(person=>person.relation==='ยาย' && person.deathYear<=state.year),physicalDisability:!!state.disability,ownsPersonalHome:(state.personalAssets||[]).some(item=>item.kind==='home'),ownsPersonalCar:(state.personalAssets||[]).some(item=>item.kind==='car'),partnerCanJoinAbroad:!!family.partner && state.loc.kind==='abroad' && !!state.loc.country && !together(state,family.partner) && state.year-family.partner.birthYear>=18 && state.year-family.partner.birthYear<65};
+    flags={...flags,missingFatherEarly:!parents.father || !!(parentInfo.father && parentInfo.father.deathYear<=state.birthYear+5),missingMotherEarly:!parents.mother || !!(parentInfo.mother && parentInfo.mother.deathYear<=state.birthYear+5),grandmotherPassed:family.grandparents.some(person=>person.relation==='ยาย' && person.deathYear<=state.year),physicalDisability:!!state.disability,ownsPersonalHome:(state.personalAssets||[]).some(item=>item.kind==='home'),elderParent:(fatherAlive && state.year-parentInfo.father.birthYear>=70) || (motherAlive && state.year-parentInfo.mother.birthYear>=70),ownsPersonalCar:(state.personalAssets||[]).some(item=>item.kind==='car'),partnerCanJoinAbroad:!!family.partner && state.loc.kind==='abroad' && !!state.loc.country && !together(state,family.partner) && state.year-family.partner.birthYear>=18 && state.year-family.partner.birthYear<65};
     flags={...flags,hasEx:family.formerPartners.length>0,hasSiblings:family.siblings.some(x=>x.birthYear<=state.year && !(x.deathYear<=state.year)),kids:family.children.length,fatherAlive,motherAlive,parentsAlive:fatherAlive||motherAlive,grandparentsAlive:family.grandparents.some(p=>state.year<p.deathYear),youngSibling,elderSibling,orphan:!fatherAlive && !motherAlive && age<20 && !!(parentInfo.father || parentInfo.mother)};
     return {...state,flags,family,pendingSplits:splits,...(orphan?{wealth:'poor',birthWealth:'poor'}:{})};
   }

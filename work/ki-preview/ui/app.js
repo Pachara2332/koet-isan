@@ -99,13 +99,14 @@ globalThis.KI = globalThis.KI || {};
   function familyFigures(all) {
     const f=state.family||{}, y=state.year, out=[];
     const add=(label,name,birthYear,sex,extra)=>{if(Number.isFinite(birthYear) && birthYear<=y)out.push({label,name,birthYear,year:y,sex,role:y-birthYear<18&&y-birthYear>=6?'student':'',conds:[],...(extra||{})});};
-    const pi=f.parentInfo||{}, home=all || state.loc.kind==='isan' && state.loc.province===state.home.province, withPartner=!!f.partner && (all || KI.family.together(state,f.partner));
-    if(home && f.parents && f.parents.father && pi.father && y<pi.father.deathYear)add('พ่อ',f.parents.father,pi.father.birthYear,'m',{role:/ครู|ข้าราชการ/.test(pi.father.job)?'teacher':/นา|ไร่|อ้อย/.test(pi.father.job)?'farmer':''});
-    if(home && f.parents && f.parents.mother && pi.mother && y<pi.mother.deathYear)add('แม่',f.parents.mother,pi.mother.birthYear,'f',{role:/นา|ไร่|อ้อย/.test(pi.mother.job)?'farmer':''});
+    const pi=f.parentInfo||{}, ownHome=!all && /^home-/.test(KI.scene.placeFor(state,data)), home=all || !ownHome && state.loc.kind==='isan' && state.loc.province===state.home.province, withPartner=!!f.partner && (all || KI.family.together(state,f.partner));
+    const parentsHere=home || ownHome && state.flags.parentsWithUs;
+    if(parentsHere && f.parents && f.parents.father && pi.father && y<pi.father.deathYear)add('พ่อ',f.parents.father,pi.father.birthYear,'m',{role:/ครู|ข้าราชการ/.test(pi.father.job)?'teacher':/นา|ไร่|อ้อย/.test(pi.father.job)?'farmer':''});
+    if(parentsHere && f.parents && f.parents.mother && pi.mother && y<pi.mother.deathYear)add('แม่',f.parents.mother,pi.mother.birthYear,'f',{role:/นา|ไร่|อ้อย/.test(pi.mother.job)?'farmer':''});
     (home?f.grandparents||[]:[]).filter(p=>y<p.deathYear).forEach(p=>add(p.relation,p.name,p.birthYear,p.relation==='ย่า'||p.relation==='ยาย'?'f':'m'));
     if(withPartner)add(f.partner.married?'คู่สมรส':'คนรัก',f.partner.name,f.partner.birthYear||state.birthYear,f.partner.sex);
     (home?f.siblings||[]:[]).filter(p=>!(p.deathYear<=y)).forEach(p=>add(p.birthYear<state.birthYear?'พี่':'น้อง',p.name,p.birthYear,p.sex));
-    (home || withPartner?f.children||[]:[]).forEach(p=>add(childRelation(p).replace('บุญธรรม',''),p.name,p.birthYear,p.sex));
+    (home || withPartner || ownHome?f.children||[]:[]).forEach(p=>add(childRelation(p).replace('บุญธรรม',''),p.name,p.birthYear,p.sex));
     (home || withPartner?f.grandchildren||[]:[]).forEach(p=>add(grandchildRelation(p),p.name,p.birthYear,p.sex));
     return out.slice(0,10);
   }
@@ -350,10 +351,10 @@ globalThis.KI = globalThis.KI || {};
     shell.append(head,cards,stats,trail,actions); root.append(shell);
     if (fresh) KI.scene.mount(view);
     const p = KI.scene.placeFor(state,data);
-    KI.scene.set({season:state.season,place:p,country:KI.scene.countryFor(state),year:state.year,mood:state.conds.some(c => ['heartbroken','grieving'].includes(c.id)) ? 'sad' : 'normal'});
+    KI.scene.set({season:state.season,place:p,country:KI.scene.countryFor(state),car:KI.scene.carFor(state),year:state.year,mood:state.conds.some(c => ['heartbroken','grieving'].includes(c.id)) ? 'sad' : 'normal'});
     KI.scene.motion(settings.motion);
     const avatar=element('div','character-avatar'); avatar.append(KI.avatar.create(state),element('span','character-name',state.name)); view.append(avatar);
-    const kin=state.role==='prisoner'?[]:familyFigures(), pets=state.role==='prisoner' || state.loc.kind!=='isan' || state.loc.province!==state.home.province?[]:(state.pets||[]).filter(pet=>pet.alive).slice(0,2);
+    const kin=state.role==='prisoner'?[]:familyFigures(), pets=state.role==='prisoner' || state.loc.kind!=='isan' || state.loc.province!==state.home.province && !/^home-/.test(p)?[]:(state.pets||[]).filter(pet=>pet.alive).slice(0,2);
     if(kin.length || pets.length){const row=element('div','family-row');kin.forEach(person=>{const box=element('div','family-figure');box.append(KI.avatar.create(person),element('span','',person.label));row.append(box);});pets.forEach(pet=>{const box=element('div','family-figure');box.append(KI.avatar.pet(pet.kind),element('span','',pet.name||petLabel(pet)));row.append(box);});view.append(row);}
     while(autoMode && (state.pendingSplits||[]).length){const sp=state.pendingSplits[0];const resolved=sp.assets && sp.assets.length?KI.finance.resolveSplit(state,data,sp.assets[0],'sell'):state;state=resolved!==state?resolved:{...state,pendingSplits:state.pendingSplits.slice(1)};}
     if(autoMode && (state.pets||[]).some(pet=>pet.alive && !pet.name))state={...state,pets:state.pets.map(pet=>pet.alive && !pet.name?{...pet,name:randomPetName(pet.kind)}:pet)};

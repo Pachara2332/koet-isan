@@ -2,7 +2,9 @@ globalThis.KI = globalThis.KI || {};
 (function () {
   const W = 1600, H = 900, VPX = 800, VPY = 520;
   const NS = 'http://www.w3.org/2000/svg';
-  const PLACES = ['rural', 'town', 'mekong', 'bangkok', 'abroad', 'school', 'factory', 'market', 'garden', 'temple', 'desert', 'asiacity', 'nordic', 'prison'];
+  const PLACES = ['rural', 'town', 'mekong', 'bangkok', 'abroad', 'school', 'factory', 'market', 'garden', 'temple', 'desert', 'asiacity', 'nordic', 'prison', 'home-small', 'home-medium', 'home-large'];
+  const HOMES = ['home-small', 'home-medium', 'home-large'], CARS = ['bike', 'car-small', 'car-electric', 'car-pickup', 'car-luxury'];
+  const PARK = { 'car-luxury': [335, .72], 'car-small': [530, .72], bike: [965, 2.8], 'car-electric': [1115, .72], 'car-pickup': [1290, .72] };
   const MOODS = ['normal', 'sad', 'bright'];
   const FX = ['flood', 'drought', 'rocket', 'boats', 'fireworks'];
   const ERA = { electricity: 'electricity', tv: 'tv', motorcycle: 'motorcycle', mobile: 'mobile' };
@@ -787,6 +789,49 @@ globalThis.KI = globalThis.KI || {};
     return Object.entries(shapes).map(([key,shape])=>g(shape,'class="landmark landmark-'+key+'"')).join('');
   }
 
+  function car(id) {
+    if (id === 'bike') return g('<ellipse cx="2" cy="1" rx="30" ry="3" fill="rgba(40,25,10,.18)"/>' + motorbike(0, 0, 1, '#c8463c'), 'class="car bike" transform="translate(' + PARK.bike[0] + ' 790) scale(' + PARK.bike[1] + ')"');
+    const wheels = (a, b) => '<circle cx="' + a + '" cy="-14" r="17" fill="#26232B"/><circle cx="' + a + '" cy="-14" r="7" fill="#9aa1a8"/><circle cx="' + b + '" cy="-14" r="17" fill="#26232B"/><circle cx="' + b + '" cy="-14" r="7" fill="#9aa1a8"/>';
+    const glass = '#bfd6de';
+    const body = {
+      'car-small': '<path d="M-95 -18 L-95 -48 Q-90 -60 -70 -62 L-40 -98 Q-30 -104 10 -104 L40 -104 Q62 -102 74 -80 L90 -60 Q100 -56 100 -40 L100 -18 Z" fill="#d6604d" stroke="#8f3a2c" stroke-width="4"/><path d="M-34 -64 L-14 -92 L18 -92 L18 -64 Z M28 -64 L28 -92 L42 -92 Q56 -90 66 -64 Z" fill="' + glass + '"/>' + wheels(-55, 60),
+      'car-pickup': '<path d="M-120 -18 L-120 -64 L10 -64 L10 -18 Z" fill="#e8e3d6" stroke="#8d8676" stroke-width="4"/><path d="M10 -18 L10 -64 L28 -108 L88 -108 Q104 -106 112 -84 L122 -64 Q130 -60 130 -44 L130 -18 Z" fill="#f2efe6" stroke="#8d8676" stroke-width="4"/><path d="M34 -70 L46 -98 L82 -98 Q94 -96 102 -70 Z" fill="' + glass + '"/><path d="M-116 -60 H6" stroke="#8d8676" stroke-width="4"/>' + wheels(-75, 85),
+      'car-electric': '<path d="M-110 -18 L-110 -46 Q-108 -62 -84 -66 L-46 -100 Q-30 -110 20 -110 Q60 -108 82 -80 L104 -64 Q116 -58 116 -40 L116 -18 Z" fill="#e9f1f3" stroke="#6f8c96" stroke-width="4"/><path d="M-40 -70 L-24 -96 Q-12 -100 16 -100 L16 -70 Z M26 -70 L26 -100 Q56 -98 72 -70 Z" fill="' + glass + '"/><path d="M-12 -46 L-22 -30 L-10 -30 L-18 -14 L2 -36 L-10 -36 L-2 -46 Z" fill="#3aa0c9"/>' + wheels(-66, 72),
+      'car-luxury': '<path d="M-135 -18 L-135 -44 Q-132 -58 -104 -62 L-60 -96 Q-46 -104 10 -104 Q56 -102 80 -76 L118 -62 Q138 -58 138 -40 L138 -18 Z" fill="#2c3442" stroke="#151a22" stroke-width="4"/><path d="M-54 -66 L-36 -92 Q-24 -96 10 -96 L10 -66 Z M20 -66 L20 -96 Q50 -94 70 -66 Z" fill="#8fa7b3"/><path d="M-130 -40 H134" stroke="#c9ccd1" stroke-width="3"/>' + wheels(-82, 88)
+    }[id];
+    return g('<ellipse cx="0" cy="2" rx="150" ry="12" fill="rgba(40,25,10,.18)"/>' + body, 'class="car ' + id + '" transform="translate(' + PARK[id][0] + ' 790) scale(' + PARK[id][1] + ')"');
+  }
+
+  function ownHome(kind) {
+    const lawn = '<rect x="-200" y="600" width="2000" height="330" fill="#b6ca8e"/><rect x="-200" y="700" width="2000" height="110" fill="#cfc3a6"/>';
+    let house;
+    if (kind === 'home-small') {
+      const unit = (x, mine) => '<rect x="' + x + '" y="420" width="240" height="210" fill="' + (mine ? '#f2dfbd' : '#e4d6c1') + '" stroke="#b9a586" stroke-width="6"/><rect x="' + (x - 6) + '" y="404" width="252" height="22" fill="' + (mine ? '#b8614c' : '#9c8b78') + '"/><rect x="' + (x + 24) + '" y="452" width="80" height="60" fill="#8db1b2" stroke="#f6eddd" stroke-width="6"/><rect x="' + (x + 136) + '" y="452" width="80" height="60" fill="#8db1b2" stroke="#f6eddd" stroke-width="6"/><rect x="' + (x + 24) + '" y="532" width="192" height="98" fill="' + (mine ? '#8e6650' : '#9a9184') + '"/>' + (mine ? '<path d="M' + (x + 24) + ' 556 H' + (x + 216) + ' M' + (x + 24) + ' 580 H' + (x + 216) + ' M' + (x + 24) + ' 604 H' + (x + 216) + '" stroke="#6f4c3a" stroke-width="3"/>' : '');
+      house = unit(320, false) + unit(560, true) + unit(800, false);
+    } else if (kind === 'home-medium') {
+      house = '<rect x="470" y="440" width="520" height="190" fill="#f2dfbd" stroke="#c4ae87" stroke-width="7"/><path d="M430 452 L730 310 L1030 452 Z" fill="#a45e49"/><path d="M430 452 H1030" stroke="#f6eddd" stroke-width="9"/>' +
+        '<rect x="510" y="480" width="110" height="80" fill="#8db1b2" stroke="#f6eddd" stroke-width="8"/><rect x="840" y="480" width="110" height="80" fill="#8db1b2" stroke="#f6eddd" stroke-width="8"/><rect x="680" y="500" width="100" height="130" fill="#8e6650"/><circle cx="764" cy="566" r="5" fill="#e2b84a"/><rect x="664" y="626" width="132" height="12" fill="#c4ae87"/>' +
+        tree(330, 640, 1, 'var(--tree)', 'var(--tree2)');
+    } else {
+      house = '<rect x="380" y="340" width="700" height="290" fill="#f5ead6" stroke="#c4ae87" stroke-width="7"/><path d="M340 352 L470 270 L990 270 L1120 352 Z" fill="#6f4a3d"/><path d="M340 352 H1120" stroke="#f6eddd" stroke-width="9"/><path d="M380 482 H1080" stroke="#d9c6a6" stroke-width="10"/>' +
+        [430, 590, 790, 950].map((x) => '<rect x="' + x + '" y="370" width="90" height="80" fill="#8db1b2" stroke="#fffaf0" stroke-width="7"/>').join('') +
+        [430, 950].map((x) => '<rect x="' + x + '" y="510" width="90" height="80" fill="#8db1b2" stroke="#fffaf0" stroke-width="7"/>').join('') +
+        '<rect x="600" y="496" width="260" height="134" fill="#e8dcc4"/><rect x="680" y="510" width="100" height="120" fill="#7a5442"/><rect x="606" y="496" width="16" height="134" fill="#fffaf0"/><rect x="838" y="496" width="16" height="134" fill="#fffaf0"/><path d="M590 496 H870" stroke="#fffaf0" stroke-width="12"/>' +
+        tree(250, 640, 1.2, 'var(--tree)', 'var(--tree2)') + tree(1200, 600, .8, 'var(--tree)', 'var(--tree2)');
+    }
+    return g(lawn + g(house, 'transform="translate(-100 294) scale(.85) translate(0 -270)"') + CARS.map(car).join(''), 'class="pl pl-' + kind + '"');
+  }
+
+  function homeFor(state) {
+    const owned = (state.personalAssets || []).map((a) => a.key);
+    return HOMES.filter((k) => owned.includes(k)).pop() || null;
+  }
+
+  function carFor(state) {
+    const owned = (state.personalAssets || []).map((a) => a.key);
+    return CARS.filter((k) => owned.includes(k)).join(' ');
+  }
+
   function placeFor(state, data) {
     if(state.role==='prisoner')return 'prison';
     if(state.role==='monk' || (state.edu && state.edu.in==='novice'))return 'temple';
@@ -798,6 +843,8 @@ globalThis.KI = globalThis.KI || {};
       return 'abroad';
     }
     if(state.loc.kind==='bangkok')return 'bangkok';
+    const home=homeFor(state);
+    if(home && !['student','factory'].includes(state.role))return home;
     const rich=state.flags && (state.flags.status==='wealthy' || (state.flags.status==='rich' && state.flags.movedOut));
     if(rich && state.role!=='student')return 'town';
     if(state.role==='student')return 'school';
@@ -845,7 +892,7 @@ globalThis.KI = globalThis.KI || {};
     root.setAttribute('aria-hidden', 'true');
     seed = 7;
     const markup = '<svg class="scene-svg" xmlns="' + NS + '" viewBox="0 0 ' + W + ' ' + H + '" preserveAspectRatio="xMidYMax slice" focusable="false">' +
-      defs() + sky() + hills() + rural() + town() + mekong() + bangkok() + abroad() + school() + factory() + market() + garden() + temple() + prison() + desert() + asiacity() + nordic() + landmarks() + fx() + '</svg>' +
+      defs() + sky() + hills() + rural() + town() + mekong() + bangkok() + abroad() + school() + factory() + market() + garden() + HOMES.map(ownHome).join('') + temple() + prison() + desert() + asiacity() + nordic() + landmarks() + fx() + '</svg>' +
       '<div class="scene-ground"></div><canvas class="scene-particles"></canvas>' +
       '<div class="scene-mood scene-mood-sad"></div><div class="scene-mood scene-mood-sad2"></div><div class="scene-mood scene-mood-bright"></div><div class="scene-veil"></div>';
     root.innerHTML = markup;
@@ -888,6 +935,7 @@ globalThis.KI = globalThis.KI || {};
     root.setAttribute('data-place', s.place);
     root.setAttribute('data-country', s.country);
     root.setAttribute('data-mood', s.mood);
+    root.setAttribute('data-car', s.car || '');
     applyEra(s.year);
     if (KI.particles && KI.particles.set) KI.particles.set(defaultParticles(s));
     if (!first && s.fx) playFx(s.fx);
@@ -899,6 +947,7 @@ globalThis.KI = globalThis.KI || {};
       season: o.season === null || o.season === 0 || o.season === 1 || o.season === 2 ? o.season : (o.season === undefined ? current.season : 2),
       place: PLACES.indexOf(o.place) >= 0 ? o.place : (o.place === undefined ? current.place : 'rural'),
       country: typeof o.country === 'string' ? o.country : '',
+      car: typeof o.car === 'string' ? o.car : '',
       year: typeof o.year === 'number' ? o.year : (o.year === undefined ? current.year : null),
       mood: MOODS.indexOf(o.mood) >= 0 ? o.mood : (o.mood === undefined ? current.mood : 'normal'),
       fx: FX.indexOf(o.fx) >= 0 ? o.fx : null
@@ -930,5 +979,5 @@ globalThis.KI = globalThis.KI || {};
     return motionOn;
   }
 
-  KI.scene = { mount, set, motion, placeFor, countryFor, get: () => Object.assign({}, current), eraYear };
+  KI.scene = { mount, set, motion, placeFor, countryFor, carFor, get: () => Object.assign({}, current), eraYear };
 })();
