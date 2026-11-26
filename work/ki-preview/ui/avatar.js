@@ -182,7 +182,12 @@ globalThis.KI = globalThis.KI || {};
     if(kit.lower==='sarong')kit.lowerColor=ma;
     if(kit.feet==='sneakers')kit.feetColor='#f1efe9';
     if((status==='rich' || status==='wealthy') && age>=20 && !monk && !['student','soldier','prisoner','construction'].includes(role))kit.extras.push('gold');
-    const build=stage==='baby' || stage==='child'?1:choose([.92,.97,1,1.04,1.08],roll.build);
+    const health=state.stats && Number.isFinite(state.stats.health)?state.stats.health:70;
+    const build=stage==='baby' || stage==='child'?1:Math.max(.88,Math.min(1.14,choose([.92,.97,1,1.04,1.08],roll.build)+((status==='rich' || status==='wealthy') && age>=35?.05:0)+(status==='poor' && age>=20?-.03:0)+(health<40?-.05:0)));
+    const officeWear=['office','business','banker','lawyer','engineer','developer','accountant','designer','politician','doctor'].includes(role);
+    if(age>=20 && !monk && role!=='prisoner' && (officeWear || ((status==='rich' || status==='wealthy') && roll.accent<.7)))kit.extras.push('watch');
+    if(age>=13 && age<=40 && state.year>=2010 && !monk && role!=='prisoner' && roll.print>.62)kit.extras.push('phone');
+    if(role==='chef'){kit.hat='toque';kit.hatColor='#fbfaf5';}
     const babyColor=era==='old'?choose(['#efe4cc','#e7dcc6','#dfe6e0'],roll.palette):choose(['#f2b134','#7cc4e6','#f28fa6','#8fd18a','#f6e05e'],roll.palette);
     const outfitColor=stage==='baby'?babyColor:monk?'#d9822b':kit.top;
     const svg=shape('svg',{viewBox:'0 0 240 330',role:'img','aria-label':`ตัวละคร ${state.name} อายุ ${age} ปี`,'data-stage':stage,'data-mood':mood,'data-hair-style':hairstyle,'data-outfit':outfitColor});
@@ -268,7 +273,9 @@ globalThis.KI = globalThis.KI || {};
         maWaist:()=>[path('M82 210 Q120 220 158 210 L159 223 Q120 233 81 223Z M144 224 L150 248 L139 246Z',ma,thin(mix(ma,'#000000',.35))),line('M82 216 Q120 226 158 216','#f1e6d0',3,{'stroke-dasharray':'5 5',opacity:'.8'})],
         scarf:()=>path('M98 138 Q120 150 142 138 L144 150 Q120 162 96 150Z',ma,thin(mix(ma,'#000000',.35))),
         print:()=>{const ink=light(kit.top)<.55?'#f5f1e6':'#2e3440';return [path('M108 186 Q108 174 120 174 Q132 174 132 186 Q132 198 120 198 Q108 198 108 186Z',ink,{opacity:'.85'}),line('M82 184 L158 184 M82 196 L158 196',ink,5,{opacity:'.8'}),path('M120 172 L124 182 L135 182 L126 189 L130 200 L120 193 L110 200 L114 189 L105 182 L116 182Z',ink,{opacity:'.85'}),path('M120 198 Q104 186 110 177 Q116 171 120 179 Q124 171 130 177 Q136 186 120 198Z',ink,{opacity:'.85'})][Math.floor(roll.print*4)%4];},
-        mask:()=>null
+        mask:()=>null,
+        watch:()=>[shape('rect',{x:47,y:203,width:17,height:7,rx:2,fill:(status==='rich' || status==='wealthy')?'#d4a62a':'#3a3f48'}),shape('circle',{cx:55.5,cy:206.5,r:3.6,fill:'#f4f1e8',stroke:'#3a3f48','stroke-width':1})],
+        phone:()=>[shape('rect',{x:178,y:206,width:15,height:24,rx:3,fill:'#2b2d33',stroke:OUTLINE,'stroke-width':1.5}),shape('rect',{x:180.5,y:209,width:10,height:16,rx:1.5,fill:'#8db1d6'})]
       };
       kit.extras.forEach(name=>{const made=extras[name]();if(made)body.append(...[].concat(made));});
       figure.append(body);
@@ -279,6 +286,7 @@ globalThis.KI = globalThis.KI || {};
     const faces=['M77 72 Q77 30 120 30 Q163 30 163 72 L161 101 Q159 131 120 140 Q81 131 79 101Z','M76 74 Q76 30 120 30 Q164 30 164 74 Q166 108 150 126 Q136 139 120 139 Q104 139 90 126 Q74 108 76 74Z','M78 72 Q78 30 120 30 Q162 30 162 72 L162 106 Q160 126 142 134 L120 140 L98 134 Q80 126 78 106Z','M76 70 Q77 30 120 30 Q163 30 164 70 Q163 98 152 116 Q138 136 120 141 Q102 136 88 116 Q77 98 76 70Z'];
     figure.append(path(stage==='baby'?faces[1]:choose(faces,roll.face),skin,stroke));
     if(front)figure.append(path(front,hair,hairstyle==='crew'?{opacity:'.92'}:{}));
+    if(female && age>=15 && !monk && role!=='prisoner' && roll.lips<.75){const ear=(status==='rich' || status==='wealthy')?'#d4a62a':roll.lips<.35?'#e8e4da':'#c9a24a';figure.append(shape('circle',{cx:75,cy:104,r:3.4,fill:ear,stroke:mix(ear,'#000000',.35),'stroke-width':1}),shape('circle',{cx:165,cy:104,r:3.4,fill:ear,stroke:mix(ear,'#000000',.35),'stroke-width':1}));}
     if(monk)figure.append(line('M80 70 Q80 33 120 32 Q160 33 160 70','#8f7a6b',1.2,{opacity:'.35'}));
     const masked=kit.extras.includes('mask') && stage!=='baby' && !monk;
     const spread=Math.round((roll.spread*3-1)*10)/10;
@@ -340,8 +348,9 @@ globalThis.KI = globalThis.KI || {};
     else if(kit.hat==='hardhat')figure.append(path('M78 64 Q78 22 120 21 Q162 22 162 64Z',kit.hatColor,stroke),path('M70 62 Q120 54 170 62 L170 69 Q120 61 70 69Z',mix(kit.hatColor,'#1d1a18',.15),stroke),line('M120 23 L120 58',hatInk,2,{opacity:'.5'}));
     else if(kit.hat==='cap')figure.append(path('M80 64 Q80 28 120 27 Q160 28 160 64Z',kit.hatColor,stroke),path('M80 62 Q120 74 160 62 Q156 74 120 78 Q84 74 80 62Z',mix(kit.hatColor,'#1d1a18',.2),stroke));
     else if(kit.hat==='helmet')figure.append(path('M72 100 Q68 22 120 18 Q172 22 168 100 L158 102 Q160 64 150 58 L90 58 Q80 64 82 102Z',kit.hatColor,stroke),path('M88 58 Q120 50 152 58 L152 64 Q120 56 88 64Z','#9ab3c4',{opacity:'.9',stroke:hatInk,'stroke-width':1.2}));
+    else if(kit.hat==='toque')figure.append(path('M84 58 Q70 34 90 26 Q96 6 120 10 Q144 6 150 26 Q170 34 156 58Z','#fbfaf5',stroke),path('M86 52 H154 L154 64 H86Z','#f1efe8',stroke));
     else if(kit.hat==='nursecap')figure.append(path('M100 40 L140 40 L134 26 L106 26Z','#fdfdfd',thin(OUTLINE)),line('M103 34 L137 34','#2f4a7a',2));
-    if(age>=78 && stage!=='baby')figure.append(line('M190 222 L198 302','#6b4a33',5),line('M184 222 Q190 214 198 220','#6b4a33',5));
+    if(stage!=='baby' && stage!=='child' && (age>=78 || state.disability==='accident' || (age>=60 && health<35)) && !kit.extras.includes('phone'))figure.append(line('M190 222 L198 302','#6b4a33',5),line('M184 222 Q190 214 198 220','#6b4a33',5));
     if(stage==='baby')figure.append(line('M112 154 Q120 163 128 154','#c4915f',2));
     svg.append(figure);return svg;
   }

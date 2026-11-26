@@ -812,7 +812,7 @@ globalThis.KI = globalThis.KI || {};
         const source=card.kind==='decision'?(data.decisions||[]).find(item=>item.id===card.id):card.kind==='personal'?(data.personalEvents||[]).find(item=>item.id===card.id):card.kind==='focus'?{choices:data.focus}:null;
         const selected=source && source.choices.find(item=>item.id===String(choice.id).split('@')[0]);
         const effects=(selected && (card.kind==='focus'?selected.perSeason:selected.effects) || []).filter(effect=>!choice.kid || typeof effect.money!=='number');
-        const preview=KI.effects.apply(state,effects.filter(effect=>'stat' in effect || 'trait' in effect || 'money' in effect || 'parents' in effect || 'inherit' in effect),data,KI.rng.make(state.rng));
+        const preview=KI.effects.apply(state,effects.filter(effect=>'stat' in effect || 'trait' in effect || 'money' in effect || 'parents' in effect || 'inherit' in effect || 'personal' in effect),data,KI.rng.make(state.rng));
         const names={health:'สุขภาพ',happy:'ความสุข',know:'ความรู้',bond:'ความสัมพันธ์',money:'เงิน',parents:'เงินพ่อแม่',attach:'ยึดติด',grit:'มุ่งมั่น',social:'เข้าสังคม'};
         const impacts=preview.deltas.filter(delta=>names[delta.k]).map(delta=>names[delta.k]+' '+(delta.d>0?'+':'')+delta.d.toLocaleString('th-TH')+(delta.k==='money'||delta.k==='parents'?' บาท':''));
         if(selected && selected.roll)impacts.push('มีผลสุ่มเพิ่มเติม');

@@ -154,7 +154,7 @@ globalThis.KI = globalThis.KI || {};
       const price = Math.round(def.days * KI.tables.wageDay(data, s.year)), down = e.free ? 0 : e.finance ? Math.ceil(price * 0.2) : price, principal = e.free ? 0 : price - down;
       let serial = (s.personalAssetSerial || 0) + 1;
       while ((s.personalAssets || []).some((a) => a.id === 'asset-' + serial)) serial++;
-      const asset = { id: 'asset-' + serial, key: def.id, kind: def.kind, label: def.label, year: s.year, price };
+      const asset = { id: 'asset-' + serial, key: def.id, kind: def.kind, label: def.label, year: s.year, price, ...(def.kind === 'home' ? { where: KI.family.homeWhere(s.loc) } : {}) };
       s.personalAssetSerial = serial;
       s.personalAssets = [...(s.personalAssets || []), asset];
       s.money -= down;

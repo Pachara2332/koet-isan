@@ -2,7 +2,7 @@ globalThis.KI = globalThis.KI || {};
 (function () {
   const W = 1600, H = 900, VPX = 800, VPY = 520;
   const NS = 'http://www.w3.org/2000/svg';
-  const PLACES = ['rural', 'town', 'mekong', 'bangkok', 'abroad', 'school', 'factory', 'market', 'garden', 'temple', 'desert', 'asiacity', 'nordic', 'prison', 'home-small', 'home-medium', 'home-large', 'office'];
+  const PLACES = ['rural', 'town', 'mekong', 'bangkok', 'abroad', 'school', 'factory', 'market', 'garden', 'temple', 'desert', 'asiacity', 'nordic', 'prison', 'home-small', 'home-medium', 'home-large', 'office', 'hospital', 'construction', 'campus', 'restaurant', 'garage', 'camp', 'apartment'];
   const HOMES = ['home-small', 'home-medium', 'home-large'], CARS = ['bike', 'car-small', 'car-electric', 'car-pickup', 'car-luxury'];
   const PARK = { 'car-luxury': [335, .72], 'car-small': [530, .72], bike: [965, 2.8], 'car-electric': [1115, .72], 'car-pickup': [1290, .72] };
   const MOODS = ['normal', 'sad', 'bright'];
@@ -822,6 +822,69 @@ globalThis.KI = globalThis.KI || {};
     return g(lawn + g(house, 'transform="translate(-40 294) scale(.85) translate(0 -270)"') + CARS.map(car).join(''), 'class="pl pl-' + kind + '"');
   }
 
+
+  function hospital() {
+    const windows = [440, 530, 620, 980, 1070, 1160].map((x) => '<rect x="' + x + '" y="380" width="60" height="56" fill="#a9c6cc" stroke="#f6f7f4" stroke-width="7"/><rect x="' + x + '" y="470" width="60" height="56" fill="#a9c6cc" stroke="#f6f7f4" stroke-width="7"/>').join('');
+    return g('<rect x="-200" y="610" width="2000" height="320" fill="#c9cdbd"/>' +
+      '<rect x="400" y="340" width="840" height="290" fill="#f4f3ee" stroke="#b9bdb4" stroke-width="8"/><rect x="380" y="322" width="880" height="26" fill="#9bb7bd"/>' + windows +
+      '<rect x="730" y="500" width="180" height="130" fill="#9bb7bd" stroke="#f6f7f4" stroke-width="8"/><path d="M820 515 V615" stroke="#f6f7f4" stroke-width="6"/>' +
+      '<rect x="760" y="372" width="120" height="110" rx="10" fill="#fdfdfb" stroke="#b9bdb4" stroke-width="6"/><path d="M820 392 V462 M785 427 H855" stroke="#c8463c" stroke-width="18" stroke-linecap="round"/>' +
+      '<path d="M0 760 H1600" stroke="#eceade" stroke-width="7" stroke-dasharray="70 60"/>' + tree(200, 660, 1, 'var(--tree)', 'var(--tree2)') + tree(1420, 660, 1, 'var(--tree)', 'var(--tree2)'), 'class="pl pl-hospital"');
+  }
+
+  function construction() {
+    const floors = [0, 1, 2].map((i) => '<rect x="520" y="' + (540 - i * 90) + '" width="520" height="12" fill="#a3a097"/><path d="M540 ' + (552 - i * 90) + ' V' + (630 - i * 90) + ' M700 ' + (552 - i * 90) + ' V' + (630 - i * 90) + ' M860 ' + (552 - i * 90) + ' V' + (630 - i * 90) + ' M1020 ' + (552 - i * 90) + ' V' + (630 - i * 90) + '" stroke="#b5b1a6" stroke-width="16"/>').join('');
+    return g('<rect x="-200" y="620" width="2000" height="310" fill="#c4a77d"/>' + floors +
+      '<path d="M500 640 L500 330 M1060 640 L1060 330 M500 400 L1060 400 M500 500 L1060 500" stroke="#d68a2c" stroke-width="5" opacity=".75"/>' +
+      '<path d="M1220 640 V250 M1220 262 H880 M1220 262 L1300 262 M1300 262 V300 H1260 V262 M960 262 V340" stroke="#e2b23a" stroke-width="12" stroke-linecap="square"/><rect x="935" y="340" width="50" height="34" fill="#7d7a72"/>' +
+      '<path d="M300 640 L340 590 L380 640 Z M330 640 L370 590 L410 640 Z" fill="#a98a5c"/><path d="M140 690 H460" stroke="#f08a24" stroke-width="10" stroke-dasharray="40 30"/>', 'class="pl pl-construction"');
+  }
+
+  function campus() {
+    const columns = [560, 640, 720, 880, 960, 1040].map((x) => '<rect x="' + x + '" y="430" width="34" height="190" fill="#f6efdf" stroke="#c9b48d" stroke-width="5"/>').join('');
+    return g('<rect x="-200" y="610" width="2000" height="320" fill="#a8c28a"/><path d="M700 930 L760 620 H840 L900 930 Z" fill="#d8cba8"/>' +
+      '<rect x="500" y="410" width="600" height="220" fill="#efe3c8" stroke="#c9b48d" stroke-width="8"/><path d="M470 420 L800 300 L1130 420 Z" fill="#8a4e3c"/><path d="M470 420 H1130" stroke="#f6eddd" stroke-width="10"/>' + columns +
+      '<circle cx="800" cy="372" r="26" fill="#e2b84a" stroke="#9a7420" stroke-width="5"/><rect x="760" y="520" width="80" height="110" fill="#7a5442"/>' +
+      tree(260, 650, 1.3, 'var(--tree)', 'var(--tree2)') + tree(1340, 650, 1.3, 'var(--tree)', 'var(--tree2)') + tree(420, 670, .8, 'var(--tree)', 'var(--tree2)') + tree(1190, 670, .8, 'var(--tree)', 'var(--tree2)'), 'class="pl pl-campus"');
+  }
+
+  function restaurant() {
+    const tables = [380, 600, 1000, 1220].map((x) => '<rect x="' + (x - 50) + '" y="650" width="100" height="10" fill="#8e6650"/><path d="M' + (x - 40) + ' 660 V700 M' + (x + 40) + ' 660 V700" stroke="#8e6650" stroke-width="7"/><circle cx="' + (x - 20) + '" cy="640" r="12" fill="#f3dfb2"/><circle cx="' + (x + 18) + '" cy="642" r="9" fill="#e9bd55"/>').join('');
+    return g('<rect x="-200" y="620" width="2000" height="310" fill="#d9c8a8"/>' +
+      '<rect x="460" y="380" width="680" height="250" fill="#f2dfbd" stroke="#c4ae87" stroke-width="8"/><path d="M440 380 L480 320 H1120 L1160 380 Z" fill="#c8463c"/><path d="M480 380 V400 M560 380 V400 M640 380 V400 M720 380 V400 M800 380 V400 M880 380 V400 M960 380 V400 M1040 380 V400 M1120 380 V400" stroke="#f6eddd" stroke-width="10"/>' +
+      '<rect x="520" y="440" width="240" height="120" fill="#a9c6cc" stroke="#f6eddd" stroke-width="8"/><rect x="840" y="440" width="240" height="120" fill="#a9c6cc" stroke="#f6eddd" stroke-width="8"/><rect x="770" y="470" width="60" height="160" fill="#8e6650"/>' +
+      '<rect x="640" y="334" width="320" height="38" rx="6" fill="#fff8e9"/><path d="M670 353 H930" stroke="#c8463c" stroke-width="6" stroke-dasharray="20 10"/>' + tables, 'class="pl pl-restaurant"');
+  }
+
+  function garage() {
+    return g('<rect x="-200" y="620" width="2000" height="310" fill="#a9a59a"/>' +
+      '<rect x="420" y="390" width="760" height="240" fill="#d9d4c5" stroke="#a7a89f" stroke-width="8"/><path d="M400 392 H1200" stroke="#3d5f6f" stroke-width="22"/>' +
+      '<rect x="470" y="440" width="300" height="190" fill="#4b4f55"/><path d="M470 470 H770 M470 500 H770 M470 530 H770" stroke="#5d6269" stroke-width="6"/>' +
+      '<rect x="830" y="440" width="300" height="190" fill="#3b3f45"/><circle cx="905" cy="600" r="26" fill="#2b2d33"/><circle cx="1055" cy="600" r="26" fill="#2b2d33"/><path d="M860 590 L880 540 H1080 L1100 590 Z" fill="#c8463c"/>' +
+      '<circle cx="300" cy="640" r="34" fill="none" stroke="#2b2d33" stroke-width="16"/><circle cx="330" cy="610" r="34" fill="none" stroke="#2b2d33" stroke-width="16"/>' +
+      '<path d="M1290 640 L1330 560 M1318 570 l26 -14" stroke="#7d7a72" stroke-width="10" stroke-linecap="round"/>', 'class="pl pl-garage"');
+  }
+
+  function camp() {
+    const barracks = [380, 1000].map((x) => '<rect x="' + x + '" y="470" width="300" height="150" fill="#b5ad86" stroke="#8a8463" stroke-width="7"/><path d="M' + (x - 20) + ' 475 L' + (x + 150) + ' 400 L' + (x + 320) + ' 475 Z" fill="#6f7a52"/><rect x="' + (x + 120) + '" y="530" width="60" height="90" fill="#5d5640"/>').join('');
+    return g('<rect x="-200" y="620" width="2000" height="310" fill="#b9b08a"/>' + barracks +
+      '<path d="M800 640 V300" stroke="#9aa1a8" stroke-width="8"/><path d="M800 304 h90 v20 h-90 Z" fill="#c8463c"/><path d="M800 324 h90 v14 h-90 Z" fill="#f6eddd"/><path d="M800 338 h90 v24 h-90 Z" fill="#2f4a6b"/><path d="M800 362 h90 v14 h-90 Z" fill="#f6eddd"/><path d="M800 376 h90 v20 h-90 Z" fill="#c8463c"/>' +
+      '<path d="M0 700 H1600" stroke="#d8cfa8" stroke-width="40"/><path d="M60 700 H1540" stroke="#ece4c0" stroke-width="6" stroke-dasharray="30 30"/>', 'class="pl pl-camp"');
+  }
+
+  function apartment() {
+    const rows = [0, 1, 2, 3, 4].map((r) => [0, 1, 2, 3, 4, 5].map((c) => {
+      const x = 470 + c * 110, y = 250 + r * 72, lit = (r * 7 + c * 3) % 5 === 0;
+      return '<rect x="' + x + '" y="' + y + '" width="64" height="44" fill="' + (lit ? '#f3d38a' : '#9ab4b8') + '" stroke="#f1ece0" stroke-width="5"/><path d="M' + (x - 6) + ' ' + (y + 52) + ' H' + (x + 70) + '" stroke="#b9b2a2" stroke-width="6"/><path d="M' + (x + 8) + ' ' + (y + 44) + ' V' + (y + 52) + ' M' + (x + 56) + ' ' + (y + 44) + ' V' + (y + 52) + '" stroke="#8a8476" stroke-width="3"/>';
+    }).join('')).join('');
+    return g('<rect x="-200" y="620" width="2000" height="310" fill="#b8b3a6"/>' +
+      '<rect x="430" y="210" width="740" height="420" fill="#ddd5c4" stroke="#a9a190" stroke-width="8"/><rect x="420" y="196" width="760" height="22" fill="#8f8676"/>' + rows +
+      '<rect x="740" y="570" width="120" height="60" fill="#6f665a"/><rect x="700" y="540" width="200" height="26" rx="4" fill="#2f4a6b"/><path d="M720 553 H880" stroke="#f6eddd" stroke-width="5" stroke-dasharray="14 8"/>' +
+      '<path d="M380 620 L380 420 M1220 620 L1220 420 M380 430 H1220" stroke="#6f7a7f" stroke-width="3" opacity=".5"/>' +
+      '<rect x="180" y="380" width="160" height="250" fill="#c9c1ae"/><rect x="1260" y="330" width="180" height="300" fill="#cfc7b4"/>' +
+      motorbike(560, 690, 1.1, '#c8463c') + motorbike(1040, 690, 1.1, '#2f4a6b') + '<path d="M0 760 H1600" stroke="#e8e2cf" stroke-width="7" stroke-dasharray="70 60"/>', 'class="pl pl-apartment"');
+  }
+
   function office() {
     const windows = [470, 560, 650, 860, 950, 1040].map((x) => '<rect x="' + x + '" y="470" width="62" height="70" fill="#9ab4b8" stroke="#f6eddd" stroke-width="7"/>').join('');
     return g('<rect x="-200" y="600" width="2000" height="330" fill="#c9c2a6"/>' +
@@ -832,7 +895,8 @@ globalThis.KI = globalThis.KI || {};
   }
 
   function homeFor(state) {
-    const owned = (state.personalAssets || []).map((a) => a.key);
+    const where = KI.family && KI.family.homeWhere ? KI.family.homeWhere(state.loc) : '';
+    const owned = (state.personalAssets || []).filter((a) => !a.where || a.where === where).map((a) => a.key);
     return HOMES.filter((k) => owned.includes(k)).pop() || null;
   }
 
@@ -851,9 +915,15 @@ globalThis.KI = globalThis.KI || {};
       if(/ไต้หวัน|เกาหลี|สิงคโปร์|ญี่ปุ่น|ฮ่องกง|บรูไน|มาเลเซีย/.test(c))return 'asiacity';
       return 'abroad';
     }
+    if(state.edu && ['uni','med'].includes(state.edu.in) && state.role==='student')return 'campus';
+    const conds=(state.conds||[]).map(c=>c.id);
+    if(conds.includes('sick') && state.flags && state.flags.illCare && state.flags.illCare!=='none')return 'hospital';
+    const work={doctor:'hospital',nurse:'hospital',pharmacist:'hospital',construction:'construction',chef:'restaurant',mechanic:'garage',soldier:'camp',police:'camp'}[state.role];
     const home=homeFor(state);
-    if(home && !['student','factory'].includes(state.role))return home;
-    if(state.loc.kind==='bangkok')return 'bangkok';
+    if(home && !['student','factory'].includes(state.role) && !work)return home;
+    if(work)return work;
+    if(['office','civil','engineer','developer','banker','accountant','lawyer','designer'].includes(state.role) && state.loc.kind!=='isan')return 'office';
+    if(state.loc.kind==='bangkok')return state.year-state.birthYear>=18 && !['rider','driver','trader'].includes(state.role)?'apartment':'bangkok';
     const rich=state.flags && (state.flags.status==='wealthy' || (state.flags.status==='rich' && state.flags.movedOut));
     if(rich && state.role!=='student')return 'town';
     if(state.role==='student')return 'school';
@@ -902,7 +972,7 @@ globalThis.KI = globalThis.KI || {};
     root.setAttribute('aria-hidden', 'true');
     seed = 7;
     const markup = '<svg class="scene-svg" xmlns="' + NS + '" viewBox="0 0 ' + W + ' ' + H + '" preserveAspectRatio="xMidYMax slice" focusable="false">' +
-      defs() + sky() + hills() + rural() + town() + mekong() + bangkok() + abroad() + school() + factory() + market() + garden() + office() + HOMES.map(ownHome).join('') + temple() + prison() + desert() + asiacity() + nordic() + landmarks() + fx() + '</svg>' +
+      defs() + sky() + hills() + rural() + town() + mekong() + bangkok() + abroad() + school() + factory() + market() + garden() + office() + hospital() + construction() + campus() + restaurant() + garage() + camp() + apartment() + HOMES.map(ownHome).join('') + temple() + prison() + desert() + asiacity() + nordic() + landmarks() + fx() + '</svg>' +
       '<div class="scene-ground"></div><canvas class="scene-particles"></canvas>' +
       '<div class="scene-mood scene-mood-sad"></div><div class="scene-mood scene-mood-sad2"></div><div class="scene-mood scene-mood-bright"></div><div class="scene-veil"></div>';
     root.innerHTML = markup;

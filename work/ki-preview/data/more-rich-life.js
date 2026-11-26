@@ -4,10 +4,10 @@ KI.data.decisions.push(...[
    "choices":[
     {"id":"business","label":"ลาออกมาเปิดกิจการของตัวเอง","text":"เช่าทำเลดีเปิดร้านของตัวเอง จ้างลูกน้องสองสามคน เหนื่อยคนละแบบ แต่เป็นนายตัวเอง","effects":[{"role":"business"},{"money":-400,"unit":"wageDay"},{"inc":"biz","d":2},{"stat":"happy","d":4},{"pin":"ลาออกมาเปิดกิจการของตัวเอง"}]},
     {"id":"retire","label":"เกษียณก่อนกำหนด ใช้ชีวิตกับครอบครัว","text":"ตื่นสายได้เป็นครั้งแรกในรอบหลายปี มีเวลาดูแลคนในบ้านและตัวเอง เย็นนั่งกินข้าวพร้อมหน้า","effects":[{"role":"retired"},{"stat":"happy","d":6},{"stat":"bond","d":5},{"stat":"health","d":3},{"pin":"เกษียณก่อนกำหนด"}]},
-    {"id":"home","label":"ซื้อบ้านหลังใหญ่ แล้วทำงานต่อแบบไม่หักโหม","text":"ย้ายเข้าบ้านใหม่ ทำงานเฉพาะวันที่อยากทำ","when":{"noFlag":["ownsPersonalHome"]},"effects":[{"personal":"home-large"},{"stat":"happy","d":5},{"stat":"health","d":2}]},
+    {"id":"home","label":"ซื้อบ้านหลังใหญ่ แล้วทำงานต่อแบบไม่หักโหม","text":"ย้ายเข้าบ้านใหม่ ทำงานเฉพาะวันที่อยากทำ","when":{"noFlag":["homeHere"]},"effects":[{"personal":"home-large"},{"stat":"happy","d":5},{"stat":"health","d":2}]},
     {"id":"keep","label":"ทำงานเดิมต่อ เพราะชอบและไม่อยากอยู่เฉย","text":"เพื่อนร่วมงานงงว่าทำไมยังมาทำ คุณยิ้มแล้วบอกว่าอยู่บ้านเฉยๆ แล้วป่วย","effects":[{"stat":"happy","d":1},{"trait":"grit","d":2}]}
    ]},
-  {"id":"city-home-buy","title":"ซื้อบ้านในเมืองดีไหม","body":"เช่าที่อยู่ในเมืองมาหลายปี ค่าเช่าที่จ่ายไปรวมกันเกือบเท่าเงินดาวน์บ้านหลังหนึ่งแล้ว เซลส์โครงการใกล้ที่ทำงานโทรมาชวนไปดูบ้านตัวอย่าง","when":{"age":[25,70],"loc":"bangkok","noFlag":["ownsPersonalHome"],"any":[{"flag":{"status":"mid"}},{"flag":{"status":"rich"}},{"flag":{"status":"wealthy"}}],"chance":0.35},"cooldown":6,"major":true,
+  {"id":"city-home-buy","title":"ซื้อบ้านในเมืองดีไหม","body":"เช่าที่อยู่ในเมืองมาหลายปี ค่าเช่าที่จ่ายไปรวมกันเกือบเท่าเงินดาวน์บ้านหลังหนึ่งแล้ว เซลส์โครงการใกล้ที่ทำงานโทรมาชวนไปดูบ้านตัวอย่าง","when":{"age":[25,70],"loc":"bangkok","noFlag":["homeHere"],"any":[{"flag":{"status":"mid"}},{"flag":{"status":"rich"}},{"flag":{"status":"wealthy"}}],"chance":0.35},"cooldown":6,"major":true,
    "choices":[
     {"id":"small","label":"ผ่อนทาวน์เฮาส์ใกล้ที่ทำงาน","text":"ได้บ้านของตัวเองหลังแรก ผ่อนนานหน่อยแต่ไม่ต้องจ่ายค่าเช่าอีก","effects":[{"personal":"home-small","finance":true},{"stat":"happy","d":4}]},
     {"id":"medium","label":"ซื้อบ้านเดี่ยวในหมู่บ้านจัดสรร","text":"มีสนามหญ้าเล็กๆ ให้ลูกวิ่งเล่น เพื่อนบ้านทักทายกันทุกเช้า","when":{"any":[{"flag":{"status":"rich"}},{"flag":{"status":"wealthy"}}]},"effects":[{"personal":"home-medium"},{"stat":"happy","d":5},{"stat":"bond","d":2}]},
@@ -52,4 +52,29 @@ KI.data.personalEvents.push(...[
     const item = [...KI.data.decisions, ...KI.data.personalEvents].find((x) => x.id === id);
     if (item && item.choices) item.choices.unshift(fly);
   }
+})();
+(function () {
+  const find = (id) => [...KI.data.decisions, ...KI.data.personalEvents].find((x) => x.id === id);
+  const addWhen = (id, extra) => {
+    const x = find(id);
+    if (!x) return;
+    const w = x.when = x.when || {};
+    if (extra.flag) w.flag = { ...(w.flag || {}), ...extra.flag };
+    if (extra.noFlag) w.noFlag = [...[].concat(w.noFlag || []), ...extra.noFlag];
+  };
+  const addEffect = (id, choiceIds, effect) => {
+    const x = find(id);
+    if (!x) return;
+    for (const c of x.choices || []) if (!choiceIds || choiceIds.includes(c.id)) c.effects = [...(c.effects || []), effect];
+  };
+  addEffect("legacy-kid-uni", ["send", "loan"], {"flag":"kidUniChoice","v":true});
+  addEffect("legacy-kid-uni", ["voc", "work"], {"flag":"kidUniChoice","v":false});
+  addEffect("kid-fm-scholar", null, {"flag":"kidUniChoice","v":true});
+  addEffect("kid-sp-dropout", ["fund", "nfe"], {"flag":"kidUniChoice","v":false});
+  addEffect("fam-child-leaves", ["bless", "fund"], {"flag":"kidAwayChoice"});
+  addEffect("legacy-kid-wedding", null, {"flag":"kidWedding"});
+  addWhen("legacy-kid-wedding", {"noFlag":["kidMarried"]});
+  addWhen("fam-child-leaves", {"noFlag":["kidStudying"]});
+  for (const id of ["kid-fm-job", "kid-leave-home", "kid-fm-hardship"]) addWhen(id, {"flag":{"kidHasJob":true}});
+  addWhen("kid-ng-nocall", {"flag":{"kidAway":true}});
 })();

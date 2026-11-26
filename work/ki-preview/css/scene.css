@@ -139,6 +139,13 @@
 .ki-scene[data-place="home-medium"] .pl-home-medium,
 .ki-scene[data-place="home-large"] .pl-home-large,
 .ki-scene[data-place="office"] .pl-office,
+.ki-scene[data-place="hospital"] .pl-hospital,
+.ki-scene[data-place="construction"] .pl-construction,
+.ki-scene[data-place="campus"] .pl-campus,
+.ki-scene[data-place="restaurant"] .pl-restaurant,
+.ki-scene[data-place="garage"] .pl-garage,
+.ki-scene[data-place="camp"] .pl-camp,
+.ki-scene[data-place="apartment"] .pl-apartment,
 .ki-scene[data-place="garden"] .pl-garden{opacity:1;visibility:visible;transition:opacity 1.2s ease,visibility 0s}
 .ki-scene .hills{transition:opacity 1.2s ease}
 .ki-scene[data-place="bangkok"] .hills,

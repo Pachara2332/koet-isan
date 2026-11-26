@@ -97,7 +97,7 @@ globalThis.KI = globalThis.KI || {};
     if(quote.partnerDown)next.family.partner.money-=quote.partnerDown;
     let serial=(state.personalAssetSerial||0)+1;
     while(next.personalAssets.some(a=>a.id==='asset-'+serial))serial++;
-    const asset={id:'asset-'+serial,key:id,kind:quote.item.kind,label:quote.item.label,year:state.year,price:quote.price,...(shared?{partnerName:next.family.partner.name,partnerSince:next.family.partner.since}: {})};
+    const asset={id:'asset-'+serial,key:id,kind:quote.item.kind,label:quote.item.label,year:state.year,price:quote.price,...(quote.item.kind==='home'?{where:KI.family.homeWhere(state.loc)}:{}),...(shared?{partnerName:next.family.partner.name,partnerSince:next.family.partner.since}: {})};
     next.personalAssetSerial=serial;next.personalAssets.push(asset);
     next.financeLog=[...(state.financeLog||[])];
     if(previous)next.financeLog.push({year:state.year,age:state.year-state.birthYear,label:'ขาย'+previous.label,delta:quote.sale,familyExpense:0,category:'personal'});

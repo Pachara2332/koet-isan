@@ -507,7 +507,11 @@ globalThis.KI = globalThis.KI || {};
 
   function moneyCost(effects, s, data) {
     let cost=0;
-    for (const e of effects || []) if (typeof e.money === 'number' && e.money < 0) cost+=-(e.unit==='wageDay' ? e.money*KI.tables.wageDay(data,s.year) : e.money);
+    for (const e of effects || []) {
+      if (typeof e.money === 'number' && e.money < 0) cost+=-(e.unit==='wageDay' ? e.money*KI.tables.wageDay(data,s.year) : e.money);
+      const def = e.personal && !e.free && ((data.assets || {}).personal || []).find((x) => x.id === e.personal);
+      if (def) { const price = Math.round(def.days * KI.tables.wageDay(data, s.year)); cost += e.finance ? Math.ceil(price * 0.2) : price; }
+    }
     return Math.round(cost);
   }
 

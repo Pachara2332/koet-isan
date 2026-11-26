@@ -208,7 +208,7 @@ globalThis.KI = globalThis.KI || {};
     const p = parentText(x), f = s.flags || {}, own = s.year - s.birthYear < 25 || !f.child;
     if (f.noParents && own && (p.both || p.mom || p.dad)) return true;
     if ((f.status === 'rich' || f.status === 'wealthy') && /^away-\d+$/.test(x.id)) return true;
-    if (f.ownsPersonalHome && p.rent) return true;
+    if (f.homeHere && p.rent) return true;
     if (p.sib && !f.hasSiblings && !/hasSiblings|youngSibling|elderSibling|siblingInBkk/.test(JSON.stringify(x.when || {}))) return true;
     if (/parentsAlive|fatherAlive|motherAlive|parentPassed|elderParent/.test(JSON.stringify(x.when || {}))) return false;
     if (p.home && !f.parentsAlive && !f.grandparentsAlive && !f.hasSiblings) return true;
@@ -240,7 +240,7 @@ globalThis.KI = globalThis.KI || {};
   }
 
   function words(state, text) {
-    if (typeof text === 'string' && state.loc && state.loc.kind !== 'isan') text = text.replace(/ในหมู่บ้าน/g, 'ในละแวกบ้าน');
+    if (typeof text === 'string' && state.loc && state.loc.kind !== 'isan') text = text.replace(/ในหมู่บ้าน(?!จัดสรร)/g, 'ในละแวกบ้าน');
     if (typeof text !== 'string' || text.indexOf('{') < 0) return text;
     const female = state.sex === 'f';
     const partner = state.family && state.family.partner;
