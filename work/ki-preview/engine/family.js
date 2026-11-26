@@ -9,6 +9,8 @@ globalThis.KI = globalThis.KI || {};
   const both=['ขวัญ','ตูน','ปาย','น้ำ','แสง','ปอ','มด','ออม','บีม','นัท','ไอซ์','นิว','หนึ่ง','กุ้ง'];
   const young=[...boys,...girls,...both];
   const nick=(sex)=>sex==='f'?girls.concat(both):boys.concat(both);
+  const TFR=[[1970,5.45],[1975,4.36],[1980,3.29],[1985,2.45],[1990,2.06],[1995,1.89],[2000,1.73],[2005,1.64],[2010,1.56],[2015,1.45],[2020,1.26],[2024,1.2]];
+  const tfrAt=(year)=>{let v=TFR[0][1];for(const [y,t] of TFR)if(year>=y)v=t;return v;};
   const farang=['ปีเตอร์','ฮันส์','จอห์น','มาร์ติน','สเวน','ไมเคิล','เดวิด','ลาร์ส','โทมัส','สตีฟ'];
   const HOME={poor:150,mid:1200,rich:6000};
   const JOBS={
@@ -111,15 +113,15 @@ globalThis.KI = globalThis.KI || {};
       if(state.loc.kind==='isan' && !together(state,partner)){partner.location={...state.loc};if(partner.job==='แรงงานต่างประเทศ')partner.job='รับจ้างทั่วไป';}
       family.partner=partner;
     }
-    if(flags.child && family.children.length===0){const sex=sexAt(9000);family.children.push({name:pick(300,sex),sex,birthYear:Number.isFinite(flags.childSince)?flags.childSince:state.year,...(flags.adoptedChild?{adopted:true}:{})});}
+    if(flags.child && family.children.length===0){const sex=sexAt(9000);family.children.push({name:pick(300,sex),sex,birthYear:(Number.isFinite(flags.childSince)?flags.childSince:state.year)-(flags.adoptedChild?2+rngFor(state,9100).int(7):0),...(flags.adoptedChild?{adopted:true}:{})});}
     if(flags.newChild){const sex=sexAt(9000+family.children.length);family.children.push({name:pick(300+family.children.length*13+state.year,sex),sex,birthYear:state.year});flags={...flags,newChild:false,child:true};}
     if(flags.grandchild && family.children.length && family.grandchildren.length===0){const sex=sexAt(10000);family.grandchildren.push({name:pick(500,sex),sex,birthYear:Number.isFinite(flags.grandchildSince)?flags.grandchildSince:state.year});}
     family.children=family.children.map((person,i)=>person.sex==='m' || person.sex==='f'?person:{...person,sex:rngFor(state,9000+i).chance(0.5)?'m':'f'});
     family.grandchildren=family.grandchildren.map((person,i)=>person.sex==='m' || person.sex==='f'?person:{...person,sex:rngFor(state,10000+i).chance(0.5)?'m':'f'});
     const kidUni={wealthy:0.85,rich:0.75,mid:0.45}[flags.status]||0.25, uniJobs=['ครู','พยาบาล','วิศวกร','พนักงานบริษัท','รับราชการ','นักบัญชี'], workJobs=['ช่างซ่อมรถ','พนักงานโรงงาน','ค้าขาย','ทำนา','ขับรถรับจ้าง','พนักงานร้านอาหาร'];
-    family.children=family.children.map((person,i)=>{const r=rngFor(state,11000+i), kidAge=state.year-person.birthYear, kid={...person};if(!Number.isFinite(kid.marryAge))kid.marryAge=24+r.int(11);if(i===0 && typeof flags.kidUniChoice==='boolean' && !kid.job)kid.uni=flags.kidUniChoice;if(kidAge>=18 && kid.uni===undefined)kid.uni=r.chance(kidUni);if(i===0 && flags.kidAwayChoice)kid.away=true;if(kidAge>=(kid.uni?22:18) && !kid.job){const list=kid.uni?uniJobs:workJobs;kid.job=list[r.int(list.length)];if(kid.away===undefined)kid.away=r.chance(0.55);}if(!kid.married && kidAge>=18 && ((i===0 && (flags.kidWedding || flags.grandchild)) || kidAge>=kid.marryAge))kid.married=true;return kid;});
-    const firstKid=family.children[0], firstAge=firstKid?state.year-firstKid.birthYear:0;
-    flags={...flags,kidWedding:false,kidUniChoice:null,kidAwayChoice:false,kidMarried:!!(firstKid && firstKid.married),kidStudying:!!(firstKid && firstKid.uni===true && firstAge>=18 && firstAge<22),kidHasJob:!!(firstKid && firstKid.job),kidAway:!!(firstKid && firstKid.away && !flags.kidStays)};
+    family.children=family.children.map((person,i)=>{const r=rngFor(state,11000+i), kidAge=state.year-person.birthYear, kid={...person};if(!Number.isFinite(kid.marryAge))kid.marryAge=24+r.int(11);if(i===0 && typeof flags.kidUniChoice==='boolean' && !kid.job)kid.uni=flags.kidUniChoice;if(kidAge>=18 && kid.uni===undefined)kid.uni=r.chance(kidUni);if(i===0 && flags.kidAwayChoice)kid.away=true;if(kidAge>=(kid.uni?22:18) && !kid.job){const list=kid.uni?uniJobs:workJobs;kid.job=list[r.int(list.length)];if(kid.away===undefined)kid.away=r.chance(0.55);}if(!kid.married && kidAge>=18 && ((i===0 && (flags.kidWedding || flags.grandchild)) || kidAge>=kid.marryAge))kid.married=true;if(kid.married && !kid.spouse){const other=kid.sex==='f'?'m':'f';const list=nick(other);kid.spouse=list[r.int(list.length)];}return kid;});
+    const firstKid=family.children[0], firstAge=firstKid?state.year-firstKid.birthYear:0, kidCap=(flags.status==='rich' || flags.status==='wealthy')?8:Math.max(1,Math.round(tfrAt(state.birthYear+25)*(state.home && state.home.setting==='rural' && state.birthYear+25<2000?1.2:1)));
+    flags={...flags,kidsRoom:family.children.length<kidCap,kidWedding:false,kidUniChoice:null,kidAwayChoice:false,kidMarried:!!(firstKid && firstKid.married),kidStudying:!!(firstKid && firstKid.uni===true && firstAge>=18 && firstAge<22),kidHasJob:!!(firstKid && firstKid.job),kidAway:!!(firstKid && firstKid.away && !flags.kidStays)};
     for(const [role,key,p] of [['พ่อ','father',parentInfo.father],['แม่','mother',parentInfo.mother]])if(p && !p.noted && state.year>=p.deathYear && !state.death){
       p.noted=true;
       const heirs=1+family.siblings.filter(x=>x.birthYear<=state.year && !(x.deathYear<=state.year)).length;

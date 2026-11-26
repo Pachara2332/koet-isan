@@ -23,7 +23,7 @@ globalThis.KI = globalThis.KI || {}; KI.data = KI.data || {};
     ]
   })));
   KI.data.personalEvents.push(
-    {"id":"ill-recovered","title":"หมอบอกว่าหายดีแล้ว","body":"ผลตรวจติดตามครั้งล่าสุดไม่พบความผิดปกติแล้ว หมอให้มาตรวจปีละครั้งพอ ทั้งบ้านโล่งใจ","w":40,"cooldown":4,"when":{"any":[{"flag":{"illCare":"best"}},{"flag":{"illCare":"standard"}}],"chance":0.35},"effects":[{"flag":"illWarn","v":false},{"flag":"illCare","v":false},{"uncond":"sick"},{"stat":"health","d":8},{"stat":"happy","d":5},{"pin":"หายจากโรคร้าย"}]},
+    {"id":"ill-recovered","title":"หมอบอกว่าหายดีแล้ว","body":"ผลตรวจติดตามครั้งล่าสุดไม่พบความผิดปกติแล้ว หมอให้มาตรวจปีละครั้งพอ ทั้งบ้านโล่งใจ","w":40,"cooldown":4,"when":{"any":[{"flag":{"illCare":"best"}},{"flag":{"illCare":"standard"}}],"chance":0.35},"effects":[{"flag":"illWarn","v":false},{"flag":"illCare","v":false},{"flag":"illSurvived"},{"uncond":"sick"},{"stat":"health","d":8},{"stat":"happy","d":5},{"pin":"หายจากโรคร้าย"}]},
     {"id":"ill-worse","title":"อาการแย่ลง","body":"อาการที่เคยเตือนไว้กลับมาหนักกว่าเดิม ต้องนอนโรงพยาบาลหลายวัน หมอถามอีกครั้งว่าจะรักษาจริงจังไหม","w":30,"cooldown":3,"when":{"flag":{"illCare":"none"},"chance":0.5},"effects":[{"flag":"illCare","v":false},{"stat":"health","d":-10},{"cond":"sick","turns":3}]}
   );
   KI.data.decisions.push(

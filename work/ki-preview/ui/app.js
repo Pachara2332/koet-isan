@@ -248,6 +248,49 @@ globalThis.KI = globalThis.KI || {};
     Object.entries(kept.scrolls).forEach(([key,top])=>{if(key==='slot-cards' && !sameTurn)return;const node=root.querySelector('.shell .'+key);if(node)node.scrollTop=top;});
     window.scrollTo(kept.x,kept.y);
   }
+  let spendDialog=null, spendResume=false;
+  function closeSpends() {
+    if(!spendDialog)return;
+    const node=spendDialog;spendDialog=null;
+    if(typeof node.close==='function' && node.open)node.close();node.remove();
+    if(spendResume && clock.isPaused()){clock.resume();play();}
+  }
+  function spendChance(it) {
+    return Math.min(0.85,it.base+(it.cloutBonus?Math.min(0.4,((state.counters||{}).clout||0)*0.02):0));
+  }
+  function confirmSpend(it,cost) {
+    gameDialog({title:it.title,message:`ใช้เงิน ${cost.toLocaleString('th-TH')} บาท ยืนยันไหม`,confirmLabel:'ยืนยัน',cancelLabel:'ยกเลิก',onConfirm:()=>{
+      const rng=KI.rng.make(((state.rng||1)+state.t*7919+it.id.length*131)>>>0);
+      let out=it.done;
+      if(it.base!==undefined)out=rng.chance(spendChance(it))?it.win:it.lose;
+      if(it.rolls){const x=rng.next();let acc=0;for(const r of it.rolls){acc+=r.p;if(x<acc){out=r;break;}}if(!out)out=it.rolls[it.rolls.length-1];}
+      const before=state.money, r=KI.effects.apply(state,[{money:-it.days,unit:'wageDay'},...(out.effects||[])],data,rng);
+      state={...r.state,spendLog:{...(state.spendLog||{}),[it.id]:state.year},financeLog:[...(r.state.financeLog||[]),{year:state.year,age:state.year-state.birthYear,label:it.title,delta:r.state.money-before,familyExpense:0,category:'personal'}]};
+      state=KI.family.sync(state);persist();closeSpends();play();
+      gameDialog({title:it.title,message:out.text});
+    }});
+  }
+  function openSpends() {
+    if(spendDialog)return;
+    spendResume=!clock.isPaused();clock.pause();
+    const wage=KI.tables.wageDay(data,state.year), log=state.spendLog||{};
+    const dialog=element('dialog','situation-dialog spend-dialog');dialog.setAttribute('aria-labelledby','spend-title');
+    dialog.addEventListener('cancel',event=>{event.preventDefault();closeSpends();});
+    const head=element('div','situation-heading'), block=element('div','situation-title-block'), title=element('h2','','ใช้เงินก้อนใหญ่');title.id='spend-title';
+    block.append(element('div','situation-kicker',`เงินสด ${state.money.toLocaleString('th-TH')} บาท`),title);head.append(block);
+    dialog.append(head,element('p','situation-body','เงินที่สะสมมาทั้งชีวิตเอาไปทำอะไรได้อีกหลายอย่าง แต่ละเรื่องทำซ้ำได้เมื่อครบเวลา'));
+    const list=element('div','choices');
+    (data.bigSpends||[]).filter(it=>KI.cond.test(it.when,state,KI.rng.make(1))).forEach(it=>{
+      const cost=Math.round(it.days*wage), wait=Number.isFinite(log[it.id]) && state.year-log[it.id]<it.cooldown, short=state.money<cost;
+      const option=button('',()=>confirmSpend(it,cost),'btn choice');option.disabled=wait || short;
+      const meta=`${it.group} · ${cost.toLocaleString('th-TH')} บาท`+(it.base!==undefined?` · โอกาสชนะราว ${Math.round(spendChance(it)*100)}%`:'')+(wait?` · ทำได้อีกครั้ง พ.ศ. ${log[it.id]+it.cooldown+543}`:short?' · เงินไม่พอ':'');
+      const detail=element('span','choice-text');detail.append(element('span','choice-label',it.title),element('span','choice-impact',meta),element('span','spend-desc',it.desc));
+      option.append(detail,element('span','choice-arrow','→'));list.append(option);
+    });
+    dialog.append(list,button('ปิด',closeSpends,'btn btn-quiet'));
+    spendDialog=dialog;(document.body || root).append(dialog);
+    if(typeof dialog.showModal==='function')dialog.showModal();else dialog.setAttribute('open','');
+  }
   let portfolio=null, portfolioTab='stock', portfolioRow=null, portfolioResume=false;
   function holdingRow(label,units,basis,value,cls) {
     const fmt=v=>v.toLocaleString('th-TH'), gain=basis?Math.round((value-basis)/basis*100):0;
@@ -443,6 +486,7 @@ globalThis.KI = globalThis.KI || {};
     }
     legacyDebts.forEach(debt=>{const payoff=button(`ปิด${debt.label} · ประมาณ ${debt.balance.toLocaleString('th-TH')} บาท`,()=>{state=KI.finance.payLegacyDebt(state,data,debt.id);persist();play();},'btn finance-action');payoff.disabled=state.money<debt.balance;cash.append(payoff);});
     if(state.year-state.birthYear>=18 && state.money>=KI.tables.wageDay(data,state.year)*360)cash.append(button('ดูบ้านและรถที่ซื้อได้',()=>{if(personalShop){finance.open=true;personalShop.open=true;personalShop.scrollIntoView({block:'nearest'});}},'btn finance-action'));
+    if(state.year-state.birthYear>=25 && ['rich','wealthy'].includes(state.flags.status))cash.append(button('ใช้เงินก้อนใหญ่',openSpends,'btn finance-action'));
     const runway=KI.finance.runway(state,data);
     if(runway!==null)cash.append(element('p','muted money-runway',runway<1?'เงินที่มีไม่พอใช้ถึงเดือนหน้า':`เงินที่มีพอใช้ราว ${runway.toLocaleString('th-TH')} เดือน`));
     const cashYear=state.log.some(entry=>entry.year===state.year)||(state.financeLog||[]).some(item=>item.year===state.year)?state.year:(state.log.length?state.log[state.log.length-1].year:state.year);
@@ -614,7 +658,7 @@ globalThis.KI = globalThis.KI || {};
     const household=element('div','family-household');
     household.append(element('h5','','คนรักและลูก'));
     if(state.family.partner){const person=state.family.partner;const row=element('p','family-close');const since=Number.isFinite(person.since)?person.since:state.flags.partnerSince;row.append(element('strong','family-relation',person.married?'คู่สมรส':'คนรัก'),element('span','family-name',person.name),element('span','family-age',`เพศ${sexLabel(person)}`),...(Number.isFinite(person.birthYear)?[element('span','family-age',`อายุ ${state.year-person.birthYear} ปี`)]:[]),element('span','family-age',`งาน ${person.job}`),...(Number.isFinite(since) && since<=state.year?[element('span','family-age',`คบกันรวม ${state.year-since} ปี` )]:[]),...(person.married && Number.isFinite(state.flags.marriedSince)?[element('span','family-age',`สมรสมา ${Math.max(0,state.year-state.flags.marriedSince)} ปี`)]:[]));household.append(row);}
-    const childStatus=(child,first)=>{const age=state.year-child.birthYear;if(age<3)return 'ยังเล็ก';if(age<6)return 'เรียนอนุบาล';if(age<12)return 'เรียนประถม';if(age<18)return 'เรียนมัธยม';if(!child.job)return child.uni?'เรียนมหาวิทยาลัย':'เพิ่งเรียนจบ';return [child.married?'แต่งงานแล้ว':'ยังโสด',child.job,first && state.flags.kidStays?'อยู่บ้านเดียวกัน':child.away?'ทำงานต่างจังหวัด':'อยู่ใกล้บ้าน'].join(' · ');};
+    const childStatus=(child,first)=>{const age=state.year-child.birthYear;if(age<3)return 'ยังเล็ก';if(age<6)return 'เรียนอนุบาล';if(age<12)return 'เรียนประถม';if(age<18)return 'เรียนมัธยม';if(!child.job)return child.uni?'เรียนมหาวิทยาลัย':'เพิ่งเรียนจบ';return [child.married?(child.spouse?`แต่งงานกับ${child.spouse}`:'แต่งงานแล้ว'):'ยังโสด',child.job,first && state.flags.kidStays?'อยู่บ้านเดียวกัน':child.away?'ทำงานต่างจังหวัด':'อยู่ใกล้บ้าน'].join(' · ');};
     state.family.children.forEach((child,i)=>{const row=element('p','family-close');row.append(element('strong','family-relation',childRelation(child)),element('span','family-name',child.name),element('span','family-age',`อายุ ${Math.max(0,state.year-child.birthYear)} ปี`),element('span','family-age',childStatus(child,i===0)));household.append(row);});
     if(!state.family.partner && !state.family.children.length)household.append(element('p','muted family-empty','ยังไม่มีคนรักหรือลูก'));
     state.family.grandchildren.forEach(child=>{const row=element('p','family-close');row.append(element('strong','family-relation',grandchildRelation(child)),element('span','family-name',child.name),element('span','family-age',`อายุ ${Math.max(0,state.year-child.birthYear)} ปี`));household.append(row);});

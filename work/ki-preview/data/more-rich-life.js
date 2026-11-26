@@ -109,3 +109,25 @@ KI.data.decisions.push(
     {"id":"single","label":"ยังไม่อยากมีใคร อยู่คนเดียวสบายใจดี","text":"ใช้เวลากับงาน งานอดิเรก และครอบครัวต่อไป","effects":[{"stat":"happy","d":1}]}
    ]}
 );
+(function () {
+  const x = KI.data.decisions.concat(KI.data.personalEvents).find((i) => i.id === "reflect-parenthood");
+  if (x) x.when.age = [46, 55];
+})();
+(function () {
+  const all = KI.data.decisions.concat(KI.data.personalEvents);
+  const find = (id) => all.find((i) => i.id === id);
+  const more = find("fam-stop-kids");
+  if (more) {
+    more.when = {"flag":{"married":true,"child":true,"kidsRoom":true},"age":[22,45],"noFlag":["fam-stopKids"],"chance":0.4};
+    more.cooldown = 2;
+    more.w = 60;
+    more.body = "มีลูกแล้ว ญาติถามว่าจะมีอีกคนไหม บ้านยังมีที่ว่าง แต่ค่าใช้จ่ายก็เพิ่มขึ้นทุกคน";
+  }
+  const meet = find("love-meet");
+  if (meet) meet.when.age = [19, 80];
+  const widow = find("widow-new-start");
+  if (widow) { widow.cooldown = 5; widow.when.chance = 0.35; }
+})();
+KI.data.personalEvents.push(
+  {"id":"kid-natural","title":"ลูกคนใหม่มาตามธรรมชาติ","body":"ยุคนี้คนในหมู่บ้านยังไม่ค่อยคุมกำเนิด ไม่นานก็มีข่าวดีว่ากำลังจะมีลูกอีกคน บ้านจะคึกคักขึ้นอีกครั้ง","w":150,"cooldown":2,"when":{"year":[1970,1989],"flag":{"married":true,"child":true,"kidsRoom":true},"age":[20,42],"noFlag":["fam-stopKids"],"chance":0.45},"effects":[{"flag":"newChild"},{"stat":"happy","d":3},{"money":-10,"unit":"wageDay"},{"stat":"health","d":-1}]}
+);

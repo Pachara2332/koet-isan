@@ -25,8 +25,8 @@ globalThis.KI = globalThis.KI || {};
   const CHILD_MORTALITY = 0.1;
   const ADULT_AGE = 18;
   const HEALTH_RISK = [0.6, 1.4];
-  const CARE_RISK = { wealthy: 0.75, rich: 0.85, poor: 1.1 };
-  const ILL_CARE_RISK = { best: 0.45, standard: 0.7, none: 1.6 };
+  const CARE_RISK = { wealthy: 0.88, rich: 0.94, poor: 1.08 };
+  const ILL_CARE_RISK = { best: 0.65, standard: 0.85, none: 1.6 };
   const ILL_UNTREATED_RISK = 1.6;
   const WARN_FIRST = { cancer: 1, kidney: 1, illness: 0.7, liver: 1, diabetes: 1, alcohol: 1, stroke: 0.6, heart: 0.6 };
   const ELDER_AGE = 60;
@@ -50,7 +50,7 @@ globalThis.KI = globalThis.KI || {};
   const INTEREST_CAP = 2;
   const PARENT_YES = { poor: 0.5, mid: 0.8, rich: 0.95 };
   const PRIME_AGE_MORTALITY = 0.35;
-  const OLDER_MORTALITY = 0.85;
+  const OLDER_MORTALITY = 1;
   const MAX_AGE = 100;
   const SKIP_LIMIT = 400;
   const SCHOOL_AGE = 6;
@@ -564,7 +564,7 @@ globalThis.KI = globalThis.KI || {};
     if (cause !== 'old-age' && s.flags.drinker && rng.chance(0.3)) cause = 'alcohol';
     if (cause !== 'old-age' && s.flags['hl-diabetes'] && rng.chance(0.4)) cause = 'diabetes';
     if (cause !== 'old-age' && age >= 40 && s.flags.rawFish && rng.chance(0.35)) cause = 'liver';
-    if (WARN_FIRST[cause] && rng.chance(WARN_FIRST[cause])) {
+    if (WARN_FIRST[cause] && !s.flags.illSurvived && rng.chance(WARN_FIRST[cause] * (age >= 75 ? 0.35 : age >= 60 ? 0.7 : 1))) {
       s.flags.illWarn = cause;
       s.flags.illWarnSince = s.year;
       s.flags.illCare = null;
@@ -712,6 +712,7 @@ globalThis.KI = globalThis.KI || {};
       if (s.season === 2 && ageOf(s) >= 75 && s.stats.know > 50) s.stats.know -= 1;
       if (s.season === 2 && ageOf(s) >= 45) s.stats.health = Math.max(0, s.stats.health - (ageOf(s) >= 70 ? 2 : 1));
       if (!s.death && (s.season === null || s.season === 2)) deathCheck(s, data, rng);
+      if (!s.death && (s.season === null || s.season === 2) && s.flags.married && s.flags.child && s.flags.kidsRoom && !s.flags['fam-stopKids'] && ageOf(s) >= 20 && ageOf(s) <= 42 && s.year < 2000 && rng.chance(s.year < 1980 ? 0.32 : s.year < 1990 ? 0.2 : 0.1)) { s.flags.newChild = true; if (s.turn) s.turn.pin = 'มีลูกเพิ่มอีกคน'; }
     }
     entry.pin = s.turn.pin || retirementPin || autoPin;
     entry.stats = { ...s.stats };
