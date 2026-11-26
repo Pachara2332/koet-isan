@@ -78,3 +78,34 @@ KI.data.personalEvents.push(...[
   for (const id of ["kid-fm-job", "kid-leave-home", "kid-fm-hardship"]) addWhen(id, {"flag":{"kidHasJob":true}});
   addWhen("kid-ng-nocall", {"flag":{"kidAway":true}});
 })();
+(function () {
+  const all = [...KI.data.decisions, ...KI.data.personalEvents];
+  for (const x of all) {
+    const ca = x.when && x.when.childAge;
+    if (!Array.isArray(ca) || ca[1] > 22) continue;
+    const a = Array.isArray(x.when.age) ? x.when.age : [0, 999];
+    x.when.age = [a[0], Math.min(a[1], 65)];
+  }
+  const bribe = all.find((x) => x.id === "pol-bribe");
+  const take = bribe && bribe.choices.find((c) => c.id === "take");
+  if (take) {
+    const caught = take.roll.find((r) => r.p === 0.3) || take.roll[1];
+    const settle = {"text":"ป.ป.ช. เริ่มสอบ แต่คุณรู้จักคนในวงการ วิ่งเต้นจนเรื่องเงียบ เสียเงินเคลียร์ก้อนใหญ่ ตำแหน่งยังอยู่ แต่ชื่อเสียงมัวหมองไปบ้าง","effects":[{"money":-200,"unit":"wageDay"},{"inc":"clout","d":-3},{"stat":"happy","d":-3}]};
+    const safe = take.roll.find((r) => r !== caught);
+    const connected = {"any":[{"trait":{"social":[70,100]}},{"counter":{"clout":[10,999]}}]};
+    take.label = "รับซอง (เสี่ยงโดนตรวจสอบ)";
+    take.when = {"any":[{"trait":{"social":[0,69]},"counter":{"clout":[0,9]}}]};
+    take.roll = [{...safe, "p":0.7}, {...settle, "p":0.12}, {...caught, "p":0.18}];
+    bribe.choices.splice(bribe.choices.indexOf(take) + 1, 0, {...take, "id":"take-connected", "label":"รับซอง เส้นสายช่วยเคลียร์ได้ถ้าโดนสอบ", "when":connected, "roll":[{...safe, "p":0.75}, {...settle, "p":0.2}, {...caught, "p":0.05}]});
+  }
+})();
+KI.data.decisions.push(
+  {"id":"love-meet","title":"มีคนเข้ามาในชีวิต","body":"ช่วงนี้มีโอกาสได้รู้จักคนใหม่หลายทาง ทั้งที่ทำงาน งานบุญ และในมือถือ คุณเองก็เริ่มคิดว่าอยากมีใครสักคนอยู่ข้างๆ","when":{"age":[19,65],"noFlag":["partner"],"noCond":["heartbroken","grieving"],"chance":0.4},"cooldown":3,"w":18,
+   "choices":[
+    {"id":"work","label":"ชวนเพื่อนร่วมงานที่คุยถูกคอไปกินข้าว","text":"จากกินข้าวกลางวันด้วยกัน กลายเป็นนัดดูหนังหลังเลิกงาน","when":{"role":["factory","construction","driver","civil","teacher","office","trader","doctor","nurse","engineer","developer","police","lawyer","pharmacist","accountant","banker","chef","mechanic","artist","creator","rider","security","housekeeper","athlete","designer","business","soldier","farmer","abroad","politician"]},"effects":[{"trait":"social","d":1}],"roll":[{"p":0.65,"text":"อีกฝ่ายก็คิดเหมือนกัน คบกันอย่างเปิดเผย","effects":[{"flag":"partner"},{"cond":"inlove","turns":3},{"stat":"happy","d":5}]},{"p":0.35,"text":"อีกฝ่ายมองเป็นแค่เพื่อน ยังคุยกันดีเหมือนเดิม","effects":[{"stat":"happy","d":-1}]}]},
+    {"id":"app","label":"ลองแอปหาคู่","text":"ปัดหาคนที่สนใจ คุยแชตอยู่หลายสัปดาห์ก่อนนัดเจอที่ร้านกาแฟ","when":{"year":[2012,9999]},"effects":[],"roll":[{"p":0.55,"text":"ตัวจริงน่ารักกว่าในรูป คุยกันถูกคอจนตกลงคบกัน","effects":[{"flag":"partner"},{"cond":"inlove","turns":3},{"stat":"happy","d":5}]},{"p":0.45,"text":"เจอแล้วไม่ใช่อย่างที่คิด ลบแอปไปก่อน","effects":[{"stat":"happy","d":-2}]}]},
+    {"id":"public","label":"ไปงานบุญหรืองานวัดกับเพื่อน","text":"ระหว่างรำวง มีคนมาขอเบอร์ บอกว่าเห็นมาตั้งแต่ต้นงาน","effects":[{"stat":"happy","d":1}],"roll":[{"p":0.5,"text":"โทรคุยกันทุกคืน ไม่นานก็เป็นแฟนกัน","effects":[{"flag":"partner"},{"cond":"inlove","turns":3},{"stat":"happy","d":4}]},{"p":0.5,"text":"คุยกันได้ไม่กี่ครั้งก็เงียบหายไป","effects":[]}]},
+    {"id":"friend","label":"ให้เพื่อนแนะนำคนรู้จัก","text":"เพื่อนนัดกินหมูกระทะแล้วพาคนที่อยากแนะนำมาด้วย","effects":[],"roll":[{"p":0.6,"text":"เข้ากันได้ดีเกินคาด เพื่อนแซวว่าต้องเลี้ยงขอบคุณ","effects":[{"flag":"partner"},{"cond":"inlove","turns":3},{"stat":"happy","d":4}]},{"p":0.4,"text":"นิสัยไม่ตรงกัน แต่ก็ได้เพื่อนใหม่","effects":[{"trait":"social","d":1}]}]},
+    {"id":"single","label":"ยังไม่อยากมีใคร อยู่คนเดียวสบายใจดี","text":"ใช้เวลากับงาน งานอดิเรก และครอบครัวต่อไป","effects":[{"stat":"happy","d":1}]}
+   ]}
+);
