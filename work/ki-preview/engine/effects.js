@@ -106,6 +106,7 @@ globalThis.KI = globalThis.KI || {};
       }
       s.flags[e.flag] = value;
       if (e.flag === 'life2-ownHouse' && value) s.legacyHomeDisposed = false;
+      if (e.flag === 'polRank' && value && s.role !== 'politician' && s.role !== 'prisoner') { s.flags.prevRole = s.role; s.role = 'politician'; }
     } else if ('role' in e) {
       if (!ROLES.includes(e.role)) throw new Error('effects: unknown role "' + e.role + '"');
       s.role = e.role;
